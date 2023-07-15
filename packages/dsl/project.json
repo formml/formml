@@ -1,0 +1,38 @@
+{
+  "name": "dsl",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/dsl/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/dsl",
+        "main": "packages/dsl/src/index.ts",
+        "tsConfig": "packages/dsl/tsconfig.lib.json",
+        "assets": ["packages/dsl/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs dsl {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/dsl/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["coverage/packages/dsl"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/packages/dsl"
+      }
+    }
+  },
+  "tags": []
+}
