@@ -20,6 +20,7 @@
     "@nx/vite": "16.5.2",
     "@nx/workspace": "16.5.2",
     "@types/node": "18.7.1",
+    "@types/vscode": "^1.80.0",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
     "@vitest/coverage-c8": "~0.32.0",
@@ -27,6 +28,7 @@
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
     "husky": "^8.0.3",
+    "langium-cli": "^1.2.1",
     "lint-staged": "^13.2.3",
     "nx": "16.5.2",
     "prettier": "^2.6.2",
@@ -38,5 +40,10 @@
   },
   "nx": {
     "includedScripts": []
+  },
+  "dependencies": {
+    "langium": "^1.2.1",
+    "vscode-languageclient": "~8.1.0",
+    "vscode-languageserver": "~8.0.2"
   }
 }

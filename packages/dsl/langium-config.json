@@ -1,0 +1,14 @@
+{
+  "projectName": ["FormML", { "exact": true }],
+  "languages": [
+    {
+      "id": "formml",
+      "grammar": "src/language/formml.langium",
+      "fileExtensions": [".formml"],
+      "textMate": {
+        "out": "syntaxes/formml.tmLanguage.json"
+      }
+    }
+  ],
+  "out": "src/language/generated"
+}

@@ -1,5 +1,46 @@
 {
   "name": "@formml/dsl",
+  "description": "Please enter a brief description here",
   "version": "0.0.1",
-  "type": "commonjs"
+  "files": [
+    "out",
+    "src"
+  ],
+  "scripts": {
+    "langium:generate": "langium generate",
+    "langium:watch": "langium generate --watch"
+  },
+  "displayName": "formml",
+  "engines": {
+    "vscode": "^1.67.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "formml",
+        "aliases": [
+          "FormML",
+          "formml"
+        ],
+        "extensions": [
+          ".formml"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "formml",
+        "scopeName": "source.formml",
+        "path": "./syntaxes/formml.tmLanguage.json"
+      }
+    ]
+  },
+  "activationEvents": [
+    "onLanguage:formml"
+  ],
+  "main": "./out/extension/main.js"
 }
