@@ -12,14 +12,14 @@ import {
   FormMLGeneratedModule,
   FormMLGeneratedSharedModule,
 } from './generated/module'
-import { FormMLValidator, registerValidationChecks } from './formml-validator'
+// import { FormMLValidator, registerValidationChecks } from './formml-validator'
 
 /**
  * Declaration of custom services - add your own service classes here.
  */
 export type FormMLAddedServices = {
   validation: {
-    FormMLValidator: FormMLValidator
+    // FormMLValidator: FormMLValidator
   }
 }
 
@@ -39,7 +39,7 @@ export const FormMLModule: Module<
   PartialLangiumServices & FormMLAddedServices
 > = {
   validation: {
-    FormMLValidator: () => new FormMLValidator(),
+    // FormMLValidator: () => new FormMLValidator(),
   },
 }
 
@@ -72,6 +72,6 @@ export function createFormMLServices(context: DefaultSharedModuleContext): {
     FormMLModule
   )
   shared.ServiceRegistry.register(FormML)
-  registerValidationChecks(FormML)
+  // registerValidationChecks(FormML)
   return { shared, FormML }
 }

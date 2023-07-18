@@ -42,5 +42,5 @@
   "activationEvents": [
     "onLanguage:formml"
   ],
-  "main": "./out/extension/main.js"
+  "main": "./src/extension/main.js"
 }
