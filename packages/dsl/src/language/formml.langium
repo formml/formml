@@ -1,18 +1,38 @@
 grammar FormML
 
 entry Model:
-    (persons+=Person | greetings+=Greeting)*;
+  (types+=UserType)* form=Form (types+=UserType)*;
 
-Person:
-    'person' name=ID;
+Form:
+  'form' name=ID '{'
+    (fields+=Field)+
+  '}';
 
-Greeting:
-    'Hello' person=[Person:ID] '!';
+UserType:
+  'type' name=ID '{'
+    (fields+=Field)+
+  '}';
+
+Field:
+  (annotations+=Annotation)*
+  (primitiveType=PrimitiveType | type=[UserType]) name=ID;
+
+Annotation:
+  '@' name=ID ('(' (args+=LITERAL ',')* (args+=LITERAL | ((namedArgs+=NamedArgument ',')* namedArgs+=NamedArgument?))? ')')?;
+
+NamedArgument:
+  key=ID '=' value=LITERAL;
+
+terminal LITERAL: NUMBER | STRING | BOOLEAN;
+terminal NUMBER returns number: /-?[0-9]+(\.[0-9]*)?/;
+terminal STRING: /"[^"]*"|'[^']*'/;
+terminal BOOLEAN returns boolean: 'true' | 'false';
+
+PrimitiveType returns string:
+  'string' | 'number' | 'boolean' | 'date';
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;
-terminal INT returns number: /[0-9]+/;
-terminal STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/;
 
 hidden terminal ML_COMMENT: /\/\*[\s\S]*?\*\//;
 hidden terminal SL_COMMENT: /\/\/[^\n\r]*/;
