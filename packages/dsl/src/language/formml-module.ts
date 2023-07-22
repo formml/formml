@@ -2,6 +2,7 @@ import {
   createDefaultModule,
   createDefaultSharedModule,
   DefaultSharedModuleContext,
+  EmptyFileSystem,
   inject,
   LangiumServices,
   LangiumSharedServices,
@@ -75,3 +76,6 @@ export function createFormMLServices(context: DefaultSharedModuleContext): {
   // registerValidationChecks(FormML)
   return { shared, FormML }
 }
+
+export const createParser = () =>
+  createFormMLServices(EmptyFileSystem).FormML.parser.LangiumParser
