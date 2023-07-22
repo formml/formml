@@ -1,5 +1,5 @@
 {
-  "projectName": ["FormML", { "exact": true }],
+  "projectName": "FormML",
   "languages": [
     {
       "id": "formml",
