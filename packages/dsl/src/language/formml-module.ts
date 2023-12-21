@@ -12,7 +12,7 @@ import {
 import {
   FormMLGeneratedModule,
   FormMLGeneratedSharedModule,
-} from './generated/module'
+} from './generated/module.js'
 // import { FormMLValidator, registerValidationChecks } from './formml-validator'
 
 /**
@@ -65,12 +65,12 @@ export function createFormMLServices(context: DefaultSharedModuleContext): {
 } {
   const shared = inject(
     createDefaultSharedModule(context),
-    FormMLGeneratedSharedModule
+    FormMLGeneratedSharedModule,
   )
   const FormML = inject(
     createDefaultModule({ shared }),
     FormMLGeneratedModule,
-    FormMLModule
+    FormMLModule,
   )
   shared.ServiceRegistry.register(FormML)
   // registerValidationChecks(FormML)

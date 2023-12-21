@@ -27,7 +27,7 @@
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/packages/client"],
+      "outputs": ["{workspaceRoot}/coverage/packages/client"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/packages/client"

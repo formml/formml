@@ -46,7 +46,7 @@
     },
     "test": {
       "executor": "@nx/vite:test",
-      "outputs": ["coverage/packages/dsl"],
+      "outputs": ["{workspaceRoot}/coverage/packages/dsl"],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/packages/dsl"

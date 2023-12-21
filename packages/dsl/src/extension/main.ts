@@ -5,7 +5,7 @@ import {
   LanguageClientOptions,
   ServerOptions,
   TransportKind,
-} from 'vscode-languageclient/node'
+} from 'vscode-languageclient/node.js'
 
 let client: LanguageClient
 
@@ -24,7 +24,7 @@ export function deactivate(): Thenable<void> | undefined {
 
 function startLanguageClient(context: vscode.ExtensionContext): LanguageClient {
   const serverModule = context.asAbsolutePath(
-    path.join('src', 'language', 'main')
+    path.join('src', 'language', 'main'),
   )
   // The debug options for the server
   // --inspect=6009: runs the server in Node's Inspector mode so VS Code can attach to the server for debugging.
@@ -67,7 +67,7 @@ function startLanguageClient(context: vscode.ExtensionContext): LanguageClient {
     'formml',
     'FormML',
     serverOptions,
-    clientOptions
+    clientOptions,
   )
 
   // Start the client. This will also launch the server
