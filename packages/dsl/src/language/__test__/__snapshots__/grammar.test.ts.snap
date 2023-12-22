@@ -1,0 +1,38 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`grammar > simple fields > should support primitives 1`] = `
+"{
+  "$type": "FormML",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "type": "Number",
+        "name": "numberField"
+      },
+      {
+        "$type": "Field",
+        "type": "Currency",
+        "name": "currencyField"
+      },
+      {
+        "$type": "Field",
+        "type": "Text",
+        "name": "textField"
+      },
+      {
+        "$type": "Field",
+        "type": "Boolean",
+        "name": "booleanField"
+      },
+      {
+        "$type": "Field",
+        "type": "Date",
+        "name": "dateField"
+      }
+    ]
+  }
+}"
+`;
