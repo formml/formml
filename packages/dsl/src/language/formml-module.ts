@@ -77,5 +77,5 @@ export function createFormMLServices(context: DefaultSharedModuleContext): {
   return { shared, FormML }
 }
 
-export const createParser = () =>
-  createFormMLServices(EmptyFileSystem).FormML.parser.LangiumParser
+export const createInMemoryServices = () =>
+  createFormMLServices(EmptyFileSystem)
