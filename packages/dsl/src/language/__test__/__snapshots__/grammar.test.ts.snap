@@ -36,3 +36,14 @@ exports[`grammar > simple fields > primitives 1`] = `
   }
 }"
 `;
+
+exports[`grammar > syntax > comments 1`] = `
+"{
+  "$type": "FormML",
+  "form": {
+    "$type": "Form",
+    "name": "Example",
+    "fields": []
+  }
+}"
+`;

@@ -8,6 +8,23 @@ describe('grammar', () => {
     services.FormML.serializer.JsonSerializer.serialize(ast, { space: 2 })
   const parser = parseHelper<FormML>(services.FormML)
 
+  describe('syntax', () => {
+    test('comments', async () => {
+      const content = `
+        // inline comment
+
+        form Example {
+          /* multiple line comment
+          Number   aField
+          */
+        }
+      `
+
+      const ast = (await parser(content)).parseResult.value
+      expect(serialize(ast)).toMatchSnapshot()
+    })
+  })
+
   describe('simple fields', () => {
     test('primitives', async () => {
       const content = `
