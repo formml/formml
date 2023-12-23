@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`grammar > simple fields > should support primitives 1`] = `
+exports[`grammar > simple fields > primitives 1`] = `
 "{
   "$type": "FormML",
   "form": {

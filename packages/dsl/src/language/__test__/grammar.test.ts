@@ -9,7 +9,7 @@ describe('grammar', () => {
   const parser = parseHelper<FormML>(services.FormML)
 
   describe('simple fields', () => {
-    test('should support primitives', async () => {
+    test('primitives', async () => {
       const content = `
         form ExampleForm {
           Number   numberField
