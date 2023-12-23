@@ -39,5 +39,16 @@ describe('grammar', () => {
       const ast = (await parser(content)).parseResult.value
       expect(serialize(ast)).toMatchSnapshot()
     })
+
+    test('invalidate unknown types', async () => {
+      const content = `
+        form ExampleForm {
+          Unknown invalidType
+        }
+      `
+      const parseResult = (await parser(content)).parseResult
+      expect(serialize(parseResult.value)).toMatchSnapshot()
+      expect(parseResult.parserErrors.length).toBeGreaterThan(0)
+    })
   })
 })
