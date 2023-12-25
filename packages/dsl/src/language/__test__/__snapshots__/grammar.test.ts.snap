@@ -2,7 +2,7 @@
 
 exports[`grammar > simple fields > invalidate unknown types 1`] = `
 "{
-  "$type": "FormML",
+  "$type": "FormMLSchema",
   "form": {
     "$type": "Form",
     "name": "ExampleForm",
@@ -13,7 +13,7 @@ exports[`grammar > simple fields > invalidate unknown types 1`] = `
 
 exports[`grammar > simple fields > primitives 1`] = `
 "{
-  "$type": "FormML",
+  "$type": "FormMLSchema",
   "form": {
     "$type": "Form",
     "name": "ExampleForm",
@@ -50,7 +50,7 @@ exports[`grammar > simple fields > primitives 1`] = `
 
 exports[`grammar > syntax > comments 1`] = `
 "{
-  "$type": "FormML",
+  "$type": "FormMLSchema",
   "form": {
     "$type": "Form",
     "name": "Example",

@@ -1,6 +1,6 @@
 grammar FormML
 
-entry FormML:
+entry FormMLSchema:
   form=Form;
 
 Form:
