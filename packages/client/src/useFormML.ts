@@ -1,3 +1,10 @@
+export type OnSubmitCallback = (data: object) => void
+
 export default function useFormML(_dsl: string) {
-  return { handleSubmit: () => {} }
+  const data = {}
+  return {
+    handleSubmit: (onSubmit: OnSubmitCallback) => () => {
+      onSubmit(data)
+    },
+  }
 }
