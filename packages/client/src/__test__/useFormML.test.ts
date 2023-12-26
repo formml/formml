@@ -3,14 +3,12 @@ import useFormML from '../useFormML.js'
 
 describe('useFormML', () => {
   describe('handleSubmit', () => {
+    const dummyDsl = `abc`
     const dummyEvent = new SubmitEvent(
       'submit',
     ) as unknown as React.FormEvent<HTMLFormElement>
 
     test('should be a function', () => {
-      // Arrange
-      const dummyDsl = `abc`
-
       // Act
       const { result } = renderHook(() => useFormML(dummyDsl))
 
@@ -20,7 +18,6 @@ describe('useFormML', () => {
 
     test('should provide data to callback', () => {
       // Arrange
-      const dummyDsl = `abc`
       const onSubmit = vi.fn()
 
       // Act
@@ -33,9 +30,10 @@ describe('useFormML', () => {
       expect(onSubmit).toBeCalledWith(expectedData)
     })
 
+    test.todo('should provide latest data to callback')
+
     test('should prevent default submit behavior', () => {
       // Arrange
-      const dummyDsl = `abc`
       const preventDefault = vi.spyOn(dummyEvent, 'preventDefault')
 
       // Act
