@@ -1,3 +1,3 @@
 {
-  "*": ["npx nx run-many -t lint", "npx nx format:write"]
+  "*": ["npx nx run-many -t lint typecheck", "npx nx format:write"]
 }

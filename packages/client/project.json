@@ -25,6 +25,16 @@
         "lintFilePatterns": ["packages/client/**/*.ts"]
       }
     },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "tsc -p packages/client/tsconfig.lib.json --noEmit",
+          "tsc -p packages/client/tsconfig.spec.json --noEmit"
+        ],
+        "color": true
+      }
+    },
     "test": {
       "executor": "@nx/vite:test",
       "outputs": ["{workspaceRoot}/coverage/packages/client"],

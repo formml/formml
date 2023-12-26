@@ -1,12 +1,12 @@
 import { parseHelper } from 'langium/test'
 import { createInMemoryServices } from '../formml-module.js'
-import { FormML } from '../generated/ast.js'
+import { FormMLSchema } from '../generated/ast.js'
 
 describe('grammar', () => {
   const services = createInMemoryServices()
-  const serialize = (ast: FormML) =>
+  const serialize = (ast: FormMLSchema) =>
     services.FormML.serializer.JsonSerializer.serialize(ast, { space: 2 })
-  const parser = parseHelper<FormML>(services.FormML)
+  const parser = parseHelper<FormMLSchema>(services.FormML)
 
   describe('syntax', () => {
     test('comments', async () => {

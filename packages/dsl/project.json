@@ -44,6 +44,16 @@
         "lintFilePatterns": ["packages/dsl/**/*.ts"]
       }
     },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "tsc -p packages/dsl/tsconfig.lib.json --noEmit",
+          "tsc -p packages/dsl/tsconfig.spec.json --noEmit"
+        ],
+        "color": true
+      }
+    },
     "test": {
       "executor": "@nx/vite:test",
       "outputs": ["{workspaceRoot}/coverage/packages/dsl"],
