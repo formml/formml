@@ -8,7 +8,7 @@ describe('grammar', () => {
   const parser = createParser(services.FormML)
 
   describe('syntax', () => {
-    test('comments', async () => {
+    test('comments', () => {
       const content = `
         // inline comment
 
@@ -19,13 +19,13 @@ describe('grammar', () => {
         }
       `
 
-      const ast = (await parser(content)).value
+      const ast = parser(content).value
       expect(serialize(ast)).toMatchSnapshot()
     })
   })
 
   describe('simple fields', () => {
-    test('primitives', async () => {
+    test('primitives', () => {
       const content = `
         form ExampleForm {
           Number   numberField
@@ -35,17 +35,17 @@ describe('grammar', () => {
           Date		 dateField
         }
       `
-      const ast = (await parser(content)).value
+      const ast = parser(content).value
       expect(serialize(ast)).toMatchSnapshot()
     })
 
-    test('invalidate unknown types', async () => {
+    test('invalidate unknown types', () => {
       const content = `
         form ExampleForm {
           Unknown invalidType
         }
       `
-      const parseResult = await parser(content)
+      const parseResult = parser(content)
       expect(serialize(parseResult.value)).toMatchSnapshot()
       expect(parseResult.parserErrors.length).toBeGreaterThan(0)
     })

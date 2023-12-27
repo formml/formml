@@ -83,23 +83,17 @@ export function createFormMLServices(context: DefaultSharedModuleContext): {
 export const createInMemoryServices = () =>
   createFormMLServices(EmptyFileSystem)
 
-export const buildDocument = async (
-  schema: string,
-  services: FormMLServices,
-) => {
+export const buildDocument = (schema: string, services: FormMLServices) => {
   const uri = URI.parse(`memory:///${nanoid()}.formml`)
   const document =
     services.shared.workspace.LangiumDocumentFactory.fromString<FormMLSchema>(
       schema,
       uri,
     )
-  services.shared.workspace.LangiumDocuments.addDocument(document)
-  await services.shared.workspace.DocumentBuilder.build([document])
   return document
 }
 
 export const createParser = (services?: FormMLServices) => {
   const _services = services ?? createInMemoryServices().FormML
-  return async (schema: string) =>
-    (await buildDocument(schema, _services)).parseResult
+  return (schema: string) => buildDocument(schema, _services).parseResult
 }
