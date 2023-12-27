@@ -1,12 +1,11 @@
-import { parseHelper } from 'langium/test'
-import { createInMemoryServices } from '../formml-module.js'
+import { createInMemoryServices, createParser } from '../formml-module.js'
 import { FormMLSchema } from '../generated/ast.js'
 
 describe('grammar', () => {
   const services = createInMemoryServices()
   const serialize = (ast: FormMLSchema) =>
     services.FormML.serializer.JsonSerializer.serialize(ast, { space: 2 })
-  const parser = parseHelper<FormMLSchema>(services.FormML)
+  const parser = createParser(services.FormML)
 
   describe('syntax', () => {
     test('comments', async () => {
@@ -20,7 +19,7 @@ describe('grammar', () => {
         }
       `
 
-      const ast = (await parser(content)).parseResult.value
+      const ast = (await parser(content)).value
       expect(serialize(ast)).toMatchSnapshot()
     })
   })
@@ -36,7 +35,7 @@ describe('grammar', () => {
           Date		 dateField
         }
       `
-      const ast = (await parser(content)).parseResult.value
+      const ast = (await parser(content)).value
       expect(serialize(ast)).toMatchSnapshot()
     })
 
@@ -46,7 +45,7 @@ describe('grammar', () => {
           Unknown invalidType
         }
       `
-      const parseResult = (await parser(content)).parseResult
+      const parseResult = await parser(content)
       expect(serialize(parseResult.value)).toMatchSnapshot()
       expect(parseResult.parserErrors.length).toBeGreaterThan(0)
     })
