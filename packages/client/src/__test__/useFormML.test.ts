@@ -37,6 +37,27 @@ describe('useFormML', () => {
         },
       })
     })
+
+    test('should not re-create indexes when rerendering without dsl change', () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number   numberField
+          Currency currencyField
+          Text     textField
+          Boolean	 booleanField
+          Date		 dateField
+        }
+      `
+      const { result, rerender } = renderHook(() => useFormML(dsl))
+      const firstIndexRoot = result.current.indexRoot
+
+      // Act
+      rerender()
+
+      // Assert
+      expect(result.current.indexRoot).toBe(firstIndexRoot) // TODO: deep equality
+    })
   })
 
   describe('handleSubmit', () => {
