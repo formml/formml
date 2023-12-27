@@ -2,6 +2,43 @@ import { renderHook } from '@testing-library/react'
 import useFormML from '../useFormML.js'
 
 describe('useFormML', () => {
+  describe('indexRoot', () => {
+    test('should generate simple field indexes according to schema', () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number   numberField
+          Currency currencyField
+          Text     textField
+          Boolean	 booleanField
+          Date		 dateField
+        }
+      `
+
+      // Act
+      const { result } = renderHook(() => useFormML(dsl))
+
+      // Assert
+      expect(result.current.indexRoot).toEqual({
+        numberField: {
+          $type: 'Number',
+        },
+        currencyField: {
+          $type: 'Currency',
+        },
+        textField: {
+          $type: 'Text',
+        },
+        booleanField: {
+          $type: 'Boolean',
+        },
+        dateField: {
+          $type: 'Date',
+        },
+      })
+    })
+  })
+
   describe('handleSubmit', () => {
     const dummyDsl = `abc`
     const dummyEvent = new SubmitEvent(
