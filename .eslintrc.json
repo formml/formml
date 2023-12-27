@@ -27,12 +27,16 @@
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nx/typescript"],
+      "extends": ["plugin:@nx/typescript", "plugin:@nx/react"],
       "rules": {}
     },
     {
       "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nx/javascript"],
+      "extends": [
+        "plugin:@nx/javascript",
+        "plugin:@nx/react-base",
+        "plugin:@nx/react-jsx"
+      ],
       "rules": {}
     }
   ]
