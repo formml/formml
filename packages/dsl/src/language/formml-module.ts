@@ -14,8 +14,6 @@ import {
   FormMLGeneratedSharedModule,
 } from './generated/module.js'
 import { FormMLSchema } from './index.js'
-import { nanoid } from 'nanoid'
-import { URI } from 'vscode-uri'
 // import { FormMLValidator, registerValidationChecks } from './formml-validator'
 
 /**
@@ -83,17 +81,8 @@ export function createFormMLServices(context: DefaultSharedModuleContext): {
 export const createInMemoryServices = () =>
   createFormMLServices(EmptyFileSystem)
 
-export const buildDocument = (schema: string, services: FormMLServices) => {
-  const uri = URI.parse(`memory:///${nanoid()}.formml`)
-  const document =
-    services.shared.workspace.LangiumDocumentFactory.fromString<FormMLSchema>(
-      schema,
-      uri,
-    )
-  return document
-}
-
 export const createParser = (services?: FormMLServices) => {
   const _services = services ?? createInMemoryServices().FormML
-  return (schema: string) => buildDocument(schema, _services).parseResult
+  return (schema: string) =>
+    _services.parser.LangiumParser.parse<FormMLSchema>(schema)
 }
