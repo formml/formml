@@ -61,7 +61,10 @@ describe('useFormML', () => {
   })
 
   describe('handleSubmit', () => {
-    const dummyDsl = `abc`
+    const dummyDsl = `
+      form ExampleForm {
+        Number   numberField
+      }`
     const dummyEvent = new SubmitEvent(
       'submit',
     ) as unknown as React.FormEvent<HTMLFormElement>

@@ -9,7 +9,7 @@ export default function useFormML(dsl: string) {
   const parser = React.useMemo(() => createParser(), [])
   const indexRoot = React.useMemo(() => {
     const indexRoot: Record<string, unknown> = {}
-    const ast = parser(dsl).value
+    const ast = parser(dsl)
     for (const field of ast.form.fields) {
       indexRoot[field.name] = { $type: field.type }
     }
