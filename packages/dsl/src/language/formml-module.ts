@@ -13,7 +13,6 @@ import {
   FormMLGeneratedModule,
   FormMLGeneratedSharedModule,
 } from './generated/module.js'
-import { FormMLSchema } from './index.js'
 // import { FormMLValidator, registerValidationChecks } from './formml-validator'
 
 /**
@@ -80,9 +79,3 @@ export function createFormMLServices(context: DefaultSharedModuleContext): {
 
 export const createInMemoryServices = () =>
   createFormMLServices(EmptyFileSystem)
-
-export const createParser = (services?: FormMLServices) => {
-  const _services = services ?? createInMemoryServices().FormML
-  return (schema: string) =>
-    _services.parser.LangiumParser.parse<FormMLSchema>(schema)
-}

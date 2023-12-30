@@ -1,16 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`grammar > simple fields > invalidate unknown types 1`] = `
-"{
-  "$type": "FormMLSchema",
-  "form": {
-    "$type": "Form",
-    "name": "ExampleForm",
-    "fields": []
-  }
-}"
-`;
-
 exports[`grammar > simple fields > primitives 1`] = `
 "{
   "$type": "FormMLSchema",
@@ -54,7 +43,13 @@ exports[`grammar > syntax > comments 1`] = `
   "form": {
     "$type": "Form",
     "name": "Example",
-    "fields": []
+    "fields": [
+      {
+        "$type": "Field",
+        "type": "Number",
+        "name": "numberField"
+      }
+    ]
   }
 }"
 `;

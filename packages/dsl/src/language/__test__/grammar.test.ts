@@ -1,4 +1,5 @@
-import { createInMemoryServices, createParser } from '../formml-module.js'
+import { createInMemoryServices } from '../formml-module.js'
+import { FormMLParserError, createParser } from '../parser.js'
 import { FormMLSchema } from '../generated/ast.js'
 
 describe('grammar', () => {
@@ -14,12 +15,14 @@ describe('grammar', () => {
 
         form Example {
           /* multiple line comment
-          Number   aField
+          Number commentedField
           */
+
+          Number numberField
         }
       `
 
-      const ast = parser(content).value
+      const ast = parser(content)
       expect(serialize(ast)).toMatchSnapshot()
     })
   })
@@ -35,7 +38,7 @@ describe('grammar', () => {
           Date		 dateField
         }
       `
-      const ast = parser(content).value
+      const ast = parser(content)
       expect(serialize(ast)).toMatchSnapshot()
     })
 
@@ -45,9 +48,7 @@ describe('grammar', () => {
           Unknown invalidType
         }
       `
-      const parseResult = parser(content)
-      expect(serialize(parseResult.value)).toMatchSnapshot()
-      expect(parseResult.parserErrors.length).toBeGreaterThan(0)
+      expect(() => parser(content)).toThrow(FormMLParserError)
     })
   })
 })
