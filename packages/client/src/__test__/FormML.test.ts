@@ -1,3 +1,4 @@
+import { FormMLParseError } from '@formml/dsl'
 import FormML from '../FormML.js'
 
 describe('FormML', () => {
@@ -7,7 +8,7 @@ describe('FormML', () => {
       const invalidSchema = `form {}`
 
       // Act & Assert
-      expect(() => new FormML(invalidSchema)).toThrow()
+      expect(() => new FormML(invalidSchema)).toThrow(FormMLParseError)
     })
   })
 
@@ -27,7 +28,9 @@ describe('FormML', () => {
 
       // Act & Assert
       const invalidIndex = {}
-      expect(() => formML.getField(invalidIndex)).toThrow()
+      expect(() => formML.getField(invalidIndex)).toThrow(
+        /given index is invalid, index provided:[\s\S]+/g,
+      )
     })
   })
 })

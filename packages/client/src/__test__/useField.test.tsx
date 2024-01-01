@@ -10,7 +10,9 @@ describe('useField', () => {
 
     test('should throw if has no context', () => {
       const dummyIndex = {}
-      expect(() => renderHook(() => useField(dummyIndex))).toThrow()
+      expect(() => renderHook(() => useField(dummyIndex))).toThrow(
+        '`useFormMLContext` must be used within a `FormMLProvider`',
+      )
     })
 
     test('should throw if index can not be recognized', () => {
@@ -30,7 +32,7 @@ describe('useField', () => {
       // Act & Assert
       expect(() =>
         renderHookWithContext(() => useField(invalidIndex), formML),
-      ).toThrow()
+      ).toThrow(/given index is invalid, index provided:[\s\S]+/g)
     })
   })
 
