@@ -1,6 +1,7 @@
 import FormML from '../FormML.js'
-import useFormMLContext, { FormMLProvider } from '../useFormMLContext.js'
+import useFormMLContext from '../useFormMLContext.js'
 import { renderHook, RenderHookResult } from '@testing-library/react'
+import renderHookWithContext from './utils/renderHookWithContext.js'
 
 describe('useFormMLContext', () => {
   // mute react warnings for uncaught errors in console
@@ -15,14 +16,11 @@ describe('useFormMLContext', () => {
   test('should get context value', () => {
     // Arrange
     const dummyFormML = {} as FormML
-    const wrapper = ({ children }: React.PropsWithChildren) => (
-      <FormMLProvider value={dummyFormML}>{children}</FormMLProvider>
-    )
 
     // Act & Assert
     let result: RenderHookResult<unknown, unknown> | undefined
     expect(() => {
-      result = renderHook(() => useFormMLContext(), { wrapper })
+      result = renderHookWithContext(() => useFormMLContext(), dummyFormML)
     }).not.toThrow()
     expect(result?.result.current).toBe(dummyFormML)
   })

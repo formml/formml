@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react'
 import useField from '../useField.js'
-import { FormMLProvider } from '../useFormMLContext.js'
 import FormML from '../FormML.js'
+import renderHookWithContext from './utils/renderHookWithContext.js'
 
 describe('useField', () => {
   describe('I/O', () => {
@@ -28,11 +28,8 @@ describe('useField', () => {
       const invalidIndex = {}
 
       // Act & Assert
-      const wrapper = ({ children }: React.PropsWithChildren) => (
-        <FormMLProvider value={formML}>{children}</FormMLProvider>
-      )
       expect(() =>
-        renderHook(() => useField(invalidIndex), { wrapper }),
+        renderHookWithContext(() => useField(invalidIndex), formML),
       ).toThrow()
     })
   })
