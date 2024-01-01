@@ -1,10 +1,10 @@
-import { FormMLSchema, createParser } from '@formml/dsl'
+import { Field, FormMLSchema, createParser } from '@formml/dsl'
 
 export default class FormML {
   private static readonly _parse = createParser()
 
   private readonly _schema: FormMLSchema
-  private _indexToSchema: WeakMap<object, unknown>
+  private _indexToSchema: WeakMap<object, Field>
 
   public indexRoot: Record<string, object>
 
@@ -15,7 +15,7 @@ export default class FormML {
 
   private static buildIndexes(schema: FormMLSchema) {
     const indexRoot: Record<string, object> = {}
-    const indexToSchema = new WeakMap<object, unknown>()
+    const indexToSchema = new WeakMap<object, Field>()
     for (const field of schema.form.fields) {
       const fieldIndex = { $type: field.type }
       indexRoot[field.name] = fieldIndex
@@ -25,7 +25,9 @@ export default class FormML {
   }
 
   getField(index: object) {
-    if (!this._indexToSchema.has(index)) {
+    const schema = this._indexToSchema.get(index)
+
+    if (schema === undefined) {
       throw new Error(
         `given index is invalid, index provided:
         ${JSON.stringify(index, undefined, 4)}`,
@@ -34,7 +36,7 @@ export default class FormML {
 
     return {
       field: {
-        name: 'numberField',
+        name: schema.name,
         value: '',
         onChange: () => {},
         onBlur: () => {},

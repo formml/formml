@@ -65,5 +65,34 @@ describe('FormML', () => {
         },
       })
     })
+
+    describe('return - field', () => {
+      test.each([
+        'numberField',
+        'currencyField',
+        'textField',
+        'booleanField',
+        'dateField',
+      ])('should return corresponding field name - %s', (fieldName) => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            Number   numberField
+            Currency currencyField
+            Text     textField
+            Boolean	 booleanField
+            Date		 dateField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot[fieldName]
+
+        // Act
+        const pack = formML.getField(index)
+
+        // Assert
+        expect(pack.field.name).toEqual(fieldName)
+      })
+    })
   })
 })
