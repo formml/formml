@@ -34,6 +34,39 @@ describe('useField', () => {
         renderHookWithContext(() => useField(invalidIndex), formML),
       ).toThrow(/given index is invalid, index provided:[\s\S]+/g)
     })
+
+    test('should return field pack given valid index', () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number   numberField
+          Currency currencyField
+          Text     textField
+          Boolean	 booleanField
+          Date		 dateField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+
+      // Act
+      const { result } = renderHookWithContext(() => useField(index), formML)
+
+      // Assert
+      expect(result.current).toEqual({
+        field: {
+          name: 'numberField',
+          value: '',
+          onChange: expect.any(Function),
+          onBlur: expect.any(Function),
+        },
+        meta: {
+          touched: false,
+          error: undefined,
+          typedValue: undefined,
+        },
+      })
+    })
   })
 
   describe.todo('behavior')

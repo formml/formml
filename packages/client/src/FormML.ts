@@ -6,7 +6,7 @@ export default class FormML {
   private readonly _schema: FormMLSchema
   private _indexToSchema: WeakMap<object, unknown>
 
-  public indexRoot: Record<string, unknown>
+  public indexRoot: Record<string, object>
 
   constructor(schema: string) {
     this._schema = FormML._parse(schema)
@@ -14,7 +14,7 @@ export default class FormML {
   }
 
   private static buildIndexes(schema: FormMLSchema) {
-    const indexRoot: Record<string, unknown> = {}
+    const indexRoot: Record<string, object> = {}
     const indexToSchema = new WeakMap<object, unknown>()
     for (const field of schema.form.fields) {
       const fieldIndex = { $type: field.type }
@@ -30,6 +30,20 @@ export default class FormML {
         `given index is invalid, index provided:
         ${JSON.stringify(index, undefined, 4)}`,
       )
+    }
+
+    return {
+      field: {
+        name: 'numberField',
+        value: '',
+        onChange: () => {},
+        onBlur: () => {},
+      },
+      meta: {
+        touched: false,
+        error: undefined,
+        typedValue: undefined,
+      },
     }
   }
 }

@@ -32,5 +32,38 @@ describe('FormML', () => {
         /given index is invalid, index provided:[\s\S]+/g,
       )
     })
+
+    test('should return field pack', () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number   numberField
+          Currency currencyField
+          Text     textField
+          Boolean	 booleanField
+          Date		 dateField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+
+      // Act
+      const pack = formML.getField(index)
+
+      // Assert
+      expect(pack).toEqual({
+        field: {
+          name: 'numberField',
+          value: '',
+          onChange: expect.any(Function),
+          onBlur: expect.any(Function),
+        },
+        meta: {
+          touched: false,
+          error: undefined,
+          typedValue: undefined,
+        },
+      })
+    })
   })
 })
