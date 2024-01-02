@@ -40,6 +40,9 @@ devDependencies:
   '@nx/workspace':
     specifier: 17.2.7
     version: 17.2.7
+  '@testing-library/jest-dom':
+    specifier: ^6.1.6
+    version: 6.1.6(vitest@1.0.4)
   '@testing-library/react':
     specifier: ^14.1.2
     version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
@@ -135,6 +138,13 @@ packages:
         integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==,
       }
     engines: { node: '>=0.10.0' }
+    dev: true
+
+  /@adobe/css-tools@4.3.2:
+    resolution:
+      {
+        integrity: sha512-DA5a1C0gD/pLOvhv33YMrbf2FK3oUzwNl9oOJqE4XVjuEtt6XIakRcsd7eLiOSPkp1kTRQGICTA8cKra/vFbjw==,
+      }
     dev: true
 
   /@ampproject/remapping@2.2.1:
@@ -3253,6 +3263,38 @@ packages:
       pretty-format: 27.5.1
     dev: true
 
+  /@testing-library/jest-dom@6.1.6(vitest@1.0.4):
+    resolution:
+      {
+        integrity: sha512-YwuiOdYEcxhfC2u5iNKlvg2Q5MgbutovP6drq7J1HrCbvR+G58BbtoCoq+L/kNlrNFsu2Kt3jaFAviLVxYHJZg==,
+      }
+    engines: { node: '>=14', npm: '>=6', yarn: '>=1' }
+    peerDependencies:
+      '@jest/globals': '>= 28'
+      '@types/jest': '>= 28'
+      jest: '>= 28'
+      vitest: '>= 0.32'
+    peerDependenciesMeta:
+      '@jest/globals':
+        optional: true
+      '@types/jest':
+        optional: true
+      jest:
+        optional: true
+      vitest:
+        optional: true
+    dependencies:
+      '@adobe/css-tools': 4.3.2
+      '@babel/runtime': 7.23.6
+      aria-query: 5.3.0
+      chalk: 3.0.0
+      css.escape: 1.5.1
+      dom-accessibility-api: 0.5.16
+      lodash: 4.17.21
+      redent: 3.0.0
+      vitest: 1.0.4(@types/node@20.10.5)(@vitest/ui@1.0.4)(jsdom@23.0.1)
+    dev: true
+
   /@testing-library/react@14.1.2(react-dom@18.2.0)(react@18.2.0):
     resolution:
       {
@@ -4826,6 +4868,17 @@ packages:
       supports-color: 5.5.0
     dev: true
 
+  /chalk@3.0.0:
+    resolution:
+      {
+        integrity: sha512-4D3B6Wf41KOYRFdszmDqMCGq5VV/uMAB273JILmO+3jAlh8X4qDtdtgCR3fxtbLEMzSx22QdhnDcJvu2u1fVwg==,
+      }
+    engines: { node: '>=8' }
+    dependencies:
+      ansi-styles: 4.3.0
+      supports-color: 7.2.0
+    dev: true
+
   /chalk@4.1.2:
     resolution:
       {
@@ -5262,6 +5315,13 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+    dev: true
+
+  /css.escape@1.5.1:
+    resolution:
+      {
+        integrity: sha512-YUifsXXuknHlUsmlgyY0PKzgPOr7/FjCePfHNt0jxm83wHZi44VDMQ7/fGNkjY3/jV1MC+1CmZbaHzugyeRtpg==,
+      }
     dev: true
 
   /cssstyle@3.0.0:
