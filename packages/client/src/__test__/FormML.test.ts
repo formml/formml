@@ -66,7 +66,7 @@ describe('FormML', () => {
       })
     })
 
-    describe('return - field', () => {
+    describe('returns', () => {
       test.each([
         'numberField',
         'currencyField',
@@ -128,10 +128,55 @@ describe('FormML', () => {
         } as unknown as React.ChangeEvent<HTMLInputElement>
         pack.field.onChange(event)
 
+        // Assert
         const newPack = formML.getField(index)
+        expect(newPack.field.value).toEqual('123')
+      })
+
+      test('should not be touched when field is fresh', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            Number   numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+
+        // Act
+        const pack = formML.getField(index)
 
         // Assert
-        expect(newPack.field.value).toEqual('123')
+        expect(pack.meta.touched).toBe(false)
+      })
+
+      test('should always be touched once field is blurred', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            Number   numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+
+        const firstPack = formML.getField(index)
+        expect(firstPack.meta.touched).toBe(false)
+
+        // Act
+        const event = new FocusEvent('blur') as unknown as React.FocusEvent
+        firstPack.field.onBlur(event)
+
+        // Assert
+        const secondPack = formML.getField(index)
+        expect(secondPack.meta.touched).toBe(true)
+
+        // Act
+        secondPack.field.onBlur(event)
+
+        // Assert
+        const thirdPack = formML.getField(index)
+        expect(thirdPack.meta.touched).toBe(true)
       })
     })
   })

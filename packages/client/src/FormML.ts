@@ -6,6 +6,7 @@ export default class FormML {
   private readonly _schema: FormMLSchema
   private readonly _indexToSchema: WeakMap<object, Field>
   private readonly _values: Record<string, string> = {}
+  private readonly _fieldsMeta: Record<string, { touched: boolean }> = {}
 
   public readonly indexRoot: Record<string, object>
 
@@ -38,6 +39,7 @@ export default class FormML {
 
     if (this._values[name] === undefined) {
       this._values[name] = ''
+      this._fieldsMeta[name] = { touched: false }
     }
 
     return {
@@ -47,10 +49,12 @@ export default class FormML {
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
           this._values[name] = e.target.value
         },
-        onBlur: () => {},
+        onBlur: (_e: React.FocusEvent) => {
+          this._fieldsMeta[name].touched = true
+        },
       },
       meta: {
-        touched: false,
+        touched: this._fieldsMeta[name].touched,
         error: undefined,
         typedValue: undefined,
       },
