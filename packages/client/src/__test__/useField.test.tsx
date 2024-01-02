@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react'
 import useField from '../useField.js'
 import FormML from '../FormML.js'
-import renderHookWithContext from './utils/renderHookWithContext.js'
+import renderHookWithContext from './helpers/renderHookWithContext.js'
 
 describe('useField', () => {
   describe('I/O', () => {

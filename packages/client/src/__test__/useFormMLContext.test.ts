@@ -1,7 +1,7 @@
 import FormML from '../FormML.js'
 import useFormMLContext from '../useFormMLContext.js'
 import { renderHook, RenderHookResult } from '@testing-library/react'
-import renderHookWithContext from './utils/renderHookWithContext.js'
+import renderHookWithContext from './helpers/renderHookWithContext.js'
 
 describe('useFormMLContext', () => {
   // mute react warnings for uncaught errors in console
