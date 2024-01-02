@@ -93,6 +93,46 @@ describe('FormML', () => {
         // Assert
         expect(pack.field.name).toEqual(fieldName)
       })
+
+      test('should return empty value when field is not initialized', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            Number   numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+
+        // Act
+        const pack = formML.getField(index)
+
+        // Assert
+        expect(pack.field.value).toEqual('')
+      })
+
+      test('should return latest value when field has been changed', async () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            Number   numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+        const pack = formML.getField(index)
+
+        // Act
+        const event = {
+          target: { value: '123' },
+        } as unknown as React.ChangeEvent<HTMLInputElement>
+        pack.field.onChange(event)
+
+        const newPack = formML.getField(index)
+
+        // Assert
+        expect(newPack.field.value).toEqual('123')
+      })
     })
   })
 })

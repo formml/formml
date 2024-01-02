@@ -4,9 +4,10 @@ export default class FormML {
   private static readonly _parse = createParser()
 
   private readonly _schema: FormMLSchema
-  private _indexToSchema: WeakMap<object, Field>
+  private readonly _indexToSchema: WeakMap<object, Field>
+  private readonly _values: Record<string, string> = {}
 
-  public indexRoot: Record<string, object>
+  public readonly indexRoot: Record<string, object>
 
   constructor(schema: string) {
     this._schema = FormML._parse(schema)
@@ -33,12 +34,19 @@ export default class FormML {
         ${JSON.stringify(index, undefined, 4)}`,
       )
     }
+    const name = schema.name
+
+    if (this._values[name] === undefined) {
+      this._values[name] = ''
+    }
 
     return {
       field: {
-        name: schema.name,
-        value: '',
-        onChange: () => {},
+        name,
+        value: this._values[name],
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+          this._values[name] = e.target.value
+        },
         onBlur: () => {},
       },
       meta: {
