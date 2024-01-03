@@ -1,12 +1,15 @@
 import { Field, FormMLSchema, createParser } from '@formml/dsl'
+import { reactive } from '@vue/reactivity'
+import { watch } from '@vue-reactivity/watch'
 
 export default class FormML {
   private static readonly _parse = createParser()
 
   private readonly _schema: FormMLSchema
   private readonly _indexToSchema: WeakMap<object, Field>
-  private readonly _values: Record<string, string> = {}
-  private readonly _fieldsMeta: Record<string, { touched: boolean }> = {}
+  private readonly _valuesProxy: Record<string, string> = reactive({})
+  private readonly _fieldsMetaProxy: Record<string, { touched: boolean }> =
+    reactive({})
 
   public readonly indexRoot: Record<string, object>
 
@@ -30,12 +33,12 @@ export default class FormML {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
 
-    if (this._values[name] === undefined) {
-      this._values[name] = ''
+    if (this._valuesProxy[name] === undefined) {
+      this._valuesProxy[name] = ''
     }
 
-    if (this._fieldsMeta[name] === undefined) {
-      this._fieldsMeta[name] = { touched: false }
+    if (this._fieldsMetaProxy[name] === undefined) {
+      this._fieldsMetaProxy[name] = { touched: false }
     }
   }
 
@@ -43,7 +46,7 @@ export default class FormML {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
 
-    if (this._values[name] === undefined) {
+    if (this._valuesProxy[name] === undefined) {
       throw new Error(
         `Field "${name}" has not been initialized yet, please make sure to call \`initField\` before calling \`getFieldSnapshot\``,
       )
@@ -52,20 +55,27 @@ export default class FormML {
     return {
       field: {
         name,
-        value: this._values[name],
+        value: this._valuesProxy[name],
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-          this._values[name] = e.target.value
+          this._valuesProxy[name] = e.target.value
         },
         onBlur: (_e: React.FocusEvent) => {
-          this._fieldsMeta[name].touched = true
+          this._fieldsMetaProxy[name].touched = true
         },
       },
       meta: {
-        touched: this._fieldsMeta[name].touched,
+        touched: this._fieldsMetaProxy[name].touched,
         error: undefined,
         typedValue: undefined,
       },
     }
+  }
+
+  subscribe(index: object, callback: () => void): () => void {
+    const schema = this.getSchemaByIndex(index)
+    const name = schema.name
+
+    return watch([() => this._valuesProxy[name]], () => callback())
   }
 
   private getSchemaByIndex(index: object) {

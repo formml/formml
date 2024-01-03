@@ -265,4 +265,31 @@ describe('FormML', () => {
       })
     })
   })
+
+  describe('subscribe', () => {
+    test('should react to field value change', () => {
+      // Arrange
+      const schema = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(schema)
+      const index = formML.indexRoot['numberField']
+      const callback = vi.fn()
+      formML.subscribe(index, callback)
+
+      // Act
+      formML.initField(index) // first change
+      const {
+        field: { onChange },
+      } = formML.getFieldSnapshot(index)
+      onChange({
+        target: { value: '123' },
+      } as unknown as React.ChangeEvent<HTMLInputElement>) // second change
+
+      // Assert
+      expect(callback).toBeCalledTimes(2)
+    })
+  })
 })
