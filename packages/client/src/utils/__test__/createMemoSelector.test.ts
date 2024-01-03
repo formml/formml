@@ -35,6 +35,25 @@ describe('createMemoSelector', () => {
     expect(secondResult).toEqual({ value: 1 })
   })
 
+  test('should return new result if argument reference changed', () => {
+    // Arrange
+    const selector = (observable: { count: number; other: string }) => ({
+      value: observable.count,
+    })
+    const select = createMemoSelector(selector)
+    const state = reactive({ count: 0, other: 'no change' })
+
+    const firstResult = select(state)
+
+    // Act
+    const newState = reactive({ count: 0, other: 'no change' })
+    const secondResult = select(newState)
+
+    // Assert
+    expect(secondResult).not.toBe(firstResult)
+    expect(secondResult).toEqual({ value: 0 })
+  })
+
   test('should return cached result if accessing values have no change', () => {
     // Arrange
     const selector = (observable: { count: number; other: string }) => ({
