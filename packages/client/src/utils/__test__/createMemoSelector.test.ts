@@ -117,4 +117,29 @@ describe('createMemoSelector', () => {
     // Assert
     expect(secondResult).toBe(firstResult)
   })
+
+  test('should return cached result if accessing values have no change - nested', () => {
+    // Arrange
+    const selector = (observable: {
+      nested: { count: number; other: string }
+      other: string
+    }) => ({
+      value: observable.nested.count,
+    })
+    const select = createMemoSelector(selector)
+    const state = reactive({
+      nested: { count: 0, other: 'no change' },
+      other: 'no change',
+    })
+
+    const firstResult = select(state)
+
+    // Act
+    state.other = 'should have no effect'
+    state.nested.other = 'should have no effect'
+    const secondResult = select(state)
+
+    // Assert
+    expect(secondResult).toBe(firstResult)
+  })
 })
