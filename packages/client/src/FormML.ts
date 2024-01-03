@@ -27,15 +27,7 @@ export default class FormML {
   }
 
   initField(index: object) {
-    const schema = this._indexToSchema.get(index)
-
-    if (schema === undefined) {
-      throw new Error(
-        `Given index is invalid, index provided:
-        ${JSON.stringify(index, undefined, 4)}`,
-      )
-    }
-
+    const schema = this.getSchemaByIndex(index)
     const name = schema.name
 
     if (this._values[name] === undefined) {
@@ -48,14 +40,7 @@ export default class FormML {
   }
 
   getFieldSnapshot(index: object) {
-    const schema = this._indexToSchema.get(index)
-
-    if (schema === undefined) {
-      throw new Error(
-        `Given index is invalid, index provided:
-        ${JSON.stringify(index, undefined, 4)}`,
-      )
-    }
+    const schema = this.getSchemaByIndex(index)
     const name = schema.name
 
     if (this._values[name] === undefined) {
@@ -81,5 +66,17 @@ export default class FormML {
         typedValue: undefined,
       },
     }
+  }
+
+  private getSchemaByIndex(index: object) {
+    const schema = this._indexToSchema.get(index)
+
+    if (schema === undefined) {
+      throw new Error(
+        `Given index is invalid, index provided:
+        ${JSON.stringify(index, undefined, 2)}`,
+      )
+    }
+    return schema
   }
 }
