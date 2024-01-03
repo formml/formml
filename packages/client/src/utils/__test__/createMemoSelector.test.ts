@@ -35,6 +35,31 @@ describe('createMemoSelector', () => {
     expect(secondResult).toEqual({ value: 1 })
   })
 
+  test('should return new result if nested accessing values changed', () => {
+    // Arrange
+    const selector = (observable: {
+      nested: { count: number; other: string }
+      other: string
+    }) => ({
+      value: observable.nested.count,
+    })
+    const select = createMemoSelector(selector)
+    const state = reactive({
+      nested: { count: 0, other: 'no change' },
+      other: 'no change',
+    })
+
+    const firstResult = select(state)
+
+    // Act
+    state.nested.count++
+    const secondResult = select(state)
+
+    // Assert
+    expect(secondResult).not.toBe(firstResult)
+    expect(secondResult).toEqual({ value: 1 })
+  })
+
   test('should return new result if argument reference changed', () => {
     // Arrange
     const selector = (observable: { count: number; other: string }) => ({
