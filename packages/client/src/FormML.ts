@@ -6,7 +6,7 @@ import createMemoSelector from './utils/createMemoSelector.js'
 type FieldProps = {
   name: string
   value: string
-  onChange: React.ChangeEventHandler
+  onChange: React.ChangeEventHandler<HTMLInputElement>
   onBlur: React.FocusEventHandler
 }
 
@@ -29,6 +29,13 @@ export default class FormML {
   private readonly _valuesProxy: Record<string, string> = reactive({})
   private readonly _fieldsMetaProxy: Record<string, { touched: boolean }> =
     reactive({})
+  private readonly _indexToFieldSnapSelector: Map<
+    object,
+    (
+      valuesProxy: typeof this._valuesProxy,
+      fieldsMetaProxy: typeof this._fieldsMetaProxy,
+    ) => FieldSnapshot
+  > = new Map()
 
   public readonly indexRoot: Record<string, object>
 
@@ -59,12 +66,36 @@ export default class FormML {
     if (this._fieldsMetaProxy[name] === undefined) {
       this._fieldsMetaProxy[name] = { touched: false }
     }
-  }
 
-  private memoFieldSnapSelector?: (
-    valuesProxy: typeof this._valuesProxy,
-    fieldsMetaProxy: typeof this._fieldsMetaProxy,
-  ) => FieldSnapshot = undefined
+    if (!this._indexToFieldSnapSelector.has(index)) {
+      this._indexToFieldSnapSelector.set(
+        index,
+        createMemoSelector(
+          // pure
+          (
+            valuesProxy: typeof this._valuesProxy,
+            fieldsMetaProxy: typeof this._fieldsMetaProxy,
+          ) => ({
+            field: {
+              name,
+              value: valuesProxy[name],
+              onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                valuesProxy[name] = e.target.value
+              },
+              onBlur: (_e: React.FocusEvent) => {
+                fieldsMetaProxy[name].touched = true
+              },
+            },
+            meta: {
+              touched: fieldsMetaProxy[name].touched,
+              error: undefined,
+              typedValue: undefined,
+            },
+          }),
+        ),
+      )
+    }
+  }
 
   getFieldSnapshot(index: object) {
     const schema = this.getSchemaByIndex(index)
@@ -76,33 +107,11 @@ export default class FormML {
       )
     }
 
-    if (!this.memoFieldSnapSelector) {
-      this.memoFieldSnapSelector = createMemoSelector(
-        // pure
-        (
-          valuesProxy: typeof this._valuesProxy,
-          fieldsMetaProxy: typeof this._fieldsMetaProxy,
-        ) => ({
-          field: {
-            name,
-            value: valuesProxy[name],
-            onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-              valuesProxy[name] = e.target.value
-            },
-            onBlur: (_e: React.FocusEvent) => {
-              fieldsMetaProxy[name].touched = true
-            },
-          },
-          meta: {
-            touched: fieldsMetaProxy[name].touched,
-            error: undefined,
-            typedValue: undefined,
-          },
-        }),
-      )
-    }
-
-    return this.memoFieldSnapSelector(this._valuesProxy, this._fieldsMetaProxy)
+    // Already initialized
+    return this._indexToFieldSnapSelector.get(index)!(
+      this._valuesProxy,
+      this._fieldsMetaProxy,
+    )
   }
 
   subscribe(index: object, callback: () => void): () => void {

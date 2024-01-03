@@ -286,6 +286,33 @@ describe('FormML', () => {
         expect(secondPack).toBe(firstPack)
       })
     })
+
+    test('should return cached snapshot if other field value changes', () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number numberField1
+          Number numberField2
+        }
+      `
+      const formML = new FormML(dsl)
+      const index1 = formML.indexRoot['numberField1']
+      formML.initField(index1)
+      const index2 = formML.indexRoot['numberField2']
+      formML.initField(index2)
+
+      const firstPack = formML.getFieldSnapshot(index1)
+
+      // Act
+      const field2Pack = formML.getFieldSnapshot(index2)
+      field2Pack.field.onChange({
+        target: { value: '123' },
+      } as unknown as React.ChangeEvent<HTMLInputElement>)
+
+      // Assert
+      const secondPack = formML.getFieldSnapshot(index1)
+      expect(secondPack).toBe(firstPack)
+    })
   })
 
   describe('subscribe', () => {
