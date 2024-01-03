@@ -12,7 +12,7 @@ describe('FormML', () => {
     })
   })
 
-  describe('getField', () => {
+  describe('initField', () => {
     test('should throw if index can not be recognized', () => {
       // Arrange
       const schema = `
@@ -28,7 +28,88 @@ describe('FormML', () => {
 
       // Act & Assert
       const invalidIndex = {}
-      expect(() => formML.getField(invalidIndex)).toThrow(
+      expect(() => formML.initField(invalidIndex)).toThrow(
+        /given index is invalid, index provided:[\s\S]+/g,
+      )
+    })
+
+    test('should initialize field if given field is not initialized yet', () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+
+      // Act
+      formML.initField(index)
+
+      // Assert
+      let pack: unknown
+      expect(() => (pack = formML.getFieldSnapshot(index))).not.toThrow()
+      expect(pack).toEqual({
+        field: {
+          name: 'numberField',
+          value: '',
+          onChange: expect.any(Function),
+          onBlur: expect.any(Function),
+        },
+        meta: {
+          touched: false,
+          error: undefined,
+          typedValue: undefined,
+        },
+      })
+    })
+
+    test('should do nothing if given field has been initialized', () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+
+      formML.initField(index)
+      const firstPack = formML.getFieldSnapshot(index)
+
+      // Act
+      formML.initField(index)
+      const secondPack = formML.getFieldSnapshot(index)
+
+      // Assert
+      expect(secondPack).toEqual({
+        field: {
+          ...firstPack.field,
+          onChange: expect.any(Function),
+          onBlur: expect.any(Function),
+        },
+        meta: firstPack.meta,
+      })
+    })
+  })
+
+  describe('getFieldSnapshot', () => {
+    test('should throw if index can not be recognized', () => {
+      // Arrange
+      const schema = `
+        form ExampleForm {
+          Number   numberField
+          Currency currencyField
+          Text     textField
+          Boolean	 booleanField
+          Date		 dateField
+        }
+      `
+      const formML = new FormML(schema)
+
+      // Act & Assert
+      const invalidIndex = {}
+      expect(() => formML.getFieldSnapshot(invalidIndex)).toThrow(
         /given index is invalid, index provided:[\s\S]+/g,
       )
     })
@@ -46,9 +127,10 @@ describe('FormML', () => {
       `
       const formML = new FormML(dsl)
       const index = formML.indexRoot['numberField']
+      formML.initField(index)
 
       // Act
-      const pack = formML.getField(index)
+      const pack = formML.getFieldSnapshot(index)
 
       // Assert
       expect(pack).toEqual({
@@ -86,15 +168,16 @@ describe('FormML', () => {
         `
         const formML = new FormML(dsl)
         const index = formML.indexRoot[fieldName]
+        formML.initField(index)
 
         // Act
-        const pack = formML.getField(index)
+        const pack = formML.getFieldSnapshot(index)
 
         // Assert
         expect(pack.field.name).toEqual(fieldName)
       })
 
-      test('should return empty value when field is not initialized', () => {
+      test('should throw when field is not initialized', () => {
         // Arrange
         const dsl = `
           form ExampleForm {
@@ -104,11 +187,10 @@ describe('FormML', () => {
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
 
-        // Act
-        const pack = formML.getField(index)
-
-        // Assert
-        expect(pack.field.value).toEqual('')
+        // Act & Assert
+        expect(() => formML.getFieldSnapshot(index)).toThrow(
+          'Field "numberField" has not been initialized yet, please make sure to call `initField` before calling `getFieldSnapshot`',
+        )
       })
 
       test('should return latest value when field has been changed', async () => {
@@ -120,7 +202,8 @@ describe('FormML', () => {
         `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
-        const pack = formML.getField(index)
+        formML.initField(index)
+        const pack = formML.getFieldSnapshot(index)
 
         // Act
         const event = {
@@ -129,7 +212,7 @@ describe('FormML', () => {
         pack.field.onChange(event)
 
         // Assert
-        const newPack = formML.getField(index)
+        const newPack = formML.getFieldSnapshot(index)
         expect(newPack.field.value).toEqual('123')
       })
 
@@ -142,9 +225,10 @@ describe('FormML', () => {
         `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
+        formML.initField(index)
 
         // Act
-        const pack = formML.getField(index)
+        const pack = formML.getFieldSnapshot(index)
 
         // Assert
         expect(pack.meta.touched).toBe(false)
@@ -159,8 +243,9 @@ describe('FormML', () => {
         `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
+        formML.initField(index)
 
-        const firstPack = formML.getField(index)
+        const firstPack = formML.getFieldSnapshot(index)
         expect(firstPack.meta.touched).toBe(false)
 
         // Act
@@ -168,14 +253,14 @@ describe('FormML', () => {
         firstPack.field.onBlur(event)
 
         // Assert
-        const secondPack = formML.getField(index)
+        const secondPack = formML.getFieldSnapshot(index)
         expect(secondPack.meta.touched).toBe(true)
 
         // Act
         secondPack.field.onBlur(event)
 
         // Assert
-        const thirdPack = formML.getField(index)
+        const thirdPack = formML.getFieldSnapshot(index)
         expect(thirdPack.meta.touched).toBe(true)
       })
     })

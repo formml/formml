@@ -26,7 +26,28 @@ export default class FormML {
     return [indexRoot, indexToSchema] as const
   }
 
-  getField(index: object) {
+  initField(index: object) {
+    const schema = this._indexToSchema.get(index)
+
+    if (schema === undefined) {
+      throw new Error(
+        `given index is invalid, index provided:
+        ${JSON.stringify(index, undefined, 4)}`,
+      )
+    }
+
+    const name = schema.name
+
+    if (this._values[name] === undefined) {
+      this._values[name] = ''
+    }
+
+    if (this._fieldsMeta[name] === undefined) {
+      this._fieldsMeta[name] = { touched: false }
+    }
+  }
+
+  getFieldSnapshot(index: object) {
     const schema = this._indexToSchema.get(index)
 
     if (schema === undefined) {
@@ -38,8 +59,9 @@ export default class FormML {
     const name = schema.name
 
     if (this._values[name] === undefined) {
-      this._values[name] = ''
-      this._fieldsMeta[name] = { touched: false }
+      throw new Error(
+        `Field "${name}" has not been initialized yet, please make sure to call \`initField\` before calling \`getFieldSnapshot\``,
+      )
     }
 
     return {
