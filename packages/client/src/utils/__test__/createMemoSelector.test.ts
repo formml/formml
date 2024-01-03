@@ -15,4 +15,23 @@ describe('createMemoSelector', () => {
     // Assert
     expect(result).toEqual({ value: 0 })
   })
+
+  test('should return new result if accessing values changed', () => {
+    // Arrange
+    const selector = (observable: { count: number; other: string }) => ({
+      value: observable.count,
+    })
+    const select = createMemoSelector(selector)
+    const state = reactive({ count: 0, other: 'no change' })
+
+    const firstResult = select(state)
+
+    // Act
+    state.count++
+    const secondResult = select(state)
+
+    // Assert
+    expect(secondResult).not.toBe(firstResult)
+    expect(secondResult).toEqual({ value: 1 })
+  })
 })
