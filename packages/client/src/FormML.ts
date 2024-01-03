@@ -1,5 +1,5 @@
 import { Field, FormMLSchema, createParser } from '@formml/dsl'
-import { reactive } from '@vue/reactivity'
+import { DeepReadonly, reactive } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
 import createMemoSelector from './utils/createMemoSelector.js'
 
@@ -21,6 +21,41 @@ type FieldSnapshot = {
   meta: FieldMetaData
 }
 
+function buildIndexes(schema: FormMLSchema) {
+  const indexRoot: Record<string, object> = {}
+  const indexToSchema = new WeakMap<object, Field>()
+  for (const field of schema.form.fields) {
+    const fieldIndex = { $type: field.type }
+    indexRoot[field.name] = fieldIndex
+    indexToSchema.set(fieldIndex, field)
+  }
+  return [indexRoot, indexToSchema] as const
+}
+
+function buildFieldSnapSelector(name: string) {
+  // pure function
+  return (
+    valuesProxy: Record<string, string>,
+    fieldsMetaProxy: Record<string, { touched: boolean }>,
+  ) => ({
+    field: {
+      name,
+      value: valuesProxy[name],
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+        valuesProxy[name] = e.target.value
+      },
+      onBlur: (_e: React.FocusEvent) => {
+        fieldsMetaProxy[name].touched = true
+      },
+    },
+    meta: {
+      touched: fieldsMetaProxy[name].touched,
+      error: undefined,
+      typedValue: undefined,
+    },
+  })
+}
+
 export default class FormML {
   private static readonly _parse = createParser()
 
@@ -34,25 +69,14 @@ export default class FormML {
     (
       valuesProxy: typeof this._valuesProxy,
       fieldsMetaProxy: typeof this._fieldsMetaProxy,
-    ) => FieldSnapshot
+    ) => DeepReadonly<FieldSnapshot>
   > = new Map()
 
   public readonly indexRoot: Record<string, object>
 
   constructor(schema: string) {
     this._schema = FormML._parse(schema)
-    ;[this.indexRoot, this._indexToSchema] = FormML.buildIndexes(this._schema)
-  }
-
-  private static buildIndexes(schema: FormMLSchema) {
-    const indexRoot: Record<string, object> = {}
-    const indexToSchema = new WeakMap<object, Field>()
-    for (const field of schema.form.fields) {
-      const fieldIndex = { $type: field.type }
-      indexRoot[field.name] = fieldIndex
-      indexToSchema.set(fieldIndex, field)
-    }
-    return [indexRoot, indexToSchema] as const
+    ;[this.indexRoot, this._indexToSchema] = buildIndexes(this._schema)
   }
 
   initField(index: object) {
@@ -70,29 +94,7 @@ export default class FormML {
     if (!this._indexToFieldSnapSelector.has(index)) {
       this._indexToFieldSnapSelector.set(
         index,
-        createMemoSelector(
-          // pure
-          (
-            valuesProxy: typeof this._valuesProxy,
-            fieldsMetaProxy: typeof this._fieldsMetaProxy,
-          ) => ({
-            field: {
-              name,
-              value: valuesProxy[name],
-              onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                valuesProxy[name] = e.target.value
-              },
-              onBlur: (_e: React.FocusEvent) => {
-                fieldsMetaProxy[name].touched = true
-              },
-            },
-            meta: {
-              touched: fieldsMetaProxy[name].touched,
-              error: undefined,
-              typedValue: undefined,
-            },
-          }),
-        ),
+        createMemoSelector(buildFieldSnapSelector(name)),
       )
     }
   }

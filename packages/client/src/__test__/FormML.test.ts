@@ -213,6 +213,7 @@ describe('FormML', () => {
 
         // Assert
         const newPack = formML.getFieldSnapshot(index)
+        expect(newPack).not.toBe(pack)
         expect(newPack.field.value).toEqual('123')
       })
 
