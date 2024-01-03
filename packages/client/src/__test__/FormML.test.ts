@@ -264,6 +264,28 @@ describe('FormML', () => {
         expect(thirdPack.meta.touched).toBe(true)
       })
     })
+
+    describe('caches', () => {
+      test('should return cached snapshot if no value changes', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            Number numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+        formML.initField(index)
+
+        const firstPack = formML.getFieldSnapshot(index)
+
+        // Act
+        const secondPack = formML.getFieldSnapshot(index)
+
+        // Assert
+        expect(secondPack).toBe(firstPack)
+      })
+    })
   })
 
   describe('subscribe', () => {

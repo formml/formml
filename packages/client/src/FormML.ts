@@ -1,6 +1,25 @@
 import { Field, FormMLSchema, createParser } from '@formml/dsl'
 import { reactive } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
+import createMemoSelector from './utils/createMemoSelector.js'
+
+type FieldProps = {
+  name: string
+  value: string
+  onChange: React.ChangeEventHandler
+  onBlur: React.FocusEventHandler
+}
+
+type FieldMetaData = {
+  error: undefined
+  touched: boolean
+  typedValue: number | undefined
+}
+
+type FieldSnapshot = {
+  field: FieldProps
+  meta: FieldMetaData
+}
 
 export default class FormML {
   private static readonly _parse = createParser()
@@ -42,6 +61,11 @@ export default class FormML {
     }
   }
 
+  private memoFieldSnapSelector?: (
+    valuesProxy: typeof this._valuesProxy,
+    fieldsMetaProxy: typeof this._fieldsMetaProxy,
+  ) => FieldSnapshot = undefined
+
   getFieldSnapshot(index: object) {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
@@ -52,23 +76,33 @@ export default class FormML {
       )
     }
 
-    return {
-      field: {
-        name,
-        value: this._valuesProxy[name],
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-          this._valuesProxy[name] = e.target.value
-        },
-        onBlur: (_e: React.FocusEvent) => {
-          this._fieldsMetaProxy[name].touched = true
-        },
-      },
-      meta: {
-        touched: this._fieldsMetaProxy[name].touched,
-        error: undefined,
-        typedValue: undefined,
-      },
+    if (!this.memoFieldSnapSelector) {
+      this.memoFieldSnapSelector = createMemoSelector(
+        // pure
+        (
+          valuesProxy: typeof this._valuesProxy,
+          fieldsMetaProxy: typeof this._fieldsMetaProxy,
+        ) => ({
+          field: {
+            name,
+            value: valuesProxy[name],
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+              valuesProxy[name] = e.target.value
+            },
+            onBlur: (_e: React.FocusEvent) => {
+              fieldsMetaProxy[name].touched = true
+            },
+          },
+          meta: {
+            touched: fieldsMetaProxy[name].touched,
+            error: undefined,
+            typedValue: undefined,
+          },
+        }),
+      )
     }
+
+    return this.memoFieldSnapSelector(this._valuesProxy, this._fieldsMetaProxy)
   }
 
   subscribe(index: object, callback: () => void): () => void {
