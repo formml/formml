@@ -267,6 +267,26 @@ describe('FormML', () => {
   })
 
   describe('subscribe', () => {
+    test('should throw if index can not be recognized', () => {
+      // Arrange
+      const schema = `
+        form ExampleForm {
+          Number   numberField
+          Currency currencyField
+          Text     textField
+          Boolean	 booleanField
+          Date		 dateField
+        }
+      `
+      const formML = new FormML(schema)
+
+      // Act & Assert
+      const invalidIndex = {}
+      expect(() => formML.subscribe(invalidIndex, () => {})).toThrow(
+        /Given index is invalid, index provided:[\s\S]+/g,
+      )
+    })
+
     test('should react to field value change', () => {
       // Arrange
       const schema = `
