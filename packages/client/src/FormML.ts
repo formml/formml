@@ -31,7 +31,7 @@ export default class FormML {
 
     if (schema === undefined) {
       throw new Error(
-        `given index is invalid, index provided:
+        `Given index is invalid, index provided:
         ${JSON.stringify(index, undefined, 4)}`,
       )
     }
@@ -52,7 +52,7 @@ export default class FormML {
 
     if (schema === undefined) {
       throw new Error(
-        `given index is invalid, index provided:
+        `Given index is invalid, index provided:
         ${JSON.stringify(index, undefined, 4)}`,
       )
     }

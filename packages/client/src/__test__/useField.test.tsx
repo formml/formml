@@ -32,7 +32,7 @@ describe('useField', () => {
       // Act & Assert
       expect(() =>
         renderHookWithContext(() => useField(invalidIndex), formML),
-      ).toThrow(/given index is invalid, index provided:[\s\S]+/g)
+      ).toThrow(/Given index is invalid, index provided:[\s\S]+/g)
     })
 
     test('should return field pack given valid index', () => {

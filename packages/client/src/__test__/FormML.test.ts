@@ -29,7 +29,7 @@ describe('FormML', () => {
       // Act & Assert
       const invalidIndex = {}
       expect(() => formML.initField(invalidIndex)).toThrow(
-        /given index is invalid, index provided:[\s\S]+/g,
+        /Given index is invalid, index provided:[\s\S]+/g,
       )
     })
 
@@ -110,7 +110,7 @@ describe('FormML', () => {
       // Act & Assert
       const invalidIndex = {}
       expect(() => formML.getFieldSnapshot(invalidIndex)).toThrow(
-        /given index is invalid, index provided:[\s\S]+/g,
+        /Given index is invalid, index provided:[\s\S]+/g,
       )
     })
 
