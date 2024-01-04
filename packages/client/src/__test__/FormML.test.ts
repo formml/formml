@@ -337,6 +337,22 @@ describe('FormML', () => {
       )
     })
 
+    test('should throw when field is not initialized', () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+
+      // Act & Assert
+      expect(() => formML.subscribe(index, () => {})).toThrow(
+        'Field "numberField" has not been initialized yet, please make sure to call `initField` before calling `subscribe`',
+      )
+    })
+
     test('should react to field value change', () => {
       // Arrange
       const schema = `
@@ -347,19 +363,19 @@ describe('FormML', () => {
       const formML = new FormML(schema)
       const index = formML.indexRoot['numberField']
       const callback = vi.fn()
+      formML.initField(index)
       formML.subscribe(index, callback)
 
       // Act
-      formML.initField(index) // first change
       const {
         field: { onChange },
       } = formML.getFieldSnapshot(index)
       onChange({
         target: { value: '123' },
-      } as unknown as React.ChangeEvent<HTMLInputElement>) // second change
+      } as unknown as React.ChangeEvent<HTMLInputElement>)
 
       // Assert
-      expect(callback).toBeCalledTimes(2)
+      expect(callback).toBeCalledTimes(1)
     })
 
     // This is necessary because of a known limitation of memo selector

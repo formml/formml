@@ -114,11 +114,7 @@ export default class FormML {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
 
-    if (this._valuesProxy[name] === undefined) {
-      throw new Error(
-        `Field "${name}" has not been initialized yet, please make sure to call \`initField\` before calling \`getFieldSnapshot\``,
-      )
-    }
+    this.assertInitialized(name, { methodName: 'getFieldSnapshot' })
 
     // already initialized
     return this._indexToFieldSnapSelector.get(index)!(
@@ -132,10 +128,23 @@ export default class FormML {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
 
+    this.assertInitialized(name, { methodName: 'subscribe' })
+
     return watch([() => this._valuesProxy[name]], () =>
       // defer callback execution to be after all sync effects
       this.deferEffect(callback),
     )
+  }
+
+  private assertInitialized(
+    name: string,
+    { methodName: caller }: { methodName: string },
+  ) {
+    if (this._valuesProxy[name] === undefined) {
+      throw new Error(
+        `Field "${name}" has not been initialized yet, please make sure to call \`initField\` before calling \`${caller}\``,
+      )
+    }
   }
 
   private deferEffect(effect: () => void) {
