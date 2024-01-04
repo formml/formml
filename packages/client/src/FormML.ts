@@ -93,7 +93,8 @@ export default class FormML {
             run(deferredEffects) // then, run deferred effects
           },
           onBlur: (_e: React.FocusEvent) => {
-            fieldsMetaProxy[name].touched = true
+            fieldsMetaProxy[name].touched = true // will trigger all sync effects firstly
+            run(deferredEffects) // then, run deferred effects
           },
         },
         meta: {
@@ -130,9 +131,14 @@ export default class FormML {
 
     this.assertInitialized(name, { methodName: 'subscribe' })
 
-    return watch([() => this._valuesProxy[name]], () =>
-      // defer callback execution to be after all sync effects
-      this.deferEffect(callback),
+    return watch(
+      [
+        () => this._valuesProxy[name],
+        () => this._fieldsMetaProxy[name].touched,
+      ],
+      () =>
+        // defer callback execution to be after all sync effects
+        this.deferEffect(callback),
     )
   }
 

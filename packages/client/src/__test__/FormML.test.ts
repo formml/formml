@@ -378,6 +378,29 @@ describe('FormML', () => {
       expect(callback).toBeCalledTimes(1)
     })
 
+    test('should react to field touched change', () => {
+      // Arrange
+      const schema = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(schema)
+      const index = formML.indexRoot['numberField']
+      const callback = vi.fn()
+      formML.initField(index)
+      formML.subscribe(index, callback)
+
+      // Act
+      const {
+        field: { onBlur },
+      } = formML.getFieldSnapshot(index)
+      onBlur({} as unknown as React.FocusEvent)
+
+      // Assert
+      expect(callback).toBeCalledTimes(1)
+    })
+
     // This is necessary because of a known limitation of memo selector
     // Refer to `createMemoSelector.test.ts`: '[Known Issue] should return new result in another watcher if accessing values changed'
     test('should call callback after snapshots updated', () => {

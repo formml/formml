@@ -89,6 +89,24 @@ describe('useField', () => {
       // Assert
       await waitFor(() => expect(result.current.field.value).toEqual('1'))
     })
+
+    test('should return new touched if onBlur triggered', async () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+      const { result } = renderHookWithContext(() => useField(index), formML)
+
+      // Act
+      result.current.field.onBlur({} as unknown as React.FocusEvent)
+
+      // Assert
+      await waitFor(() => expect(result.current.meta.touched).toBe(true))
+    })
   })
 
   describe('integration', () => {
@@ -119,5 +137,40 @@ describe('useField', () => {
       // Assert
       expect(input).toHaveDisplayValue('123')
     })
+  })
+
+  test('should update touched properly when user blurs', async () => {
+    // Arrange
+    const TestInput = ({ index }: { index: object }) => {
+      const { field, meta } = useField(index)
+      return (
+        <>
+          <input {...field} />
+          {meta.touched && <span>Touched!</span>}
+        </>
+      )
+    }
+
+    const dsl = `
+      form ExampleForm {
+        Number numberField
+      }
+    `
+    const formML = new FormML(dsl)
+    const index = formML.indexRoot['numberField']
+
+    renderWithContext(<TestInput index={index} />, formML)
+
+    const input = screen.getByRole('textbox')
+    expect(screen.queryByText('Touched!')).not.toBeInTheDocument()
+
+    // Act
+    const user = userEvent.setup()
+    await user.click(input)
+    await user.tab()
+
+    // Assert
+    expect(input).not.toHaveFocus()
+    expect(screen.queryByText('Touched!')).toBeInTheDocument()
   })
 })
