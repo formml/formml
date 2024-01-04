@@ -3,23 +3,25 @@ import { DeepReadonly, reactive } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
 import createMemoSelector from './utils/createMemoSelector.js'
 
-type FieldProps = {
+export type FieldProps = {
   name: string
   value: string
   onChange: React.ChangeEventHandler<HTMLInputElement>
   onBlur: React.FocusEventHandler
 }
 
-type FieldMetaData = {
+export type FieldMetaData = {
   error: undefined
   touched: boolean
   typedValue: number | undefined
 }
 
-type FieldSnapshot = {
+export type FieldPack = {
   field: FieldProps
   meta: FieldMetaData
 }
+
+export type FieldSnapshot = DeepReadonly<FieldPack>
 
 function buildIndexes(schema: FormMLSchema) {
   const indexRoot: Record<string, object> = {}
@@ -37,12 +39,18 @@ function buildFieldSnapSelector(name: string) {
   return (
     valuesProxy: Record<string, string>,
     fieldsMetaProxy: Record<string, { touched: boolean }>,
+    deferredEffects: (() => void)[],
   ) => ({
     field: {
       name,
       value: valuesProxy[name],
       onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-        valuesProxy[name] = e.target.value
+        valuesProxy[name] = e.target.value // will trigger all sync effects
+        while (deferredEffects.length > 0) {
+          const effect = deferredEffects.shift()!
+          // run deferred effects
+          effect()
+        }
       },
       onBlur: (_e: React.FocusEvent) => {
         fieldsMetaProxy[name].touched = true
@@ -69,8 +77,10 @@ export default class FormML {
     (
       valuesProxy: typeof this._valuesProxy,
       fieldsMetaProxy: typeof this._fieldsMetaProxy,
-    ) => DeepReadonly<FieldSnapshot>
+      deferredEffects: typeof this._deferredEffects,
+    ) => FieldSnapshot
   > = new Map()
+  private readonly _deferredEffects: (() => void)[] = []
 
   public readonly indexRoot: Record<string, object>
 
@@ -99,7 +109,7 @@ export default class FormML {
     }
   }
 
-  getFieldSnapshot(index: object) {
+  getFieldSnapshot(index: object): FieldSnapshot {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
 
@@ -109,10 +119,11 @@ export default class FormML {
       )
     }
 
-    // Already initialized
+    // already initialized
     return this._indexToFieldSnapSelector.get(index)!(
       this._valuesProxy,
       this._fieldsMetaProxy,
+      this._deferredEffects,
     )
   }
 
@@ -120,7 +131,10 @@ export default class FormML {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
 
-    return watch([() => this._valuesProxy[name]], () => callback())
+    return watch([() => this._valuesProxy[name]], () =>
+      // defer callback execution to be after all sync effects
+      this._deferredEffects.push(callback),
+    )
   }
 
   private getSchemaByIndex(index: object) {

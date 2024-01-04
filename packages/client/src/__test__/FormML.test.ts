@@ -1,5 +1,5 @@
 import { FormMLParseError } from '@formml/dsl'
-import FormML from '../FormML.js'
+import FormML, { type FieldSnapshot } from '../FormML.js'
 
 describe('FormML', () => {
   describe('constructor', () => {
@@ -360,6 +360,36 @@ describe('FormML', () => {
 
       // Assert
       expect(callback).toBeCalledTimes(2)
+    })
+
+    // This is necessary because of a known limitation of memo selector
+    // Refer to `createMemoSelector.test.ts`: '[Known Issue] should return new result in another watcher if accessing values changed'
+    test('should call callback after snapshots updated', () => {
+      // Arrange
+      const schema = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(schema)
+      const index = formML.indexRoot['numberField']
+      formML.initField(index)
+
+      const firstSnapshot = formML.getFieldSnapshot(index)
+
+      let secondSnapshot: FieldSnapshot | undefined
+      formML.subscribe(index, () => {
+        secondSnapshot = formML.getFieldSnapshot(index)
+      })
+
+      // Act
+      firstSnapshot.field.onChange({
+        target: { value: '123' },
+      } as unknown as React.ChangeEvent<HTMLInputElement>)
+
+      // Assert
+      expect(secondSnapshot).not.toBe(firstSnapshot)
+      expect(secondSnapshot?.field.value).toEqual('123')
     })
   })
 })
