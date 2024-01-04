@@ -61,6 +61,29 @@ describe('createMemoSelector', () => {
     },
   )
 
+  test('should return new result if accessing values changed - multiple args', () => {
+    // Arrange
+    const selector = (
+      observableA: { count: number; other: string },
+      observableB: { count: number },
+    ) => ({
+      value: observableA.count + observableB.count,
+    })
+    const select = createMemoSelector(selector)
+    const stateA = reactive({ count: 0, other: 'no change' })
+    const stateB = reactive({ count: 0 })
+
+    const firstResult = select(stateA, stateB)
+
+    // Act
+    stateA.count++
+    const secondResult = select(stateA, stateB)
+
+    // Assert
+    expect(secondResult).not.toBe(firstResult)
+    expect(secondResult).toEqual({ value: 1 })
+  })
+
   test('should return new result if nested accessing values changed', () => {
     // Arrange
     const selector = (observable: {
