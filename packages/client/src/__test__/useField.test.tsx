@@ -1,10 +1,12 @@
-import { renderHook } from '@testing-library/react'
+import { renderHook, screen, waitFor } from '@testing-library/react'
+import { userEvent } from '@testing-library/user-event'
 import useField from '../useField.js'
 import FormML from '../FormML.js'
 import renderHookWithContext from './helpers/renderHookWithContext.js'
+import renderWithContext from './helpers/renderWithContext.js'
 
 describe('useField', () => {
-  describe('I/O', () => {
+  describe('hook only', () => {
     // mute react warnings for uncaught errors in console
     vi.spyOn(console, 'error').mockImplementation(() => vi.fn())
 
@@ -67,7 +69,55 @@ describe('useField', () => {
         },
       })
     })
+
+    test('should return new value if onChange triggered', async () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+      const { result } = renderHookWithContext(() => useField(index), formML)
+
+      // Act
+      result.current.field.onChange({
+        target: { value: '1' },
+      } as unknown as React.ChangeEvent<HTMLInputElement>)
+
+      // Assert
+      await waitFor(() => expect(result.current.field.value).toEqual('1'))
+    })
   })
 
-  describe.todo('behavior')
+  describe('integration', () => {
+    test('should update value properly when user inputs', async () => {
+      // Arrange
+      const TestInput = ({ index }: { index: object }) => {
+        const { field } = useField(index)
+        return <input {...field} />
+      }
+
+      const dsl = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+
+      renderWithContext(<TestInput index={index} />, formML)
+
+      const input = screen.getByRole('textbox')
+      expect(input).toHaveDisplayValue('')
+
+      // Act
+      const user = userEvent.setup()
+      await user.type(input, '123')
+
+      // Assert
+      expect(input).toHaveDisplayValue('123')
+    })
+  })
 })

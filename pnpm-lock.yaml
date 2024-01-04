@@ -14,6 +14,9 @@ dependencies:
   langium:
     specifier: ^2.1.3
     version: 2.1.3
+  use-sync-external-store:
+    specifier: ^1.2.0
+    version: 1.2.0(react@18.2.0)
   vscode-languageclient:
     specifier: ~9.0.1
     version: 9.0.1
@@ -61,6 +64,9 @@ devDependencies:
   '@types/react':
     specifier: ^18.2.45
     version: 18.2.45
+  '@types/use-sync-external-store':
+    specifier: ^0.0.6
+    version: 0.0.6
   '@types/vscode':
     specifier: ^1.85.0
     version: 1.85.0
@@ -3523,6 +3529,13 @@ packages:
     resolution:
       {
         integrity: sha512-dn1l8LaMea/IjDoHNd9J52uBbInB796CDffS6VdIxvqYCPSG0V0DzHp76GpaWnlhg88uYyPbXCDIowa86ybd5A==,
+      }
+    dev: true
+
+  /@types/use-sync-external-store@0.0.6:
+    resolution:
+      {
+        integrity: sha512-zFDAD+tlpf2r4asuHEj0XH6pY6i0g5NeAHPn+15wk3BV6JA69eERFXC1gyGThDkVa1zCyKr5jox1+2LbV/AMLg==,
       }
     dev: true
 
@@ -8129,7 +8142,6 @@ packages:
       {
         integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==,
       }
-    dev: true
 
   /js-yaml@3.14.1:
     resolution:
@@ -8763,7 +8775,6 @@ packages:
     hasBin: true
     dependencies:
       js-tokens: 4.0.0
-    dev: true
 
   /loupe@2.3.7:
     resolution:
@@ -10091,7 +10102,6 @@ packages:
     engines: { node: '>=0.10.0' }
     dependencies:
       loose-envify: 1.4.0
-    dev: true
 
   /read-pkg-up@7.0.1:
     resolution:
@@ -11679,6 +11689,17 @@ packages:
       querystringify: 2.2.0
       requires-port: 1.0.0
     dev: true
+
+  /use-sync-external-store@1.2.0(react@18.2.0):
+    resolution:
+      {
+        integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==,
+      }
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /util-deprecate@1.0.2:
     resolution:
