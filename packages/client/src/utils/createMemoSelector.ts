@@ -1,4 +1,5 @@
 import { ReactiveEffectRunner, effect, stop } from '@vue/reactivity'
+
 import isDepsChanged from './isDepsChanged.js'
 
 export default function createMemoSelector<Params extends unknown[], Result>(

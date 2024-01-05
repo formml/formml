@@ -1,5 +1,6 @@
-import { FormMLServices, createInMemoryServices } from './formml-module.js'
 import { ParseResult } from 'langium'
+
+import { FormMLServices, createInMemoryServices } from './formml-module.js'
 import { FormMLSchema } from './generated/ast.js'
 
 export class FormMLParseError extends Error {

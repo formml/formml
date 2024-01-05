@@ -1,4 +1,5 @@
 import React from 'react'
+
 import isDepsChanged from './isDepsChanged.js'
 
 export default function useConstant<T>(
@@ -6,7 +7,7 @@ export default function useConstant<T>(
   deps: readonly unknown[],
 ): T {
   const valueRef = React.useRef<T | null>(null)
-  const prevDepsRef = React.useRef<readonly unknown[] | null>(null)
+  const prevDepsRef = React.useRef<null | readonly unknown[]>(null)
 
   if (valueRef.current === null || isDepsChanged(prevDepsRef.current, deps)) {
     valueRef.current = initializer()

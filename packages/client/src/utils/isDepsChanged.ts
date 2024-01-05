@@ -1,5 +1,5 @@
 export default function isDepsChanged(
-  prevDeps: readonly unknown[] | null,
+  prevDeps: null | readonly unknown[],
   currDeps: readonly unknown[],
 ) {
   if (prevDeps === null) return true

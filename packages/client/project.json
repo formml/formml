@@ -22,7 +22,12 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/client/**/*.ts"]
+        "lintFilePatterns": ["packages/client/**/*.{ts,tsx}"]
+      },
+      "configurations": {
+        "fix": {
+          "fix": true
+        }
       }
     },
     "typecheck": {

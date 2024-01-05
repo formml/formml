@@ -1,4 +1,5 @@
 import React from 'react'
+
 import FormML from './FormML.js'
 import useConstant from './utils/useConstant.js'
 
@@ -17,7 +18,7 @@ export default function useFormML(dsl: string) {
   }
 
   return {
-    indexRoot: formML.indexRoot,
     handleSubmit,
+    indexRoot: formML.indexRoot,
   }
 }

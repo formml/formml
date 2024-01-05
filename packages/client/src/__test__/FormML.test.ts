@@ -1,4 +1,5 @@
 import { FormMLParseError } from '@formml/dsl'
+
 import FormML, { type FieldSnapshot } from '../FormML.js'
 
 describe('FormML', () => {
@@ -52,13 +53,13 @@ describe('FormML', () => {
       expect(pack).toEqual({
         field: {
           name: 'numberField',
-          value: '',
-          onChange: expect.any(Function),
           onBlur: expect.any(Function),
+          onChange: expect.any(Function),
+          value: '',
         },
         meta: {
-          touched: false,
           error: undefined,
+          touched: false,
           typedValue: undefined,
         },
       })
@@ -85,8 +86,8 @@ describe('FormML', () => {
       expect(secondPack).toEqual({
         field: {
           ...firstPack.field,
-          onChange: expect.any(Function),
           onBlur: expect.any(Function),
+          onChange: expect.any(Function),
         },
         meta: firstPack.meta,
       })
@@ -136,13 +137,13 @@ describe('FormML', () => {
       expect(pack).toEqual({
         field: {
           name: 'numberField',
-          value: '',
-          onChange: expect.any(Function),
           onBlur: expect.any(Function),
+          onChange: expect.any(Function),
+          value: '',
         },
         meta: {
-          touched: false,
           error: undefined,
+          touched: false,
           typedValue: undefined,
         },
       })

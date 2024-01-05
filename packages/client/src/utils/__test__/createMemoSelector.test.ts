@@ -1,6 +1,7 @@
 import { effect, reactive } from '@vue/reactivity'
-import createMemoSelector from '../createMemoSelector.js'
 import { watch } from '@vue-reactivity/watch'
+
+import createMemoSelector from '../createMemoSelector.js'
 
 vi.mock('@vue/reactivity', async (importOriginal) => {
   const reactivity = await importOriginal<typeof import('@vue/reactivity')>()

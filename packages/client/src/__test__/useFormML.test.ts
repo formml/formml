@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react'
+
 import useFormML from '../useFormML.js'
 
 describe('useFormML', () => {
@@ -20,20 +21,20 @@ describe('useFormML', () => {
 
       // Assert
       expect(result.current.indexRoot).toEqual({
-        numberField: {
-          $type: 'Number',
+        booleanField: {
+          $type: 'Boolean',
         },
         currencyField: {
           $type: 'Currency',
         },
-        textField: {
-          $type: 'Text',
-        },
-        booleanField: {
-          $type: 'Boolean',
-        },
         dateField: {
           $type: 'Date',
+        },
+        numberField: {
+          $type: 'Number',
+        },
+        textField: {
+          $type: 'Text',
         },
       })
     })
@@ -49,7 +50,7 @@ describe('useFormML', () => {
           Date		 dateField
         }
       `
-      const { result, rerender } = renderHook((dsl) => useFormML(dsl), {
+      const { rerender, result } = renderHook((dsl) => useFormML(dsl), {
         initialProps: dsl,
       })
       const firstIndexRoot = result.current.indexRoot
@@ -77,7 +78,7 @@ describe('useFormML', () => {
           Date		 dateField
         }
       `
-      const { result, rerender } = renderHook(() => useFormML(dsl))
+      const { rerender, result } = renderHook(() => useFormML(dsl))
       const firstIndexRoot = result.current.indexRoot
 
       // Act

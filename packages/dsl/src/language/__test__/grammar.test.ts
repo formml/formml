@@ -1,6 +1,6 @@
 import { createInMemoryServices } from '../formml-module.js'
-import { FormMLParserError, createParser } from '../parser.js'
 import { FormMLSchema } from '../generated/ast.js'
+import { FormMLParserError, createParser } from '../parser.js'
 
 describe('grammar', () => {
   const services = createInMemoryServices()

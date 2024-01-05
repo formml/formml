@@ -42,6 +42,11 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/dsl/**/*.ts"]
+      },
+      "configurations": {
+        "fix": {
+          "fix": true
+        }
       }
     },
     "typecheck": {

@@ -1,5 +1,5 @@
-import * as vscode from 'vscode'
 import * as path from 'path'
+import * as vscode from 'vscode'
 import {
   LanguageClient,
   LanguageClientOptions,
@@ -41,12 +41,12 @@ function startLanguageClient(context: vscode.ExtensionContext): LanguageClient {
   // If the extension is launched in debug mode then the debug server options are used
   // Otherwise the run options are used
   const serverOptions: ServerOptions = {
-    run: { module: serverModule, transport: TransportKind.ipc },
     debug: {
       module: serverModule,
-      transport: TransportKind.ipc,
       options: debugOptions,
+      transport: TransportKind.ipc,
     },
+    run: { module: serverModule, transport: TransportKind.ipc },
   }
 
   const fileSystemWatcher =
@@ -55,7 +55,7 @@ function startLanguageClient(context: vscode.ExtensionContext): LanguageClient {
 
   // Options to control the language client
   const clientOptions: LanguageClientOptions = {
-    documentSelector: [{ scheme: 'file', language: 'formml' }],
+    documentSelector: [{ language: 'formml', scheme: 'file' }],
     synchronize: {
       // Notify the server about file changes to files contained in the workspace
       fileEvents: fileSystemWatcher,

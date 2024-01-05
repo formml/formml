@@ -1,7 +1,8 @@
 import { renderHook, screen, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
-import useField from '../useField.js'
+
 import FormML from '../FormML.js'
+import useField from '../useField.js'
 import renderHookWithContext from './helpers/renderHookWithContext.js'
 import renderWithContext from './helpers/renderWithContext.js'
 
@@ -58,13 +59,13 @@ describe('useField', () => {
       expect(result.current).toEqual({
         field: {
           name: 'numberField',
-          value: '',
-          onChange: expect.any(Function),
           onBlur: expect.any(Function),
+          onChange: expect.any(Function),
+          value: '',
         },
         meta: {
-          touched: false,
           error: undefined,
+          touched: false,
           typedValue: undefined,
         },
       })

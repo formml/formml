@@ -1,17 +1,18 @@
 import {
-  queries,
   Queries,
-  render,
   RenderOptions,
   RenderResult,
+  queries,
+  render,
 } from '@testing-library/react'
+
 import FormML from '../../FormML.js'
 import buildWrapper from './buildWrapper.js'
 
 export default function renderWithContext<
   Q extends Queries = typeof queries,
-  Container extends Element | DocumentFragment = HTMLElement,
-  BaseElement extends Element | DocumentFragment = Container,
+  Container extends DocumentFragment | Element = HTMLElement,
+  BaseElement extends DocumentFragment | Element = Container,
 >(
   ui: React.ReactElement,
   formML: FormML,

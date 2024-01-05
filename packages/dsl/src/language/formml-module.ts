@@ -1,14 +1,15 @@
 import {
-  createDefaultModule,
-  createDefaultSharedModule,
   DefaultSharedModuleContext,
   EmptyFileSystem,
-  inject,
   LangiumServices,
   LangiumSharedServices,
   Module,
   PartialLangiumServices,
+  createDefaultModule,
+  createDefaultSharedModule,
+  inject,
 } from 'langium'
+
 import {
   FormMLGeneratedModule,
   FormMLGeneratedSharedModule,
@@ -60,8 +61,8 @@ export const FormMLModule: Module<
  * @returns An object wrapping the shared services and the language-specific services
  */
 export function createFormMLServices(context: DefaultSharedModuleContext): {
-  shared: LangiumSharedServices
   FormML: FormMLServices
+  shared: LangiumSharedServices
 } {
   const shared = inject(
     createDefaultSharedModule(context),
@@ -74,7 +75,7 @@ export function createFormMLServices(context: DefaultSharedModuleContext): {
   )
   shared.ServiceRegistry.register(FormML)
   // registerValidationChecks(FormML)
-  return { shared, FormML }
+  return { FormML, shared }
 }
 
 export const createInMemoryServices = () =>

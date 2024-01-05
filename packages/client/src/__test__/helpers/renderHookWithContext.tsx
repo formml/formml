@@ -1,10 +1,11 @@
 import {
-  queries,
   Queries,
   RenderHookOptions,
   RenderHookResult,
+  queries,
   renderHook,
 } from '@testing-library/react'
+
 import FormML from '../../FormML.js'
 import buildWrapper from './buildWrapper.js'
 
@@ -12,8 +13,8 @@ export default function renderHookWithContext<
   Result,
   Props,
   Q extends Queries = typeof queries,
-  Container extends Element | DocumentFragment = HTMLElement,
-  BaseElement extends Element | DocumentFragment = Container,
+  Container extends DocumentFragment | Element = HTMLElement,
+  BaseElement extends DocumentFragment | Element = Container,
 >(
   render: (initialProps: Props) => Result,
   formML: FormML,

@@ -1,6 +1,7 @@
+import { RenderHookResult, renderHook } from '@testing-library/react'
+
 import FormML from '../FormML.js'
 import useFormMLContext from '../useFormMLContext.js'
-import { renderHook, RenderHookResult } from '@testing-library/react'
 import renderHookWithContext from './helpers/renderHookWithContext.js'
 
 describe('useFormMLContext', () => {

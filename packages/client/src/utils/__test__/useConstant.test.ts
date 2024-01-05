@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react'
+
 import useConstant from '../useConstant.js'
 
 describe('useConstant', () => {
@@ -13,7 +14,7 @@ describe('useConstant', () => {
   test('should return same reference when deps have no change', () => {
     // Arrange
     const objectDep = {}
-    const { result, rerender } = renderHook(
+    const { rerender, result } = renderHook(
       (deps) => useConstant(initializer, deps),
       {
         initialProps: ['string', 0, objectDep] as const,
@@ -38,7 +39,7 @@ describe('useConstant', () => {
 
   test('should re-initialize when deps length changes', () => {
     // Arrange
-    const { result, rerender } = renderHook(
+    const { rerender, result } = renderHook(
       (deps) => useConstant(initializer, deps),
       {
         initialProps: [1, 2],
@@ -58,7 +59,7 @@ describe('useConstant', () => {
   test('should re-initialize when deps reference changes', () => {
     // Arrange
     const objectDep = {}
-    const { result, rerender } = renderHook(
+    const { rerender, result } = renderHook(
       (deps) => useConstant(initializer, deps),
       {
         initialProps: ['nochange', objectDep],
