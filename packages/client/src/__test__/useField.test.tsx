@@ -70,48 +70,6 @@ describe('useField', () => {
       })
     })
 
-    test('should subscribe only once', async () => {
-      // Arrange
-      const dsl = `
-        form ExampleForm {
-          Number numberField
-        }
-      `
-      const formML = new FormML(dsl)
-      const spiedSubscribe = vi.spyOn(formML, 'subscribe')
-      const index = formML.indexRoot['numberField']
-
-      // Act
-      const { rerender } = renderHookWithContext(() => useField(index), formML)
-      rerender()
-
-      // Assert
-      expect(spiedSubscribe).toBeCalledTimes(1)
-    })
-
-    test('should re-subscribe if index changes', async () => {
-      // Arrange
-      const dsl = `
-        form ExampleForm {
-          Number numberFieldA
-          Number numberFieldB
-        }
-      `
-      const formML = new FormML(dsl)
-      const spiedSubscribe = vi.spyOn(formML, 'subscribe')
-      const indexA = formML.indexRoot['numberFieldA']
-      const indexB = formML.indexRoot['numberFieldB']
-
-      // Act
-      const { rerender } = renderHookWithContext((i) => useField(i), formML, {
-        initialProps: indexA,
-      })
-      rerender(indexB)
-
-      // Assert
-      expect(spiedSubscribe).toBeCalledTimes(2)
-    })
-
     test('should return new value if onChange triggered', async () => {
       // Arrange
       const dsl = `
@@ -214,5 +172,91 @@ describe('useField', () => {
     // Assert
     expect(input).not.toHaveFocus()
     expect(screen.queryByText('Touched!')).toBeInTheDocument()
+  })
+
+  describe('performance', () => {
+    test('should subscribe only once', async () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const spiedSubscribe = vi.spyOn(formML, 'subscribe')
+      const index = formML.indexRoot['numberField']
+
+      // Act
+      const { rerender } = renderHookWithContext(() => useField(index), formML)
+      rerender()
+
+      // Assert
+      expect(spiedSubscribe).toBeCalledTimes(1)
+    })
+
+    test('should re-subscribe if index changes', async () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number numberFieldA
+          Number numberFieldB
+        }
+      `
+      const formML = new FormML(dsl)
+      const spiedSubscribe = vi.spyOn(formML, 'subscribe')
+      const indexA = formML.indexRoot['numberFieldA']
+      const indexB = formML.indexRoot['numberFieldB']
+
+      // Act
+      const { rerender } = renderHookWithContext((i) => useField(i), formML, {
+        initialProps: indexA,
+      })
+      rerender(indexB)
+
+      // Assert
+      expect(spiedSubscribe).toBeCalledTimes(2)
+    })
+
+    test('should init field only once', () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const spiedInitField = vi.spyOn(formML, 'initField')
+      const index = formML.indexRoot['numberField']
+
+      // Act
+      const { rerender } = renderHookWithContext(() => useField(index), formML)
+      rerender()
+
+      // Assert
+      expect(spiedInitField).toBeCalledTimes(1)
+    })
+
+    test('should re-init field if index changes', async () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number numberFieldA
+          Number numberFieldB
+        }
+      `
+      const formML = new FormML(dsl)
+      const spiedInitField = vi.spyOn(formML, 'initField')
+      const indexA = formML.indexRoot['numberFieldA']
+      const indexB = formML.indexRoot['numberFieldB']
+
+      // Act
+      const { rerender } = renderHookWithContext((i) => useField(i), formML, {
+        initialProps: indexA,
+      })
+      rerender(indexB)
+
+      // Assert
+      expect(spiedInitField).toBeCalledTimes(2)
+    })
   })
 })

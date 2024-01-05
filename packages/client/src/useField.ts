@@ -1,10 +1,10 @@
 import { useSyncExternalStore } from 'use-sync-external-store/shim'
 import useFormMLContext from './useFormMLContext.js'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 
 export default function useField(index: object) {
   const formML = useFormMLContext()
-  formML.initField(index)
+  useMemo(() => formML.initField(index), [formML, index])
 
   return useSyncExternalStore(
     useCallback((cb) => formML.subscribe(index, cb), [formML, index]),
