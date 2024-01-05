@@ -129,6 +129,46 @@ describe('useField', () => {
       // Assert
       await waitFor(() => expect(result.current.meta.typedValue).toEqual('123'))
     })
+
+    test('should return new typed value if not-first-time onBlur triggered', async () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Text textField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['textField']
+      const { result } = renderHookWithContext(() => useField(index), formML)
+
+      // Act
+      result.current.field.onChange({
+        target: { value: 'first time' },
+      } as unknown as React.ChangeEvent<HTMLInputElement>)
+      await waitFor(() =>
+        expect(result.current.field.value).toEqual('first time'),
+      )
+      result.current.field.onBlur({} as unknown as React.FocusEvent)
+
+      // Assert
+      await waitFor(() =>
+        expect(result.current.meta.typedValue).toEqual('first time'),
+      )
+
+      // Act
+      result.current.field.onChange({
+        target: { value: 'second time' },
+      } as unknown as React.ChangeEvent<HTMLInputElement>)
+      await waitFor(() =>
+        expect(result.current.field.value).toEqual('second time'),
+      )
+      result.current.field.onBlur({} as unknown as React.FocusEvent)
+
+      // Assert
+      await waitFor(() =>
+        expect(result.current.meta.typedValue).toEqual('second time'),
+      )
+    })
   })
 
   describe('integration', () => {

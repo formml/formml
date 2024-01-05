@@ -443,6 +443,34 @@ describe('FormML', () => {
       onBlur({} as unknown as React.FocusEvent)
 
       // Assert
+      expect(callback).toBeCalled()
+    })
+
+    test('should react to field typed value change', () => {
+      // Arrange
+      const schema = `
+        form ExampleForm {
+          Text textField
+        }
+      `
+      const formML = new FormML(schema)
+      const index = formML.indexRoot['textField']
+      const callback = vi.fn()
+      formML.initField(index)
+      formML.subscribe(index, callback)
+      const {
+        field: { onBlur, onChange },
+      } = formML.getFieldSnapshot(index)
+      onBlur({} as unknown as React.FocusEvent) // skip touched change
+
+      // Act
+      onChange({
+        target: { value: 'abc' },
+      } as unknown as React.ChangeEvent<HTMLInputElement>)
+      callback.mockClear()
+      onBlur({} as unknown as React.FocusEvent) // trigger typed value change
+
+      // Assert
       expect(callback).toBeCalledTimes(1)
     })
 

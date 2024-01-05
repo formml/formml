@@ -169,6 +169,7 @@ export default class FormML {
     return watch(
       [
         () => this._valuesProxy[name],
+        () => this._typedValuesProxy[name],
         () => this._fieldsMetaProxy[name].touched,
       ],
       () =>
