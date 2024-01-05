@@ -1,6 +1,14 @@
-import { reactive } from '@vue/reactivity'
+import { effect, reactive } from '@vue/reactivity'
 import createMemoSelector from '../createMemoSelector.js'
 import { watch } from '@vue-reactivity/watch'
+
+vi.mock('@vue/reactivity', async (importOriginal) => {
+  const reactivity = await importOriginal<typeof import('@vue/reactivity')>()
+  return {
+    ...reactivity,
+    effect: vi.fn(reactivity.effect),
+  }
+})
 
 describe('createMemoSelector', () => {
   test('should return selected result', () => {
@@ -190,5 +198,35 @@ describe('createMemoSelector', () => {
 
     // Assert
     expect(secondResult).toBe(firstResult)
+  })
+
+  test('should run effect only once if deps have changes', async () => {
+    // Arrange
+    const selector = (observable: { count: number; other: string }) => ({
+      value: observable.count,
+    })
+    const select = createMemoSelector(selector)
+    const state = reactive({ count: 0, other: 'no change' })
+
+    const { effect: realEffect } =
+      await vi.importActual<typeof import('@vue/reactivity')>('@vue/reactivity')
+    const mockedScheduler = vi.fn()
+    vi.mocked(effect).mockImplementationOnce((fn, options) =>
+      realEffect(fn, {
+        ...options,
+        scheduler: mockedScheduler.mockImplementation(options!.scheduler!),
+      }),
+    )
+    const firstResult = select(state)
+
+    // Act
+    state.count++
+    state.count++
+    const secondResult = select(state)
+
+    // Assert
+    expect(secondResult).not.toBe(firstResult)
+    expect(secondResult).toEqual({ value: 2 })
+    expect(mockedScheduler).toBeCalledTimes(1)
   })
 })

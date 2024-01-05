@@ -9,6 +9,11 @@ export default function createMemoSelector<Params extends unknown[], Result>(
   let prevRunner: ReactiveEffectRunner | null = null
   let dirty = false
 
+  const cleanupRunner = () => {
+    prevRunner && stop(prevRunner)
+    prevRunner = null
+  }
+
   return (...params) => {
     if (isDepsChanged(prevParams, params)) {
       dirty = true
@@ -18,11 +23,12 @@ export default function createMemoSelector<Params extends unknown[], Result>(
       return prevResult
     }
 
-    prevRunner && stop(prevRunner)
+    cleanupRunner() // clean up stale untriggered effect
     const newRunner = effect(() => selector(...params), {
       lazy: true,
-      scheduler() {
-        dirty = true // deps changed
+      scheduler: () => {
+        dirty = true
+        cleanupRunner() // clean up current effect once triggered
       },
     })
     const newResult = newRunner()
