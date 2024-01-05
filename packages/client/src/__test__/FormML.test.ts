@@ -265,6 +265,50 @@ describe('FormML', () => {
         const thirdPack = formML.getFieldSnapshot(index)
         expect(thirdPack.meta.touched).toBe(true)
       })
+
+      test('should have no typed value when field is fresh', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            Text textField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['textField']
+        formML.initField(index)
+
+        // Act
+        const pack = formML.getFieldSnapshot(index)
+
+        // Assert
+        expect(pack.meta.typedValue).toBeUndefined()
+      })
+
+      test('should return latest typed value once field is blurred', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            Text textField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['textField']
+        formML.initField(index)
+
+        const firstPack = formML.getFieldSnapshot(index)
+
+        // Act
+        firstPack.field.onChange({
+          target: { value: 'abc' },
+        } as unknown as React.ChangeEvent<HTMLInputElement>)
+
+        const event = new FocusEvent('blur') as unknown as React.FocusEvent
+        firstPack.field.onBlur(event)
+
+        // Assert
+        const secondPack = formML.getFieldSnapshot(index)
+        expect(secondPack.meta.typedValue).toEqual('abc')
+      })
     })
 
     describe('caches', () => {

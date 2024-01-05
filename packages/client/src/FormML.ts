@@ -14,7 +14,7 @@ export type FieldProps = {
 export type FieldMetaData = {
   error: undefined
   touched: boolean
-  typedValue: number | undefined
+  typedValue: string | undefined
 }
 
 export type FieldPack = {
@@ -51,6 +51,7 @@ export default class FormML {
     object,
     (
       valuesProxy: typeof this._valuesProxy,
+      typedValuesProxy: typeof this._typedValuesProxy,
       fieldsMetaProxy: typeof this._fieldsMetaProxy,
       deferredEffects: typeof this._deferredEffects,
     ) => FieldSnapshot
@@ -58,6 +59,7 @@ export default class FormML {
   private readonly _indexToSchema: WeakMap<object, Field>
   private static readonly _parse = createParser()
   private readonly _schema: FormMLSchema
+  private readonly _typedValuesProxy: Record<string, string> = reactive({})
   private readonly _valuesProxy: Record<string, string> = reactive({})
 
   public readonly indexRoot: Record<string, object>
@@ -103,6 +105,7 @@ export default class FormML {
     // already initialized
     return this._indexToFieldSnapSelector.get(index)!(
       this._valuesProxy,
+      this._typedValuesProxy,
       this._fieldsMetaProxy,
       this._deferredEffects,
     )
@@ -123,14 +126,18 @@ export default class FormML {
     if (!this._indexToFieldSnapSelector.has(index)) {
       // pure function
       const fieldSnapSelector = (
-        valuesProxy: Record<string, string>,
-        fieldsMetaProxy: Record<string, { touched: boolean }>,
-        deferredEffects: (() => void)[],
+        valuesProxy: typeof this._valuesProxy,
+        typedValuesProxy: typeof this._typedValuesProxy,
+        fieldsMetaProxy: typeof this._fieldsMetaProxy,
+        deferredEffects: typeof this._deferredEffects,
       ) => ({
         field: {
           name,
           onBlur: (_e: React.FocusEvent) => {
-            fieldsMetaProxy[name].touched = true // will trigger all sync effects firstly
+            // will trigger all sync effects firstly
+            fieldsMetaProxy[name].touched = true
+            typedValuesProxy[name] = valuesProxy[name]
+
             run(deferredEffects) // then, run deferred effects
           },
           onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,7 +149,7 @@ export default class FormML {
         meta: {
           error: undefined,
           touched: fieldsMetaProxy[name].touched,
-          typedValue: undefined,
+          typedValue: typedValuesProxy[name],
         },
       })
 
