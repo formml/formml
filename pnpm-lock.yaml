@@ -11,6 +11,9 @@ dependencies:
   '@vue/reactivity':
     specifier: ^3.4.3
     version: 3.4.3
+  currency.js:
+    specifier: ^2.0.4
+    version: 2.0.4
   langium:
     specifier: ^2.1.3
     version: 2.1.3
@@ -5404,6 +5407,14 @@ packages:
         integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==,
       }
     dev: true
+
+  /currency.js@2.0.4:
+    resolution:
+      {
+        integrity: sha512-6/OplJYgJ0RUlli74d93HJ/OsKVBi8lB1+Z6eJYS1YZzBuIp4qKKHpJ7ad+GvTlWmLR/hLJOWTykN5Nm8NJ7+w==,
+      }
+    engines: { node: '>=4' }
+    dev: false
 
   /damerau-levenshtein@1.0.8:
     resolution:

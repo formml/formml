@@ -28,7 +28,7 @@
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nx/typescript", "plugin:@nx/react"],
+      "extends": ["plugin:@nx/react", "plugin:@nx/typescript"],
       "rules": {}
     },
     {

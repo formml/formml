@@ -1,6 +1,7 @@
-import { Field, FormMLSchema, createParser } from '@formml/dsl'
+import { Field, FormMLSchema, PrimitiveType, createParser } from '@formml/dsl'
 import { DeepReadonly, reactive } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
+import currency from 'currency.js'
 
 import createMemoSelector from './utils/createMemoSelector.js'
 
@@ -14,7 +15,7 @@ export type FieldProps = {
 export type FieldMetaData = {
   error: undefined
   touched: boolean
-  typedValue: string | undefined
+  typedValue?: PrimitivesRuntimeTypesUnion
 }
 
 export type FieldPack = {
@@ -42,6 +43,61 @@ function run(effects: (() => void)[]) {
   }
 }
 
+type PrimitivesRuntimeType = {
+  Boolean: boolean
+  Currency: currency
+  Date: Date
+  Number: number
+  Text: string
+}
+
+type PrimitivesRuntimeTypesUnion =
+  PrimitivesRuntimeType[keyof PrimitivesRuntimeType]
+
+function convertValueToTyped(
+  rawValue: string,
+  type: 'Boolean',
+): PrimitivesRuntimeType['Boolean']
+function convertValueToTyped(
+  rawValue: string,
+  type: 'Currency',
+): PrimitivesRuntimeType['Currency']
+function convertValueToTyped(
+  rawValue: string,
+  type: 'Date',
+): PrimitivesRuntimeType['Date']
+function convertValueToTyped(
+  rawValue: string,
+  type: 'Number',
+): PrimitivesRuntimeType['Number']
+function convertValueToTyped(
+  rawValue: string,
+  type: 'Text',
+): PrimitivesRuntimeType['Text']
+function convertValueToTyped(
+  rawValue: string,
+  type: PrimitiveType,
+): PrimitivesRuntimeTypesUnion
+function convertValueToTyped(rawValue: string, type: PrimitiveType) {
+  switch (type) {
+    case 'Boolean':
+      return rawValue === 'true' ? true : false
+    case 'Currency':
+      return currency(rawValue)
+    case 'Date':
+      return new Date(rawValue) // TODO: time zone?
+    case 'Number':
+      return Number(rawValue)
+    case 'Text':
+      return rawValue
+    default: {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const never: never = type
+      throw new Error(`Unsupported type '${type}'`)
+    }
+  }
+}
+
 export default class FormML {
   private readonly _deferredEffects: (() => void)[] = []
 
@@ -59,7 +115,10 @@ export default class FormML {
   private readonly _indexToSchema: WeakMap<object, Field>
   private static readonly _parse = createParser()
   private readonly _schema: FormMLSchema
-  private readonly _typedValuesProxy: Record<string, string> = reactive({})
+  private readonly _typedValuesProxy: Record<
+    string,
+    PrimitivesRuntimeTypesUnion | undefined
+  > = reactive({})
   private readonly _valuesProxy: Record<string, string> = reactive({})
 
   public readonly indexRoot: Record<string, object>
@@ -114,6 +173,7 @@ export default class FormML {
   initField(index: object) {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
+    const type = schema.type
 
     if (this._valuesProxy[name] === undefined) {
       this._valuesProxy[name] = ''
@@ -136,7 +196,10 @@ export default class FormML {
           onBlur: (_e: React.FocusEvent) => {
             // will trigger all sync effects firstly
             fieldsMetaProxy[name].touched = true
-            typedValuesProxy[name] = valuesProxy[name]
+            typedValuesProxy[name] = convertValueToTyped(
+              valuesProxy[name],
+              type,
+            )
 
             run(deferredEffects) // then, run deferred effects
           },
