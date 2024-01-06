@@ -1,6 +1,15 @@
 import { renderHook } from '@testing-library/react'
 
+import FormML from '../FormML.js'
 import useFormML from '../useFormML.js'
+
+vi.mock('../FormML.js', async (importOriginal) => {
+  const realFormML = (await importOriginal<typeof import('../FormML.js')>())
+    .default
+  return {
+    default: vi.fn((dsl) => new realFormML(dsl)),
+  }
+})
 
 describe('useFormML', () => {
   describe('indexRoot', () => {
@@ -92,7 +101,7 @@ describe('useFormML', () => {
   describe('handleSubmit', () => {
     const dummyDsl = `
       form ExampleForm {
-        Number   numberField
+        Number numberField
       }`
     const dummyEvent = new SubmitEvent(
       'submit',
@@ -120,7 +129,29 @@ describe('useFormML', () => {
       expect(onSubmit).toBeCalledWith(expectedData)
     })
 
-    test.todo('should provide latest data to callback')
+    test('should provide latest data to callback', () => {
+      // Arrange
+      const stubFormML = {
+        getTypedData: vi.fn(),
+      }
+      vi.mocked(FormML).mockReturnValue(stubFormML as unknown as FormML)
+      const { result } = renderHook(() => useFormML(dummyDsl))
+
+      const onSubmit = vi.fn()
+      const eventHandler = result.current.handleSubmit(onSubmit)
+
+      const expectedData = {
+        fieldA: 'abc',
+        fieldB: 123.45,
+      }
+      stubFormML.getTypedData.mockReturnValue(expectedData)
+
+      // Act
+      eventHandler(dummyEvent)
+
+      // Assert
+      expect(onSubmit).toBeCalledWith(expectedData)
+    })
 
     test('should prevent default submit behavior', () => {
       // Arrange

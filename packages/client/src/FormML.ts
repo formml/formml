@@ -1,5 +1,5 @@
 import { Field, FormMLSchema, PrimitiveType, createParser } from '@formml/dsl'
-import { DeepReadonly, reactive } from '@vue/reactivity'
+import { DeepReadonly, reactive, toRaw } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
 import currency from 'currency.js'
 
@@ -100,9 +100,9 @@ function convertValueToTyped(rawValue: string, type: PrimitiveType) {
 
 export default class FormML {
   private readonly _deferredEffects: (() => void)[] = []
-
   private readonly _fieldsMetaProxy: Record<string, { touched: boolean }> =
     reactive({})
+
   private readonly _indexToFieldSnapSelector: Map<
     object,
     (
@@ -120,7 +120,6 @@ export default class FormML {
     PrimitivesRuntimeTypesUnion | undefined
   > = reactive({})
   private readonly _valuesProxy: Record<string, string> = reactive({})
-
   public readonly indexRoot: Record<string, object>
 
   constructor(schema: string) {
@@ -168,6 +167,10 @@ export default class FormML {
       this._fieldsMetaProxy,
       this._deferredEffects,
     )
+  }
+
+  getTypedData() {
+    return toRaw(this._typedValuesProxy)
   }
 
   initField(index: object) {
