@@ -4,8 +4,7 @@
     "composite": true,
     "outDir": "../../dist/out-tsc",
     "declaration": true,
-    "types": ["vitest/globals", "vitest/importMeta", "vite/client", "node"],
-    "jsx": "react-jsx"
+    "types": ["vitest/globals", "vitest/importMeta", "vite/client", "node"]
   },
   "include": [
     "vite.config.ts",

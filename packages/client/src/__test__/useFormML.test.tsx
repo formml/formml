@@ -1,7 +1,8 @@
-import { renderHook } from '@testing-library/react'
+import { render, renderHook } from '@testing-library/react'
 
 import FormML from '../FormML.js'
 import useFormML from '../useFormML.js'
+import useFormMLContext from '../useFormMLContext.js'
 
 vi.mock('../FormML.js', async (importOriginal) => {
   const realFormML = (await importOriginal<typeof import('../FormML.js')>())
@@ -164,6 +165,38 @@ describe('useFormML', () => {
 
       // Assert
       expect(preventDefault).toBeCalled()
+    })
+  })
+
+  describe('FormML', () => {
+    const dummyDsl = `
+      form ExampleForm {
+        Number numberField
+      }`
+
+    test('should provide FormML instance via context', () => {
+      // Arrange
+      let receivedContext: FormML | undefined
+      const Consumer = () => {
+        receivedContext = useFormMLContext()
+        return null
+      }
+
+      const stubFormML = new FormML(dummyDsl)
+      vi.mocked(FormML).mockReturnValue(stubFormML)
+
+      const { result } = renderHook(() => useFormML(dummyDsl))
+      const { FormML: FormMLWrapper } = result.current
+
+      // Act
+      render(
+        <FormMLWrapper>
+          <Consumer />
+        </FormMLWrapper>,
+      )
+
+      // Assert
+      expect(receivedContext).toBe(stubFormML)
     })
   })
 })
