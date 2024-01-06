@@ -1,4 +1,5 @@
 import { render, renderHook } from '@testing-library/react'
+import { Profiler } from 'react'
 
 import FormML from '../FormML.js'
 import useFormML from '../useFormML.js'
@@ -197,6 +198,41 @@ describe('useFormML', () => {
 
       // Assert
       expect(receivedContext).toBe(stubFormML)
+    })
+
+    test('should avoid re-mount children if parent re-renders', () => {
+      // Arrange
+      const Consumer = () => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const _formML = useFormMLContext()
+        return null
+      }
+
+      const renderPhases: string[] = []
+
+      const Parent = ({ count }: { count: number }) => {
+        const { FormML } = useFormML(dummyDsl)
+        return (
+          <>
+            <FormML>
+              <Profiler
+                id="children"
+                onRender={(_id, phase) => renderPhases.push(phase)}
+              >
+                <Consumer />
+              </Profiler>
+            </FormML>
+            <span>{count}</span>
+          </>
+        )
+      }
+
+      // Act
+      const { rerender } = render(<Parent count={1} />)
+      rerender(<Parent count={2} />)
+
+      // Assert
+      expect(renderPhases).toEqual(['mount', 'update'])
     })
   })
 })

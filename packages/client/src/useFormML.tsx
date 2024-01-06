@@ -16,8 +16,11 @@ export default function useFormML(dsl: string) {
     onSubmit(formML.getTypedData())
   }
 
-  const FormMLWrapper = (props: React.PropsWithChildren) => (
-    <FormMLProvider value={formML}>{props.children}</FormMLProvider>
+  const FormMLWrapper = React.useCallback(
+    (props: React.PropsWithChildren) => (
+      <FormMLProvider value={formML}>{props.children}</FormMLProvider>
+    ),
+    [formML],
   )
 
   return {
