@@ -199,41 +199,41 @@ describe('useField', () => {
       // Assert
       expect(input).toHaveDisplayValue('123')
     })
-  })
 
-  test('should update touched properly when user blurs', async () => {
-    // Arrange
-    const TestInput = ({ index }: { index: object }) => {
-      const { field, meta } = useField(index)
-      return (
-        <>
-          <input {...field} />
-          {meta.touched && <span>Touched!</span>}
-        </>
-      )
-    }
-
-    const dsl = `
-      form ExampleForm {
-        Number numberField
+    test('should update touched properly when user blurs', async () => {
+      // Arrange
+      const TestInput = ({ index }: { index: object }) => {
+        const { field, meta } = useField(index)
+        return (
+          <>
+            <input {...field} />
+            {meta.touched && <span>Touched!</span>}
+          </>
+        )
       }
-    `
-    const formML = new FormML(dsl)
-    const index = formML.indexRoot['numberField']
 
-    renderWithContext(<TestInput index={index} />, formML)
+      const dsl = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
 
-    const input = screen.getByRole('textbox')
-    expect(screen.queryByText('Touched!')).not.toBeInTheDocument()
+      renderWithContext(<TestInput index={index} />, formML)
 
-    // Act
-    const user = userEvent.setup()
-    await user.click(input)
-    await user.tab()
+      const input = screen.getByRole('textbox')
+      expect(screen.queryByText('Touched!')).not.toBeInTheDocument()
 
-    // Assert
-    expect(input).not.toHaveFocus()
-    expect(screen.queryByText('Touched!')).toBeInTheDocument()
+      // Act
+      const user = userEvent.setup()
+      await user.click(input)
+      await user.tab()
+
+      // Assert
+      expect(input).not.toHaveFocus()
+      expect(screen.queryByText('Touched!')).toBeInTheDocument()
+    })
   })
 
   describe('performance', () => {
