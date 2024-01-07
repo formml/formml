@@ -102,7 +102,6 @@ export default class FormML {
   private readonly _deferredEffects: (() => void)[] = []
   private readonly _fieldsMetaProxy: Record<string, { touched: boolean }> =
     reactive({})
-
   private readonly _indexToFieldSnapSelector: Map<
     object,
     (
@@ -112,6 +111,7 @@ export default class FormML {
       deferredEffects: typeof this._deferredEffects,
     ) => FieldSnapshot
   > = new Map()
+
   private readonly _indexToSchema: WeakMap<object, Field>
   private static readonly _parse = createParser()
   private readonly _schema: FormMLSchema
@@ -121,7 +121,6 @@ export default class FormML {
   > = reactive({})
   private readonly _valuesProxy: Record<string, string> = reactive({})
   public readonly indexRoot: Record<string, object>
-
   constructor(schema: string) {
     this._schema = FormML._parse(schema)
     ;[this.indexRoot, this._indexToSchema] = buildIndexes(this._schema)
@@ -152,6 +151,31 @@ export default class FormML {
       )
     }
     return schema
+  }
+
+  getField(index: object) {
+    const schema = this.getSchemaByIndex(index)
+    const name = schema.name
+
+    this.assertInitialized(name, { methodName: 'getField' })
+
+    return {
+      error: undefined,
+      schema: {},
+
+      // Part: raw value
+      commitRawValue: () => {},
+      rawValue: '',
+      setRawValue: () => {},
+
+      // Part: value
+      setValue: () => {},
+      value: undefined,
+
+      // Part: touch
+      touch: () => {},
+      touched: false,
+    }
   }
 
   getFieldSnapshot(index: object): FieldSnapshot {

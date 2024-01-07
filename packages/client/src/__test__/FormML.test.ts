@@ -399,6 +399,82 @@ describe('FormML', () => {
     })
   })
 
+  describe('getField', () => {
+    test('should throw if index can not be recognized', () => {
+      // Arrange
+      const schema = `
+        form ExampleForm {
+          Number   numberField
+          Currency currencyField
+          Text     textField
+          Boolean	 booleanField
+          Date		 dateField
+        }
+      `
+      const formML = new FormML(schema)
+
+      // Act & Assert
+      const invalidIndex = {}
+      expect(() => formML.getField(invalidIndex)).toThrow(
+        /Given index is invalid, index provided:[\s\S]+/g,
+      )
+    })
+
+    test('should throw when field is not initialized', () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+
+      // Act & Assert
+      expect(() => formML.getField(index)).toThrow(
+        'Field "numberField" has not been initialized yet, please make sure to call `initField` before calling `getField`',
+      )
+    })
+
+    test('should return field pack', () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number   numberField
+          Currency currencyField
+          Text     textField
+          Boolean	 booleanField
+          Date		 dateField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+      formML.initField(index)
+
+      // Act
+      const pack = formML.getField(index)
+
+      // Assert
+      expect(pack).toEqual({
+        error: undefined,
+        schema: {},
+
+        // Part: raw value
+        commitRawValue: expect.any(Function),
+        rawValue: '',
+        setRawValue: expect.any(Function),
+
+        // Part: value
+        setValue: expect.any(Function),
+        value: undefined,
+
+        // Part: touch
+        touch: expect.any(Function),
+        touched: false,
+      })
+    })
+  })
+
   describe('subscribe', () => {
     test('should throw if index can not be recognized', () => {
       // Arrange
