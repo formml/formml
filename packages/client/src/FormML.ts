@@ -166,8 +166,10 @@ export default class FormML {
 
       // Part: raw value
       commitRawValue: () => {},
-      rawValue: '',
-      setRawValue: () => {},
+      rawValue: this._valuesProxy[name],
+      setRawValue: (value: string) => {
+        this._valuesProxy[name] = value
+      },
 
       // Part: value
       setValue: () => {},

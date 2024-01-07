@@ -436,7 +436,7 @@ describe('FormML', () => {
       )
     })
 
-    test('should return field pack', () => {
+    test('should return initial field pack', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
@@ -516,6 +516,26 @@ describe('FormML', () => {
           )
         },
       )
+
+      test('should return latest raw value when field has been changed', async () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            Number numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+        formML.initField(index)
+        const pack = formML.getField(index)
+
+        // Act
+        pack.setRawValue('123')
+
+        // Assert
+        const newPack = formML.getField(index)
+        expect(newPack.rawValue).toEqual('123')
+      })
     })
   })
 
