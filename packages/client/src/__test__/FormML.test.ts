@@ -536,6 +536,35 @@ describe('FormML', () => {
         const newPack = formML.getField(index)
         expect(newPack.rawValue).toEqual('123')
       })
+
+      test('should always be touched after touches field', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            Number numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+        formML.initField(index)
+
+        const firstPack = formML.getField(index)
+        expect(firstPack.touched).toBe(false)
+
+        // Act
+        firstPack.touch()
+
+        // Assert
+        const secondPack = formML.getField(index)
+        expect(secondPack.touched).toBe(true)
+
+        // Act
+        secondPack.touch()
+
+        // Assert
+        const thirdPack = formML.getField(index)
+        expect(thirdPack.touched).toBe(true)
+      })
     })
   })
 

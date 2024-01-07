@@ -176,8 +176,10 @@ export default class FormML {
       value: undefined,
 
       // Part: touch
-      touch: () => {},
-      touched: false,
+      touch: () => {
+        this._fieldsMetaProxy[name].touched = true
+      },
+      touched: this._fieldsMetaProxy[name].touched,
     }
   }
 
