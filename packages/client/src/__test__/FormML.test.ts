@@ -632,6 +632,38 @@ describe('FormML', () => {
         },
       )
     })
+
+    describe('caches', () => {
+      test.each([
+        'schema',
+        'commitRawValue',
+        'setRawValue',
+        'setValue',
+        'touch',
+      ] as const)('should always return same references for "%s"', (key) => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            Number numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+        formML.initField(index)
+
+        const firstPack = formML.getField(index)
+
+        // Act
+        firstPack.setRawValue('123')
+        firstPack.commitRawValue()
+        firstPack.setValue('456')
+        firstPack.touch()
+
+        // Assert
+        const secondPack = formML.getField(index)
+        expect(secondPack[key]).toBe(firstPack[key])
+      })
+    })
   })
 
   describe('subscribe', () => {

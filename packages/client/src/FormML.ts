@@ -132,6 +132,15 @@ export default class FormML {
       deferredEffects: typeof this._deferredEffects,
     ) => FieldSnapshot
   > = new Map()
+  private readonly _indexToHelpers: Map<
+    object,
+    {
+      commitRawValue: () => void
+      setRawValue: (value: string) => void
+      setValue: (value: PrimitivesRuntimeTypesUnion) => void
+      touch: () => void
+    }
+  > = new Map()
 
   private readonly _indexToSchema: WeakMap<object, Field>
   private static readonly _parse = createParser()
@@ -177,38 +186,17 @@ export default class FormML {
 
   getField(index: object) {
     const schema = this.getSchemaByIndex(index)
-    const { name, type } = schema
+    const { name } = schema
 
     this.assertInitialized(name, { methodName: 'getField' })
 
     return {
       error: undefined,
+      rawValue: toRaw(this._valuesProxy[name]), // to raw for every value from proxies
       schema,
-
-      // Part: raw value
-      commitRawValue: () => {
-        this._typedValuesProxy[name] = convertRawValueToTyped(
-          this._valuesProxy[name],
-          type,
-        )
-      },
-      rawValue: this._valuesProxy[name],
-      setRawValue: (value: string) => {
-        this._valuesProxy[name] = value
-      },
-
-      // Part: value
-      setValue: (value: PrimitivesRuntimeTypesUnion) => {
-        this._typedValuesProxy[name] = value
-        this._valuesProxy[name] = convertTypedValueToRaw(value)
-      },
-      value: toRaw(this._typedValuesProxy[name]), // maybe proxy if value is not primitive
-
-      // Part: touch
-      touch: () => {
-        this._fieldsMetaProxy[name].touched = true
-      },
-      touched: this._fieldsMetaProxy[name].touched,
+      touched: toRaw(this._fieldsMetaProxy[name].touched),
+      value: toRaw(this._typedValuesProxy[name]),
+      ...this._indexToHelpers.get(index)!,
     }
   }
 
@@ -233,8 +221,7 @@ export default class FormML {
 
   initField(index: object) {
     const schema = this.getSchemaByIndex(index)
-    const name = schema.name
-    const type = schema.type
+    const { name, type } = schema
 
     if (this._valuesProxy[name] === undefined) {
       this._valuesProxy[name] = ''
@@ -242,6 +229,27 @@ export default class FormML {
 
     if (this._fieldsMetaProxy[name] === undefined) {
       this._fieldsMetaProxy[name] = { touched: false }
+    }
+
+    if (!this._indexToHelpers.has(index)) {
+      this._indexToHelpers.set(index, {
+        commitRawValue: () => {
+          this._typedValuesProxy[name] = convertRawValueToTyped(
+            this._valuesProxy[name],
+            type,
+          )
+        },
+        setRawValue: (value: string) => {
+          this._valuesProxy[name] = value
+        },
+        setValue: (value: PrimitivesRuntimeTypesUnion) => {
+          this._typedValuesProxy[name] = value
+          this._valuesProxy[name] = convertTypedValueToRaw(value)
+        },
+        touch: () => {
+          this._fieldsMetaProxy[name].touched = true
+        },
+      })
     }
 
     if (!this._indexToFieldSnapSelector.has(index)) {
