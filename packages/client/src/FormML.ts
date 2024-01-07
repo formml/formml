@@ -121,6 +121,7 @@ export default class FormML {
   > = reactive({})
   private readonly _valuesProxy: Record<string, string> = reactive({})
   public readonly indexRoot: Record<string, object>
+
   constructor(schema: string) {
     this._schema = FormML._parse(schema)
     ;[this.indexRoot, this._indexToSchema] = buildIndexes(this._schema)
@@ -161,7 +162,7 @@ export default class FormML {
 
     return {
       error: undefined,
-      schema: {},
+      schema,
 
       // Part: raw value
       commitRawValue: () => {},

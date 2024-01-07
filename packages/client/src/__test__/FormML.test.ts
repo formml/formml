@@ -457,7 +457,11 @@ describe('FormML', () => {
       // Assert
       expect(pack).toEqual({
         error: undefined,
-        schema: {},
+        schema: expect.objectContaining({
+          $type: 'Field',
+          name: 'numberField',
+          type: 'Number',
+        }),
 
         // Part: raw value
         commitRawValue: expect.any(Function),
@@ -472,6 +476,46 @@ describe('FormML', () => {
         touch: expect.any(Function),
         touched: false,
       })
+    })
+
+    describe('returns', () => {
+      test.each`
+        type          | fieldName
+        ${'Number'}   | ${'numberField'}
+        ${'Currency'} | ${'currencyField'}
+        ${'Text'}     | ${'textField'}
+        ${'Boolean'}  | ${'booleanField'}
+        ${'Date'}     | ${'dateField'}
+      `(
+        'should return corresponding field schema - $fieldName',
+        ({ fieldName, type }) => {
+          // Arrange
+          const dsl = `
+            form ExampleForm {
+              Number   numberField
+              Currency currencyField
+              Text     textField
+              Boolean	 booleanField
+              Date		 dateField
+            }
+          `
+          const formML = new FormML(dsl)
+          const index = formML.indexRoot[fieldName]
+          formML.initField(index)
+
+          // Act
+          const pack = formML.getField(index)
+
+          // Assert
+          expect(pack.schema).toEqual(
+            expect.objectContaining({
+              $type: 'Field',
+              name: fieldName,
+              type: type,
+            }),
+          )
+        },
+      )
     })
   })
 
