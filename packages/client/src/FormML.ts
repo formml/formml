@@ -37,30 +37,6 @@ export type PrimitivesRuntimeType = {
 export type PrimitivesRuntimeTypesUnion =
   PrimitivesRuntimeType[keyof PrimitivesRuntimeType]
 
-function convertRawValueToTyped(
-  rawValue: string,
-  type: 'Boolean',
-): PrimitivesRuntimeType['Boolean']
-function convertRawValueToTyped(
-  rawValue: string,
-  type: 'Currency',
-): PrimitivesRuntimeType['Currency']
-function convertRawValueToTyped(
-  rawValue: string,
-  type: 'Date',
-): PrimitivesRuntimeType['Date']
-function convertRawValueToTyped(
-  rawValue: string,
-  type: 'Number',
-): PrimitivesRuntimeType['Number']
-function convertRawValueToTyped(
-  rawValue: string,
-  type: 'Text',
-): PrimitivesRuntimeType['Text']
-function convertRawValueToTyped(
-  rawValue: string,
-  type: PrimitiveType,
-): PrimitivesRuntimeTypesUnion
 function convertRawValueToTyped(rawValue: string, type: PrimitiveType) {
   switch (type) {
     case 'Boolean':
