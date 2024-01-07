@@ -598,6 +598,39 @@ describe('FormML', () => {
           expect(secondPack.value).toEqual(expected)
         },
       )
+
+      test.each`
+        fieldType     | expectedRawValue              | newValue
+        ${'Text'}     | ${'abc'}                      | ${'abc'}
+        ${'Number'}   | ${'123.45'}                   | ${123.45}
+        ${'Currency'} | ${'123.45'}                   | ${currency('123.45')}
+        ${'Boolean'}  | ${'true'}                     | ${true}
+        ${'Boolean'}  | ${'false'}                    | ${false}
+        ${'Date'}     | ${'2024-01-01T00:00:00.000Z'} | ${new Date(Date.UTC(2024, 0, 1))}
+      `(
+        'should update both of value and raw value when set $fieldType value',
+        ({ expectedRawValue, fieldType, newValue }) => {
+          // Arrange
+          const dsl = `
+            form ExampleForm {
+              ${fieldType} field
+            }
+          `
+          const formML = new FormML(dsl)
+          const index = formML.indexRoot['field']
+          formML.initField(index)
+
+          const firstPack = formML.getField(index)
+
+          // Act
+          firstPack.setValue(newValue)
+
+          // Assert
+          const secondPack = formML.getField(index)
+          expect(secondPack.value).toBe(newValue)
+          expect(secondPack.rawValue).toEqual(expectedRawValue)
+        },
+      )
     })
   })
 

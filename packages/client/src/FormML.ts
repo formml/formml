@@ -98,6 +98,27 @@ function convertRawValueToTyped(rawValue: string, type: PrimitiveType) {
   }
 }
 
+function convertTypedValueToRaw(value: PrimitivesRuntimeTypesUnion): string {
+  if (typeof value === 'boolean') {
+    return value ? 'true' : 'false'
+  }
+  if (value instanceof currency) {
+    return value.toString()
+  }
+  if (value instanceof Date) {
+    return value.toISOString()
+  }
+  if (typeof value === 'number') {
+    return value.toString()
+  }
+  if (typeof value === 'string') {
+    return value
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const never: never = value
+  throw new Error(`Unsupported type '${value}'`)
+}
+
 export default class FormML {
   private readonly _deferredEffects: (() => void)[] = []
   private readonly _fieldsMetaProxy: Record<string, { touched: boolean }> =
@@ -177,8 +198,11 @@ export default class FormML {
       },
 
       // Part: value
-      setValue: () => {},
-      value: this._typedValuesProxy[name],
+      setValue: (value: PrimitivesRuntimeTypesUnion) => {
+        this._typedValuesProxy[name] = value
+        this._valuesProxy[name] = convertTypedValueToRaw(value)
+      },
+      value: toRaw(this._typedValuesProxy[name]), // maybe proxy if value is not primitive
 
       // Part: touch
       touch: () => {
