@@ -18,7 +18,9 @@
     "src/**/*.spec.jsx",
     "src/**/*.d.ts",
     "src/**/__test__/**/*.ts",
-    "src/**/__test__/**/*.tsx"
+    "src/**/__test__/**/*.tsx",
+    "integration-test/**/*.ts",
+    "integration-test/**/*.tsx"
   ],
   "references": [{ "path": "./tsconfig.lib.json" }]
 }

@@ -40,6 +40,9 @@
         "passWithNoTests": true,
         "reportsDirectory": "../../coverage/packages/client"
       }
+    },
+    "demo": {
+      "command": "vite packages/client/integration-test --open -c packages/client/vite.config.ts"
     }
   },
   "tags": []

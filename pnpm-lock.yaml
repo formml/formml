@@ -67,6 +67,9 @@ devDependencies:
   '@types/react':
     specifier: ^18.2.45
     version: 18.2.45
+  '@types/react-dom':
+    specifier: ^18.2.18
+    version: 18.2.18
   '@types/use-sync-external-store':
     specifier: ^0.0.6
     version: 0.0.6
