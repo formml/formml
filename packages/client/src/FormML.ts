@@ -54,31 +54,31 @@ type PrimitivesRuntimeType = {
 type PrimitivesRuntimeTypesUnion =
   PrimitivesRuntimeType[keyof PrimitivesRuntimeType]
 
-function convertValueToTyped(
+function convertRawValueToTyped(
   rawValue: string,
   type: 'Boolean',
 ): PrimitivesRuntimeType['Boolean']
-function convertValueToTyped(
+function convertRawValueToTyped(
   rawValue: string,
   type: 'Currency',
 ): PrimitivesRuntimeType['Currency']
-function convertValueToTyped(
+function convertRawValueToTyped(
   rawValue: string,
   type: 'Date',
 ): PrimitivesRuntimeType['Date']
-function convertValueToTyped(
+function convertRawValueToTyped(
   rawValue: string,
   type: 'Number',
 ): PrimitivesRuntimeType['Number']
-function convertValueToTyped(
+function convertRawValueToTyped(
   rawValue: string,
   type: 'Text',
 ): PrimitivesRuntimeType['Text']
-function convertValueToTyped(
+function convertRawValueToTyped(
   rawValue: string,
   type: PrimitiveType,
 ): PrimitivesRuntimeTypesUnion
-function convertValueToTyped(rawValue: string, type: PrimitiveType) {
+function convertRawValueToTyped(rawValue: string, type: PrimitiveType) {
   switch (type) {
     case 'Boolean':
       return rawValue === 'true' ? true : false
@@ -156,7 +156,7 @@ export default class FormML {
 
   getField(index: object) {
     const schema = this.getSchemaByIndex(index)
-    const name = schema.name
+    const { name, type } = schema
 
     this.assertInitialized(name, { methodName: 'getField' })
 
@@ -165,7 +165,12 @@ export default class FormML {
       schema,
 
       // Part: raw value
-      commitRawValue: () => {},
+      commitRawValue: () => {
+        this._typedValuesProxy[name] = convertRawValueToTyped(
+          this._valuesProxy[name],
+          type,
+        )
+      },
       rawValue: this._valuesProxy[name],
       setRawValue: (value: string) => {
         this._valuesProxy[name] = value
@@ -173,7 +178,7 @@ export default class FormML {
 
       // Part: value
       setValue: () => {},
-      value: undefined,
+      value: this._typedValuesProxy[name],
 
       // Part: touch
       touch: () => {
@@ -228,7 +233,7 @@ export default class FormML {
           onBlur: (_e: React.FocusEvent) => {
             // will trigger all sync effects firstly
             fieldsMetaProxy[name].touched = true
-            typedValuesProxy[name] = convertValueToTyped(
+            typedValuesProxy[name] = convertRawValueToTyped(
               valuesProxy[name],
               type,
             )

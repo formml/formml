@@ -565,6 +565,39 @@ describe('FormML', () => {
         const thirdPack = formML.getField(index)
         expect(thirdPack.touched).toBe(true)
       })
+
+      test.each`
+        fieldType     | rawInput                      | expected
+        ${'Text'}     | ${'abc'}                      | ${'abc'}
+        ${'Number'}   | ${'123.45'}                   | ${123.45}
+        ${'Currency'} | ${'123.45'}                   | ${currency('123.45')}
+        ${'Boolean'}  | ${'true'}                     | ${true}
+        ${'Boolean'}  | ${'false'}                    | ${false}
+        ${'Date'}     | ${'2024-01-01T00:00:00.000Z'} | ${new Date(Date.UTC(2024, 0, 1))}
+      `(
+        'should return latest typed $fieldType value once raw value change is committed',
+        ({ expected, fieldType, rawInput }) => {
+          // Arrange
+          const dsl = `
+            form ExampleForm {
+              ${fieldType} field
+            }
+          `
+          const formML = new FormML(dsl)
+          const index = formML.indexRoot['field']
+          formML.initField(index)
+
+          const firstPack = formML.getField(index)
+
+          // Act
+          firstPack.setRawValue(rawInput)
+          firstPack.commitRawValue()
+
+          // Assert
+          const secondPack = formML.getField(index)
+          expect(secondPack.value).toEqual(expected)
+        },
+      )
     })
   })
 
