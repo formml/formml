@@ -3,27 +3,17 @@ import { DeepReadonly, reactive, toRaw } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
 import currency from 'currency.js'
 
-import createMemoSelector from './utils/createMemoSelector.js'
-
-export type FieldProps = {
-  name: string
-  onBlur: React.FocusEventHandler
-  onChange: React.ChangeEventHandler<HTMLInputElement>
-  value: string
-}
-
-export type FieldMetaData = {
+export type FieldResult = DeepReadonly<{
+  commitRawValue: () => void
   error: undefined
+  rawValue: string
+  schema: Field
+  setRawValue: (value: string) => void
+  setValue: (value: PrimitivesRuntimeTypesUnion) => void
+  touch: () => void
   touched: boolean
-  typedValue?: PrimitivesRuntimeTypesUnion
-}
-
-export type FieldPack = {
-  field: FieldProps
-  meta: FieldMetaData
-}
-
-export type FieldSnapshot = DeepReadonly<FieldPack>
+  value: PrimitivesRuntimeTypesUnion | undefined
+}>
 
 function buildIndexes(schema: FormMLSchema) {
   const indexRoot: Record<string, object> = {}
@@ -36,14 +26,7 @@ function buildIndexes(schema: FormMLSchema) {
   return [indexRoot, indexToSchema] as const
 }
 
-function run(effects: (() => void)[]) {
-  while (effects.length > 0) {
-    const effect = effects.shift()!
-    effect()
-  }
-}
-
-type PrimitivesRuntimeType = {
+export type PrimitivesRuntimeType = {
   Boolean: boolean
   Currency: currency
   Date: Date
@@ -51,7 +34,7 @@ type PrimitivesRuntimeType = {
   Text: string
 }
 
-type PrimitivesRuntimeTypesUnion =
+export type PrimitivesRuntimeTypesUnion =
   PrimitivesRuntimeType[keyof PrimitivesRuntimeType]
 
 function convertRawValueToTyped(
@@ -120,18 +103,8 @@ function convertTypedValueToRaw(value: PrimitivesRuntimeTypesUnion): string {
 }
 
 export default class FormML {
-  private readonly _deferredEffects: (() => void)[] = []
   private readonly _fieldsMetaProxy: Record<string, { touched: boolean }> =
     reactive({})
-  private readonly _indexToFieldSnapSelector: Map<
-    object,
-    (
-      valuesProxy: typeof this._valuesProxy,
-      typedValuesProxy: typeof this._typedValuesProxy,
-      fieldsMetaProxy: typeof this._fieldsMetaProxy,
-      deferredEffects: typeof this._deferredEffects,
-    ) => FieldSnapshot
-  > = new Map()
   private readonly _indexToHelpers: Map<
     object,
     {
@@ -168,10 +141,6 @@ export default class FormML {
     }
   }
 
-  private deferEffect(effect: () => void) {
-    this._deferredEffects.push(effect)
-  }
-
   private getSchemaByIndex(index: object) {
     const schema = this._indexToSchema.get(index)
 
@@ -184,7 +153,7 @@ export default class FormML {
     return schema
   }
 
-  getField(index: object) {
+  getField(index: object): FieldResult {
     const schema = this.getSchemaByIndex(index)
     const { name } = schema
 
@@ -198,21 +167,6 @@ export default class FormML {
       value: toRaw(this._typedValuesProxy[name]),
       ...this._indexToHelpers.get(index)!,
     }
-  }
-
-  getFieldSnapshot(index: object): FieldSnapshot {
-    const schema = this.getSchemaByIndex(index)
-    const name = schema.name
-
-    this.assertInitialized(name, { methodName: 'getFieldSnapshot' })
-
-    // already initialized
-    return this._indexToFieldSnapSelector.get(index)!(
-      this._valuesProxy,
-      this._typedValuesProxy,
-      this._fieldsMetaProxy,
-      this._deferredEffects,
-    )
   }
 
   getTypedData() {
@@ -251,45 +205,6 @@ export default class FormML {
         },
       })
     }
-
-    if (!this._indexToFieldSnapSelector.has(index)) {
-      // pure function
-      const fieldSnapSelector = (
-        valuesProxy: typeof this._valuesProxy,
-        typedValuesProxy: typeof this._typedValuesProxy,
-        fieldsMetaProxy: typeof this._fieldsMetaProxy,
-        deferredEffects: typeof this._deferredEffects,
-      ) => ({
-        field: {
-          name,
-          onBlur: (_e: React.FocusEvent) => {
-            // will trigger all sync effects firstly
-            fieldsMetaProxy[name].touched = true
-            typedValuesProxy[name] = convertRawValueToTyped(
-              valuesProxy[name],
-              type,
-            )
-
-            run(deferredEffects) // then, run deferred effects
-          },
-          onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-            valuesProxy[name] = e.target.value // will trigger all sync effects firstly
-            run(deferredEffects) // then, run deferred effects
-          },
-          value: valuesProxy[name],
-        },
-        meta: {
-          error: undefined,
-          touched: fieldsMetaProxy[name].touched,
-          typedValue: typedValuesProxy[name],
-        },
-      })
-
-      this._indexToFieldSnapSelector.set(
-        index,
-        createMemoSelector(fieldSnapSelector),
-      )
-    }
   }
 
   subscribe(index: object, callback: () => void): () => void {
@@ -304,9 +219,7 @@ export default class FormML {
         () => this._typedValuesProxy[name],
         () => this._fieldsMetaProxy[name].touched,
       ],
-      () =>
-        // defer callback execution to be after all sync effects
-        this.deferEffect(callback),
+      () => callback(),
     )
   }
 }
