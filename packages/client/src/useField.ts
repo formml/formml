@@ -1,3 +1,4 @@
+import { Field } from '@formml/dsl'
 import { type DeepReadonly } from '@vue/reactivity'
 import { useCallback, useMemo } from 'react'
 import { useSyncExternalStore } from 'use-sync-external-store/shim'
@@ -15,6 +16,7 @@ export type FieldProps = {
 
 export type FieldMetaData = {
   error: undefined
+  schema: Field
   touched: boolean
   typedValue: PrimitivesRuntimeTypesUnion | undefined
 }
@@ -34,7 +36,7 @@ const selectFieldPack = createMemoSelector(
     touch: FieldResult['touch'],
     touched: FieldResult['touched'],
     value: FieldResult['value'],
-  ): FieldPack => ({
+  ): DeepReadonly<FieldPack> => ({
     field: {
       name: schema.name,
       onBlur: (e) => {
@@ -48,6 +50,7 @@ const selectFieldPack = createMemoSelector(
     },
     meta: {
       error,
+      schema,
       touched,
       typedValue: value,
     },

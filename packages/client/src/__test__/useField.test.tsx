@@ -65,6 +65,11 @@ describe('useField', () => {
         },
         meta: {
           error: undefined,
+          schema: expect.objectContaining({
+            $type: 'Field',
+            name: 'numberField',
+            type: 'Number',
+          }),
           touched: false,
           typedValue: undefined,
         },
