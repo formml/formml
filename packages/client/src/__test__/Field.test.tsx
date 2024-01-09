@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import { userEvent } from '@testing-library/user-event'
 
 import Field from '../Field.js'
 import useFormML from '../useFormML.js'
@@ -105,6 +106,48 @@ describe('Field', () => {
       Object.entries(extraAttrs)
         .filter(([key]) => key !== 'key') // won't pass it down
         .forEach(([key, value]) => expect(input).toHaveAttribute(key, value))
+    })
+
+    test('should allow to override injected attributes', async () => {
+      // Arrange
+      const schema = `
+        form ExampleForm {
+          Text textField
+        }
+      `
+      const mockOnChange = vi.fn()
+      const mockOnBlur = vi.fn()
+
+      const Form = () => {
+        const { FormML, indexRoot } = useFormML(schema)
+        return (
+          <FormML>
+            <Field
+              as="input"
+              index={indexRoot['textField']}
+              name="overridden name"
+              onBlur={mockOnBlur}
+              onChange={mockOnChange}
+              value="overridden"
+            />
+          </FormML>
+        )
+      }
+
+      // Act
+      render(<Form />)
+      const input = screen.getByRole('textbox')
+      const user = userEvent.setup()
+      await user.type(input, 'something')
+      await user.tab()
+
+      // Assert
+      expect(input).toBeInTheDocument()
+
+      expect(input).toHaveValue('overridden')
+      expect(input).toHaveAttribute('name', 'overridden name')
+      expect(mockOnChange).toBeCalled()
+      expect(mockOnBlur).toBeCalled()
     })
 
     test.todo('ref')
