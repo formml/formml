@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
+import { useEffect, useRef } from 'react'
 
 import Field from '../Field.js'
 import useFormML from '../useFormML.js'
@@ -150,7 +151,36 @@ describe('Field', () => {
       expect(mockOnBlur).toBeCalled()
     })
 
-    test.todo('ref')
+    test('should forward ref to underlying input', () => {
+      // Arrange
+      const schema = `
+        form ExampleForm {
+          Text textField
+        }
+      `
+      let actualRef: HTMLInputElement | null = null
+
+      const Form = () => {
+        const { FormML, indexRoot } = useFormML(schema)
+        const ref = useRef<HTMLInputElement>(null)
+        useEffect(() => {
+          actualRef = ref.current
+        }, [])
+        return (
+          <FormML>
+            <Field as="input" index={indexRoot['textField']} ref={ref} />
+          </FormML>
+        )
+      }
+
+      // Act
+      render(<Form />)
+
+      // Assert
+      const input = screen.getByRole('textbox')
+      expect(input).toBeInTheDocument()
+      expect(actualRef).toBe(input)
+    })
 
     test.todo('change value')
 
