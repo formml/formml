@@ -182,7 +182,33 @@ describe('Field', () => {
       expect(actualRef).toBe(input)
     })
 
-    test.todo('change value')
+    test('should show latest value when user inputs', async () => {
+      // Arrange
+      const schema = `
+        form ExampleForm {
+          Text textField
+        }
+      `
+
+      const Form = () => {
+        const { FormML, indexRoot } = useFormML(schema)
+        return (
+          <FormML>
+            <Field as="input" index={indexRoot['textField']} />
+          </FormML>
+        )
+      }
+
+      // Act
+      render(<Form />)
+      const input = screen.getByRole('textbox')
+      const user = userEvent.setup()
+      await user.type(input, 'abc')
+
+      // Assert
+      expect(input).toBeInTheDocument()
+      expect(input).toHaveDisplayValue('abc')
+    })
 
     test.todo('submit value')
   })
