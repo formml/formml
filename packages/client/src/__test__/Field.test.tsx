@@ -237,6 +237,33 @@ describe('Field', () => {
           expect(input).toHaveAttribute('type', 'number')
         })
       })
+
+      describe('Currency', () => {
+        test('should render a number input if field type is currency', () => {
+          // Arrange
+          const schema = `
+            form ExampleForm {
+              Currency currencyField
+            }
+          `
+          const Form = () => {
+            const { FormML, indexRoot } = useFormML(schema)
+            return (
+              <FormML>
+                <Field as="input" index={indexRoot['currencyField']} />
+              </FormML>
+            )
+          }
+
+          // Act
+          render(<Form />)
+
+          // Assert
+          const input = screen.getByRole('spinbutton')
+          expect(input).toBeInTheDocument()
+          expect(input).toHaveAttribute('type', 'number')
+        })
+      })
     })
   })
 })

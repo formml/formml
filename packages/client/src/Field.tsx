@@ -9,7 +9,7 @@ type Props = {
 } & React.ComponentPropsWithoutRef<'input'>
 
 function getInputType(type: PrimitiveType) {
-  if (type === 'Number') return 'number'
+  if (type === 'Number' || type === 'Currency') return 'number'
   return 'text'
 }
 
