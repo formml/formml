@@ -32,7 +32,32 @@ describe('Field', () => {
       expect(input).toHaveValue('')
     })
 
-    test.todo('explicit input')
+    test('should render input element if given explicit target', () => {
+      // Arrange
+      const schema = `
+        form ExampleForm {
+          Text textField
+        }
+      `
+      const Form = () => {
+        const { FormML, indexRoot } = useFormML(schema)
+        return (
+          <FormML>
+            <Field as="input" index={indexRoot['textField']} />
+          </FormML>
+        )
+      }
+
+      // Act
+      render(<Form />)
+
+      // Assert
+      const input = screen.getByRole('textbox')
+      expect(input).toBeInTheDocument()
+      expect(input.tagName).toEqual('INPUT')
+      expect(input).toHaveAttribute('name', 'textField')
+      expect(input).toHaveValue('')
+    })
 
     test.todo('should accept all valid input attributes', () => {})
 
