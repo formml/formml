@@ -264,6 +264,34 @@ describe('Field', () => {
           expect(input).toHaveAttribute('type', 'number')
         })
       })
+
+      describe('Boolean', () => {
+        test('should render a checkbox input if field type is boolean', () => {
+          // Arrange
+          const schema = `
+            form ExampleForm {
+              Boolean booleanField
+            }
+          `
+          const Form = () => {
+            const { FormML, indexRoot } = useFormML(schema)
+            return (
+              <FormML>
+                <Field as="input" index={indexRoot['booleanField']} />
+              </FormML>
+            )
+          }
+
+          // Act
+          render(<Form />)
+
+          // Assert
+          const input = screen.getByRole('checkbox')
+          expect(input).toBeInTheDocument()
+          expect(input.tagName).toEqual('INPUT')
+          expect(input).toHaveAttribute('type', 'checkbox')
+        })
+      })
     })
   })
 })

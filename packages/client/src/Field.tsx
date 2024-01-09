@@ -10,6 +10,7 @@ type Props = {
 
 function getInputType(type: PrimitiveType) {
   if (type === 'Number' || type === 'Currency') return 'number'
+  if (type === 'Boolean') return 'checkbox'
   return 'text'
 }
 
