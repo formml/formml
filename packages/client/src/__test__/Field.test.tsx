@@ -59,7 +59,53 @@ describe('Field', () => {
       expect(input).toHaveValue('')
     })
 
-    test.todo('should accept all valid input attributes', () => {})
+    test('should accept all valid input attributes', () => {
+      // Arrange
+      const schema = `
+        form ExampleForm {
+          Text textField
+        }
+      `
+      const extraAttrs = {
+        'aria-label': 'abc',
+        'data-testid': 'abc',
+        id: 'abc',
+        placeholder: 'abc',
+        title: 'abc',
+        type: 'email',
+
+        // Part: react key prop
+        key: 'abc',
+      }
+      const Form = () => {
+        const { FormML, indexRoot } = useFormML(schema)
+        return (
+          <FormML>
+            <Field
+              aria-label={extraAttrs['aria-label']}
+              as="input"
+              data-testid={extraAttrs['data-testid']}
+              id={extraAttrs['id']}
+              index={indexRoot['textField']}
+              key={extraAttrs['key']}
+              placeholder={extraAttrs['placeholder']}
+              title={extraAttrs['title']}
+              type={extraAttrs['type']}
+            />
+          </FormML>
+        )
+      }
+
+      // Act
+      render(<Form />)
+
+      // Assert
+      const input = screen.getByRole('textbox')
+      expect(input).toBeInTheDocument()
+      Object.entries(extraAttrs)
+        .filter(([key]) => key !== 'key') // won't pass it down
+        .forEach(([key, value]) => expect(input).toHaveAttribute(key, value))
+    })
 
     test.todo('ref')
 
