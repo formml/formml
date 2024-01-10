@@ -63,6 +63,12 @@ describe('useField', () => {
           onChange: expect.any(Function),
           value: '',
         },
+        helpers: {
+          commitRawValue: expect.any(Function),
+          setRawValue: expect.any(Function),
+          setTypedValue: expect.any(Function),
+          touch: expect.any(Function),
+        },
         meta: {
           error: undefined,
           schema: expect.objectContaining({

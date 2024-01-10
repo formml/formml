@@ -21,10 +21,20 @@ export type FieldMetaData = {
   typedValue: PrimitivesRuntimeTypesUnion | undefined
 }
 
+export type FieldHelpers = {
+  commitRawValue: () => void
+  setRawValue: (value: string) => void
+  setTypedValue: (value: PrimitivesRuntimeTypesUnion) => void
+  touch: () => void
+}
+
 export type FieldPack = {
   field: FieldProps
+  helpers: FieldHelpers
   meta: FieldMetaData
 }
+
+export type FieldPackReadonly = DeepReadonly<FieldPack>
 
 const selectFieldPack = createMemoSelector(
   (
@@ -33,10 +43,11 @@ const selectFieldPack = createMemoSelector(
     rawValue: FieldResult['rawValue'],
     schema: FieldResult['schema'],
     setRawValue: FieldResult['setRawValue'],
+    setValue: FieldResult['setValue'],
     touch: FieldResult['touch'],
     touched: FieldResult['touched'],
     value: FieldResult['value'],
-  ): DeepReadonly<FieldPack> => ({
+  ): FieldPackReadonly => ({
     field: {
       name: schema.name,
       onBlur: (e) => {
@@ -48,6 +59,12 @@ const selectFieldPack = createMemoSelector(
       },
       value: rawValue,
     },
+    helpers: {
+      commitRawValue,
+      setRawValue,
+      setTypedValue: setValue,
+      touch,
+    },
     meta: {
       error,
       schema,
@@ -57,7 +74,7 @@ const selectFieldPack = createMemoSelector(
   }),
 )
 
-export default function useField(index: object): DeepReadonly<FieldPack> {
+export default function useField(index: object): FieldPackReadonly {
   const formML = useFormMLContext()
   useMemo(() => formML.initField(index), [formML, index])
 
@@ -71,6 +88,7 @@ export default function useField(index: object): DeepReadonly<FieldPack> {
         field.rawValue,
         field.schema,
         field.setRawValue,
+        field.setValue,
         field.touch,
         field.touched,
         field.value,

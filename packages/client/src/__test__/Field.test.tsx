@@ -286,10 +286,75 @@ describe('Field', () => {
           render(<Form />)
 
           // Assert
-          const input = screen.getByRole('checkbox')
-          expect(input).toBeInTheDocument()
-          expect(input.tagName).toEqual('INPUT')
-          expect(input).toHaveAttribute('type', 'checkbox')
+          const checkbox = screen.getByRole('checkbox')
+          expect(checkbox).toBeInTheDocument()
+          expect(checkbox.tagName).toEqual('INPUT')
+          expect(checkbox).toHaveAttribute('type', 'checkbox')
+        })
+
+        test('should update checked status and form by user action', async () => {
+          // Arrange
+          const schema = `
+            form ExampleForm {
+              Boolean booleanField
+            }
+          `
+          const mockOnSubmit = vi.fn()
+          const Form = () => {
+            const { FormML, handleSubmit, indexRoot } = useFormML(schema)
+            return (
+              <form onSubmit={handleSubmit(mockOnSubmit)}>
+                <FormML>
+                  <Field as="input" index={indexRoot['booleanField']} />
+                </FormML>
+                <button>Submit</button>
+              </form>
+            )
+          }
+
+          // Act
+          render(<Form />)
+          const checkbox = screen.getByRole('checkbox')
+          expect(checkbox).not.toBeChecked()
+
+          const user = userEvent.setup()
+          await user.click(checkbox)
+
+          const button = screen.getByRole('button')
+          await user.click(button)
+
+          // Assert
+          expect(checkbox).toBeChecked()
+          expect(mockOnSubmit).toBeCalledWith({ booleanField: true })
+        })
+
+        test('should have no value attribute by default', async () => {
+          // Arrange
+          const schema = `
+            form ExampleForm {
+              Boolean booleanField
+            }
+          `
+          const Form = () => {
+            const { FormML, indexRoot } = useFormML(schema)
+            return (
+              <FormML>
+                <Field as="input" index={indexRoot['booleanField']} />
+              </FormML>
+            )
+          }
+
+          // Act
+          render(<Form />)
+          const checkbox = screen.getByRole('checkbox')
+          expect(checkbox).not.toHaveAttribute('value')
+
+          const user = userEvent.setup()
+          await user.click(checkbox)
+
+          // Assert
+          expect(checkbox).toBeChecked()
+          expect(checkbox).not.toHaveAttribute('value')
         })
       })
     })

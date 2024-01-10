@@ -1,24 +1,41 @@
-import { PrimitiveType } from '@formml/dsl'
-import { forwardRef } from 'react'
+import { ChangeEvent, forwardRef } from 'react'
 
-import useField from './useField.js'
+import useField, { FieldPackReadonly } from './useField.js'
 
 type Props = {
   as?: 'input'
   index: object
 } & React.ComponentPropsWithoutRef<'input'>
 
-function getInputType(type: PrimitiveType) {
-  if (type === 'Number' || type === 'Currency') return 'number'
-  if (type === 'Boolean') return 'checkbox'
-  return 'text'
+function selectProps({ field, helpers, meta }: FieldPackReadonly) {
+  const type = meta.schema.type
+
+  if (type === 'Number' || type === 'Currency') {
+    return {
+      ...field,
+      type: 'number',
+    }
+  }
+  if (type === 'Boolean') {
+    return {
+      checked: (meta.typedValue as boolean | undefined) ?? false, // TODO: optimize type
+      name: field.name,
+      onBlur: () => {
+        helpers.touch()
+      },
+      onChange: (e: ChangeEvent<HTMLInputElement>) => {
+        helpers.setTypedValue(e.target.checked)
+      },
+      type: 'checkbox',
+    }
+  }
+  return field
 }
 
 const Field = forwardRef<HTMLInputElement, Props>(
   ({ as = 'input', index, ...rest }, ref) => {
-    const { field, meta } = useField(index)
-    const type = getInputType(meta.schema.type)
-    return <input ref={ref} type={type} {...field} {...rest} />
+    const fieldPack = useField(index)
+    return <input ref={ref} {...selectProps(fieldPack)} {...rest} />
   },
 )
 
