@@ -1,8 +1,8 @@
 form SignUpForm {
-  Text    username
-  Text    password
-  Text    phoneNumber
-  Date    birthDay
-  Number  age  // will be calculated by birthDay later
-  Boolean receiveMarketingEmails
+  Text     username
+  Text     password
+  Text     phoneNumber
+  DateTime birthDay
+  Number   age  // will be calculated by birthDay later
+  Boolean  receiveMarketingEmails
 }

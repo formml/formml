@@ -29,7 +29,7 @@ function buildIndexes(schema: FormMLSchema) {
 export type PrimitivesRuntimeType = {
   Boolean: boolean
   Currency: currency
-  Date: Date
+  DateTime: Date
   Number: number
   Text: string
 }
@@ -43,7 +43,7 @@ function convertRawValueToTyped(rawValue: string, type: PrimitiveType) {
       return rawValue === 'true' ? true : false
     case 'Currency':
       return currency(rawValue)
-    case 'Date':
+    case 'DateTime':
       return new Date(rawValue) // TODO: time zone?
     case 'Number':
       return Number(rawValue)

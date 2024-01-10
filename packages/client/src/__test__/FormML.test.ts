@@ -23,7 +23,7 @@ describe('FormML', () => {
           Currency currencyField
           Text     textField
           Boolean	 booleanField
-          Date		 dateField
+          DateTime datetimeField
         }
       `
       const formML = new FormML(schema)
@@ -105,7 +105,7 @@ describe('FormML', () => {
           Currency currencyField
           Text     textField
           Boolean	 booleanField
-          Date		 dateField
+          DateTime datetimeField
         }
       `
       const formML = new FormML(schema)
@@ -141,7 +141,7 @@ describe('FormML', () => {
           Currency currencyField
           Text     textField
           Boolean	 booleanField
-          Date		 dateField
+          DateTime datetimeField
         }
       `
       const formML = new FormML(dsl)
@@ -182,7 +182,7 @@ describe('FormML', () => {
         ${'Currency'} | ${'currencyField'}
         ${'Text'}     | ${'textField'}
         ${'Boolean'}  | ${'booleanField'}
-        ${'Date'}     | ${'dateField'}
+        ${'DateTime'} | ${'datetimeField'}
       `(
         'should return corresponding field schema - $fieldName',
         ({ fieldName, type }) => {
@@ -193,7 +193,7 @@ describe('FormML', () => {
               Currency currencyField
               Text     textField
               Boolean	 booleanField
-              Date		 dateField
+              DateTime datetimeField
             }
           `
           const formML = new FormML(dsl)
@@ -270,7 +270,7 @@ describe('FormML', () => {
         ${'Currency'} | ${'123.45'}                   | ${currency('123.45')}
         ${'Boolean'}  | ${'true'}                     | ${true}
         ${'Boolean'}  | ${'false'}                    | ${false}
-        ${'Date'}     | ${'2024-01-01T00:00:00.000Z'} | ${new Date(Date.UTC(2024, 0, 1))}
+        ${'DateTime'} | ${'2024-01-01T00:00:00.000Z'} | ${new Date(Date.UTC(2024, 0, 1))}
       `(
         'should return latest typed $fieldType value once raw value change is committed',
         ({ expected, fieldType, rawInput }) => {
@@ -303,7 +303,7 @@ describe('FormML', () => {
         ${'Currency'} | ${'123.45'}                   | ${currency('123.45')}
         ${'Boolean'}  | ${'true'}                     | ${true}
         ${'Boolean'}  | ${'false'}                    | ${false}
-        ${'Date'}     | ${'2024-01-01T00:00:00.000Z'} | ${new Date(Date.UTC(2024, 0, 1))}
+        ${'DateTime'} | ${'2024-01-01T00:00:00.000Z'} | ${new Date(Date.UTC(2024, 0, 1))}
       `(
         'should update both of value and raw value when set $fieldType value',
         ({ expectedRawValue, fieldType, newValue }) => {
@@ -372,7 +372,7 @@ describe('FormML', () => {
           Currency currencyField
           Text     textField
           Boolean	 booleanField
-          Date		 dateField
+          DateTime datetimeField
         }
       `
       const formML = new FormML(schema)

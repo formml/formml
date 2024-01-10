@@ -23,7 +23,7 @@ describe('useFormML', () => {
           Currency currencyField
           Text     textField
           Boolean	 booleanField
-          Date		 dateField
+          DateTime datetimeField
         }
       `
 
@@ -38,8 +38,8 @@ describe('useFormML', () => {
         currencyField: {
           $type: 'Currency',
         },
-        dateField: {
-          $type: 'Date',
+        datetimeField: {
+          $type: 'DateTime',
         },
         numberField: {
           $type: 'Number',
@@ -58,7 +58,7 @@ describe('useFormML', () => {
           Currency currencyField
           Text     textField
           Boolean	 booleanField
-          Date		 dateField
+          DateTime datetimeField
         }
       `
       const { rerender, result } = renderHook((dsl) => useFormML(dsl), {
@@ -86,7 +86,7 @@ describe('useFormML', () => {
           Currency currencyField
           Text     textField
           Boolean	 booleanField
-          Date		 dateField
+          DateTime datetimeField
         }
       `
       const { rerender, result } = renderHook(() => useFormML(dsl))

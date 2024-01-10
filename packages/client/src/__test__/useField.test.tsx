@@ -26,7 +26,7 @@ describe('useField', () => {
           Currency currencyField
           Text     textField
           Boolean	 booleanField
-          Date		 dateField
+          DateTime datetimeField
         }
       `
       const formML = new FormML(dsl)
@@ -46,7 +46,7 @@ describe('useField', () => {
           Currency currencyField
           Text     textField
           Boolean	 booleanField
-          Date		 dateField
+          DateTime datetimeField
         }
       `
       const formML = new FormML(dsl)
