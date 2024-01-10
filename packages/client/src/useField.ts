@@ -5,7 +5,7 @@ import { useSyncExternalStore } from 'use-sync-external-store/shim'
 
 import { FieldResult, type PrimitivesRuntimeTypesUnion } from './FormML.js'
 import useFormMLContext from './useFormMLContext.js'
-import createMemoSelector from './utils/createMemoSelector.js'
+import createMemoSelectorGrouper from './utils/createMemoSelectorGrouper.js'
 
 export type FieldProps = {
   name: string
@@ -36,7 +36,7 @@ export type FieldPack = {
 
 export type FieldPackReadonly = DeepReadonly<FieldPack>
 
-const selectFieldPack = createMemoSelector(
+const selectFieldPackByIndex = createMemoSelectorGrouper(
   (
     commitRawValue: FieldResult['commitRawValue'],
     error: FieldResult['error'],
@@ -82,7 +82,7 @@ export default function useField(index: object): FieldPackReadonly {
     useCallback((cb) => formML.subscribe(index, cb), [formML, index]),
     () => {
       const field = formML.getField(index)
-      return selectFieldPack(
+      return selectFieldPackByIndex(index)(
         field.commitRawValue,
         field.error,
         field.rawValue,

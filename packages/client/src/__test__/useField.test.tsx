@@ -354,5 +354,38 @@ describe('useField', () => {
       // Assert
       expect(result.current).toBe(firstResult)
     })
+
+    test('should return stable references when re-rendering multiple hooks', () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number numberFieldA
+          Number numberFieldB
+        }
+      `
+      const formML = new FormML(dsl)
+      const indexA = formML.indexRoot['numberFieldA']
+      const indexB = formML.indexRoot['numberFieldB']
+
+      const { rerender: rerenderA, result: resultA } = renderHookWithContext(
+        () => useField(indexA),
+        formML,
+      )
+      const firstResultA = resultA.current
+
+      const { rerender: rerenderB, result: resultB } = renderHookWithContext(
+        () => useField(indexB),
+        formML,
+      )
+      const firstResultB = resultB.current
+
+      // Act
+      rerenderA()
+      rerenderB()
+
+      // Assert
+      expect(resultA.current).toBe(firstResultA)
+      expect(resultB.current).toBe(firstResultB)
+    })
   })
 })
