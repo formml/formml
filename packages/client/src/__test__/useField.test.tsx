@@ -331,5 +331,28 @@ describe('useField', () => {
       // Assert
       expect(spiedInitField).toBeCalledTimes(2)
     })
+
+    test('should return stable reference when re-rendering', () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+
+      const { rerender, result } = renderHookWithContext(
+        () => useField(index),
+        formML,
+      )
+      const firstResult = result.current
+
+      // Act
+      rerender()
+
+      // Assert
+      expect(result.current).toBe(firstResult)
+    })
   })
 })
