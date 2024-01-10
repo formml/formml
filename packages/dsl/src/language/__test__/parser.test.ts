@@ -10,7 +10,7 @@ describe('parser', () => {
           Currency currencyField
           Text     textField
           Boolean	 booleanField
-          Date		 dateField
+          DateTime datetimeField
         }
       `
     const ast = parser(content)

@@ -29,8 +29,8 @@ exports[`grammar > simple fields > primitives 1`] = `
       },
       {
         "$type": "Field",
-        "type": "Date",
-        "name": "dateField"
+        "type": "DateTime",
+        "name": "datetimeField"
       }
     ]
   }

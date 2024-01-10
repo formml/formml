@@ -12,7 +12,7 @@ Field:
   type=PrimitiveType name=ID;
 
 PrimitiveType returns string:
-  'Text' | 'Number' | 'Currency' | 'Boolean' | 'Date';
+  'Text' | 'Number' | 'Currency' | 'Boolean' | 'DateTime';
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_$a-zA-Z][\w_]*/;
