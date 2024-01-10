@@ -1,6 +1,6 @@
+import Field from '../../src/Field.js'
 import useFormML from '../../src/useFormML.js'
-import Input from './Input.js'
-import dsl from './SignUp.formml?raw'
+import schema from './SignUp.formml?raw'
 
 const submitData = (data: unknown) => {
   alert('logged!')
@@ -8,7 +8,7 @@ const submitData = (data: unknown) => {
 }
 
 export default function SignUpForm() {
-  const { FormML, handleSubmit, indexRoot } = useFormML(dsl)
+  const { FormML, handleSubmit, indexRoot } = useFormML(schema)
   return (
     <FormML>
       <h2>Sign up your account</h2>
@@ -22,19 +22,24 @@ export default function SignUpForm() {
         }}
       >
         <label htmlFor="username">Username</label>
-        <Input id="username" index={indexRoot['username']} />
+        <Field id="username" index={indexRoot['username']} />
+
         <label htmlFor="password">Password</label>
-        <Input id="password" index={indexRoot['password']} />
+        <Field id="password" index={indexRoot['password']} />
+
         <label htmlFor="phoneNumber">Phone number</label>
-        <Input id="phoneNumber" index={indexRoot['phoneNumber']} />
+        <Field id="phoneNumber" index={indexRoot['phoneNumber']} />
+
         <label htmlFor="birthDay">Birth day</label>
-        <Input id="birthDay" index={indexRoot['birthDay']} />
+        <Field id="birthDay" index={indexRoot['birthDay']} />
+
         <label htmlFor="age">Age</label>
-        <Input id="age" index={indexRoot['age']} />
+        <Field id="age" index={indexRoot['age']} />
+
         <label htmlFor="receiveMarketingEmails">
           Want to receive marketing emails?
         </label>
-        <Input
+        <Field
           id="receiveMarketingEmails"
           index={indexRoot['receiveMarketingEmails']}
         />
