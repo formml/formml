@@ -17,7 +17,7 @@ const App = () => {
         <p>Select display demo:</p>
         <div>
           {Object.keys(demos).map((name) => (
-            <>
+            <span key={name}>
               <input
                 checked={activeDemo === name}
                 id={name}
@@ -27,7 +27,7 @@ const App = () => {
                 value={name}
               />
               <label htmlFor={name}>{name}</label>
-            </>
+            </span>
           ))}
         </div>
       </div>
