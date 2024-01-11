@@ -27,5 +27,6 @@ export default function useFormML(schema: string) {
     FormML: FormMLWrapper,
     handleSubmit,
     indexRoot: formML.indexRoot,
+    instance: formML,
   }
 }

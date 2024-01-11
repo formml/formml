@@ -133,10 +133,9 @@ describe('useFormML', () => {
 
     test('should provide latest data to callback', () => {
       // Arrange
-      const stubFormML = {
-        getTypedData: vi.fn(),
-      }
-      vi.mocked(FormML).mockReturnValue(stubFormML as unknown as FormML)
+      const stubFormML = new FormML(dummyDsl)
+      const spiedGetTypedData = vi.spyOn(stubFormML, 'getTypedData')
+      vi.mocked(FormML).mockReturnValue(stubFormML)
       const { result } = renderHook(() => useFormML(dummyDsl))
 
       const onSubmit = vi.fn()
@@ -146,7 +145,7 @@ describe('useFormML', () => {
         fieldA: 'abc',
         fieldB: 123.45,
       }
-      stubFormML.getTypedData.mockReturnValue(expectedData)
+      spiedGetTypedData.mockReturnValue(expectedData)
 
       // Act
       eventHandler(dummyEvent)
@@ -233,6 +232,25 @@ describe('useFormML', () => {
 
       // Assert
       expect(renderPhases).toEqual(['mount', 'update'])
+    })
+  })
+
+  describe('instance', () => {
+    const dummyDsl = `
+      form ExampleForm {
+        Number numberField
+      }`
+
+    test('should return FormML instance', () => {
+      // Arrange
+      const stubFormML = new FormML(dummyDsl)
+      vi.mocked(FormML).mockReturnValue(stubFormML)
+
+      // Act
+      const { result } = renderHook(() => useFormML(dummyDsl))
+
+      // Assert
+      expect(result.current.instance).toBe(stubFormML)
     })
   })
 })
