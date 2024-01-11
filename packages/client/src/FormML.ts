@@ -92,8 +92,8 @@ export default class FormML {
     }
   > = new Map()
   private readonly _indexToSchema: WeakMap<object, Field>
-
   private static readonly _parse = createParser()
+
   private readonly _schema: FormMLSchema
   private readonly _typedValuesProxy: Record<
     string,
@@ -105,7 +105,6 @@ export default class FormML {
     this._schema = FormML._parse(schema)
     ;[this.indexRoot, this._indexToSchema] = buildIndexes(this._schema)
   }
-
   private assertInitialized(
     name: string,
     { methodName: caller }: { methodName: string },
@@ -188,6 +187,14 @@ export default class FormML {
     const name = schema.name
 
     this._valuesProxy[name] = value
+  }
+
+  setValue(index: object, value: PrimitivesRuntimeTypesUnion) {
+    const schema = this.getSchemaByIndex(index)
+    const name = schema.name
+
+    this._typedValuesProxy[name] = value
+    this._valuesProxy[name] = convertTypedValueToRaw(value)
   }
 
   subscribe(index: object, callback: () => void): () => void {
