@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { ChangeEvent, forwardRef } from 'react'
 
 import useField, { FieldPackReadonly } from './useField.js'
@@ -33,6 +34,7 @@ function selectProps({ field, helpers, meta }: FieldPackReadonly) {
     return {
       ...field,
       type: 'datetime-local',
+      value: dayjs(field.value).format('YYYY-MM-DDTHH:mm'),
     }
   }
   return field
