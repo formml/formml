@@ -101,10 +101,12 @@ export default class FormML {
   private readonly _valuesProxy: Record<string, string> = reactive({})
 
   public readonly indexRoot: Record<string, object>
+
   constructor(schema: string) {
     this._schema = FormML._parse(schema)
     ;[this.indexRoot, this._indexToSchema] = buildIndexes(this._schema)
   }
+
   private assertInitialized(
     name: string,
     { methodName: caller }: { methodName: string },
@@ -115,6 +117,7 @@ export default class FormML {
       )
     }
   }
+
   private getSchemaByIndex(index: object) {
     const schema = this._indexToSchema.get(index)
 
@@ -126,11 +129,12 @@ export default class FormML {
     }
     return schema
   }
+
   commitRawValue(index: object) {
     const schema = this.getSchemaByIndex(index)
     const { name, type } = schema
 
-    this.assertInitialized(name, { methodName: 'getField' })
+    this.assertInitialized(name, { methodName: 'commitRawValue' })
 
     this._typedValuesProxy[name] = convertRawValueToTyped(
       this._valuesProxy[name],
@@ -196,16 +200,26 @@ export default class FormML {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
 
+    this.assertInitialized(name, { methodName: 'setRawValue' })
+
     this._valuesProxy[name] = value
   }
 
   setTypedValue(index: object, value: number) {
-    return this.setValue(index, value)
+    const schema = this.getSchemaByIndex(index)
+    const name = schema.name
+
+    this.assertInitialized(name, { methodName: 'setTypedValue' })
+
+    this._typedValuesProxy[name] = value
+    this._valuesProxy[name] = convertTypedValueToRaw(value)
   }
 
   setValue(index: object, value: PrimitivesRuntimeTypesUnion) {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
+
+    this.assertInitialized(name, { methodName: 'setValue' })
 
     this._typedValuesProxy[name] = value
     this._valuesProxy[name] = convertTypedValueToRaw(value)
@@ -231,7 +245,7 @@ export default class FormML {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
 
-    this.assertInitialized(name, { methodName: 'subscribe' })
+    this.assertInitialized(name, { methodName: 'touch' })
 
     this._fieldsMetaProxy[name].touched = true
   }

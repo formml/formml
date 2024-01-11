@@ -100,43 +100,58 @@ describe('FormML', () => {
     })
   })
 
+  describe.each([
+    'getField',
+    'subscribe',
+    'setRawValue',
+    'setValue',
+    'setTypedValue',
+    'commitRawValue',
+    'touch',
+  ] as const)(
+    'index validity and field initialization check - "%s"',
+    (methodName) => {
+      test('should throw if index can not be recognized', () => {
+        // Arrange
+        const schema = `
+          form ExampleForm {
+            Number   numberField
+            Currency currencyField
+            Text     textField
+            Boolean	 booleanField
+            DateTime datetimeField
+          }
+        `
+        const formML = new FormML(schema)
+
+        // Act & Assert
+        const invalidIndex = {}
+        expect(() =>
+          (formML[methodName] as (index: object) => void)(invalidIndex),
+        ).toThrow(/Given index is invalid, index provided:[\s\S]+/g)
+      })
+
+      test('should throw when field is not initialized', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            Number numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+
+        // Act & Assert
+        expect(() =>
+          (formML[methodName] as (index: object) => void)(index),
+        ).toThrow(
+          `Field "numberField" has not been initialized yet, please make sure to call \`initField\` before calling \`${methodName}\``,
+        )
+      })
+    },
+  )
+
   describe('getField', () => {
-    test('should throw if index can not be recognized', () => {
-      // Arrange
-      const schema = `
-        form ExampleForm {
-          Number   numberField
-          Currency currencyField
-          Text     textField
-          Boolean	 booleanField
-          DateTime datetimeField
-        }
-      `
-      const formML = new FormML(schema)
-
-      // Act & Assert
-      const invalidIndex = {}
-      expect(() => formML.getField(invalidIndex)).toThrow(
-        /Given index is invalid, index provided:[\s\S]+/g,
-      )
-    })
-
-    test('should throw when field is not initialized', () => {
-      // Arrange
-      const dsl = `
-        form ExampleForm {
-          Number numberField
-        }
-      `
-      const formML = new FormML(dsl)
-      const index = formML.indexRoot['numberField']
-
-      // Act & Assert
-      expect(() => formML.getField(index)).toThrow(
-        'Field "numberField" has not been initialized yet, please make sure to call `initField` before calling `getField`',
-      )
-    })
-
     test('should return initial field pack', () => {
       // Arrange
       const dsl = `
@@ -371,42 +386,6 @@ describe('FormML', () => {
   })
 
   describe('subscribe', () => {
-    test('should throw if index can not be recognized', () => {
-      // Arrange
-      const schema = `
-        form ExampleForm {
-          Number   numberField
-          Currency currencyField
-          Text     textField
-          Boolean	 booleanField
-          DateTime datetimeField
-        }
-      `
-      const formML = new FormML(schema)
-
-      // Act & Assert
-      const invalidIndex = {}
-      expect(() => formML.subscribe(invalidIndex, () => {})).toThrow(
-        /Given index is invalid, index provided:[\s\S]+/g,
-      )
-    })
-
-    test('should throw when field is not initialized', () => {
-      // Arrange
-      const dsl = `
-        form ExampleForm {
-          Number numberField
-        }
-      `
-      const formML = new FormML(dsl)
-      const index = formML.indexRoot['numberField']
-
-      // Act & Assert
-      expect(() => formML.subscribe(index, () => {})).toThrow(
-        'Field "numberField" has not been initialized yet, please make sure to call `initField` before calling `subscribe`',
-      )
-    })
-
     test('should react to field value change', () => {
       // Arrange
       const schema = `
