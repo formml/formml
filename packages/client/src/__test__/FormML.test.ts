@@ -516,4 +516,26 @@ describe('FormML', () => {
       expect(pack.value).toEqual(123)
     })
   })
+
+  describe('setTypedValue', () => {
+    test('should be alias of setValue', () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+      formML.initField(index)
+
+      // Act
+      formML.setTypedValue(index, 123)
+
+      // Assert
+      const pack = formML.getField(index)
+      expect(pack.rawValue).toEqual('123')
+      expect(pack.value).toEqual(123)
+    })
+  })
 })
