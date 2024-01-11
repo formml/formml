@@ -10,6 +10,7 @@ export type FieldResult = DeepReadonly<{
   rawValue: string
   schema: Field
   setRawValue: (value: string) => void
+  setTypedValue: (value: PrimitivesRuntimeTypesUnion) => void
   setValue: (value: PrimitivesRuntimeTypesUnion) => void
   touch: () => void
   touched: boolean
@@ -87,6 +88,7 @@ export default class FormML {
     {
       commitRawValue: () => void
       setRawValue: (value: string) => void
+      setTypedValue: (value: PrimitivesRuntimeTypesUnion) => void
       setValue: (value: PrimitivesRuntimeTypesUnion) => void
       touch: () => void
     }
@@ -164,7 +166,7 @@ export default class FormML {
 
   initField(index: object) {
     const schema = this.getSchemaByIndex(index)
-    const { name, type } = schema
+    const { name } = schema
 
     if (this._valuesProxy[name] === undefined) {
       this._valuesProxy[name] = ''
@@ -177,20 +179,19 @@ export default class FormML {
     if (!this._indexToHelpers.has(index)) {
       this._indexToHelpers.set(index, {
         commitRawValue: () => {
-          this._typedValuesProxy[name] = convertRawValueToTyped(
-            this._valuesProxy[name],
-            type,
-          )
+          this.commitRawValue(index)
         },
         setRawValue: (value: string) => {
-          this._valuesProxy[name] = value
+          this.setRawValue(index, value)
+        },
+        setTypedValue: (value: PrimitivesRuntimeTypesUnion) => {
+          this.setTypedValue(index, value)
         },
         setValue: (value: PrimitivesRuntimeTypesUnion) => {
-          this._typedValuesProxy[name] = value
-          this._valuesProxy[name] = convertTypedValueToRaw(value)
+          this.setValue(index, value)
         },
         touch: () => {
-          this._fieldsMetaProxy[name].touched = true
+          this.touch(index)
         },
       })
     }
@@ -205,7 +206,7 @@ export default class FormML {
     this._valuesProxy[name] = value
   }
 
-  setTypedValue(index: object, value: number) {
+  setTypedValue(index: object, value: PrimitivesRuntimeTypesUnion) {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
 

@@ -69,6 +69,7 @@ describe('FormML', () => {
         setRawValue: expect.any(Function),
 
         // Part: value
+        setTypedValue: expect.any(Function),
         setValue: expect.any(Function),
         value: undefined,
 
@@ -185,6 +186,7 @@ describe('FormML', () => {
         setRawValue: expect.any(Function),
 
         // Part: value
+        setTypedValue: expect.any(Function),
         setValue: expect.any(Function),
         value: undefined,
 
