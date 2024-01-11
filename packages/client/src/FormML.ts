@@ -2,6 +2,7 @@ import { Field, FormMLSchema, PrimitiveType, createParser } from '@formml/dsl'
 import { DeepReadonly, reactive, toRaw } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
 import currency from 'currency.js'
+import dayjs from 'dayjs'
 
 export type FieldResult = DeepReadonly<{
   commitRawValue: () => void
@@ -44,7 +45,7 @@ function convertRawValueToTyped(rawValue: string, type: PrimitiveType) {
     case 'Currency':
       return currency(rawValue)
     case 'DateTime':
-      return new Date(rawValue) // TODO: time zone?
+      return dayjs(rawValue).toDate()
     case 'Number':
       return Number(rawValue)
     case 'Text':

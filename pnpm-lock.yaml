@@ -14,6 +14,9 @@ dependencies:
   currency.js:
     specifier: ^2.0.4
     version: 2.0.4
+  dayjs:
+    specifier: ^1.11.10
+    version: 1.11.10
   langium:
     specifier: ^2.1.3
     version: 2.1.3
@@ -5454,6 +5457,13 @@ packages:
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.0.0
     dev: true
+
+  /dayjs@1.11.10:
+    resolution:
+      {
+        integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==,
+      }
+    dev: false
 
   /dayjs@1.11.7:
     resolution:

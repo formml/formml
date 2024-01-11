@@ -60,6 +60,7 @@
     "@vue-reactivity/watch": "^0.2.0",
     "@vue/reactivity": "^3.4.3",
     "currency.js": "^2.0.4",
+    "dayjs": "^1.11.10",
     "langium": "^2.1.3",
     "use-sync-external-store": "^1.2.0",
     "vscode-languageclient": "~9.0.1",
