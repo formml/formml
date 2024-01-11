@@ -574,4 +574,35 @@ describe('FormML', () => {
       },
     )
   })
+
+  describe('touch', () => {
+    test('should always be touched after touches field', () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+      formML.initField(index)
+
+      const firstPack = formML.getField(index)
+      expect(firstPack.touched).toBe(false)
+
+      // Act
+      formML.touch(index)
+
+      // Assert
+      const secondPack = formML.getField(index)
+      expect(secondPack.touched).toBe(true)
+
+      // Act
+      formML.touch(index)
+
+      // Assert
+      const thirdPack = formML.getField(index)
+      expect(thirdPack.touched).toBe(true)
+    })
+  })
 })

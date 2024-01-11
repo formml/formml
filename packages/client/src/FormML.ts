@@ -98,8 +98,8 @@ export default class FormML {
     string,
     PrimitivesRuntimeTypesUnion | undefined
   > = reactive({})
-
   private readonly _valuesProxy: Record<string, string> = reactive({})
+
   public readonly indexRoot: Record<string, object>
   constructor(schema: string) {
     this._schema = FormML._parse(schema)
@@ -126,7 +126,6 @@ export default class FormML {
     }
     return schema
   }
-
   commitRawValue(index: object) {
     const schema = this.getSchemaByIndex(index)
     const { name, type } = schema
@@ -226,5 +225,14 @@ export default class FormML {
       ],
       () => callback(),
     )
+  }
+
+  touch(index: object) {
+    const schema = this.getSchemaByIndex(index)
+    const name = schema.name
+
+    this.assertInitialized(name, { methodName: 'subscribe' })
+
+    this._fieldsMetaProxy[name].touched = true
   }
 }
