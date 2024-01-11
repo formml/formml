@@ -94,11 +94,11 @@ export default class FormML {
   private readonly _indexToSchema: WeakMap<object, Field>
   private static readonly _parse = createParser()
   private readonly _schema: FormMLSchema
-
   private readonly _typedValuesProxy: Record<
     string,
     PrimitivesRuntimeTypesUnion | undefined
   > = reactive({})
+
   private readonly _valuesProxy: Record<string, string> = reactive({})
   public readonly indexRoot: Record<string, object>
   constructor(schema: string) {
@@ -125,6 +125,18 @@ export default class FormML {
       )
     }
     return schema
+  }
+
+  commitRawValue(index: object) {
+    const schema = this.getSchemaByIndex(index)
+    const { name, type } = schema
+
+    this.assertInitialized(name, { methodName: 'getField' })
+
+    this._typedValuesProxy[name] = convertRawValueToTyped(
+      this._valuesProxy[name],
+      type,
+    )
   }
 
   getField(index: object): FieldResult {

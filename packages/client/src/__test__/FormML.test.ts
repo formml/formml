@@ -538,4 +538,40 @@ describe('FormML', () => {
       expect(pack.value).toEqual(123)
     })
   })
+
+  describe('commitRawValue', () => {
+    test.each`
+      fieldType     | rawInput                           | expected
+      ${'Text'}     | ${'abc'}                           | ${'abc'}
+      ${'Number'}   | ${'123.45'}                        | ${123.45}
+      ${'Currency'} | ${'123.45'}                        | ${currency('123.45')}
+      ${'Boolean'}  | ${'true'}                          | ${true}
+      ${'Boolean'}  | ${'false'}                         | ${false}
+      ${'DateTime'} | ${'2024-01-01'}                    | ${new Date(2024, 0, 1)}
+      ${'DateTime'} | ${'2024-01-01T00:00:00.000'}       | ${new Date(2024, 0, 1, 0, 0, 0, 0)}
+      ${'DateTime'} | ${'2024-01-01T08:00:00.000+08:00'} | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
+      ${'DateTime'} | ${'2024-01-01T00:00:00.000Z'}      | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
+    `(
+      'should modify typed $fieldType value once raw value change is committed',
+      ({ expected, fieldType, rawInput }) => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            ${fieldType} field
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['field']
+        formML.initField(index)
+
+        // Act
+        formML.setRawValue(index, rawInput)
+        formML.commitRawValue(index)
+
+        // Assert
+        const pack = formML.getField(index)
+        expect(pack.value).toEqual(expected)
+      },
+    )
+  })
 })
