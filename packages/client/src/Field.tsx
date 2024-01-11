@@ -29,6 +29,12 @@ function selectProps({ field, helpers, meta }: FieldPackReadonly) {
       type: 'checkbox',
     }
   }
+  if (type === 'DateTime') {
+    return {
+      ...field,
+      type: 'datetime-local',
+    }
+  }
   return field
 }
 

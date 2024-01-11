@@ -357,6 +357,36 @@ describe('Field', () => {
           expect(checkbox).not.toHaveAttribute('value')
         })
       })
+
+      describe('DateTime', () => {
+        test('should render a datetime-local input if field type is datetime', () => {
+          // Arrange
+          const schema = `
+            form ExampleForm {
+              DateTime datetimeField
+            }
+          `
+          const Form = () => {
+            const { FormML, indexRoot } = useFormML(schema)
+            return (
+              <FormML>
+                <label>
+                  Pick time
+                  <Field as="input" index={indexRoot['datetimeField']} />
+                </label>
+              </FormML>
+            )
+          }
+
+          // Act
+          render(<Form />)
+
+          // Assert
+          const input = screen.getByLabelText('Pick time')
+          expect(input).toBeInTheDocument()
+          expect(input).toHaveAttribute('type', 'datetime-local')
+        })
+      })
     })
   })
 })
