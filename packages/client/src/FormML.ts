@@ -91,8 +91,8 @@ export default class FormML {
       touch: () => void
     }
   > = new Map()
-
   private readonly _indexToSchema: WeakMap<object, Field>
+
   private static readonly _parse = createParser()
   private readonly _schema: FormMLSchema
   private readonly _typedValuesProxy: Record<
@@ -101,7 +101,6 @@ export default class FormML {
   > = reactive({})
   private readonly _valuesProxy: Record<string, string> = reactive({})
   public readonly indexRoot: Record<string, object>
-
   constructor(schema: string) {
     this._schema = FormML._parse(schema)
     ;[this.indexRoot, this._indexToSchema] = buildIndexes(this._schema)
@@ -182,6 +181,13 @@ export default class FormML {
         },
       })
     }
+  }
+
+  setRawValue(index: object, value: string) {
+    const schema = this.getSchemaByIndex(index)
+    const name = schema.name
+
+    this._valuesProxy[name] = value
   }
 
   subscribe(index: object, callback: () => void): () => void {

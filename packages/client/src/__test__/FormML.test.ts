@@ -473,4 +473,25 @@ describe('FormML', () => {
       expect(callback).toBeCalledTimes(1)
     })
   })
+
+  describe('setRawValue', () => {
+    test('should set raw value of target field', () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          Number numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+      formML.initField(index)
+
+      // Act
+      formML.setRawValue(index, '123')
+
+      // Assert
+      const pack = formML.getField(index)
+      expect(pack.rawValue).toEqual('123')
+    })
+  })
 })
