@@ -43,7 +43,7 @@ const selectFieldPackByIndex = createMemoSelectorGrouper(
     rawValue: FieldResult['rawValue'],
     schema: FieldResult['schema'],
     setRawValue: FieldResult['setRawValue'],
-    setValue: FieldResult['setValue'],
+    setTypedValue: FieldResult['setTypedValue'],
     touch: FieldResult['touch'],
     touched: FieldResult['touched'],
     value: FieldResult['value'],
@@ -62,7 +62,7 @@ const selectFieldPackByIndex = createMemoSelectorGrouper(
     helpers: {
       commitRawValue,
       setRawValue,
-      setTypedValue: setValue,
+      setTypedValue,
       touch,
     },
     meta: {
@@ -88,7 +88,7 @@ export default function useField(index: object): FieldPackReadonly {
         field.rawValue,
         field.schema,
         field.setRawValue,
-        field.setValue,
+        field.setTypedValue,
         field.touch,
         field.touched,
         field.value,
