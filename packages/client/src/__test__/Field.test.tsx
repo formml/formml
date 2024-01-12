@@ -442,4 +442,33 @@ describe('Field', () => {
       })
     })
   })
+
+  describe('as textarea', () => {
+    test('should render as textarea', () => {
+      // Arrange
+      const schema = `
+        form ExampleForm {
+          Text textField
+        }
+      `
+      const Form = () => {
+        const { FormML, indexRoot } = useFormML(schema)
+        return (
+          <FormML>
+            <Field as="textarea" index={indexRoot['textField']} />
+          </FormML>
+        )
+      }
+
+      // Act
+      render(<Form />)
+
+      // Assert
+      const input = screen.getByRole('textbox')
+      expect(input).toBeInTheDocument()
+      expect(input.tagName).toEqual('TEXTAREA')
+      expect(input).toHaveAttribute('name', 'textField')
+      expect(input).toHaveValue('')
+    })
+  })
 })

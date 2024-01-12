@@ -10,7 +10,7 @@ import createMemoSelectorGrouper from './utils/createMemoSelectorGrouper.js'
 export type FieldProps = {
   name: string
   onBlur: React.FocusEventHandler
-  onChange: React.ChangeEventHandler<HTMLInputElement>
+  onChange: React.ChangeEventHandler<HTMLElement & { value: string }>
   value: string
 }
 
@@ -50,7 +50,7 @@ const selectFieldPackByIndex = createMemoSelectorGrouper(
   ): FieldPackReadonly => ({
     field: {
       name: schema.name,
-      onBlur: (e) => {
+      onBlur: () => {
         touch()
         commitRawValue()
       },

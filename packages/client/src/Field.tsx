@@ -1,14 +1,10 @@
 import dayjs from 'dayjs'
-import { ChangeEvent, forwardRef } from 'react'
+import { ChangeEvent, ForwardedRef, forwardRef } from 'react'
 
 import useField, { FieldPackReadonly } from './useField.js'
+import omit from './utils/omit.js'
 
-type Props = {
-  as?: 'input'
-  index: object
-} & React.ComponentPropsWithoutRef<'input'>
-
-function selectProps({ field, helpers, meta }: FieldPackReadonly) {
+function selectInputProps({ field, helpers, meta }: FieldPackReadonly) {
   const type = meta.schema.type
 
   if (type === 'Number' || type === 'Currency') {
@@ -40,10 +36,40 @@ function selectProps({ field, helpers, meta }: FieldPackReadonly) {
   return field
 }
 
-const Field = forwardRef<HTMLInputElement, Props>(
-  ({ as = 'input', index, ...rest }, ref) => {
+type InputProps = { as?: 'input' } & React.ComponentPropsWithoutRef<'input'>
+type TextAreaProps = {
+  as: 'textarea'
+} & React.ComponentPropsWithoutRef<'textarea'>
+
+type Props = {
+  index: object
+} & (InputProps | TextAreaProps)
+
+const Field = forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>(
+  ({ index, ...rest }, ref) => {
     const fieldPack = useField(index)
-    return <input ref={ref} {...selectProps(fieldPack)} {...rest} />
+
+    if (rest.as === undefined || rest.as === 'input') {
+      return (
+        <input
+          ref={ref as ForwardedRef<HTMLInputElement>}
+          {...selectInputProps(fieldPack)}
+          {...omit(rest, ['as'])}
+        />
+      )
+    }
+    if (rest.as === 'textarea') {
+      return (
+        <textarea
+          ref={ref as ForwardedRef<HTMLTextAreaElement>}
+          {...fieldPack.field}
+          {...omit(rest, ['as'])}
+        />
+      )
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const never: never = rest.as
+    return null
   },
 )
 
