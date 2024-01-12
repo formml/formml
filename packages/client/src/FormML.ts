@@ -29,11 +29,11 @@ function buildIndexes(schema: FormMLSchema) {
 }
 
 export type PrimitivesRuntimeType = {
-  Boolean: boolean
-  Currency: currency
-  DateTime: Date
-  Number: number
-  Text: string
+  Boolean: boolean | undefined
+  Currency: currency | undefined
+  DateTime: Date | undefined
+  Number: number | undefined
+  Text: string | undefined
 }
 
 export type PrimitivesRuntimeTypesUnion =
@@ -77,6 +77,9 @@ function convertTypedValueToRaw(value: PrimitivesRuntimeTypesUnion): string {
   }
   if (typeof value === 'string') {
     return value
+  }
+  if (typeof value === 'undefined') {
+    return ''
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const never: never = value

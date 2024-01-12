@@ -384,6 +384,31 @@ describe('FormML', () => {
           expect(secondPack.rawValue).toEqual(expectedRawValue)
         },
       )
+
+      test.each(['Text', 'Number', 'Currency', 'Boolean', 'DateTime'])(
+        'should set raw value to empty when set "%s" value as `undefined`',
+        (fieldType) => {
+          // Arrange
+          const dsl = `
+            form ExampleForm {
+              ${fieldType} field
+            }
+          `
+          const formML = new FormML(dsl)
+          const index = formML.indexRoot['field']
+          formML.initField(index)
+
+          const firstPack = formML.getField(index)
+
+          // Act
+          firstPack.setValue(undefined)
+
+          // Assert
+          const secondPack = formML.getField(index)
+          expect(secondPack.value).toBeUndefined()
+          expect(secondPack.rawValue).toEqual('')
+        },
+      )
     })
 
     describe('caches', () => {
@@ -528,6 +553,29 @@ describe('FormML', () => {
       expect(pack.rawValue).toEqual('123')
       expect(pack.value).toEqual(123)
     })
+
+    test.each(['Text', 'Number', 'Currency', 'Boolean', 'DateTime'])(
+      'should set raw value to empty when set "%s" value as `undefined`',
+      (fieldType) => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            ${fieldType} field
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['field']
+        formML.initField(index)
+
+        // Act
+        formML.setValue(index, undefined)
+
+        // Assert
+        const pack = formML.getField(index)
+        expect(pack.value).toBeUndefined()
+        expect(pack.rawValue).toEqual('')
+      },
+    )
   })
 
   describe('setTypedValue', () => {
