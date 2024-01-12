@@ -4,5 +4,6 @@ form SignUpForm {
   Text     phoneNumber
   DateTime birthDay
   Number   age  // will be calculated by birthDay later
+  Text     biography
   Boolean  receiveMarketingEmails
 }

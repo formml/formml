@@ -36,6 +36,9 @@ export default function SignUpForm() {
         <label htmlFor="age">Age</label>
         <Field id="age" index={indexRoot['age']} />
 
+        <label htmlFor="biography">Biography</label>
+        <Field as="textarea" id="biography" index={indexRoot['biography']} />
+
         <label htmlFor="receiveMarketingEmails">
           Want to receive marketing emails?
         </label>
@@ -43,6 +46,7 @@ export default function SignUpForm() {
           id="receiveMarketingEmails"
           index={indexRoot['receiveMarketingEmails']}
         />
+
         <button style={{ gridColumn: '1 / -1' }}>Sign up!</button>
       </form>
     </FormML>
