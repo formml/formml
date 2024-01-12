@@ -352,61 +352,66 @@ describe('FormML', () => {
         },
       )
 
-      test.each`
-        fieldType     | newValue                                         | expectedRawValue
-        ${'Text'}     | ${'abc'}                                         | ${'abc'}
-        ${'Number'}   | ${123.45}                                        | ${'123.45'}
-        ${'Currency'} | ${currency('123.45')}                            | ${'123.45'}
-        ${'Boolean'}  | ${true}                                          | ${'true'}
-        ${'Boolean'}  | ${false}                                         | ${'false'}
-        ${'DateTime'} | ${dayjs.utc('2024-01-01').utcOffset(8).toDate()} | ${'2024-01-01T00:00:00.000Z'}
-      `(
-        'should update both of value and raw value when set $fieldType value',
-        ({ expectedRawValue, fieldType, newValue }) => {
-          // Arrange
-          const dsl = `
-            form ExampleForm {
-              ${fieldType} field
-            }
-          `
-          const formML = new FormML(dsl)
-          const index = formML.indexRoot['field']
-          formML.initField(index)
+      describe.each(['setValue', 'setTypedValue'] as const)(
+        '%s',
+        (methodName) => {
+          test.each`
+            fieldType     | newValue                                         | expectedRawValue
+            ${'Text'}     | ${'abc'}                                         | ${'abc'}
+            ${'Number'}   | ${123.45}                                        | ${'123.45'}
+            ${'Currency'} | ${currency('123.45')}                            | ${'123.45'}
+            ${'Boolean'}  | ${true}                                          | ${'true'}
+            ${'Boolean'}  | ${false}                                         | ${'false'}
+            ${'DateTime'} | ${dayjs.utc('2024-01-01').utcOffset(8).toDate()} | ${'2024-01-01T00:00:00.000Z'}
+          `(
+            'should update both of value and raw value when set $fieldType value',
+            ({ expectedRawValue, fieldType, newValue }) => {
+              // Arrange
+              const dsl = `
+                form ExampleForm {
+                  ${fieldType} field
+                }
+              `
+              const formML = new FormML(dsl)
+              const index = formML.indexRoot['field']
+              formML.initField(index)
 
-          const firstPack = formML.getField(index)
+              const firstPack = formML.getField(index)
 
-          // Act
-          firstPack.setValue(newValue)
+              // Act
+              firstPack[methodName](newValue)
 
-          // Assert
-          const secondPack = formML.getField(index)
-          expect(secondPack.value).toBe(newValue)
-          expect(secondPack.rawValue).toEqual(expectedRawValue)
-        },
-      )
+              // Assert
+              const secondPack = formML.getField(index)
+              expect(secondPack.value).toBe(newValue)
+              expect(secondPack.rawValue).toEqual(expectedRawValue)
+            },
+          )
 
-      test.each(['Text', 'Number', 'Currency', 'Boolean', 'DateTime'])(
-        'should set raw value to empty when set "%s" value as `undefined`',
-        (fieldType) => {
-          // Arrange
-          const dsl = `
-            form ExampleForm {
-              ${fieldType} field
-            }
-          `
-          const formML = new FormML(dsl)
-          const index = formML.indexRoot['field']
-          formML.initField(index)
+          test.each(['Text', 'Number', 'Currency', 'Boolean', 'DateTime'])(
+            'should set raw value to empty when set "%s" value as `undefined`',
+            (fieldType) => {
+              // Arrange
+              const dsl = `
+                form ExampleForm {
+                  ${fieldType} field
+                }
+              `
+              const formML = new FormML(dsl)
+              const index = formML.indexRoot['field']
+              formML.initField(index)
 
-          const firstPack = formML.getField(index)
+              const firstPack = formML.getField(index)
 
-          // Act
-          firstPack.setValue(undefined)
+              // Act
+              firstPack[methodName](undefined)
 
-          // Assert
-          const secondPack = formML.getField(index)
-          expect(secondPack.value).toBeUndefined()
-          expect(secondPack.rawValue).toEqual('')
+              // Assert
+              const secondPack = formML.getField(index)
+              expect(secondPack.value).toBeUndefined()
+              expect(secondPack.rawValue).toEqual('')
+            },
+          )
         },
       )
     })
@@ -533,7 +538,7 @@ describe('FormML', () => {
     })
   })
 
-  describe('setValue', () => {
+  describe.each(['setValue', 'setTypedValue'] as const)('%s', (methodName) => {
     test('should set typed value and raw value of target field', () => {
       // Arrange
       const dsl = `
@@ -546,7 +551,7 @@ describe('FormML', () => {
       formML.initField(index)
 
       // Act
-      formML.setValue(index, 123)
+      formML[methodName](index, 123)
 
       // Assert
       const pack = formML.getField(index)
@@ -568,7 +573,7 @@ describe('FormML', () => {
         formML.initField(index)
 
         // Act
-        formML.setValue(index, undefined)
+        formML[methodName](index, undefined)
 
         // Assert
         const pack = formML.getField(index)
@@ -576,28 +581,6 @@ describe('FormML', () => {
         expect(pack.rawValue).toEqual('')
       },
     )
-  })
-
-  describe('setTypedValue', () => {
-    test('should be alias of setValue', () => {
-      // Arrange
-      const dsl = `
-        form ExampleForm {
-          Number numberField
-        }
-      `
-      const formML = new FormML(dsl)
-      const index = formML.indexRoot['numberField']
-      formML.initField(index)
-
-      // Act
-      formML.setTypedValue(index, 123)
-
-      // Assert
-      const pack = formML.getField(index)
-      expect(pack.rawValue).toEqual('123')
-      expect(pack.value).toEqual(123)
-    })
   })
 
   describe('commitRawValue', () => {
