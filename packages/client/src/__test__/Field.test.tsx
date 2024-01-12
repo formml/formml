@@ -388,46 +388,57 @@ describe('Field', () => {
           expect(input).toHaveAttribute('type', 'datetime-local')
         })
 
-        test('should format value given to input', async () => {
-          // Arrange
-          const schema = `
-            form ExampleForm {
-              DateTime datetimeField
+        test.each([
+          {
+            expectedValue: '2024-01-01T00:00',
+            time: dayjs('2024-01-01T00:00:00.000').toDate(),
+          },
+          {
+            expectedValue: '',
+            time: undefined,
+          },
+        ])(
+          'should format value given to input',
+          async ({ expectedValue, time }) => {
+            // Arrange
+            const schema = `
+              form ExampleForm {
+                DateTime datetimeField
+              }
+            `
+            const Form = () => {
+              const { FormML, indexRoot, instance } = useFormML(schema)
+              return (
+                <FormML>
+                  <label>
+                    Pick time
+                    <Field as="input" index={indexRoot['datetimeField']} />
+                  </label>
+                  <button
+                    onClick={() =>
+                      instance.setTypedValue(indexRoot['datetimeField'], time)
+                    }
+                  >
+                    Reset time
+                  </button>
+                </FormML>
+              )
             }
-          `
-          const targetTime = dayjs('2024-01-01T00:00:00.000').toISOString()
-          const Form = () => {
-            const { FormML, indexRoot, instance } = useFormML(schema)
-            return (
-              <FormML>
-                <label>
-                  Pick time
-                  <Field as="input" index={indexRoot['datetimeField']} />
-                </label>
-                <button
-                  onClick={() =>
-                    instance.setRawValue(indexRoot['datetimeField'], targetTime)
-                  }
-                >
-                  Reset time
-                </button>
-              </FormML>
-            )
-          }
 
-          // Act
-          render(<Form />)
+            // Act
+            render(<Form />)
 
-          const button = screen.getByRole('button')
-          const user = userEvent.setup()
-          await user.click(button)
+            const button = screen.getByRole('button')
+            const user = userEvent.setup()
+            await user.click(button)
 
-          // Assert
-          const input = screen.getByLabelText<HTMLInputElement>('Pick time')
-          expect(input).toBeInTheDocument()
-          expect(input.value).not.toEqual(targetTime)
-          expect(input).toHaveValue('2024-01-01T00:00')
-        })
+            // Assert
+            const input = screen.getByLabelText<HTMLInputElement>('Pick time')
+            expect(input).toBeInTheDocument()
+            expect(input).toHaveValue(expectedValue)
+            expect(input.defaultValue).toEqual(expectedValue)
+          },
+        )
       })
     })
   })

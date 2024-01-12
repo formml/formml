@@ -34,7 +34,7 @@ function selectProps({ field, helpers, meta }: FieldPackReadonly) {
     return {
       ...field,
       type: 'datetime-local',
-      value: dayjs(field.value).format('YYYY-MM-DDTHH:mm'),
+      value: field.value && dayjs(field.value).format('YYYY-MM-DDTHH:mm'),
     }
   }
   return field
