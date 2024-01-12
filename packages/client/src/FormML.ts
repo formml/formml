@@ -40,6 +40,9 @@ export type PrimitivesRuntimeTypesUnion =
   PrimitivesRuntimeType[keyof PrimitivesRuntimeType]
 
 function convertRawValueToTyped(rawValue: string, type: PrimitiveType) {
+  if (rawValue === '' && type !== 'Text') {
+    return undefined
+  }
   switch (type) {
     case 'Boolean':
       return rawValue === 'true' ? true : false

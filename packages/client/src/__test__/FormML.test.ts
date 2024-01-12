@@ -321,6 +321,38 @@ describe('FormML', () => {
       )
 
       test.each`
+        fieldType     | rawInput | expected
+        ${'Text'}     | ${''}    | ${''}
+        ${'Number'}   | ${''}    | ${undefined}
+        ${'Currency'} | ${''}    | ${undefined}
+        ${'Boolean'}  | ${''}    | ${undefined}
+        ${'DateTime'} | ${''}    | ${undefined}
+      `(
+        'should return undefined once raw value is empty except "Text" - $fieldType',
+        ({ expected, fieldType, rawInput }) => {
+          // Arrange
+          const dsl = `
+            form ExampleForm {
+              ${fieldType} field
+            }
+          `
+          const formML = new FormML(dsl)
+          const index = formML.indexRoot['field']
+          formML.initField(index)
+
+          const firstPack = formML.getField(index)
+
+          // Act
+          firstPack.setRawValue(rawInput)
+          firstPack.commitRawValue()
+
+          // Assert
+          const secondPack = formML.getField(index)
+          expect(secondPack.value).toEqual(expected)
+        },
+      )
+
+      test.each`
         fieldType     | newValue                                         | expectedRawValue
         ${'Text'}     | ${'abc'}                                         | ${'abc'}
         ${'Number'}   | ${123.45}                                        | ${'123.45'}
@@ -534,6 +566,36 @@ describe('FormML', () => {
       ${'DateTime'} | ${'2024-01-01T00:00:00.000Z'}      | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
     `(
       'should modify typed $fieldType value once raw value change is committed',
+      ({ expected, fieldType, rawInput }) => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            ${fieldType} field
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['field']
+        formML.initField(index)
+
+        // Act
+        formML.setRawValue(index, rawInput)
+        formML.commitRawValue(index)
+
+        // Assert
+        const pack = formML.getField(index)
+        expect(pack.value).toEqual(expected)
+      },
+    )
+
+    test.each`
+      fieldType     | rawInput | expected
+      ${'Text'}     | ${''}    | ${''}
+      ${'Number'}   | ${''}    | ${undefined}
+      ${'Currency'} | ${''}    | ${undefined}
+      ${'Boolean'}  | ${''}    | ${undefined}
+      ${'DateTime'} | ${''}    | ${undefined}
+    `(
+      'should set typed value to undefined once raw value is empty except for "Text" - $fieldType',
       ({ expected, fieldType, rawInput }) => {
         // Arrange
         const dsl = `
