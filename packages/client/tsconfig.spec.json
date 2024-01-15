@@ -1,9 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "../../dist/out-tsc",
-    "declaration": true,
     "types": ["vitest/globals", "vitest/importMeta", "vite/client", "node"]
   },
   "include": [
@@ -21,6 +19,5 @@
     "src/**/__test__/**/*.tsx",
     "integration-test/**/*.ts",
     "integration-test/**/*.tsx"
-  ],
-  "references": [{ "path": "./tsconfig.lib.json" }]
+  ]
 }
