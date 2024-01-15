@@ -39,4 +39,7 @@ testem.log
 Thumbs.db
 
 # Nx
-.nx/cache
+.nx
+
+# Turbo
+.turbo
