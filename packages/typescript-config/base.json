@@ -10,7 +10,7 @@
     "moduleResolution": "NodeNext",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noUncheckedIndexedAccess": true,
+    "noUncheckedIndexedAccess": false,
     "target": "es2015",
     "module": "NodeNext",
     "lib": ["es2020", "dom"],
