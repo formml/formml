@@ -10,14 +10,6 @@
     },
     "typecheck": {
       "command": "tsc -p packages/dsl/tsconfig.typecheck.json"
-    },
-    "test": {
-      "executor": "@nx/vite:test",
-      "outputs": ["{workspaceRoot}/coverage/packages/dsl"],
-      "options": {
-        "passWithNoTests": true,
-        "reportsDirectory": "../../coverage/packages/dsl"
-      }
     }
   },
   "tags": []

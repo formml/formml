@@ -12,6 +12,8 @@
     "build:tsc": "tsc -p ./tsconfig.lib.json",
     "lint": "eslint . --ignore-path .gitignore",
     "lint:fix": "pnpm run lint --fix",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
     "dev": "rimraf dist/ && pnpm run build:tsc --watch",
     "langium:generate": "langium generate",
     "langium:watch": "langium generate --watch"

@@ -17,6 +17,10 @@
         "*-test/**/*.tsx"
       ]
     },
+    "test:watch": {
+      "cache": false,
+      "persistent": true
+    },
     "lint": {},
     "lint:fix": {},
     "dev": {
