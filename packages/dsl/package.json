@@ -12,6 +12,7 @@
     "build:tsc": "tsc -p ./tsconfig.lib.json",
     "lint": "eslint . --ignore-path .gitignore",
     "lint:fix": "pnpm run lint --fix",
+    "lint:type": "tsc -p ./tsconfig.typecheck.json",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "dev": "rimraf dist/ && pnpm run build:tsc --watch",
