@@ -3,10 +3,7 @@
   "env": {
     "shared-node-browser": true
   },
-  "ignorePatterns": [
-    "node_modules/",
-    "dist/"
-  ],
+  "ignorePatterns": ["node_modules/", "dist/"],
   "plugins": ["perfectionist", "@typescript-eslint"],
   "extends": [
     "eslint:recommended",

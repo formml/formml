@@ -8,18 +8,6 @@
       "command": "node tools/scripts/publish.mjs dsl {args.ver} {args.tag}",
       "dependsOn": ["build"]
     },
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/dsl/**/*.ts"]
-      },
-      "configurations": {
-        "fix": {
-          "fix": true
-        }
-      }
-    },
     "typecheck": {
       "command": "tsc -p packages/dsl/tsconfig.typecheck.json"
     },

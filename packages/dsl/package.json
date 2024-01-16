@@ -10,6 +10,8 @@
   "scripts": {
     "build": "rimraf dist/ && pnpm run build:tsc",
     "build:tsc": "tsc -p ./tsconfig.lib.json",
+    "lint": "eslint . --ignore-path .gitignore",
+    "lint:fix": "pnpm run lint --fix",
     "dev": "rimraf dist/ && pnpm run build:tsc --watch",
     "langium:generate": "langium generate",
     "langium:watch": "langium generate --watch"
@@ -19,6 +21,9 @@
     "langium": "^2.1.3",
     "vscode-languageclient": "~9.0.1",
     "vscode-languageserver": "~9.0.1"
+  },
+  "devDependencies": {
+    "eslint-config-formml": "workspace:*"
   },
   "displayName": "formml",
   "engines": {
