@@ -6,22 +6,6 @@ settings:
 
 importers:
   .:
-    dependencies:
-      '@vue-reactivity/watch':
-        specifier: ^0.2.0
-        version: 0.2.0(@vue/reactivity@3.4.3)(@vue/shared@3.4.3)
-      '@vue/reactivity':
-        specifier: ^3.4.3
-        version: 3.4.3
-      currency.js:
-        specifier: ^2.0.4
-        version: 2.0.4
-      dayjs:
-        specifier: ^1.11.10
-        version: 1.11.10
-      use-sync-external-store:
-        specifier: ^1.2.0
-        version: 1.2.0(react@18.2.0)
     devDependencies:
       '@commitlint/cli':
         specifier: ^18.4.3
@@ -159,7 +143,36 @@ importers:
         specifier: ~1.0.4
         version: 1.0.4(@types/node@20.10.5)(@vitest/ui@1.0.4)(jsdom@23.0.1)
 
-  packages/client: {}
+  packages/client:
+    dependencies:
+      '@formml/dsl':
+        specifier: workspace:^
+        version: link:../dsl
+      '@vue-reactivity/watch':
+        specifier: ^0.2.0
+        version: 0.2.0(@vue/reactivity@3.4.3)(@vue/shared@3.4.3)
+      '@vue/reactivity':
+        specifier: ^3.4.3
+        version: 3.4.3
+      currency.js:
+        specifier: ^2.0.4
+        version: 2.0.4
+      dayjs:
+        specifier: ^1.11.10
+        version: 1.11.10
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      use-sync-external-store:
+        specifier: ^1.2.0
+        version: 1.2.0(react@18.2.0)
+    devDependencies:
+      '@formml/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
 
   packages/dsl:
     dependencies:
@@ -10336,7 +10349,6 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
-    dev: true
 
   /react-is@16.13.1:
     resolution:
@@ -10782,7 +10794,6 @@ packages:
       }
     dependencies:
       loose-envify: 1.4.0
-    dev: true
 
   /semver@5.7.2:
     resolution:

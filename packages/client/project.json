@@ -4,16 +4,6 @@
   "sourceRoot": "packages/client/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/client",
-        "main": "packages/client/src/index.ts",
-        "tsConfig": "packages/client/tsconfig.lib.json",
-        "assets": ["packages/client/*.md"]
-      }
-    },
     "publish": {
       "command": "node tools/scripts/publish.mjs client {args.ver} {args.tag}",
       "dependsOn": ["build"]
