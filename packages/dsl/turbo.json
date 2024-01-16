@@ -1,0 +1,15 @@
+{
+  "extends": ["//"],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build", "langium:generate"]
+    },
+    "langium:generate": {
+      "outputs": ["src/language/generated/**", "syntaxes/**"]
+    },
+    "langium:watch": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

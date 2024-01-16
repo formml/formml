@@ -1,8 +1,8 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "@formml/typescript-config/base.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "declaration": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
     "types": ["node"]
   },
   "include": ["src/**/*.ts"],
