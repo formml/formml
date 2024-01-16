@@ -163,9 +163,6 @@ importers:
 
   packages/dsl:
     dependencies:
-      '@formml/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
       langium:
         specifier: ^2.1.3
         version: 2.1.3
@@ -176,6 +173,9 @@ importers:
         specifier: ~9.0.1
         version: 9.0.1
     devDependencies:
+      '@formml/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
       eslint-config-formml:
         specifier: workspace:*
         version: link:../eslint-config-formml

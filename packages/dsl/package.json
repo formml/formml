@@ -17,12 +17,12 @@
     "langium:watch": "langium generate --watch"
   },
   "dependencies": {
-    "@formml/typescript-config": "workspace:*",
     "langium": "^2.1.3",
     "vscode-languageclient": "~9.0.1",
     "vscode-languageserver": "~9.0.1"
   },
   "devDependencies": {
+    "@formml/typescript-config": "workspace:*",
     "eslint-config-formml": "workspace:*"
   },
   "displayName": "formml",
