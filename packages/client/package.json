@@ -8,7 +8,9 @@
     "dev": "rimraf dist/ && pnpm run build:tsc --watch",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "lint:type": "tsc -p ./tsconfig.typecheck.json"
+    "lint:type": "tsc -p ./tsconfig.typecheck.json",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
   },
   "dependencies": {
     "@formml/dsl": "workspace:^",
