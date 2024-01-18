@@ -8,9 +8,6 @@
       "command": "node tools/scripts/publish.mjs client {args.ver} {args.tag}",
       "dependsOn": ["build"]
     },
-    "typecheck": {
-      "command": "tsc -p packages/client/tsconfig.typecheck.json"
-    },
     "test": {
       "executor": "@nx/vite:test",
       "outputs": ["{workspaceRoot}/coverage/packages/client"],
