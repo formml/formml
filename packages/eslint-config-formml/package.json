@@ -1,10 +1,9 @@
 {
   "name": "eslint-config-formml",
-  "type": "commonjs",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
   "files": [
-    "base.json"
+    "."
   ]
 }

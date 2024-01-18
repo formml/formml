@@ -173,6 +173,9 @@ importers:
       '@formml/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      eslint-config-formml:
+        specifier: workspace:*
+        version: link:../eslint-config-formml
 
   packages/dsl:
     dependencies:

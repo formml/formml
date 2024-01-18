@@ -46,7 +46,7 @@ type Props = {
 } & (InputProps | TextAreaProps)
 
 const Field = forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>(
-  ({ index, ...rest }, ref) => {
+  function Field({ index, ...rest }, ref) {
     const fieldPack = useField(index)
 
     if (rest.as === undefined || rest.as === 'input') {

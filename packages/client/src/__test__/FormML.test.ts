@@ -235,7 +235,7 @@ describe('FormML', () => {
         },
       )
 
-      test('should return latest raw value when field has been changed', async () => {
+      test('should return latest raw value when field has been changed', () => {
         // Arrange
         const dsl = `
           form ExampleForm {

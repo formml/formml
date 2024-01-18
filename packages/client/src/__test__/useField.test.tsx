@@ -248,7 +248,7 @@ describe('useField', () => {
   })
 
   describe('performance', () => {
-    test('should subscribe only once', async () => {
+    test('should subscribe only once', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
@@ -267,7 +267,7 @@ describe('useField', () => {
       expect(spiedSubscribe).toBeCalledTimes(1)
     })
 
-    test('should re-subscribe if index changes', async () => {
+    test('should re-subscribe if index changes', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
@@ -309,7 +309,7 @@ describe('useField', () => {
       expect(spiedInitField).toBeCalledTimes(1)
     })
 
-    test('should re-init field if index changes', async () => {
+    test('should re-init field if index changes', () => {
       // Arrange
       const dsl = `
         form ExampleForm {

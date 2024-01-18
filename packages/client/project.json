@@ -8,18 +8,6 @@
       "command": "node tools/scripts/publish.mjs client {args.ver} {args.tag}",
       "dependsOn": ["build"]
     },
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/client/**/*.{ts,tsx}"]
-      },
-      "configurations": {
-        "fix": {
-          "fix": true
-        }
-      }
-    },
     "typecheck": {
       "command": "tsc -p packages/client/tsconfig.typecheck.json"
     },

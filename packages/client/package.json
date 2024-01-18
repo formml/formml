@@ -5,7 +5,9 @@
   "scripts": {
     "build": "rimraf dist/ && pnpm run build:tsc",
     "build:tsc": "tsc -p ./tsconfig.lib.json",
-    "dev": "rimraf dist/ && pnpm run build:tsc --watch"
+    "dev": "rimraf dist/ && pnpm run build:tsc --watch",
+    "lint": "eslint .",
+    "lint:fix": "pnpm run lint --fix"
   },
   "dependencies": {
     "@formml/dsl": "workspace:^",
@@ -20,6 +22,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@formml/typescript-config": "workspace:*"
+    "@formml/typescript-config": "workspace:*",
+    "eslint-config-formml": "workspace:*"
   }
 }

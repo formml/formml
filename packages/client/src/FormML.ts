@@ -4,6 +4,8 @@ import { watch } from '@vue-reactivity/watch'
 import currency from 'currency.js'
 import dayjs from 'dayjs'
 
+import assertNever from './utils/assertNever.js'
+
 export type FieldResult = DeepReadonly<{
   commitRawValue: () => void
   error: undefined
@@ -55,9 +57,7 @@ function convertRawValueToTyped(rawValue: string, type: PrimitiveType) {
     case 'Text':
       return rawValue
     default: {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const never: never = type
-      throw new Error(`Unsupported type '${type}'`)
+      return assertNever`Unsupported type '${type}'`
     }
   }
 }
@@ -81,9 +81,7 @@ function convertTypedValueToRaw(value: PrimitivesRuntimeTypesUnion): string {
   if (typeof value === 'undefined') {
     return ''
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const never: never = value
-  throw new Error(`Unsupported type '${value}'`)
+  return assertNever`Unsupported type '${value}'`
 }
 
 export default class FormML {
