@@ -10,12 +10,12 @@
   "scripts": {
     "build": "rimraf dist/ && pnpm run build:tsc",
     "build:tsc": "tsc -p ./tsconfig.lib.json",
+    "dev": "rimraf dist/ && pnpm run build:tsc --watch",
     "lint": "eslint . --ignore-path .gitignore",
     "lint:fix": "pnpm run lint --fix",
     "lint:type": "tsc -p ./tsconfig.typecheck.json",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "dev": "rimraf dist/ && pnpm run build:tsc --watch",
     "langium:generate": "langium generate",
     "langium:watch": "langium generate --watch"
   },
