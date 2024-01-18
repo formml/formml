@@ -1,6 +1,6 @@
-import createMemoSelector from './createMemoSelector.js'
+import { createMemoSelector } from './createMemoSelector.js'
 
-export default function createMemoSelectorGrouper<
+export function createMemoSelectorGrouper<
   TKey extends object,
   Params extends unknown[],
   Result,

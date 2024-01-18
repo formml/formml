@@ -3,8 +3,8 @@ import { userEvent } from '@testing-library/user-event'
 import dayjs from 'dayjs'
 import { useEffect, useRef } from 'react'
 
-import Field from '../Field.js'
-import useFormML from '../useFormML.js'
+import { Field } from '../Field.js'
+import { useFormML } from '../useFormML.js'
 
 describe('Field', () => {
   describe('as input', () => {

@@ -1,8 +1,8 @@
 import React from 'react'
 
-import isDepsChanged from './isDepsChanged.js'
+import { isDepsChanged } from './isDepsChanged.js'
 
-export default function useConstant<T>(
+export function useConstant<T>(
   initializer: () => T,
   deps: readonly unknown[],
 ): T {

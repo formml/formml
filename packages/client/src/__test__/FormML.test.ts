@@ -3,7 +3,7 @@ import currency from 'currency.js'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc.js'
 
-import FormML from '../FormML.js'
+import { FormML } from '../FormML.js'
 
 dayjs.extend(utc)
 

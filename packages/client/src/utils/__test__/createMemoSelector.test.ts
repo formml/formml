@@ -1,4 +1,4 @@
-import createMemoSelector from '../createMemoSelector.js'
+import { createMemoSelector } from '../createMemoSelector.js'
 
 describe('createMemoSelector', () => {
   test('should return selected result', () => {

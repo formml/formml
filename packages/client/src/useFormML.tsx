@@ -1,12 +1,12 @@
 import React from 'react'
 
-import FormML from './FormML.js'
+import { FormML } from './FormML.js'
 import { FormMLProvider } from './useFormMLContext.js'
-import useConstant from './utils/useConstant.js'
+import { useConstant } from './utils/useConstant.js'
 
 export type OnSubmitCallback = (data: object) => void
 
-export default function useFormML(schema: string) {
+export function useFormML(schema: string) {
   const formML = useConstant(() => new FormML(schema), [schema])
 
   const handleSubmit: (

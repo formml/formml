@@ -1,4 +1,4 @@
-export default function omit<T extends object, K extends keyof T>(
+export function omit<T extends object, K extends keyof T>(
   object: T,
   keys: K[],
 ): Omit<T, K> {

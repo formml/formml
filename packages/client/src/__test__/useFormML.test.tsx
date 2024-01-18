@@ -1,15 +1,15 @@
 import { render, renderHook } from '@testing-library/react'
 import { Profiler } from 'react'
 
-import FormML from '../FormML.js'
-import useFormML from '../useFormML.js'
-import useFormMLContext from '../useFormMLContext.js'
+import { FormML } from '../FormML.js'
+import { useFormML } from '../useFormML.js'
+import { useFormMLContext } from '../useFormMLContext.js'
 
 vi.mock('../FormML.js', async (importOriginal) => {
-  const realFormML = (await importOriginal<typeof import('../FormML.js')>())
-    .default
+  const { FormML: realFormML } =
+    await importOriginal<typeof import('../FormML.js')>()
   return {
-    default: vi.fn((dsl) => new realFormML(dsl)),
+    FormML: vi.fn((dsl) => new realFormML(dsl)),
   }
 })
 

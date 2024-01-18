@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react'
 
-import useConstant from '../useConstant.js'
+import { useConstant } from '../useConstant.js'
 
 describe('useConstant', () => {
   const initializer = () => ({ value: 'something' })

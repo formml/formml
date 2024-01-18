@@ -1,4 +1,4 @@
-export default function assertNever(
+export function assertNever(
   strings: TemplateStringsArray,
   never: never,
 ): never {

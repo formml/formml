@@ -1,4 +1,4 @@
-export default function isDepsChanged(
+export function isDepsChanged(
   prevDeps: null | readonly unknown[],
   currDeps: readonly unknown[],
 ) {

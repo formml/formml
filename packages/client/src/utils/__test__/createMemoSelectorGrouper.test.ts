@@ -1,4 +1,4 @@
-import createMemoSelectorGrouper from '../createMemoSelectorGrouper.js'
+import { createMemoSelectorGrouper } from '../createMemoSelectorGrouper.js'
 
 describe('createMemoSelectorGrouper', () => {
   test('should create memorized selector', () => {

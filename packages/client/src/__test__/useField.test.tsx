@@ -1,10 +1,10 @@
 import { renderHook, screen, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 
-import FormML from '../FormML.js'
-import useField from '../useField.js'
-import renderHookWithContext from './helpers/renderHookWithContext.js'
-import renderWithContext from './helpers/renderWithContext.js'
+import { FormML } from '../FormML.js'
+import { useField } from '../useField.js'
+import { renderHookWithContext } from './helpers/renderHookWithContext.js'
+import { renderWithContext } from './helpers/renderWithContext.js'
 
 describe('useField', () => {
   describe('hook only', () => {

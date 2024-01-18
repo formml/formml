@@ -4,7 +4,7 @@ import { watch } from '@vue-reactivity/watch'
 import currency from 'currency.js'
 import dayjs from 'dayjs'
 
-import assertNever from './utils/assertNever.js'
+import { assertNever } from './utils/assertNever.js'
 
 export type FieldResult = DeepReadonly<{
   commitRawValue: () => void
@@ -84,7 +84,7 @@ function convertTypedValueToRaw(value: PrimitivesRuntimeTypesUnion): string {
   return assertNever`Unsupported type '${value}'`
 }
 
-export default class FormML {
+export class FormML {
   private readonly _fieldsMetaProxy: Record<string, { touched: boolean }> =
     reactive({})
   private readonly _indexToHelpers: Map<

@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
 import { ChangeEvent, ForwardedRef, forwardRef } from 'react'
 
-import useField, { FieldPackReadonly } from './useField.js'
-import omit from './utils/omit.js'
+import { FieldPackReadonly, useField } from './useField.js'
+import { omit } from './utils/omit.js'
 
 function selectInputProps({ field, helpers, meta }: FieldPackReadonly) {
   const type = meta.schema.type
@@ -45,7 +45,7 @@ type Props = {
   index: object
 } & (InputProps | TextAreaProps)
 
-const Field = forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>(
+export const Field = forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>(
   function Field({ index, ...rest }, ref) {
     const fieldPack = useField(index)
 
@@ -72,5 +72,3 @@ const Field = forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>(
     return null
   },
 )
-
-export default Field

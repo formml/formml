@@ -4,8 +4,8 @@ import { useCallback, useMemo } from 'react'
 import { useSyncExternalStore } from 'use-sync-external-store/shim'
 
 import { FieldResult, type PrimitivesRuntimeTypesUnion } from './FormML.js'
-import useFormMLContext from './useFormMLContext.js'
-import createMemoSelectorGrouper from './utils/createMemoSelectorGrouper.js'
+import { useFormMLContext } from './useFormMLContext.js'
+import { createMemoSelectorGrouper } from './utils/createMemoSelectorGrouper.js'
 
 export type FieldProps = {
   name: string
@@ -74,7 +74,7 @@ const selectFieldPackByIndex = createMemoSelectorGrouper(
   }),
 )
 
-export default function useField(index: object): FieldPackReadonly {
+export function useField(index: object): FieldPackReadonly {
   const formML = useFormMLContext()
   useMemo(() => formML.initField(index), [formML, index])
 

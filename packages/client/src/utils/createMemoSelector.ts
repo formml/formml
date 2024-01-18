@@ -1,6 +1,6 @@
-import isDepsChanged from './isDepsChanged.js'
+import { isDepsChanged } from './isDepsChanged.js'
 
-export default function createMemoSelector<Params extends unknown[], Result>(
+export function createMemoSelector<Params extends unknown[], Result>(
   selector: (...params: Params) => Result,
 ): (...params: Params) => Result {
   let prevResult: Result | null = null

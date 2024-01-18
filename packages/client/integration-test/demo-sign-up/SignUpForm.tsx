@@ -1,5 +1,5 @@
-import Field from '../../src/Field.js'
-import useFormML from '../../src/useFormML.js'
+import { Field } from '../../src/Field.js'
+import { useFormML } from '../../src/useFormML.js'
 import schema from './SignUp.formml?raw'
 
 const submitData = (data: unknown) => {

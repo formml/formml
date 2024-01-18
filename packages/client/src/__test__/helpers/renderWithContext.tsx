@@ -6,10 +6,10 @@ import {
   render,
 } from '@testing-library/react'
 
-import FormML from '../../FormML.js'
-import buildWrapper from './buildWrapper.js'
+import { FormML } from '../../FormML.js'
+import { buildWrapper } from './buildWrapper.js'
 
-export default function renderWithContext<
+export function renderWithContext<
   Q extends Queries = typeof queries,
   Container extends DocumentFragment | Element = HTMLElement,
   BaseElement extends DocumentFragment | Element = Container,
