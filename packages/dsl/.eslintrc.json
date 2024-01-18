@@ -1,18 +1,10 @@
 {
-  "extends": ["../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*"],
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {}
-    },
-    {
-      "files": ["*.ts", "*.tsx"],
-      "rules": {}
-    },
-    {
-      "files": ["*.js", "*.jsx"],
-      "rules": {}
-    }
-  ]
+  "root": true,
+  "extends": ["formml/base"],
+  "rules": {
+    "turbo/no-undeclared-env-vars": [
+      "error",
+      { "allowList": ["^DEBUG_[A-Z_]+$"] }
+    ]
+  }
 }

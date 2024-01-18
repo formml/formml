@@ -1,5 +1,32 @@
 {
   "name": "@formml/client",
   "version": "0.0.0",
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "build": "rimraf dist/ && pnpm run build:tsc",
+    "build:tsc": "tsc -p ./tsconfig.lib.json",
+    "dev": "rimraf dist/ && pnpm run build:tsc --watch",
+    "demo": "vite ./integration-test --open",
+    "lint": "eslint .",
+    "lint:fix": "pnpm run lint --fix",
+    "lint:type": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "dependencies": {
+    "@formml/dsl": "workspace:^",
+    "@vue-reactivity/watch": "^0.2.0",
+    "@vue/reactivity": "^3.4.3",
+    "currency.js": "^2.0.4",
+    "dayjs": "^1.11.10",
+    "use-sync-external-store": "^1.2.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@formml/typescript-config": "workspace:*",
+    "eslint-config-formml": "workspace:*"
+  }
 }

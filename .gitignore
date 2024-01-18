@@ -3,7 +3,6 @@
 # compiled output
 dist
 tmp
-/out-tsc
 
 # dependencies
 node_modules
@@ -38,5 +37,5 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Nx
-.nx/cache
+# Turbo
+.turbo

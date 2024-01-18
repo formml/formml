@@ -1,13 +1,12 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "@formml/typescript-config/jsx.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "declaration": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
     "types": ["node"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": [
-    "jest.config.ts",
     "src/**/*.test.ts",
     "src/**/*.spec.ts",
     "src/**/*.test.tsx",

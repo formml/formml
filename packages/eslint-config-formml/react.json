@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/eslintrc",
+  "extends": [
+    "./base.json",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

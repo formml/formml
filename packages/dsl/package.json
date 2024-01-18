@@ -8,8 +8,25 @@
     "src"
   ],
   "scripts": {
+    "build": "rimraf dist/ && pnpm run build:tsc",
+    "build:tsc": "tsc -p ./tsconfig.lib.json",
+    "dev": "rimraf dist/ && pnpm run build:tsc --watch",
+    "lint": "eslint . --ignore-path .gitignore",
+    "lint:fix": "pnpm run lint --fix",
+    "lint:type": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
     "langium:generate": "langium generate",
     "langium:watch": "langium generate --watch"
+  },
+  "dependencies": {
+    "langium": "^2.1.3",
+    "vscode-languageclient": "~9.0.1",
+    "vscode-languageserver": "~9.0.1"
+  },
+  "devDependencies": {
+    "@formml/typescript-config": "workspace:*",
+    "eslint-config-formml": "workspace:*"
   },
   "displayName": "formml",
   "engines": {
@@ -43,5 +60,5 @@
   "activationEvents": [
     "onLanguage:formml"
   ],
-  "main": "./src/extension/main.js"
+  "exports": "./dist/language/index.js"
 }

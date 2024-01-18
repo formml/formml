@@ -71,6 +71,6 @@ function startLanguageClient(context: vscode.ExtensionContext): LanguageClient {
   )
 
   // Start the client. This will also launch the server
-  client.start()
+  void client.start()
   return client
 }

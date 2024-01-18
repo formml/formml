@@ -1,0 +1,32 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "release": {
+      "dependsOn": ["build", "test", "lint"]
+    },
+    "test": {
+      "inputs": [
+        "**/*.formml",
+        "src/**/*.tsx",
+        "src/**/*.ts",
+        "*-test/**/*.ts",
+        "*-test/**/*.tsx"
+      ]
+    },
+    "test:watch": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {},
+    "lint:fix": {},
+    "lint:type": {},
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

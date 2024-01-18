@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json.schemastore.org/eslintrc",
+  "env": {
+    "shared-node-browser": true
+  },
+  "ignorePatterns": ["node_modules/", "dist/"],
+  "plugins": ["perfectionist", "@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:perfectionist/recommended-natural",
+    "plugin:prettier/recommended",
+    "eslint-config-turbo"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": true
+  },
+  "rules": {
+    "prettier/prettier": "warn",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
+    ],
+    "perfectionist/sort-objects": [
+      "error",
+      {
+        "type": "natural",
+        "order": "asc",
+        "partition-by-comment": "Part:**"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["*.test.ts", "*.test.tsx"],
+      "rules": {
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-argument": "off"
+      }
+    }
+  ]
+}
