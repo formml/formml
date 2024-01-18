@@ -9,7 +9,7 @@
     "demo": "vite ./integration-test --open",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "lint:type": "tsc -p ./tsconfig.typecheck.json",
+    "lint:type": "tsc",
     "test": "vitest run",
     "test:watch": "vitest watch"
   },

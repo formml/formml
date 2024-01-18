@@ -1,23 +1,9 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "@formml/typescript-config/jsx.json",
   "compilerOptions": {
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "types": ["vitest"],
+    "noEmit": true,
+    "types": ["vitest/globals", "vitest/importMeta", "vite/client", "node"],
     "jsx": "react-jsx"
   },
-  "files": [],
-  "include": [],
-  "references": [
-    {
-      "path": "./tsconfig.lib.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
-    }
-  ]
+  "include": ["**/*.ts", "**/*.tsx"]
 }

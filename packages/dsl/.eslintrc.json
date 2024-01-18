@@ -1,9 +1,6 @@
 {
   "root": true,
   "extends": ["formml/base"],
-  "parserOptions": {
-    "project": "./tsconfig.typecheck.json"
-  },
   "rules": {
     "turbo/no-undeclared-env-vars": [
       "error",

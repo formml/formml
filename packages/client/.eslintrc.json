@@ -1,7 +1,4 @@
 {
   "root": true,
-  "extends": ["formml/react"],
-  "parserOptions": {
-    "project": "./tsconfig.typecheck.json"
-  }
+  "extends": ["formml/react"]
 }
