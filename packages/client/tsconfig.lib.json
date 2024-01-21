@@ -1,7 +1,7 @@
 {
   "extends": "@formml/typescript-config/jsx.json",
   "compilerOptions": {
-    "outDir": "./dist",
+    "outDir": "./dist/esm",
     "rootDir": "./src",
     "types": ["node"]
   },

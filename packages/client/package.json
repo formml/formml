@@ -2,10 +2,24 @@
   "name": "@formml/client",
   "version": "0.0.0",
   "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.cjs"
+    }
+  },
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
-    "build": "rimraf dist/ && pnpm run build:tsc",
-    "build:tsc": "tsc -p ./tsconfig.lib.json",
-    "dev": "rimraf dist/ && pnpm run build:tsc --watch",
+    "build": "rimraf dist/ && mkdir dist/ && concurrently \"pnpm:build:cjs\" \"pnpm:build:esm\"",
+    "build:cjs": "tsup",
+    "build:esm": "tsc -p ./tsconfig.lib.json",
+    "dev": "rimraf dist/ && pnpm run build:esm --watch",
     "demo": "vite ./integration-test --open",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
