@@ -1,0 +1,12 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "@formml/client": "0.0.0",
+    "@formml/dsl": "0.0.0",
+    "eslint-config-formml": "0.0.0",
+    "@formml/typescript-config": "0.0.0",
+    "@formml/vscode": "0.0.0"
+  },
+  "changesets": []
+}
