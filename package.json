@@ -10,6 +10,7 @@
     "pnpm": ">=8"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.1",
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-angular": "^18.4.3",
     "@commitlint/config-pnpm-scopes": "^18.4.4",
