@@ -1,7 +1,6 @@
 {
-  "name": "@formml/source",
-  "version": "0.0.0",
-  "license": "MIT",
+  "name": "@formml/root",
+  "description": "The root of FormML monorepo. Never publish this file!",
   "scripts": {
     "prepare": "husky install"
   },

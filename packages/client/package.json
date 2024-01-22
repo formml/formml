@@ -1,6 +1,18 @@
 {
   "name": "@formml/client",
   "version": "0.0.0",
+  "description": "The client to evaluate formml schema files, for frontend or backend",
+  "keywords": [
+    "formml",
+    "form",
+    "react",
+    "react-hooks"
+  ],
+  "homepage": "https://github.com/formml/formml/tree/main/packages/client",
+  "repository": "https://github.com/formml/formml/tree/main/packages/client",
+  "bugs": "https://github.com/formml/formml/issues",
+  "author": "Jindong Zhang <jindong.zhannng@gmail.com>",
+  "license": "MIT",
   "type": "module",
   "exports": {
     ".": {
@@ -13,7 +25,8 @@
   "types": "./dist/esm/index.d.ts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "!src/**/__test__"
   ],
   "scripts": {
     "build": "rimraf dist/ && mkdir dist/ && concurrently \"pnpm:build:cjs\" \"pnpm:build:esm\"",

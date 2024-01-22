@@ -1,11 +1,22 @@
 {
   "name": "@formml/dsl",
-  "description": "Please enter a brief description here",
   "version": "0.0.0",
   "type": "module",
+  "description": "The parser of formml schema language",
+  "keywords": [
+    "formml",
+    "form",
+    "parser"
+  ],
+  "homepage": "https://github.com/formml/formml/tree/main/packages/dsl",
+  "repository": "https://github.com/formml/formml/tree/main/packages/dsl",
+  "bugs": "https://github.com/formml/formml/issues",
+  "author": "Jindong Zhang <jindong.zhannng@gmail.com>",
+  "license": "MIT",
   "files": [
-    "out",
-    "src"
+    "dist",
+    "src",
+    "!src/**/__test__"
   ],
   "scripts": {
     "build": "rimraf dist/ && pnpm run build:tsc",
