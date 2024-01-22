@@ -6,7 +6,7 @@
       "grammar": "src/language/formml.langium",
       "fileExtensions": [".formml"],
       "textMate": {
-        "out": "syntaxes/formml.tmLanguage.json"
+        "out": "../vscode/syntaxes/formml.tmLanguage.json"
       }
     }
   ],

@@ -9,9 +9,7 @@
       "name": "Run Extension",
       "type": "extensionHost",
       "request": "launch",
-      "args": [
-        "--extensionDevelopmentPath=${workspaceFolder}/dist/packages/dsl"
-      ]
+      "args": ["--extensionDevelopmentPath=${workspaceFolder}/packages/vscode"]
     },
     {
       "name": "Attach to Language Server",
@@ -21,8 +19,8 @@
       "skipFiles": ["<node_internals>/**"],
       "sourceMaps": true,
       "outFiles": [
-        "${workspaceFolder}/dist/**/*.js",
-        "${workspaceFolder}/node_modules/langium"
+        "${workspaceFolder}/**/dist/**/*.js",
+        "${workspaceFolder}/**/node_modules/langium"
       ]
     }
   ]

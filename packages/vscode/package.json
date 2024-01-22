@@ -1,0 +1,60 @@
+{
+  "name": "@formml/vscode",
+  "description": "Please enter a brief description here",
+  "version": "0.0.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm run build:cjs",
+    "build:cjs": "tsup",
+    "dev": "pnpm run build:cjs --watch",
+    "lint": "eslint . --ignore-path .gitignore",
+    "lint:fix": "pnpm run lint --fix",
+    "lint:type": "tsc"
+  },
+  "dependencies": {
+    "@formml/dsl": "workspace:^",
+    "langium": "^2.1.3",
+    "vscode-languageclient": "~9.0.1",
+    "vscode-languageserver": "~9.0.1"
+  },
+  "devDependencies": {
+    "@formml/typescript-config": "workspace:*",
+    "eslint-config-formml": "workspace:*"
+  },
+  "displayName": "FormML",
+  "engines": {
+    "vscode": "^1.67.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "formml",
+        "aliases": [
+          "FormML",
+          "formml"
+        ],
+        "extensions": [
+          ".formml"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "formml",
+        "scopeName": "source.formml",
+        "path": "./syntaxes/formml.tmLanguage.json"
+      }
+    ]
+  },
+  "activationEvents": [
+    "onLanguage:formml"
+  ],
+  "main": "./dist/index.cjs"
+}

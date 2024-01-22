@@ -1,0 +1,10 @@
+{
+  "root": true,
+  "extends": ["formml/base"],
+  "rules": {
+    "turbo/no-undeclared-env-vars": [
+      "error",
+      { "allowList": ["^DEBUG_[A-Z_]+$"] }
+    ]
+  }
+}

@@ -1,11 +1,10 @@
+import { createFormMLServices } from '@formml/dsl'
 import { startLanguageServer } from 'langium'
 import { NodeFileSystem } from 'langium/node'
 import {
   ProposedFeatures,
   createConnection,
 } from 'vscode-languageserver/node.js'
-
-import { createFormMLServices } from './formml-module.js'
 
 // Create a connection to the client
 const connection = createConnection(ProposedFeatures.all)

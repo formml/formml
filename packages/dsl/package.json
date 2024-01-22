@@ -20,45 +20,11 @@
     "langium:watch": "langium generate --watch"
   },
   "dependencies": {
-    "langium": "^2.1.3",
-    "vscode-languageclient": "~9.0.1",
-    "vscode-languageserver": "~9.0.1"
+    "langium": "^2.1.3"
   },
   "devDependencies": {
     "@formml/typescript-config": "workspace:*",
     "eslint-config-formml": "workspace:*"
   },
-  "displayName": "formml",
-  "engines": {
-    "vscode": "^1.67.0"
-  },
-  "categories": [
-    "Programming Languages"
-  ],
-  "contributes": {
-    "languages": [
-      {
-        "id": "formml",
-        "aliases": [
-          "FormML",
-          "formml"
-        ],
-        "extensions": [
-          ".formml"
-        ],
-        "configuration": "./language-configuration.json"
-      }
-    ],
-    "grammars": [
-      {
-        "language": "formml",
-        "scopeName": "source.formml",
-        "path": "./syntaxes/formml.tmLanguage.json"
-      }
-    ]
-  },
-  "activationEvents": [
-    "onLanguage:formml"
-  ],
-  "exports": "./dist/language/index.js"
+  "exports": "./dist/index.js"
 }
