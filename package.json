@@ -3,7 +3,8 @@
   "description": "The root of FormML monorepo. Never publish this file!",
   "scripts": {
     "prepare": "husky install",
-    "publish-packages": "turbo run build lint lint:type test && changeset version && changeset publish"
+    "release:version": "turbo run build lint lint:type test && changeset version",
+    "release:publish": "changeset publish"
   },
   "private": true,
   "engines": {
