@@ -15,15 +15,22 @@
         "src/**/*.ts",
         "*-test/**/*.ts",
         "*-test/**/*.tsx"
-      ]
+      ],
+      "dependsOn": ["^build"]
     },
     "test:watch": {
       "cache": false,
       "persistent": true
     },
-    "lint": {},
-    "lint:fix": {},
-    "lint:type": {},
+    "lint": {
+      "dependsOn": ["^build"]
+    },
+    "lint:fix": {
+      "dependsOn": ["^build"]
+    },
+    "lint:type": {
+      "dependsOn": ["^build"]
+    },
     "dev": {
       "cache": false,
       "persistent": true

@@ -2,7 +2,8 @@
   "name": "@formml/root",
   "description": "The root of FormML monorepo. Never publish this file!",
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "publish-packages": "turbo run build lint lint:type test && changeset version && changeset publish"
   },
   "private": true,
   "engines": {
