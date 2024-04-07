@@ -19,7 +19,7 @@ describe('Field', () => {
         const { FormML, indexRoot } = useFormML(schema)
         return (
           <FormML>
-            <Field index={indexRoot['textField']} />
+            <Field $bind={indexRoot['textField']} />
           </FormML>
         )
       }
@@ -46,7 +46,7 @@ describe('Field', () => {
         const { FormML, indexRoot } = useFormML(schema)
         return (
           <FormML>
-            <Field as="input" index={indexRoot['textField']} />
+            <Field $bind={indexRoot['textField']} as="input" />
           </FormML>
         )
       }
@@ -85,11 +85,11 @@ describe('Field', () => {
         return (
           <FormML>
             <Field
+              $bind={indexRoot['textField']}
               aria-label={extraAttrs['aria-label']}
               as="input"
               data-testid={extraAttrs['data-testid']}
               id={extraAttrs['id']}
-              index={indexRoot['textField']}
               key={extraAttrs['key']}
               placeholder={extraAttrs['placeholder']}
               title={extraAttrs['title']}
@@ -125,8 +125,8 @@ describe('Field', () => {
         return (
           <FormML>
             <Field
+              $bind={indexRoot['textField']}
               as="input"
-              index={indexRoot['textField']}
               name="overridden name"
               onBlur={mockOnBlur}
               onChange={mockOnChange}
@@ -169,7 +169,7 @@ describe('Field', () => {
         }, [])
         return (
           <FormML>
-            <Field as="input" index={indexRoot['textField']} ref={ref} />
+            <Field $bind={indexRoot['textField']} as="input" ref={ref} />
           </FormML>
         )
       }
@@ -195,7 +195,7 @@ describe('Field', () => {
         const { FormML, indexRoot } = useFormML(schema)
         return (
           <FormML>
-            <Field as="input" index={indexRoot['textField']} />
+            <Field $bind={indexRoot['textField']} as="input" />
           </FormML>
         )
       }
@@ -224,7 +224,7 @@ describe('Field', () => {
             const { FormML, indexRoot } = useFormML(schema)
             return (
               <FormML>
-                <Field as="input" index={indexRoot['numberField']} />
+                <Field $bind={indexRoot['numberField']} as="input" />
               </FormML>
             )
           }
@@ -251,7 +251,7 @@ describe('Field', () => {
             const { FormML, indexRoot } = useFormML(schema)
             return (
               <FormML>
-                <Field as="input" index={indexRoot['currencyField']} />
+                <Field $bind={indexRoot['currencyField']} as="input" />
               </FormML>
             )
           }
@@ -278,7 +278,7 @@ describe('Field', () => {
             const { FormML, indexRoot } = useFormML(schema)
             return (
               <FormML>
-                <Field as="input" index={indexRoot['booleanField']} />
+                <Field $bind={indexRoot['booleanField']} as="input" />
               </FormML>
             )
           }
@@ -306,7 +306,7 @@ describe('Field', () => {
             return (
               <form onSubmit={handleSubmit(mockOnSubmit)}>
                 <FormML>
-                  <Field as="input" index={indexRoot['booleanField']} />
+                  <Field $bind={indexRoot['booleanField']} as="input" />
                 </FormML>
                 <button>Submit</button>
               </form>
@@ -340,7 +340,7 @@ describe('Field', () => {
             const { FormML, indexRoot } = useFormML(schema)
             return (
               <FormML>
-                <Field as="input" index={indexRoot['booleanField']} />
+                <Field $bind={indexRoot['booleanField']} as="input" />
               </FormML>
             )
           }
@@ -373,7 +373,7 @@ describe('Field', () => {
               <FormML>
                 <label>
                   Pick time
-                  <Field as="input" index={indexRoot['datetimeField']} />
+                  <Field $bind={indexRoot['datetimeField']} as="input" />
                 </label>
               </FormML>
             )
@@ -412,7 +412,7 @@ describe('Field', () => {
                 <FormML>
                   <label>
                     Pick time
-                    <Field as="input" index={indexRoot['datetimeField']} />
+                    <Field $bind={indexRoot['datetimeField']} as="input" />
                   </label>
                   <button
                     onClick={() =>
@@ -455,7 +455,7 @@ describe('Field', () => {
         const { FormML, indexRoot } = useFormML(schema)
         return (
           <FormML>
-            <Field as="textarea" index={indexRoot['textField']} />
+            <Field $bind={indexRoot['textField']} as="textarea" />
           </FormML>
         )
       }

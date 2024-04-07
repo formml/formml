@@ -42,12 +42,12 @@ type TextAreaProps = {
 } & React.ComponentPropsWithoutRef<'textarea'>
 
 type Props = {
-  index: object
+  $bind: object
 } & (InputProps | TextAreaProps)
 
 export const Field = forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>(
-  function Field({ index, ...rest }, ref) {
-    const fieldPack = useField(index)
+  function Field({ $bind, ...rest }, ref) {
+    const fieldPack = useField($bind)
 
     if (rest.as === undefined || rest.as === 'input') {
       return (

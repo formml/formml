@@ -22,29 +22,29 @@ export default function SignUpForm() {
         }}
       >
         <label htmlFor="username">Username</label>
-        <Field id="username" index={indexRoot['username']} />
+        <Field $bind={indexRoot['username']} id="username" />
 
         <label htmlFor="password">Password</label>
-        <Field id="password" index={indexRoot['password']} />
+        <Field $bind={indexRoot['password']} id="password" />
 
         <label htmlFor="phoneNumber">Phone number</label>
-        <Field id="phoneNumber" index={indexRoot['phoneNumber']} />
+        <Field $bind={indexRoot['phoneNumber']} id="phoneNumber" />
 
         <label htmlFor="birthDay">Birth day</label>
-        <Field id="birthDay" index={indexRoot['birthDay']} />
+        <Field $bind={indexRoot['birthDay']} id="birthDay" />
 
         <label htmlFor="age">Age</label>
-        <Field id="age" index={indexRoot['age']} />
+        <Field $bind={indexRoot['age']} id="age" />
 
         <label htmlFor="biography">Biography</label>
-        <Field as="textarea" id="biography" index={indexRoot['biography']} />
+        <Field $bind={indexRoot['biography']} as="textarea" id="biography" />
 
         <label htmlFor="receiveMarketingEmails">
           Want to receive marketing emails?
         </label>
         <Field
+          $bind={indexRoot['receiveMarketingEmails']}
           id="receiveMarketingEmails"
-          index={indexRoot['receiveMarketingEmails']}
         />
 
         <button style={{ gridColumn: '1 / -1' }}>Sign up!</button>
