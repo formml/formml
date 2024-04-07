@@ -16,10 +16,10 @@ describe('Field', () => {
         }
       `
       const Form = () => {
-        const { FormML, indexRoot } = useFormML(schema)
+        const { $form, FormML } = useFormML(schema)
         return (
           <FormML>
-            <Field $bind={indexRoot['textField']} />
+            <Field $bind={$form['textField']} />
           </FormML>
         )
       }
@@ -43,10 +43,10 @@ describe('Field', () => {
         }
       `
       const Form = () => {
-        const { FormML, indexRoot } = useFormML(schema)
+        const { $form, FormML } = useFormML(schema)
         return (
           <FormML>
-            <Field $bind={indexRoot['textField']} as="input" />
+            <Field $bind={$form['textField']} as="input" />
           </FormML>
         )
       }
@@ -81,11 +81,11 @@ describe('Field', () => {
         key: 'abc',
       }
       const Form = () => {
-        const { FormML, indexRoot } = useFormML(schema)
+        const { $form, FormML } = useFormML(schema)
         return (
           <FormML>
             <Field
-              $bind={indexRoot['textField']}
+              $bind={$form['textField']}
               aria-label={extraAttrs['aria-label']}
               as="input"
               data-testid={extraAttrs['data-testid']}
@@ -121,11 +121,11 @@ describe('Field', () => {
       const mockOnBlur = vi.fn()
 
       const Form = () => {
-        const { FormML, indexRoot } = useFormML(schema)
+        const { $form, FormML } = useFormML(schema)
         return (
           <FormML>
             <Field
-              $bind={indexRoot['textField']}
+              $bind={$form['textField']}
               as="input"
               name="overridden name"
               onBlur={mockOnBlur}
@@ -162,14 +162,14 @@ describe('Field', () => {
       let actualRef: HTMLInputElement | null = null
 
       const Form = () => {
-        const { FormML, indexRoot } = useFormML(schema)
+        const { $form, FormML } = useFormML(schema)
         const ref = useRef<HTMLInputElement>(null)
         useEffect(() => {
           actualRef = ref.current
         }, [])
         return (
           <FormML>
-            <Field $bind={indexRoot['textField']} as="input" ref={ref} />
+            <Field $bind={$form['textField']} as="input" ref={ref} />
           </FormML>
         )
       }
@@ -192,10 +192,10 @@ describe('Field', () => {
       `
 
       const Form = () => {
-        const { FormML, indexRoot } = useFormML(schema)
+        const { $form, FormML } = useFormML(schema)
         return (
           <FormML>
-            <Field $bind={indexRoot['textField']} as="input" />
+            <Field $bind={$form['textField']} as="input" />
           </FormML>
         )
       }
@@ -221,10 +221,10 @@ describe('Field', () => {
             }
           `
           const Form = () => {
-            const { FormML, indexRoot } = useFormML(schema)
+            const { $form, FormML } = useFormML(schema)
             return (
               <FormML>
-                <Field $bind={indexRoot['numberField']} as="input" />
+                <Field $bind={$form['numberField']} as="input" />
               </FormML>
             )
           }
@@ -248,10 +248,10 @@ describe('Field', () => {
             }
           `
           const Form = () => {
-            const { FormML, indexRoot } = useFormML(schema)
+            const { $form, FormML } = useFormML(schema)
             return (
               <FormML>
-                <Field $bind={indexRoot['currencyField']} as="input" />
+                <Field $bind={$form['currencyField']} as="input" />
               </FormML>
             )
           }
@@ -275,10 +275,10 @@ describe('Field', () => {
             }
           `
           const Form = () => {
-            const { FormML, indexRoot } = useFormML(schema)
+            const { $form, FormML } = useFormML(schema)
             return (
               <FormML>
-                <Field $bind={indexRoot['booleanField']} as="input" />
+                <Field $bind={$form['booleanField']} as="input" />
               </FormML>
             )
           }
@@ -302,11 +302,11 @@ describe('Field', () => {
           `
           const mockOnSubmit = vi.fn()
           const Form = () => {
-            const { FormML, handleSubmit, indexRoot } = useFormML(schema)
+            const { $form, FormML, handleSubmit } = useFormML(schema)
             return (
               <form onSubmit={handleSubmit(mockOnSubmit)}>
                 <FormML>
-                  <Field $bind={indexRoot['booleanField']} as="input" />
+                  <Field $bind={$form['booleanField']} as="input" />
                 </FormML>
                 <button>Submit</button>
               </form>
@@ -337,10 +337,10 @@ describe('Field', () => {
             }
           `
           const Form = () => {
-            const { FormML, indexRoot } = useFormML(schema)
+            const { $form, FormML } = useFormML(schema)
             return (
               <FormML>
-                <Field $bind={indexRoot['booleanField']} as="input" />
+                <Field $bind={$form['booleanField']} as="input" />
               </FormML>
             )
           }
@@ -368,12 +368,12 @@ describe('Field', () => {
             }
           `
           const Form = () => {
-            const { FormML, indexRoot } = useFormML(schema)
+            const { $form, FormML } = useFormML(schema)
             return (
               <FormML>
                 <label>
                   Pick time
-                  <Field $bind={indexRoot['datetimeField']} as="input" />
+                  <Field $bind={$form['datetimeField']} as="input" />
                 </label>
               </FormML>
             )
@@ -407,16 +407,16 @@ describe('Field', () => {
               }
             `
             const Form = () => {
-              const { FormML, indexRoot, instance } = useFormML(schema)
+              const { $form, FormML, instance } = useFormML(schema)
               return (
                 <FormML>
                   <label>
                     Pick time
-                    <Field $bind={indexRoot['datetimeField']} as="input" />
+                    <Field $bind={$form['datetimeField']} as="input" />
                   </label>
                   <button
                     onClick={() =>
-                      instance.setTypedValue(indexRoot['datetimeField'], time)
+                      instance.setTypedValue($form['datetimeField'], time)
                     }
                   >
                     Reset time
@@ -452,10 +452,10 @@ describe('Field', () => {
         }
       `
       const Form = () => {
-        const { FormML, indexRoot } = useFormML(schema)
+        const { $form, FormML } = useFormML(schema)
         return (
           <FormML>
-            <Field $bind={indexRoot['textField']} as="textarea" />
+            <Field $bind={$form['textField']} as="textarea" />
           </FormML>
         )
       }

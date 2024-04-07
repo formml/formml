@@ -24,9 +24,9 @@ export function useFormML(schema: string) {
   )
 
   return {
+    $form: formML.indexRoot,
     FormML: FormMLWrapper,
     handleSubmit,
-    indexRoot: formML.indexRoot,
     instance: formML,
   }
 }

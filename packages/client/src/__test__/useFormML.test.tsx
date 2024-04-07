@@ -14,7 +14,7 @@ vi.mock('../FormML.js', async (importOriginal) => {
 })
 
 describe('useFormML', () => {
-  describe('indexRoot', () => {
+  describe('$form', () => {
     test('should generate simple field indexes according to schema', () => {
       // Arrange
       const dsl = `
@@ -31,7 +31,7 @@ describe('useFormML', () => {
       const { result } = renderHook(() => useFormML(dsl))
 
       // Assert
-      expect(result.current.indexRoot).toEqual({
+      expect(result.current.$form).toEqual({
         booleanField: {
           $type: 'Boolean',
         },
@@ -64,7 +64,7 @@ describe('useFormML', () => {
       const { rerender, result } = renderHook((dsl) => useFormML(dsl), {
         initialProps: dsl,
       })
-      const firstIndexRoot = result.current.indexRoot
+      const firstIndexRoot = result.current.$form
 
       // Act
       const anotherDsl = `
@@ -75,7 +75,7 @@ describe('useFormML', () => {
       rerender(anotherDsl)
 
       // Assert
-      expect(result.current.indexRoot).not.toBe(firstIndexRoot)
+      expect(result.current.$form).not.toBe(firstIndexRoot)
     })
 
     test('should not re-create indexes when rerendering without dsl change', () => {
@@ -90,13 +90,13 @@ describe('useFormML', () => {
         }
       `
       const { rerender, result } = renderHook(() => useFormML(dsl))
-      const firstIndexRoot = result.current.indexRoot
+      const firstIndexRoot = result.current.$form
 
       // Act
       rerender()
 
       // Assert
-      expect(result.current.indexRoot).toBe(firstIndexRoot) // TODO: deep equality
+      expect(result.current.$form).toBe(firstIndexRoot) // TODO: deep equality
     })
   })
 

@@ -8,7 +8,7 @@ const submitData = (data: unknown) => {
 }
 
 export default function SignUpForm() {
-  const { FormML, handleSubmit, indexRoot } = useFormML(schema)
+  const { $form, FormML, handleSubmit } = useFormML(schema)
   return (
     <FormML>
       <h2>Sign up your account</h2>
@@ -22,28 +22,28 @@ export default function SignUpForm() {
         }}
       >
         <label htmlFor="username">Username</label>
-        <Field $bind={indexRoot['username']} id="username" />
+        <Field $bind={$form['username']} id="username" />
 
         <label htmlFor="password">Password</label>
-        <Field $bind={indexRoot['password']} id="password" />
+        <Field $bind={$form['password']} id="password" />
 
         <label htmlFor="phoneNumber">Phone number</label>
-        <Field $bind={indexRoot['phoneNumber']} id="phoneNumber" />
+        <Field $bind={$form['phoneNumber']} id="phoneNumber" />
 
         <label htmlFor="birthDay">Birth day</label>
-        <Field $bind={indexRoot['birthDay']} id="birthDay" />
+        <Field $bind={$form['birthDay']} id="birthDay" />
 
         <label htmlFor="age">Age</label>
-        <Field $bind={indexRoot['age']} id="age" />
+        <Field $bind={$form['age']} id="age" />
 
         <label htmlFor="biography">Biography</label>
-        <Field $bind={indexRoot['biography']} as="textarea" id="biography" />
+        <Field $bind={$form['biography']} as="textarea" id="biography" />
 
         <label htmlFor="receiveMarketingEmails">
           Want to receive marketing emails?
         </label>
         <Field
-          $bind={indexRoot['receiveMarketingEmails']}
+          $bind={$form['receiveMarketingEmails']}
           id="receiveMarketingEmails"
         />
 
