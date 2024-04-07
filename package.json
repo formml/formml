@@ -4,7 +4,7 @@
   "scripts": {
     "prepare": "husky install",
     "release:version": "turbo run build lint lint:type test && changeset version",
-    "release:publish": "changeset publish"
+    "release:publish": "changeset publish && pnpm --filter vscode-formml release:publish"
   },
   "private": true,
   "engines": {
@@ -29,6 +29,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "@vitest/coverage-v8": "~1.0.4",
     "@vitest/ui": "~1.0.4",
+    "@vscode/vsce": "^2.24.0",
     "concurrently": "^8.2.2",
     "eslint": "~8.56.0",
     "eslint-config-prettier": "9.1.0",

@@ -1,7 +1,8 @@
 {
-  "name": "@formml/vscode",
+  "name": "vscode-formml",
   "private": true,
   "version": "0.0.1",
+  "publisher": "formml",
   "type": "module",
   "description": "The VSCode extension to provide intellisense for formml schema files",
   "keywords": [
@@ -23,7 +24,8 @@
     "dev": "pnpm run build:cjs --watch",
     "lint": "eslint . --ignore-path .gitignore",
     "lint:fix": "pnpm run lint --fix",
-    "lint:type": "tsc"
+    "lint:type": "tsc",
+    "release:publish": "turbo build lint lint:type && vsce publish --no-dependencies"
   },
   "dependencies": {
     "@formml/dsl": "workspace:^",
