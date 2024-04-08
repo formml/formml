@@ -12,7 +12,7 @@ describe('Field', () => {
       // Arrange
       const schema = `
         form ExampleForm {
-          Text textField
+          text textField
         }
       `
       const Form = () => {
@@ -39,7 +39,7 @@ describe('Field', () => {
       // Arrange
       const schema = `
         form ExampleForm {
-          Text textField
+          text textField
         }
       `
       const Form = () => {
@@ -66,7 +66,7 @@ describe('Field', () => {
       // Arrange
       const schema = `
         form ExampleForm {
-          Text textField
+          text textField
         }
       `
       const extraAttrs = {
@@ -114,7 +114,7 @@ describe('Field', () => {
       // Arrange
       const schema = `
         form ExampleForm {
-          Text textField
+          text textField
         }
       `
       const mockOnChange = vi.fn()
@@ -156,7 +156,7 @@ describe('Field', () => {
       // Arrange
       const schema = `
         form ExampleForm {
-          Text textField
+          text textField
         }
       `
       let actualRef: HTMLInputElement | null = null
@@ -187,7 +187,7 @@ describe('Field', () => {
       // Arrange
       const schema = `
         form ExampleForm {
-          Text textField
+          text textField
         }
       `
 
@@ -212,12 +212,12 @@ describe('Field', () => {
     })
 
     describe('heuristic default behaviors', () => {
-      describe('Number', () => {
+      describe('num', () => {
         test('should render a number input if field type is number', () => {
           // Arrange
           const schema = `
             form ExampleForm {
-              Number numberField
+              num numberField
             }
           `
           const Form = () => {
@@ -239,19 +239,19 @@ describe('Field', () => {
         })
       })
 
-      describe('Currency', () => {
-        test('should render a number input if field type is currency', () => {
+      describe('decimal', () => {
+        test('should render a number input if field type is decimal', () => {
           // Arrange
           const schema = `
             form ExampleForm {
-              Currency currencyField
+              decimal decimalField
             }
           `
           const Form = () => {
             const { $form, FormML } = useFormML(schema)
             return (
               <FormML>
-                <Field $bind={$form['currencyField']} as="input" />
+                <Field $bind={$form['decimalField']} as="input" />
               </FormML>
             )
           }
@@ -266,19 +266,19 @@ describe('Field', () => {
         })
       })
 
-      describe('Boolean', () => {
-        test('should render a checkbox input if field type is boolean', () => {
+      describe('bool', () => {
+        test('should render a checkbox input if field type is bool', () => {
           // Arrange
           const schema = `
             form ExampleForm {
-              Boolean booleanField
+              bool boolField
             }
           `
           const Form = () => {
             const { $form, FormML } = useFormML(schema)
             return (
               <FormML>
-                <Field $bind={$form['booleanField']} as="input" />
+                <Field $bind={$form['boolField']} as="input" />
               </FormML>
             )
           }
@@ -297,7 +297,7 @@ describe('Field', () => {
           // Arrange
           const schema = `
             form ExampleForm {
-              Boolean booleanField
+              bool boolField
             }
           `
           const mockOnSubmit = vi.fn()
@@ -306,7 +306,7 @@ describe('Field', () => {
             return (
               <form onSubmit={handleSubmit(mockOnSubmit)}>
                 <FormML>
-                  <Field $bind={$form['booleanField']} as="input" />
+                  <Field $bind={$form['boolField']} as="input" />
                 </FormML>
                 <button>Submit</button>
               </form>
@@ -326,21 +326,21 @@ describe('Field', () => {
 
           // Assert
           expect(checkbox).toBeChecked()
-          expect(mockOnSubmit).toBeCalledWith({ booleanField: true })
+          expect(mockOnSubmit).toBeCalledWith({ boolField: true })
         })
 
         test('should have no value attribute by default', async () => {
           // Arrange
           const schema = `
             form ExampleForm {
-              Boolean booleanField
+              bool boolField
             }
           `
           const Form = () => {
             const { $form, FormML } = useFormML(schema)
             return (
               <FormML>
-                <Field $bind={$form['booleanField']} as="input" />
+                <Field $bind={$form['boolField']} as="input" />
               </FormML>
             )
           }
@@ -359,12 +359,12 @@ describe('Field', () => {
         })
       })
 
-      describe('DateTime', () => {
+      describe('datetime', () => {
         test('should render a datetime-local input if field type is datetime', () => {
           // Arrange
           const schema = `
             form ExampleForm {
-              DateTime datetimeField
+              datetime datetimeField
             }
           `
           const Form = () => {
@@ -403,7 +403,7 @@ describe('Field', () => {
             // Arrange
             const schema = `
               form ExampleForm {
-                DateTime datetimeField
+                datetime datetimeField
               }
             `
             const Form = () => {
@@ -448,7 +448,7 @@ describe('Field', () => {
       // Arrange
       const schema = `
         form ExampleForm {
-          Text textField
+          text textField
         }
       `
       const Form = () => {

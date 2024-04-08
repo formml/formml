@@ -9,27 +9,27 @@ exports[`grammar > simple fields > primitives 1`] = `
     "fields": [
       {
         "$type": "Field",
-        "type": "Number",
+        "type": "num",
         "name": "numberField"
       },
       {
         "$type": "Field",
-        "type": "Currency",
-        "name": "currencyField"
+        "type": "decimal",
+        "name": "decimalField"
       },
       {
         "$type": "Field",
-        "type": "Text",
+        "type": "text",
         "name": "textField"
       },
       {
         "$type": "Field",
-        "type": "Boolean",
-        "name": "booleanField"
+        "type": "bool",
+        "name": "boolField"
       },
       {
         "$type": "Field",
-        "type": "DateTime",
+        "type": "datetime",
         "name": "datetimeField"
       }
     ]
@@ -46,7 +46,7 @@ exports[`grammar > syntax > comments 1`] = `
     "fields": [
       {
         "$type": "Field",
-        "type": "Number",
+        "type": "num",
         "name": "numberField"
       }
     ]

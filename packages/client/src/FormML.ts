@@ -31,30 +31,30 @@ function buildIndexes(schema: FormMLSchema) {
 }
 
 export type PrimitivesRuntimeType = {
-  Boolean: boolean | undefined
-  Currency: BigNumber | undefined
-  DateTime: Date | undefined
-  Number: number | undefined
-  Text: string | undefined
+  bool: boolean | undefined
+  datetime: Date | undefined
+  decimal: BigNumber | undefined
+  num: number | undefined
+  text: string | undefined
 }
 
 export type PrimitivesRuntimeTypesUnion =
   PrimitivesRuntimeType[keyof PrimitivesRuntimeType]
 
 function convertRawValueToTyped(rawValue: string, type: PrimitiveType) {
-  if (rawValue === '' && type !== 'Text') {
+  if (rawValue === '' && type !== 'text') {
     return undefined
   }
   switch (type) {
-    case 'Boolean':
+    case 'bool':
       return rawValue === 'true' ? true : false
-    case 'Currency':
+    case 'decimal':
       return new BigNumber(rawValue)
-    case 'DateTime':
+    case 'datetime':
       return dayjs(rawValue).toDate()
-    case 'Number':
+    case 'num':
       return Number(rawValue)
-    case 'Text':
+    case 'text':
       return rawValue
     default: {
       return assertNever`Unsupported type '${type}'`

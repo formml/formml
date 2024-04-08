@@ -7,13 +7,13 @@ import { omit } from './utils/omit.js'
 function selectInputProps({ field, helpers, meta }: FieldPackReadonly) {
   const type = meta.schema.type
 
-  if (type === 'Number' || type === 'Currency') {
+  if (type === 'num' || type === 'decimal') {
     return {
       ...field,
       type: 'number',
     }
   }
-  if (type === 'Boolean') {
+  if (type === 'bool') {
     return {
       checked: (meta.typedValue as boolean | undefined) ?? false, // TODO: optimize type
       name: field.name,
@@ -26,7 +26,7 @@ function selectInputProps({ field, helpers, meta }: FieldPackReadonly) {
       type: 'checkbox',
     }
   }
-  if (type === 'DateTime') {
+  if (type === 'datetime') {
     return {
       ...field,
       type: 'datetime-local',

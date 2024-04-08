@@ -15,10 +15,10 @@ describe('grammar', () => {
 
         form Example {
           /* multiple line comment
-          Number commentedField
+          num commentedField
           */
 
-          Number numberField
+          num numberField
         }
       `
 
@@ -31,11 +31,11 @@ describe('grammar', () => {
     test('primitives', () => {
       const content = `
         form ExampleForm {
-          Number   numberField
-          Currency currencyField
-          Text     textField
-          Boolean	 booleanField
-          DateTime datetimeField
+          num      numberField
+          decimal  decimalField
+          text     textField
+          bool	   boolField
+          datetime datetimeField
         }
       `
       const ast = parser(content)
@@ -45,7 +45,7 @@ describe('grammar', () => {
     test('invalidate unknown types', () => {
       const content = `
         form ExampleForm {
-          Unknown invalidType
+          unknown invalidType
         }
       `
       expect(() => parser(content)).toThrow(FormMLParserError)

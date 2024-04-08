@@ -22,11 +22,11 @@ describe('useField', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number   numberField
-          Currency currencyField
-          Text     textField
-          Boolean	 booleanField
-          DateTime datetimeField
+          num   numberField
+          decimal decimalField
+          text     textField
+          bool	 boolField
+          datetime datetimeField
         }
       `
       const formML = new FormML(dsl)
@@ -42,11 +42,11 @@ describe('useField', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number   numberField
-          Currency currencyField
-          Text     textField
-          Boolean	 booleanField
-          DateTime datetimeField
+          num   numberField
+          decimal decimalField
+          text     textField
+          bool	 boolField
+          datetime datetimeField
         }
       `
       const formML = new FormML(dsl)
@@ -74,7 +74,7 @@ describe('useField', () => {
           schema: expect.objectContaining({
             $type: 'Field',
             name: 'numberField',
-            type: 'Number',
+            type: 'num',
           }),
           touched: false,
           typedValue: undefined,
@@ -86,7 +86,7 @@ describe('useField', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number numberField
+          num numberField
         }
       `
       const formML = new FormML(dsl)
@@ -106,7 +106,7 @@ describe('useField', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number numberField
+          num numberField
         }
       `
       const formML = new FormML(dsl)
@@ -124,7 +124,7 @@ describe('useField', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Text textField
+          text textField
         }
       `
       const formML = new FormML(dsl)
@@ -145,7 +145,7 @@ describe('useField', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Text textField
+          text textField
         }
       `
       const formML = new FormML(dsl)
@@ -192,7 +192,7 @@ describe('useField', () => {
 
       const dsl = `
         form ExampleForm {
-          Number numberField
+          num numberField
         }
       `
       const formML = new FormML(dsl)
@@ -225,7 +225,7 @@ describe('useField', () => {
 
       const dsl = `
         form ExampleForm {
-          Number numberField
+          num numberField
         }
       `
       const formML = new FormML(dsl)
@@ -252,7 +252,7 @@ describe('useField', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number numberField
+          num numberField
         }
       `
       const formML = new FormML(dsl)
@@ -271,8 +271,8 @@ describe('useField', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number numberFieldA
-          Number numberFieldB
+          num numberFieldA
+          num numberFieldB
         }
       `
       const formML = new FormML(dsl)
@@ -294,7 +294,7 @@ describe('useField', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number numberField
+          num numberField
         }
       `
       const formML = new FormML(dsl)
@@ -313,8 +313,8 @@ describe('useField', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number numberFieldA
-          Number numberFieldB
+          num numberFieldA
+          num numberFieldB
         }
       `
       const formML = new FormML(dsl)
@@ -336,7 +336,7 @@ describe('useField', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number numberField
+          num numberField
         }
       `
       const formML = new FormML(dsl)
@@ -359,8 +359,8 @@ describe('useField', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number numberFieldA
-          Number numberFieldB
+          num numberFieldA
+          num numberFieldB
         }
       `
       const formML = new FormML(dsl)

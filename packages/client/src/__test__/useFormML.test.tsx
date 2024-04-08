@@ -19,11 +19,11 @@ describe('useFormML', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number   numberField
-          Currency currencyField
-          Text     textField
-          Boolean	 booleanField
-          DateTime datetimeField
+          num   numberField
+          decimal decimalField
+          text     textField
+          bool	 boolField
+          datetime datetimeField
         }
       `
 
@@ -32,20 +32,20 @@ describe('useFormML', () => {
 
       // Assert
       expect(result.current.$form).toEqual({
-        booleanField: {
-          $type: 'Boolean',
-        },
-        currencyField: {
-          $type: 'Currency',
+        boolField: {
+          $type: 'bool',
         },
         datetimeField: {
-          $type: 'DateTime',
+          $type: 'datetime',
+        },
+        decimalField: {
+          $type: 'decimal',
         },
         numberField: {
-          $type: 'Number',
+          $type: 'num',
         },
         textField: {
-          $type: 'Text',
+          $type: 'text',
         },
       })
     })
@@ -54,11 +54,11 @@ describe('useFormML', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number   numberField
-          Currency currencyField
-          Text     textField
-          Boolean	 booleanField
-          DateTime datetimeField
+          num   numberField
+          decimal decimalField
+          text     textField
+          bool	 boolField
+          datetime datetimeField
         }
       `
       const { rerender, result } = renderHook((dsl) => useFormML(dsl), {
@@ -69,7 +69,7 @@ describe('useFormML', () => {
       // Act
       const anotherDsl = `
         form ExampleForm2 {
-          Number   numberField
+          num   numberField
         }
       `
       rerender(anotherDsl)
@@ -82,11 +82,11 @@ describe('useFormML', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number   numberField
-          Currency currencyField
-          Text     textField
-          Boolean	 booleanField
-          DateTime datetimeField
+          num   numberField
+          decimal decimalField
+          text     textField
+          bool	 boolField
+          datetime datetimeField
         }
       `
       const { rerender, result } = renderHook(() => useFormML(dsl))
@@ -103,7 +103,7 @@ describe('useFormML', () => {
   describe('handleSubmit', () => {
     const dummyDsl = `
       form ExampleForm {
-        Number numberField
+        num numberField
       }`
     const dummyEvent = new SubmitEvent(
       'submit',
@@ -171,7 +171,7 @@ describe('useFormML', () => {
   describe('FormML', () => {
     const dummyDsl = `
       form ExampleForm {
-        Number numberField
+        num numberField
       }`
 
     test('should provide FormML instance via context', () => {
@@ -238,7 +238,7 @@ describe('useFormML', () => {
   describe('instance', () => {
     const dummyDsl = `
       form ExampleForm {
-        Number numberField
+        num numberField
       }`
 
     test('should return FormML instance', () => {

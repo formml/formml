@@ -6,11 +6,11 @@ describe('parser', () => {
   test('should return AST given valid schema', () => {
     const content = `
         form ExampleForm {
-          Number   numberField
-          Currency currencyField
-          Text     textField
-          Boolean	 booleanField
-          DateTime datetimeField
+          num      numberField
+          decimal  decimalField
+          text     textField
+          bool	   boolField
+          datetime datetimeField
         }
       `
     const ast = parser(content)
@@ -21,7 +21,7 @@ describe('parser', () => {
   test('should throw error if schema has lexer error', () => {
     const content = `
         form ExampleForm {
-          Number numberField
+          num numberField
           /* unclosed comment
         }
       `
@@ -31,7 +31,7 @@ describe('parser', () => {
   test('should throw error if schema has parser error', () => {
     const content = `
         form {
-          Number numberField
+          num numberField
         }
       `
     expect(() => parser(content)).toThrow(FormMLParserError)

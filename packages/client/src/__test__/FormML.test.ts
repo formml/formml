@@ -23,11 +23,11 @@ describe('FormML', () => {
       // Arrange
       const schema = `
         form ExampleForm {
-          Number   numberField
-          Currency currencyField
-          Text     textField
-          Boolean	 booleanField
-          DateTime datetimeField
+          num   numberField
+          decimal decimalField
+          text     textField
+          bool	 boolField
+          datetime datetimeField
         }
       `
       const formML = new FormML(schema)
@@ -43,7 +43,7 @@ describe('FormML', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number numberField
+          num numberField
         }
       `
       const formML = new FormML(dsl)
@@ -60,7 +60,7 @@ describe('FormML', () => {
         schema: expect.objectContaining({
           $type: 'Field',
           name: 'numberField',
-          type: 'Number',
+          type: 'num',
         }),
 
         // Part: raw value
@@ -83,7 +83,7 @@ describe('FormML', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number numberField
+          num numberField
         }
       `
       const formML = new FormML(dsl)
@@ -116,11 +116,11 @@ describe('FormML', () => {
         // Arrange
         const schema = `
           form ExampleForm {
-            Number   numberField
-            Currency currencyField
-            Text     textField
-            Boolean	 booleanField
-            DateTime datetimeField
+            num   numberField
+            decimal decimalField
+            text     textField
+            bool	 boolField
+            datetime datetimeField
           }
         `
         const formML = new FormML(schema)
@@ -136,7 +136,7 @@ describe('FormML', () => {
         // Arrange
         const dsl = `
           form ExampleForm {
-            Number numberField
+            num numberField
           }
         `
         const formML = new FormML(dsl)
@@ -157,11 +157,11 @@ describe('FormML', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number   numberField
-          Currency currencyField
-          Text     textField
-          Boolean	 booleanField
-          DateTime datetimeField
+          num   numberField
+          decimal decimalField
+          text     textField
+          bool	 boolField
+          datetime datetimeField
         }
       `
       const formML = new FormML(dsl)
@@ -177,7 +177,7 @@ describe('FormML', () => {
         schema: expect.objectContaining({
           $type: 'Field',
           name: 'numberField',
-          type: 'Number',
+          type: 'num',
         }),
 
         // Part: raw value
@@ -199,22 +199,22 @@ describe('FormML', () => {
     describe('returns', () => {
       test.each`
         type          | fieldName
-        ${'Number'}   | ${'numberField'}
-        ${'Currency'} | ${'currencyField'}
-        ${'Text'}     | ${'textField'}
-        ${'Boolean'}  | ${'booleanField'}
-        ${'DateTime'} | ${'datetimeField'}
+        ${'num'}      | ${'numberField'}
+        ${'decimal'}  | ${'decimalField'}
+        ${'text'}     | ${'textField'}
+        ${'bool'}     | ${'boolField'}
+        ${'datetime'} | ${'datetimeField'}
       `(
         'should return corresponding field schema - $fieldName',
         ({ fieldName, type }) => {
           // Arrange
           const dsl = `
             form ExampleForm {
-              Number   numberField
-              Currency currencyField
-              Text     textField
-              Boolean	 booleanField
-              DateTime datetimeField
+              num   numberField
+              decimal decimalField
+              text     textField
+              bool	 boolField
+              datetime datetimeField
             }
           `
           const formML = new FormML(dsl)
@@ -239,7 +239,7 @@ describe('FormML', () => {
         // Arrange
         const dsl = `
           form ExampleForm {
-            Number numberField
+            num numberField
           }
         `
         const formML = new FormML(dsl)
@@ -259,7 +259,7 @@ describe('FormML', () => {
         // Arrange
         const dsl = `
           form ExampleForm {
-            Number numberField
+            num numberField
           }
         `
         const formML = new FormML(dsl)
@@ -286,15 +286,15 @@ describe('FormML', () => {
 
       test.each`
         fieldType     | rawInput                           | expected
-        ${'Text'}     | ${'abc'}                           | ${'abc'}
-        ${'Number'}   | ${'123.45'}                        | ${123.45}
-        ${'Currency'} | ${'123.45'}                        | ${new BigNumber('123.45')}
-        ${'Boolean'}  | ${'true'}                          | ${true}
-        ${'Boolean'}  | ${'false'}                         | ${false}
-        ${'DateTime'} | ${'2024-01-01'}                    | ${new Date(2024, 0, 1)}
-        ${'DateTime'} | ${'2024-01-01T00:00:00.000'}       | ${new Date(2024, 0, 1, 0, 0, 0, 0)}
-        ${'DateTime'} | ${'2024-01-01T08:00:00.000+08:00'} | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
-        ${'DateTime'} | ${'2024-01-01T00:00:00.000Z'}      | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
+        ${'text'}     | ${'abc'}                           | ${'abc'}
+        ${'num'}      | ${'123.45'}                        | ${123.45}
+        ${'decimal'}  | ${'123.45'}                        | ${new BigNumber('123.45')}
+        ${'bool'}     | ${'true'}                          | ${true}
+        ${'bool'}     | ${'false'}                         | ${false}
+        ${'datetime'} | ${'2024-01-01'}                    | ${new Date(2024, 0, 1)}
+        ${'datetime'} | ${'2024-01-01T00:00:00.000'}       | ${new Date(2024, 0, 1, 0, 0, 0, 0)}
+        ${'datetime'} | ${'2024-01-01T08:00:00.000+08:00'} | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
+        ${'datetime'} | ${'2024-01-01T00:00:00.000Z'}      | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
       `(
         'should return latest typed $fieldType value once raw value change is committed',
         ({ expected, fieldType, rawInput }) => {
@@ -322,13 +322,13 @@ describe('FormML', () => {
 
       test.each`
         fieldType     | rawInput | expected
-        ${'Text'}     | ${''}    | ${''}
-        ${'Number'}   | ${''}    | ${undefined}
-        ${'Currency'} | ${''}    | ${undefined}
-        ${'Boolean'}  | ${''}    | ${undefined}
-        ${'DateTime'} | ${''}    | ${undefined}
+        ${'text'}     | ${''}    | ${''}
+        ${'num'}      | ${''}    | ${undefined}
+        ${'decimal'}  | ${''}    | ${undefined}
+        ${'bool'}     | ${''}    | ${undefined}
+        ${'datetime'} | ${''}    | ${undefined}
       `(
-        'should return undefined once raw value is empty except "Text" - $fieldType',
+        'should return undefined once raw value is empty except "text" - $fieldType',
         ({ expected, fieldType, rawInput }) => {
           // Arrange
           const dsl = `
@@ -357,12 +357,12 @@ describe('FormML', () => {
         (methodName) => {
           test.each`
             fieldType     | newValue                                         | expectedRawValue
-            ${'Text'}     | ${'abc'}                                         | ${'abc'}
-            ${'Number'}   | ${123.45}                                        | ${'123.45'}
-            ${'Currency'} | ${new BigNumber('123.45')}                       | ${'123.45'}
-            ${'Boolean'}  | ${true}                                          | ${'true'}
-            ${'Boolean'}  | ${false}                                         | ${'false'}
-            ${'DateTime'} | ${dayjs.utc('2024-01-01').utcOffset(8).toDate()} | ${'2024-01-01T00:00:00.000Z'}
+            ${'text'}     | ${'abc'}                                         | ${'abc'}
+            ${'num'}      | ${123.45}                                        | ${'123.45'}
+            ${'decimal'}  | ${new BigNumber('123.45')}                       | ${'123.45'}
+            ${'bool'}     | ${true}                                          | ${'true'}
+            ${'bool'}     | ${false}                                         | ${'false'}
+            ${'datetime'} | ${dayjs.utc('2024-01-01').utcOffset(8).toDate()} | ${'2024-01-01T00:00:00.000Z'}
           `(
             'should update both of value and raw value when set $fieldType value',
             ({ expectedRawValue, fieldType, newValue }) => {
@@ -388,7 +388,7 @@ describe('FormML', () => {
             },
           )
 
-          test.each(['Text', 'Number', 'Currency', 'Boolean', 'DateTime'])(
+          test.each(['text', 'num', 'decimal', 'bool', 'datetime'])(
             'should set raw value to empty when set "%s" value as `undefined`',
             (fieldType) => {
               // Arrange
@@ -427,7 +427,7 @@ describe('FormML', () => {
         // Arrange
         const dsl = `
           form ExampleForm {
-            Number numberField
+            num numberField
           }
         `
         const formML = new FormML(dsl)
@@ -454,7 +454,7 @@ describe('FormML', () => {
       // Arrange
       const schema = `
         form ExampleForm {
-          Number numberField
+          num numberField
         }
       `
       const formML = new FormML(schema)
@@ -475,7 +475,7 @@ describe('FormML', () => {
       // Arrange
       const schema = `
         form ExampleForm {
-          Number numberField
+          num numberField
         }
       `
       const formML = new FormML(schema)
@@ -496,7 +496,7 @@ describe('FormML', () => {
       // Arrange
       const schema = `
         form ExampleForm {
-          Text textField
+          text textField
         }
       `
       const formML = new FormML(schema)
@@ -522,7 +522,7 @@ describe('FormML', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number numberField
+          num numberField
         }
       `
       const formML = new FormML(dsl)
@@ -543,7 +543,7 @@ describe('FormML', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number numberField
+          num numberField
         }
       `
       const formML = new FormML(dsl)
@@ -559,7 +559,7 @@ describe('FormML', () => {
       expect(pack.value).toEqual(123)
     })
 
-    test.each(['Text', 'Number', 'Currency', 'Boolean', 'DateTime'])(
+    test.each(['text', 'num', 'decimal', 'bool', 'datetime'])(
       'should set raw value to empty when set "%s" value as `undefined`',
       (fieldType) => {
         // Arrange
@@ -586,15 +586,15 @@ describe('FormML', () => {
   describe('commitRawValue', () => {
     test.each`
       fieldType     | rawInput                           | expected
-      ${'Text'}     | ${'abc'}                           | ${'abc'}
-      ${'Number'}   | ${'123.45'}                        | ${123.45}
-      ${'Currency'} | ${'123.45'}                        | ${new BigNumber('123.45')}
-      ${'Boolean'}  | ${'true'}                          | ${true}
-      ${'Boolean'}  | ${'false'}                         | ${false}
-      ${'DateTime'} | ${'2024-01-01'}                    | ${new Date(2024, 0, 1)}
-      ${'DateTime'} | ${'2024-01-01T00:00:00.000'}       | ${new Date(2024, 0, 1, 0, 0, 0, 0)}
-      ${'DateTime'} | ${'2024-01-01T08:00:00.000+08:00'} | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
-      ${'DateTime'} | ${'2024-01-01T00:00:00.000Z'}      | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
+      ${'text'}     | ${'abc'}                           | ${'abc'}
+      ${'num'}      | ${'123.45'}                        | ${123.45}
+      ${'decimal'}  | ${'123.45'}                        | ${new BigNumber('123.45')}
+      ${'bool'}     | ${'true'}                          | ${true}
+      ${'bool'}     | ${'false'}                         | ${false}
+      ${'datetime'} | ${'2024-01-01'}                    | ${new Date(2024, 0, 1)}
+      ${'datetime'} | ${'2024-01-01T00:00:00.000'}       | ${new Date(2024, 0, 1, 0, 0, 0, 0)}
+      ${'datetime'} | ${'2024-01-01T08:00:00.000+08:00'} | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
+      ${'datetime'} | ${'2024-01-01T00:00:00.000Z'}      | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
     `(
       'should modify typed $fieldType value once raw value change is committed',
       ({ expected, fieldType, rawInput }) => {
@@ -620,13 +620,13 @@ describe('FormML', () => {
 
     test.each`
       fieldType     | rawInput | expected
-      ${'Text'}     | ${''}    | ${''}
-      ${'Number'}   | ${''}    | ${undefined}
-      ${'Currency'} | ${''}    | ${undefined}
-      ${'Boolean'}  | ${''}    | ${undefined}
-      ${'DateTime'} | ${''}    | ${undefined}
+      ${'text'}     | ${''}    | ${''}
+      ${'num'}      | ${''}    | ${undefined}
+      ${'decimal'}  | ${''}    | ${undefined}
+      ${'bool'}     | ${''}    | ${undefined}
+      ${'datetime'} | ${''}    | ${undefined}
     `(
-      'should set typed value to undefined once raw value is empty except for "Text" - $fieldType',
+      'should set typed value to undefined once raw value is empty except for "text" - $fieldType',
       ({ expected, fieldType, rawInput }) => {
         // Arrange
         const dsl = `
@@ -654,7 +654,7 @@ describe('FormML', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
-          Number numberField
+          num numberField
         }
       `
       const formML = new FormML(dsl)
