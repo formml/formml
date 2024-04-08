@@ -1,7 +1,7 @@
 import { Field, FormMLSchema, PrimitiveType, createParser } from '@formml/dsl'
 import { DeepReadonly, reactive, toRaw } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
-import currency from 'currency.js'
+import { BigNumber } from 'bignumber.js'
 import dayjs from 'dayjs'
 
 import { assertNever } from './utils/assertNever.js'
@@ -32,7 +32,7 @@ function buildIndexes(schema: FormMLSchema) {
 
 export type PrimitivesRuntimeType = {
   Boolean: boolean | undefined
-  Currency: currency | undefined
+  Currency: BigNumber | undefined
   DateTime: Date | undefined
   Number: number | undefined
   Text: string | undefined
@@ -49,7 +49,7 @@ function convertRawValueToTyped(rawValue: string, type: PrimitiveType) {
     case 'Boolean':
       return rawValue === 'true' ? true : false
     case 'Currency':
-      return currency(rawValue)
+      return new BigNumber(rawValue)
     case 'DateTime':
       return dayjs(rawValue).toDate()
     case 'Number':
@@ -66,7 +66,7 @@ function convertTypedValueToRaw(value: PrimitivesRuntimeTypesUnion): string {
   if (typeof value === 'boolean') {
     return value ? 'true' : 'false'
   }
-  if (value instanceof currency) {
+  if (value instanceof BigNumber) {
     return value.toString()
   }
   if (value instanceof Date) {

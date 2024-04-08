@@ -1,5 +1,5 @@
 import { FormMLParseError } from '@formml/dsl'
-import currency from 'currency.js'
+import { BigNumber } from 'bignumber.js'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc.js'
 
@@ -288,7 +288,7 @@ describe('FormML', () => {
         fieldType     | rawInput                           | expected
         ${'Text'}     | ${'abc'}                           | ${'abc'}
         ${'Number'}   | ${'123.45'}                        | ${123.45}
-        ${'Currency'} | ${'123.45'}                        | ${currency('123.45')}
+        ${'Currency'} | ${'123.45'}                        | ${new BigNumber('123.45')}
         ${'Boolean'}  | ${'true'}                          | ${true}
         ${'Boolean'}  | ${'false'}                         | ${false}
         ${'DateTime'} | ${'2024-01-01'}                    | ${new Date(2024, 0, 1)}
@@ -359,7 +359,7 @@ describe('FormML', () => {
             fieldType     | newValue                                         | expectedRawValue
             ${'Text'}     | ${'abc'}                                         | ${'abc'}
             ${'Number'}   | ${123.45}                                        | ${'123.45'}
-            ${'Currency'} | ${currency('123.45')}                            | ${'123.45'}
+            ${'Currency'} | ${new BigNumber('123.45')}                       | ${'123.45'}
             ${'Boolean'}  | ${true}                                          | ${'true'}
             ${'Boolean'}  | ${false}                                         | ${'false'}
             ${'DateTime'} | ${dayjs.utc('2024-01-01').utcOffset(8).toDate()} | ${'2024-01-01T00:00:00.000Z'}
@@ -588,7 +588,7 @@ describe('FormML', () => {
       fieldType     | rawInput                           | expected
       ${'Text'}     | ${'abc'}                           | ${'abc'}
       ${'Number'}   | ${'123.45'}                        | ${123.45}
-      ${'Currency'} | ${'123.45'}                        | ${currency('123.45')}
+      ${'Currency'} | ${'123.45'}                        | ${new BigNumber('123.45')}
       ${'Boolean'}  | ${'true'}                          | ${true}
       ${'Boolean'}  | ${'false'}                         | ${false}
       ${'DateTime'} | ${'2024-01-01'}                    | ${new Date(2024, 0, 1)}

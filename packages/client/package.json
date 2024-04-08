@@ -44,7 +44,7 @@
     "@formml/dsl": "workspace:^",
     "@vue-reactivity/watch": "^0.2.0",
     "@vue/reactivity": "^3.4.3",
-    "currency.js": "^2.0.4",
+    "bignumber.js": "^9.1.2",
     "dayjs": "^1.11.10",
     "use-sync-external-store": "^1.2.0"
   },
