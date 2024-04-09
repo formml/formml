@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "publisher": "formml",
   "type": "module",
-  "description": "The VSCode extension to provide intellisense for formml schema files",
+  "description": "The VSCode extension that provides intellisense for FormML schema files",
   "keywords": [
     "formml",
     "form",
