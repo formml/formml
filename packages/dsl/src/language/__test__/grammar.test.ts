@@ -74,6 +74,18 @@ describe('grammar', () => {
         const ast = parser(content)
         expect(serialize(ast)).toMatchSnapshot()
       })
+
+      test('multiple annotations', () => {
+        const content = `
+          form ExampleForm {
+            @required1
+            @required2
+            num numberField
+          }
+        `
+        const ast = parser(content)
+        expect(serialize(ast)).toMatchSnapshot()
+      })
     })
   })
 })

@@ -10,27 +10,32 @@ exports[`grammar > simple fields > primitives 1`] = `
       {
         "$type": "Field",
         "type": "num",
-        "name": "numberField"
+        "name": "numberField",
+        "annotations": []
       },
       {
         "$type": "Field",
         "type": "decimal",
-        "name": "decimalField"
+        "name": "decimalField",
+        "annotations": []
       },
       {
         "$type": "Field",
         "type": "text",
-        "name": "textField"
+        "name": "textField",
+        "annotations": []
       },
       {
         "$type": "Field",
         "type": "bool",
-        "name": "boolField"
+        "name": "boolField",
+        "annotations": []
       },
       {
         "$type": "Field",
         "type": "datetime",
-        "name": "datetimeField"
+        "name": "datetimeField",
+        "annotations": []
       }
     ]
   }
@@ -46,6 +51,34 @@ exports[`grammar > syntax > comments 1`] = `
     "fields": [
       {
         "$type": "Field",
+        "type": "num",
+        "name": "numberField",
+        "annotations": []
+      }
+    ]
+  }
+}"
+`;
+
+exports[`grammar > validation annotations > non-parameter annotation > multiple annotations 1`] = `
+"{
+  "$type": "FormMLSchema",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "annotations": [
+          {
+            "$type": "Annotation",
+            "name": "required1"
+          },
+          {
+            "$type": "Annotation",
+            "name": "required2"
+          }
+        ],
         "type": "num",
         "name": "numberField"
       }
@@ -63,10 +96,12 @@ exports[`grammar > validation annotations > non-parameter annotation > multiple 
     "fields": [
       {
         "$type": "Field",
-        "annotations": {
-          "$type": "Annotation",
-          "name": "required"
-        },
+        "annotations": [
+          {
+            "$type": "Annotation",
+            "name": "required"
+          }
+        ],
         "type": "num",
         "name": "numberField"
       }
@@ -84,10 +119,12 @@ exports[`grammar > validation annotations > non-parameter annotation > one line 
     "fields": [
       {
         "$type": "Field",
-        "annotations": {
-          "$type": "Annotation",
-          "name": "required"
-        },
+        "annotations": [
+          {
+            "$type": "Annotation",
+            "name": "required"
+          }
+        ],
         "type": "num",
         "name": "numberField"
       }

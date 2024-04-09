@@ -9,7 +9,7 @@ Form:
   '}';
 
 Field:
-  (annotations=Annotation)? type=PrimitiveType name=ID;
+  (annotations+=Annotation)* type=PrimitiveType name=ID;
 
 Annotation:
   '@' name=ID;
