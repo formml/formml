@@ -9,7 +9,10 @@ Form:
   '}';
 
 Field:
-  type=PrimitiveType name=ID;
+  (annotations=Annotation)? type=PrimitiveType name=ID;
+
+Annotation:
+  '@' name=ID;
 
 PrimitiveType returns string:
   'text' | 'num' | 'decimal' | 'bool' | 'datetime';

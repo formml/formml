@@ -51,4 +51,29 @@ describe('grammar', () => {
       expect(() => parser(content)).toThrow(FormMLParserError)
     })
   })
+
+  describe('validation annotations', () => {
+    describe('non-parameter annotation', () => {
+      test('one line', () => {
+        const content = `
+          form ExampleForm {
+            @required num numberField
+          }
+        `
+        const ast = parser(content)
+        expect(serialize(ast)).toMatchSnapshot()
+      })
+
+      test('multiple lines', () => {
+        const content = `
+          form ExampleForm {
+            @required
+            num numberField
+          }
+        `
+        const ast = parser(content)
+        expect(serialize(ast)).toMatchSnapshot()
+      })
+    })
+  })
 })

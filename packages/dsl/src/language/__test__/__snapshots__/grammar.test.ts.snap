@@ -53,3 +53,45 @@ exports[`grammar > syntax > comments 1`] = `
   }
 }"
 `;
+
+exports[`grammar > validation annotations > non-parameter annotation > multiple lines 1`] = `
+"{
+  "$type": "FormMLSchema",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "annotations": {
+          "$type": "Annotation",
+          "name": "required"
+        },
+        "type": "num",
+        "name": "numberField"
+      }
+    ]
+  }
+}"
+`;
+
+exports[`grammar > validation annotations > non-parameter annotation > one line 1`] = `
+"{
+  "$type": "FormMLSchema",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "annotations": {
+          "$type": "Annotation",
+          "name": "required"
+        },
+        "type": "num",
+        "name": "numberField"
+      }
+    ]
+  }
+}"
+`;
