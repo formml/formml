@@ -3,11 +3,8 @@ import { type DeepReadonly } from '@vue/reactivity'
 import { useCallback, useMemo } from 'react'
 import { useSyncExternalStore } from 'use-sync-external-store/shim'
 
-import type {
-  FieldError,
-  FieldResult,
-  PrimitivesRuntimeTypesUnion,
-} from './FormML.js'
+import type { FieldError, FieldResult } from './FormML.js'
+import type { PrimitivesType } from './JsTypes.js'
 
 import { useFormMLContext } from './useFormMLContext.js'
 import { createMemoSelectorGrouper } from './utils/createMemoSelectorGrouper.js'
@@ -23,13 +20,13 @@ export type FieldMetaData = {
   error: FieldError | undefined
   schema: Field
   touched: boolean
-  typedValue: PrimitivesRuntimeTypesUnion | undefined
+  typedValue: PrimitivesType
 }
 
 export type FieldHelpers = {
   commitRawValue: () => void
   setRawValue: (value: string) => void
-  setTypedValue: (value: PrimitivesRuntimeTypesUnion) => void
+  setTypedValue: (value: PrimitivesType) => void
   touch: () => void
 }
 

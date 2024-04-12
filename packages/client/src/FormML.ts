@@ -1,10 +1,9 @@
-import { Field, FormMLSchema, PrimitiveType, createParser } from '@formml/dsl'
+import { Field, FormMLSchema, createParser } from '@formml/dsl'
 import { DeepReadonly, reactive, toRaw } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
-import { BigNumber } from 'bignumber.js'
-import dayjs from 'dayjs'
 
-import { assertNever } from './utils/assertNever.js'
+import * as JsTypes from './JsTypes.js'
+import validate from './validate/index.js'
 
 export type FieldResult = DeepReadonly<{
   commitRawValue: () => void
@@ -12,11 +11,11 @@ export type FieldResult = DeepReadonly<{
   rawValue: string
   schema: Field
   setRawValue: (value: string) => void
-  setTypedValue: (value: PrimitivesRuntimeTypesUnion) => void
-  setValue: (value: PrimitivesRuntimeTypesUnion) => void
+  setTypedValue: (value: JsTypes.PrimitivesType) => void
+  setValue: (value: JsTypes.PrimitivesType) => void
   touch: () => void
   touched: boolean
-  value: PrimitivesRuntimeTypesUnion | undefined
+  value: JsTypes.PrimitivesType
 }>
 
 function buildIndexes(schema: FormMLSchema) {
@@ -30,61 +29,7 @@ function buildIndexes(schema: FormMLSchema) {
   return [indexRoot, indexToSchema] as const
 }
 
-export type PrimitivesRuntimeType = {
-  bool: boolean | undefined
-  datetime: Date | undefined
-  decimal: BigNumber | undefined
-  num: number | undefined
-  text: string | undefined
-}
-
-export type PrimitivesRuntimeTypesUnion =
-  PrimitivesRuntimeType[keyof PrimitivesRuntimeType]
-
 export type FieldError = { message: string }
-
-function convertRawValueToTyped(rawValue: string, type: PrimitiveType) {
-  if (rawValue === '' && type !== 'text') {
-    return undefined
-  }
-  switch (type) {
-    case 'bool':
-      return rawValue === 'true' ? true : false
-    case 'decimal':
-      return new BigNumber(rawValue)
-    case 'datetime':
-      return dayjs(rawValue).toDate()
-    case 'num':
-      return Number(rawValue)
-    case 'text':
-      return rawValue
-    default: {
-      return assertNever`Unsupported type '${type}'`
-    }
-  }
-}
-
-function convertTypedValueToRaw(value: PrimitivesRuntimeTypesUnion): string {
-  if (typeof value === 'boolean') {
-    return value ? 'true' : 'false'
-  }
-  if (value instanceof BigNumber) {
-    return value.toString()
-  }
-  if (value instanceof Date) {
-    return value.toISOString()
-  }
-  if (typeof value === 'number') {
-    return value.toString()
-  }
-  if (typeof value === 'string') {
-    return value
-  }
-  if (typeof value === 'undefined') {
-    return ''
-  }
-  return assertNever`Unsupported type '${value}'`
-}
 
 export class FormML {
   private readonly _fieldsMetaProxy: Record<
@@ -96,18 +41,16 @@ export class FormML {
     {
       commitRawValue: () => void
       setRawValue: (value: string) => void
-      setTypedValue: (value: PrimitivesRuntimeTypesUnion) => void
-      setValue: (value: PrimitivesRuntimeTypesUnion) => void
+      setTypedValue: (value: JsTypes.PrimitivesType) => void
+      setValue: (value: JsTypes.PrimitivesType) => void
       touch: () => void
     }
   > = new Map()
   private readonly _indexToSchema: WeakMap<object, Field>
   private static readonly _parse = createParser()
   private readonly _schema: FormMLSchema
-  private readonly _typedValuesProxy: Record<
-    string,
-    PrimitivesRuntimeTypesUnion | undefined
-  > = reactive({})
+  private readonly _typedValuesProxy: Record<string, JsTypes.PrimitivesType> =
+    reactive({})
 
   private readonly _valuesProxy: Record<string, string> = reactive({})
   public readonly indexRoot: Record<string, object>
@@ -146,18 +89,9 @@ export class FormML {
 
     this.assertInitialized(name, { methodName: 'commitRawValue' })
 
-    const typedValue = convertRawValueToTyped(this._valuesProxy[name], type)
+    const typedValue = JsTypes.toTyped(this._valuesProxy[name], type)
     this._typedValuesProxy[name] = typedValue
-
-    for (const annotation of schema.annotations) {
-      if (annotation.name === 'required') {
-        if (typedValue === undefined) {
-          this._fieldsMetaProxy[name].error = {
-            message: 'This field is required',
-          }
-        }
-      }
-    }
+    this._fieldsMetaProxy[name].error = validate(typedValue, schema)
   }
 
   getField(index: object): FieldResult {
@@ -200,10 +134,10 @@ export class FormML {
         setRawValue: (value: string) => {
           this.setRawValue(index, value)
         },
-        setTypedValue: (value: PrimitivesRuntimeTypesUnion) => {
+        setTypedValue: (value: JsTypes.PrimitivesType) => {
           this.setTypedValue(index, value)
         },
-        setValue: (value: PrimitivesRuntimeTypesUnion) => {
+        setValue: (value: JsTypes.PrimitivesType) => {
           this.setValue(index, value)
         },
         touch: () => {
@@ -215,62 +149,37 @@ export class FormML {
 
   setRawValue(index: object, value: string) {
     const schema = this.getSchemaByIndex(index)
-    const name = schema.name
+    const { name, type } = schema
 
     this.assertInitialized(name, { methodName: 'setRawValue' })
 
     this._valuesProxy[name] = value
-
-    for (const annotation of schema.annotations) {
-      if (annotation.name === 'required') {
-        const typedValue = convertRawValueToTyped(value, schema.type)
-        if (typedValue === undefined) {
-          this._fieldsMetaProxy[name].error = {
-            message: 'This field is required',
-          }
-        }
-      }
-    }
+    this._fieldsMetaProxy[name].error = validate(
+      JsTypes.toTyped(value, type),
+      schema,
+    )
   }
 
-  setTypedValue(index: object, value: PrimitivesRuntimeTypesUnion) {
+  setTypedValue(index: object, value: JsTypes.PrimitivesType) {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
 
     this.assertInitialized(name, { methodName: 'setTypedValue' })
 
     this._typedValuesProxy[name] = value
-    this._valuesProxy[name] = convertTypedValueToRaw(value)
-
-    for (const annotation of schema.annotations) {
-      if (annotation.name === 'required') {
-        if (value === undefined) {
-          this._fieldsMetaProxy[name].error = {
-            message: 'This field is required',
-          }
-        }
-      }
-    }
+    this._valuesProxy[name] = JsTypes.toRaw(value)
+    this._fieldsMetaProxy[name].error = validate(value, schema)
   }
 
-  setValue(index: object, value: PrimitivesRuntimeTypesUnion) {
+  setValue(index: object, value: JsTypes.PrimitivesType) {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
 
     this.assertInitialized(name, { methodName: 'setValue' })
 
     this._typedValuesProxy[name] = value
-    this._valuesProxy[name] = convertTypedValueToRaw(value)
-
-    for (const annotation of schema.annotations) {
-      if (annotation.name === 'required') {
-        if (value === undefined) {
-          this._fieldsMetaProxy[name].error = {
-            message: 'This field is required',
-          }
-        }
-      }
-    }
+    this._valuesProxy[name] = JsTypes.toRaw(value)
+    this._fieldsMetaProxy[name].error = validate(value, schema)
   }
 
   subscribe(index: object, callback: () => void): () => void {
