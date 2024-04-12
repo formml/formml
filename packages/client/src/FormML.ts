@@ -233,6 +233,16 @@ export class FormML {
 
     this._typedValuesProxy[name] = value
     this._valuesProxy[name] = convertTypedValueToRaw(value)
+
+    for (const annotation of schema.annotations) {
+      if (annotation.name === 'required') {
+        if (value === undefined) {
+          this._fieldsMetaProxy[name].error = {
+            message: 'This field is required',
+          }
+        }
+      }
+    }
   }
 
   setValue(index: object, value: PrimitivesRuntimeTypesUnion) {
@@ -243,6 +253,16 @@ export class FormML {
 
     this._typedValuesProxy[name] = value
     this._valuesProxy[name] = convertTypedValueToRaw(value)
+
+    for (const annotation of schema.annotations) {
+      if (annotation.name === 'required') {
+        if (value === undefined) {
+          this._fieldsMetaProxy[name].error = {
+            message: 'This field is required',
+          }
+        }
+      }
+    }
   }
 
   subscribe(index: object, callback: () => void): () => void {

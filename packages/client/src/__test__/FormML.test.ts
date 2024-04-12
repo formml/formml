@@ -728,6 +728,32 @@ describe('FormML', () => {
           expect.objectContaining({ message: expect.any(String) }),
         )
       })
+
+      test.each(['setValue', 'setTypedValue'] as const)(
+        'should do validation when setting typed value',
+        (methodName) => {
+          // Arrange
+          const dsl = `
+          form ExampleForm {
+            @required
+            num numberField
+          }
+        `
+          const formML = new FormML(dsl)
+          const index = formML.indexRoot['numberField']
+          formML.initField(index)
+
+          // Act
+          formML[methodName](index, undefined)
+          const pack = formML.getField(index)
+
+          // Assert
+          expect(pack.error).toBeDefined()
+          expect(pack.error).toEqual(
+            expect.objectContaining({ message: expect.any(String) }),
+          )
+        },
+      )
     })
 
     describe.todo('touch on change')
