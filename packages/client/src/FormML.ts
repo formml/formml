@@ -146,10 +146,18 @@ export class FormML {
 
     this.assertInitialized(name, { methodName: 'commitRawValue' })
 
-    this._typedValuesProxy[name] = convertRawValueToTyped(
-      this._valuesProxy[name],
-      type,
-    )
+    const typedValue = convertRawValueToTyped(this._valuesProxy[name], type)
+    this._typedValuesProxy[name] = typedValue
+
+    for (const annotation of schema.annotations) {
+      if (annotation.name === 'required') {
+        if (typedValue === undefined) {
+          this._fieldsMetaProxy[name].error = {
+            message: 'This field is required',
+          }
+        }
+      }
+    }
   }
 
   getField(index: object): FieldResult {

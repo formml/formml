@@ -754,6 +754,29 @@ describe('FormML', () => {
           )
         },
       )
+
+      test('should do validation when committing raw value', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            @required
+            num numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+        formML.initField(index)
+
+        // Act
+        formML.commitRawValue(index)
+        const pack = formML.getField(index)
+
+        // Assert
+        expect(pack.error).toBeDefined()
+        expect(pack.error).toEqual(
+          expect.objectContaining({ message: expect.any(String) }),
+        )
+      })
     })
 
     describe.todo('touch on change')
