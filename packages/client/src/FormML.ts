@@ -8,7 +8,7 @@ import { assertNever } from './utils/assertNever.js'
 
 export type FieldResult = DeepReadonly<{
   commitRawValue: () => void
-  error: undefined
+  error: FieldError | undefined
   rawValue: string
   schema: Field
   setRawValue: (value: string) => void
@@ -40,6 +40,8 @@ export type PrimitivesRuntimeType = {
 
 export type PrimitivesRuntimeTypesUnion =
   PrimitivesRuntimeType[keyof PrimitivesRuntimeType]
+
+export type FieldError = { message: string }
 
 function convertRawValueToTyped(rawValue: string, type: PrimitiveType) {
   if (rawValue === '' && type !== 'text') {
@@ -85,8 +87,10 @@ function convertTypedValueToRaw(value: PrimitivesRuntimeTypesUnion): string {
 }
 
 export class FormML {
-  private readonly _fieldsMetaProxy: Record<string, { touched: boolean }> =
-    reactive({})
+  private readonly _fieldsMetaProxy: Record<
+    string,
+    { error: FieldError | undefined; touched: boolean }
+  > = reactive({})
   private readonly _indexToHelpers: Map<
     object,
     {
@@ -104,8 +108,8 @@ export class FormML {
     string,
     PrimitivesRuntimeTypesUnion | undefined
   > = reactive({})
-  private readonly _valuesProxy: Record<string, string> = reactive({})
 
+  private readonly _valuesProxy: Record<string, string> = reactive({})
   public readonly indexRoot: Record<string, object>
 
   constructor(schema: string) {
@@ -155,7 +159,7 @@ export class FormML {
     this.assertInitialized(name, { methodName: 'getField' })
 
     return {
-      error: undefined,
+      error: toRaw(this._fieldsMetaProxy[name].error),
       rawValue: toRaw(this._valuesProxy[name]), // to raw for every value from proxies
       schema,
       touched: toRaw(this._fieldsMetaProxy[name].touched),
@@ -177,7 +181,7 @@ export class FormML {
     }
 
     if (this._fieldsMetaProxy[name] === undefined) {
-      this._fieldsMetaProxy[name] = { touched: false }
+      this._fieldsMetaProxy[name] = { error: undefined, touched: false }
     }
 
     if (!this._indexToHelpers.has(index)) {
@@ -208,6 +212,17 @@ export class FormML {
     this.assertInitialized(name, { methodName: 'setRawValue' })
 
     this._valuesProxy[name] = value
+
+    for (const annotation of schema.annotations) {
+      if (annotation.name === 'required') {
+        const typedValue = convertRawValueToTyped(value, schema.type)
+        if (typedValue === undefined) {
+          this._fieldsMetaProxy[name].error = {
+            message: 'This field is required',
+          }
+        }
+      }
+    }
   }
 
   setTypedValue(index: object, value: PrimitivesRuntimeTypesUnion) {
