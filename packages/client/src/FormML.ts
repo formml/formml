@@ -205,5 +205,9 @@ export class FormML {
     this.assertInitialized(name, { methodName: 'touch' })
 
     this._fieldsMetaProxy[name].touched = true
+    this._fieldsMetaProxy[name].error = validate(
+      this._typedValuesProxy[name],
+      schema,
+    )
   }
 }

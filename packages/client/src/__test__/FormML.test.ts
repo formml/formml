@@ -454,10 +454,10 @@ describe('FormML', () => {
       test('should react to field value change', () => {
         // Arrange
         const schema = `
-        form ExampleForm {
-          num numberField
-        }
-      `
+          form ExampleForm {
+            num numberField
+          }
+        `
         const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
         const callback = vi.fn()
@@ -475,10 +475,10 @@ describe('FormML', () => {
       test('should react to field touched change', () => {
         // Arrange
         const schema = `
-        form ExampleForm {
-          num numberField
-        }
-      `
+          form ExampleForm {
+            num numberField
+          }
+        `
         const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
         const callback = vi.fn()
@@ -496,10 +496,10 @@ describe('FormML', () => {
       test('should react to field typed value change', () => {
         // Arrange
         const schema = `
-        form ExampleForm {
-          text textField
-        }
-      `
+          form ExampleForm {
+            text textField
+          }
+        `
         const formML = new FormML(schema)
         const index = formML.indexRoot['textField']
         const callback = vi.fn()
@@ -769,6 +769,29 @@ describe('FormML', () => {
 
         // Act
         formML.commitRawValue(index)
+        const pack = formML.getField(index)
+
+        // Assert
+        expect(pack.error).toBeDefined()
+        expect(pack.error).toEqual(
+          expect.objectContaining({ message: expect.any(String) }),
+        )
+      })
+
+      test('should do validation when touching field', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            @required
+            num numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+        formML.initField(index)
+
+        // Act
+        formML.touch(index)
         const pack = formML.getField(index)
 
         // Assert
