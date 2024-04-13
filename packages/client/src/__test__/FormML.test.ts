@@ -23,14 +23,14 @@ describe('FormML', () => {
       test('should throw if index can not be recognized', () => {
         // Arrange
         const schema = `
-        form ExampleForm {
-          num   numberField
-          decimal decimalField
-          text     textField
-          bool	 boolField
-          datetime datetimeField
-        }
-      `
+          form ExampleForm {
+            num   numberField
+            decimal decimalField
+            text     textField
+            bool	 boolField
+            datetime datetimeField
+          }
+        `
         const formML = new FormML(schema)
 
         // Act & Assert
@@ -43,10 +43,10 @@ describe('FormML', () => {
       test('should initialize field if given field is not initialized yet', () => {
         // Arrange
         const dsl = `
-        form ExampleForm {
-          num numberField
-        }
-      `
+          form ExampleForm {
+            num numberField
+          }
+        `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
 
@@ -83,10 +83,10 @@ describe('FormML', () => {
       test('should do nothing if given field has been initialized', () => {
         // Arrange
         const dsl = `
-        form ExampleForm {
-          num numberField
-        }
-      `
+          form ExampleForm {
+            num numberField
+          }
+        `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
 
@@ -116,14 +116,14 @@ describe('FormML', () => {
         test('should throw if index can not be recognized', () => {
           // Arrange
           const schema = `
-          form ExampleForm {
-            num   numberField
-            decimal decimalField
-            text     textField
-            bool	 boolField
-            datetime datetimeField
-          }
-        `
+            form ExampleForm {
+              num   numberField
+              decimal decimalField
+              text     textField
+              bool	 boolField
+              datetime datetimeField
+            }
+          `
           const formML = new FormML(schema)
 
           // Act & Assert
@@ -136,10 +136,10 @@ describe('FormML', () => {
         test('should throw when field is not initialized', () => {
           // Arrange
           const dsl = `
-          form ExampleForm {
-            num numberField
-          }
-        `
+            form ExampleForm {
+              num numberField
+            }
+          `
           const formML = new FormML(dsl)
           const index = formML.indexRoot['numberField']
 
@@ -157,14 +157,14 @@ describe('FormML', () => {
       test('should return initial field pack', () => {
         // Arrange
         const dsl = `
-        form ExampleForm {
-          num   numberField
-          decimal decimalField
-          text     textField
-          bool	 boolField
-          datetime datetimeField
-        }
-      `
+          form ExampleForm {
+            num   numberField
+            decimal decimalField
+            text     textField
+            bool	 boolField
+            datetime datetimeField
+          }
+        `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
         formML.initField(index)
@@ -210,14 +210,14 @@ describe('FormML', () => {
           ({ fieldName, type }) => {
             // Arrange
             const dsl = `
-            form ExampleForm {
-              num   numberField
-              decimal decimalField
-              text     textField
-              bool	 boolField
-              datetime datetimeField
-            }
-          `
+              form ExampleForm {
+                num   numberField
+                decimal decimalField
+                text     textField
+                bool	 boolField
+                datetime datetimeField
+              }
+            `
             const formML = new FormML(dsl)
             const index = formML.indexRoot[fieldName]
             formML.initField(index)
@@ -239,10 +239,10 @@ describe('FormML', () => {
         test('should return latest raw value when field has been changed', () => {
           // Arrange
           const dsl = `
-          form ExampleForm {
-            num numberField
-          }
-        `
+            form ExampleForm {
+              num numberField
+            }
+          `
           const formML = new FormML(dsl)
           const index = formML.indexRoot['numberField']
           formML.initField(index)
@@ -259,10 +259,10 @@ describe('FormML', () => {
         test('should always be touched after touches field', () => {
           // Arrange
           const dsl = `
-          form ExampleForm {
-            num numberField
-          }
-        `
+            form ExampleForm {
+              num numberField
+            }
+          `
           const formML = new FormML(dsl)
           const index = formML.indexRoot['numberField']
           formML.initField(index)
@@ -301,10 +301,10 @@ describe('FormML', () => {
           ({ expected, fieldType, rawInput }) => {
             // Arrange
             const dsl = `
-            form ExampleForm {
-              ${fieldType} field
-            }
-          `
+              form ExampleForm {
+                ${fieldType} field
+              }
+            `
             const formML = new FormML(dsl)
             const index = formML.indexRoot['field']
             formML.initField(index)
@@ -333,10 +333,10 @@ describe('FormML', () => {
           ({ expected, fieldType, rawInput }) => {
             // Arrange
             const dsl = `
-            form ExampleForm {
-              ${fieldType} field
-            }
-          `
+              form ExampleForm {
+                ${fieldType} field
+              }
+            `
             const formML = new FormML(dsl)
             const index = formML.indexRoot['field']
             formML.initField(index)
@@ -369,10 +369,10 @@ describe('FormML', () => {
               ({ expectedRawValue, fieldType, newValue }) => {
                 // Arrange
                 const dsl = `
-                form ExampleForm {
-                  ${fieldType} field
-                }
-              `
+                  form ExampleForm {
+                    ${fieldType} field
+                  }
+                `
                 const formML = new FormML(dsl)
                 const index = formML.indexRoot['field']
                 formML.initField(index)
@@ -394,10 +394,10 @@ describe('FormML', () => {
               (fieldType) => {
                 // Arrange
                 const dsl = `
-                form ExampleForm {
-                  ${fieldType} field
-                }
-              `
+                  form ExampleForm {
+                    ${fieldType} field
+                  }
+                `
                 const formML = new FormML(dsl)
                 const index = formML.indexRoot['field']
                 formML.initField(index)
@@ -427,10 +427,10 @@ describe('FormML', () => {
         ] as const)('should always return same references for "%s"', (key) => {
           // Arrange
           const dsl = `
-          form ExampleForm {
-            num numberField
-          }
-        `
+            form ExampleForm {
+              num numberField
+            }
+          `
           const formML = new FormML(dsl)
           const index = formML.indexRoot['numberField']
           formML.initField(index)
@@ -567,10 +567,10 @@ describe('FormML', () => {
         test('should set typed value and raw value of target field', () => {
           // Arrange
           const dsl = `
-        form ExampleForm {
-          num numberField
-        }
-      `
+            form ExampleForm {
+              num numberField
+            }
+          `
           const formML = new FormML(dsl)
           const index = formML.indexRoot['numberField']
           formML.initField(index)
@@ -589,10 +589,10 @@ describe('FormML', () => {
           (fieldType) => {
             // Arrange
             const dsl = `
-          form ExampleForm {
-            ${fieldType} field
-          }
-        `
+              form ExampleForm {
+                ${fieldType} field
+              }
+            `
             const formML = new FormML(dsl)
             const index = formML.indexRoot['field']
             formML.initField(index)
@@ -626,10 +626,10 @@ describe('FormML', () => {
         ({ expected, fieldType, rawInput }) => {
           // Arrange
           const dsl = `
-          form ExampleForm {
-            ${fieldType} field
-          }
-        `
+            form ExampleForm {
+              ${fieldType} field
+            }
+          `
           const formML = new FormML(dsl)
           const index = formML.indexRoot['field']
           formML.initField(index)
@@ -656,10 +656,10 @@ describe('FormML', () => {
         ({ expected, fieldType, rawInput }) => {
           // Arrange
           const dsl = `
-          form ExampleForm {
-            ${fieldType} field
-          }
-        `
+            form ExampleForm {
+              ${fieldType} field
+            }
+          `
           const formML = new FormML(dsl)
           const index = formML.indexRoot['field']
           formML.initField(index)
@@ -679,10 +679,10 @@ describe('FormML', () => {
       test('should always be touched after touches field', () => {
         // Arrange
         const dsl = `
-        form ExampleForm {
-          num numberField
-        }
-      `
+          form ExampleForm {
+            num numberField
+          }
+        `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
         formML.initField(index)
