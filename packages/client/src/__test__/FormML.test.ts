@@ -516,6 +516,28 @@ describe('FormML', () => {
         // Assert
         expect(callback).toBeCalledTimes(1)
       })
+
+      test('should react to field error change', () => {
+        // Arrange
+        const schema = `
+          form ExampleForm {
+            @required
+            num numberField
+          }
+        `
+        const formML = new FormML(schema)
+        const index = formML.indexRoot['numberField']
+        const callback = vi.fn()
+        formML.initField(index)
+        formML.subscribe(index, callback)
+
+        // Act
+        const pack = formML.getField(index)
+        pack.commitRawValue()
+
+        // Assert
+        expect(callback).toBeCalledTimes(1)
+      })
     })
 
     describe('setRawValue', () => {

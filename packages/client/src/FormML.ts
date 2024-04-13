@@ -193,6 +193,7 @@ export class FormML {
         () => this._valuesProxy[name],
         () => this._typedValuesProxy[name],
         () => this._fieldsMetaProxy[name].touched,
+        () => this._fieldsMetaProxy[name].error,
       ],
       () => callback(),
     )
