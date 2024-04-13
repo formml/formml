@@ -180,6 +180,54 @@ describe('useField', () => {
         expect(result.current.meta.typedValue).toEqual('second time'),
       )
     })
+
+    test('should return new validation result if onBlur triggered', async () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          @required
+          num numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+      const { result } = renderHookWithContext(() => useField(index), formML)
+
+      // Act
+      result.current.field.onBlur({} as unknown as React.FocusEvent)
+
+      // Assert
+      await waitFor(() =>
+        expect(result.current.meta.error).toEqual({
+          message: expect.any(String),
+        }),
+      )
+    })
+
+    test('should return new validation result if onChange triggered', async () => {
+      // Arrange
+      const dsl = `
+        form ExampleForm {
+          @required
+          num numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+      const { result } = renderHookWithContext(() => useField(index), formML)
+
+      // Act
+      result.current.field.onChange({
+        target: { value: '' },
+      } as unknown as React.ChangeEvent<HTMLInputElement>)
+
+      // Assert
+      await waitFor(() =>
+        expect(result.current.meta.error).toEqual({
+          message: expect.any(String),
+        }),
+      )
+    })
   })
 
   describe('integration', () => {
@@ -243,7 +291,82 @@ describe('useField', () => {
 
       // Assert
       expect(input).not.toHaveFocus()
-      expect(screen.queryByText('Touched!')).toBeInTheDocument()
+      expect(screen.getByText('Touched!')).toBeInTheDocument()
+    })
+
+    test('should update error properly when user inputs', async () => {
+      // Arrange
+      const TestInput = ({ index }: { index: object }) => {
+        const { field, meta } = useField(index)
+        return (
+          <>
+            <input {...field} />
+            {meta.error && (
+              <span data-testid="error-message">{meta.error.message}</span>
+            )}
+          </>
+        )
+      }
+
+      const dsl = `
+        form ExampleForm {
+          @required
+          num numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+
+      renderWithContext(<TestInput index={index} />, formML)
+
+      const input = screen.getByRole('textbox')
+      expect(screen.queryByTestId('error-message')).not.toBeInTheDocument()
+
+      // Act
+      const user = userEvent.setup()
+      await user.type(input, '{1}{Backspace}')
+
+      // Assert
+      expect(input).toHaveFocus()
+      expect(screen.getByTestId('error-message')).toBeInTheDocument()
+    })
+
+    test('should update error properly when user blurs', async () => {
+      // Arrange
+      const TestInput = ({ index }: { index: object }) => {
+        const { field, meta } = useField(index)
+        return (
+          <>
+            <input {...field} />
+            {meta.error && (
+              <span data-testid="error-message">{meta.error.message}</span>
+            )}
+          </>
+        )
+      }
+
+      const dsl = `
+        form ExampleForm {
+          @required
+          num numberField
+        }
+      `
+      const formML = new FormML(dsl)
+      const index = formML.indexRoot['numberField']
+
+      renderWithContext(<TestInput index={index} />, formML)
+
+      const input = screen.getByRole('textbox')
+      expect(screen.queryByTestId('error-message')).not.toBeInTheDocument()
+
+      // Act
+      const user = userEvent.setup()
+      await user.click(input)
+      await user.tab()
+
+      // Assert
+      expect(input).not.toHaveFocus()
+      expect(screen.getByTestId('error-message')).toBeInTheDocument()
     })
   })
 
