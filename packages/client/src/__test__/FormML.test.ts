@@ -705,6 +705,30 @@ describe('FormML', () => {
         expect(thirdPack.touched).toBe(true)
       })
     })
+
+    describe('validate', () => {
+      test('should return valid when no error', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            @required
+            num numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+        formML.initField(index)
+
+        // Act
+        const pack = formML.getField(index)
+        pack.setRawValue('123')
+        pack.commitRawValue()
+
+        // Assert
+        const result = formML.validate()
+        expect(result).toEqual({ errors: [], isValid: true })
+      })
+    })
   })
 
   describe('behaviors', () => {

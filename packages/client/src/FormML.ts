@@ -36,6 +36,7 @@ export class FormML {
     string,
     { error: FieldError | undefined; touched: boolean }
   > = reactive({})
+
   private readonly _indexToHelpers: Map<
     object,
     {
@@ -51,10 +52,9 @@ export class FormML {
   private readonly _schema: FormMLSchema
   private readonly _typedValuesProxy: Record<string, JsTypes.PrimitivesType> =
     reactive({})
-
   private readonly _valuesProxy: Record<string, string> = reactive({})
-  public readonly indexRoot: Record<string, object>
 
+  public readonly indexRoot: Record<string, object>
   constructor(schema: string) {
     this._schema = FormML._parse(schema)
     ;[this.indexRoot, this._indexToSchema] = buildIndexes(this._schema)
@@ -210,5 +210,9 @@ export class FormML {
       this._typedValuesProxy[name],
       schema,
     )
+  }
+
+  validate() {
+    return { errors: [], isValid: true }
   }
 }
