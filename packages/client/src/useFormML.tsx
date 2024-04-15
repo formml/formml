@@ -13,7 +13,10 @@ export function useFormML(schema: string) {
     onSubmit: OnSubmitCallback,
   ) => React.FormEventHandler<HTMLFormElement> = (onSubmit) => (event) => {
     event.preventDefault()
-    onSubmit(formML.getTypedData())
+    const result = formML.validate()
+    if (result.isValid) {
+      onSubmit(formML.getTypedData())
+    }
   }
 
   const FormMLWrapper = React.useCallback(

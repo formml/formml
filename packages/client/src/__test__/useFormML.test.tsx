@@ -166,6 +166,25 @@ describe('useFormML', () => {
       // Assert
       expect(preventDefault).toBeCalled()
     })
+
+    test('should not call callback if form is invalid', () => {
+      // Arrange
+      const onSubmit = vi.fn()
+      const stubFormML = new FormML(dummyDsl)
+      const spiedValidate = vi.spyOn(stubFormML, 'validate')
+      spiedValidate.mockReturnValue({ errors: [], isValid: false })
+      vi.mocked(FormML).mockReturnValue(stubFormML)
+      const { result } = renderHook(() => useFormML(dummyDsl))
+      const eventHandler = result.current.handleSubmit(onSubmit)
+
+      // Act
+      eventHandler(dummyEvent)
+
+      // Assert
+      expect(onSubmit).not.toBeCalled()
+    })
+
+    // TODO: touch all fields before submit
   })
 
   describe('FormML', () => {
