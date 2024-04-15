@@ -782,6 +782,33 @@ describe('FormML', () => {
         expect(result.isValid).toBe(false)
         expect(result.errors).toHaveLength(2)
       })
+
+      test('should update field error when validation fails', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            @required
+            num numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+        formML.initField(index)
+
+        // Assert
+        const pack = formML.getField(index)
+        expect(pack.error).toBeUndefined()
+
+        // Act
+        formML.validate()
+
+        // Assert
+        const pack2 = formML.getField(index)
+        expect(pack2.error).toBeDefined()
+        expect(pack2.error).toEqual(
+          expect.objectContaining({ message: expect.any(String) }),
+        )
+      })
     })
   })
 
