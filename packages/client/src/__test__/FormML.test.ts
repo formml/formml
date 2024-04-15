@@ -728,6 +728,29 @@ describe('FormML', () => {
         const result = formML.validate()
         expect(result).toEqual({ errors: [], isValid: true })
       })
+
+      test('should return error details when validation fails', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            @required
+            num numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+        formML.initField(index)
+
+        // Act
+        const pack = formML.getField(index)
+        pack.setRawValue('')
+        pack.commitRawValue()
+
+        // Assert
+        const result = formML.validate()
+        expect(result.isValid).toBe(false)
+        expect(result.errors).toHaveLength(1)
+      })
     })
   })
 

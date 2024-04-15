@@ -36,7 +36,6 @@ export class FormML {
     string,
     { error: FieldError | undefined; touched: boolean }
   > = reactive({})
-
   private readonly _indexToHelpers: Map<
     object,
     {
@@ -55,6 +54,7 @@ export class FormML {
   private readonly _valuesProxy: Record<string, string> = reactive({})
 
   public readonly indexRoot: Record<string, object>
+
   constructor(schema: string) {
     this._schema = FormML._parse(schema)
     ;[this.indexRoot, this._indexToSchema] = buildIndexes(this._schema)
@@ -213,6 +213,18 @@ export class FormML {
   }
 
   validate() {
-    return { errors: [], isValid: true }
+    const errors = []
+
+    // TODO: pre-build validation schemas, and find by index
+    for (const index of Object.values(this.indexRoot)) {
+      const schema = this.getSchemaByIndex(index)
+      const name = schema.name
+      const result = validate(this._typedValuesProxy[name], schema)
+      this._fieldsMetaProxy[name].error = result
+      if (result) {
+        errors.push(result)
+      }
+    }
+    return { errors, isValid: errors.length === 0 }
   }
 }
