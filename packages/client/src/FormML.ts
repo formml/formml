@@ -64,7 +64,7 @@ export class FormML {
     name: string,
     { methodName: caller }: { methodName: string },
   ) {
-    if (this._valuesProxy[name] === undefined) {
+    if (!this.isInitialized(name)) {
       throw new Error(
         `Field "${name}" has not been initialized yet, please make sure to call \`initField\` before calling \`${caller}\``,
       )
@@ -81,6 +81,10 @@ export class FormML {
       )
     }
     return schema
+  }
+
+  private isInitialized(name: string) {
+    return this._valuesProxy[name] !== undefined
   }
 
   commitRawValue(index: object) {
@@ -220,10 +224,13 @@ export class FormML {
       const schema = this.getSchemaByIndex(index)
       const name = schema.name
       const result = validate(this._typedValuesProxy[name], schema)
-      this._fieldsMetaProxy[name].error = result
+
       if (result) {
         errors.push(result)
       }
+
+      this.initField(index)
+      this._fieldsMetaProxy[name].error = result
     }
     return { errors, isValid: errors.length === 0 }
   }

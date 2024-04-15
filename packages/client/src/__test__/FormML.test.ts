@@ -809,6 +809,24 @@ describe('FormML', () => {
           expect.objectContaining({ message: expect.any(String) }),
         )
       })
+
+      test('should initialize fields if not initialized', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            @required
+            num numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+
+        // Act
+        formML.validate()
+
+        // Assert
+        expect(() => formML.getField(index)).not.toThrow()
+      })
     })
   })
 
