@@ -751,6 +751,37 @@ describe('FormML', () => {
         expect(result.isValid).toBe(false)
         expect(result.errors).toHaveLength(1)
       })
+
+      test('should validate all fields', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            @required
+            num numberField1
+            @required
+            num numberField2
+          }
+        `
+        const formML = new FormML(dsl)
+        const index1 = formML.indexRoot['numberField1']
+        const index2 = formML.indexRoot['numberField2']
+        formML.initField(index1)
+        formML.initField(index2)
+
+        // Act
+        const pack1 = formML.getField(index1)
+        pack1.setRawValue('')
+        pack1.commitRawValue()
+
+        const pack2 = formML.getField(index2)
+        pack2.setRawValue('')
+        pack2.commitRawValue()
+
+        // Assert
+        const result = formML.validate()
+        expect(result.isValid).toBe(false)
+        expect(result.errors).toHaveLength(2)
+      })
     })
   })
 
