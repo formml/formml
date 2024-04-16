@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import dayjs from 'dayjs'
-import { useEffect, useRef } from 'react'
+import { FormEvent, useEffect, useRef } from 'react'
 
 import { Field } from '../Field.js'
 import { useFormML } from '../useFormML.js'
@@ -300,7 +300,9 @@ describe('Field', () => {
               bool boolField
             }
           `
-          const mockOnSubmit = vi.fn()
+          const mockOnSubmit = vi.fn((_, event: FormEvent<HTMLFormElement>) => {
+            event.preventDefault()
+          })
           const Form = () => {
             const { $form, FormML, handleSubmit } = useFormML(schema)
             return (
@@ -326,7 +328,10 @@ describe('Field', () => {
 
           // Assert
           expect(checkbox).toBeChecked()
-          expect(mockOnSubmit).toBeCalledWith({ boolField: true })
+          expect(mockOnSubmit).toBeCalledWith(
+            { boolField: true },
+            expect.anything(), // submit event
+          )
         })
 
         test('should have no value attribute by default', async () => {

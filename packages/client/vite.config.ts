@@ -12,6 +12,7 @@ export default defineConfig({
       'src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
       'integration-test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
     ],
+    restoreMocks: true,
     setupFiles: ['src/__test__/vitest-setup.ts'],
   },
 })

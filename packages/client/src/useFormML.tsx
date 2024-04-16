@@ -5,7 +5,10 @@ import { FormMLProvider } from './useFormMLContext.js'
 import { useConstant } from './utils/useConstant.js'
 import { ValidationError } from './validate/index.js'
 
-export type SubmitHandler = (data: object) => void
+export type SubmitHandler = (
+  data: object,
+  event: React.FormEvent<HTMLFormElement>,
+) => void
 export type SubmitErrorHandler = (errors: ValidationError[]) => void
 
 export function useFormML(schema: string) {
@@ -17,10 +20,9 @@ export function useFormML(schema: string) {
       onError?: SubmitErrorHandler,
     ): React.FormEventHandler<HTMLFormElement> =>
     (event) => {
-      event.preventDefault()
       const result = formML.validate()
       if (result.isValid) {
-        return onSubmit(formML.getTypedData())
+        return onSubmit(formML.getTypedData(), event)
       }
       if (onError) {
         return onError(result.errors)

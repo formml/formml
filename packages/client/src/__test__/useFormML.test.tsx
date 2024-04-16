@@ -128,7 +128,7 @@ describe('useFormML', () => {
 
       // Assert
       const expectedData = {}
-      expect(onSubmit).toBeCalledWith(expectedData)
+      expect(onSubmit).toBeCalledWith(expectedData, dummyEvent)
     })
 
     test('should provide latest data to submit handler', () => {
@@ -151,20 +151,20 @@ describe('useFormML', () => {
       eventHandler(dummyEvent)
 
       // Assert
-      expect(onSubmit).toBeCalledWith(expectedData)
+      expect(onSubmit).toBeCalledWith(expectedData, dummyEvent)
     })
 
-    test('should prevent default submit behavior', () => {
+    test('should provide event to submit handler', () => {
       // Arrange
-      const preventDefault = vi.spyOn(dummyEvent, 'preventDefault')
+      const onSubmit = vi.fn()
 
       // Act
       const { result } = renderHook(() => useFormML(dummyDsl))
-      const eventHandler = result.current.handleSubmit(() => {})
+      const eventHandler = result.current.handleSubmit(onSubmit)
       eventHandler(dummyEvent)
 
       // Assert
-      expect(preventDefault).toBeCalled()
+      expect(onSubmit).toBeCalledWith({}, dummyEvent)
     })
 
     test('should not call submit handler if form is invalid', () => {
