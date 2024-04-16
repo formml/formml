@@ -117,7 +117,7 @@ describe('useFormML', () => {
       expect(result.current.handleSubmit).toBeTypeOf('function')
     })
 
-    test('should provide data to callback', () => {
+    test('should provide data to submit handler', () => {
       // Arrange
       const onSubmit = vi.fn()
 
@@ -131,7 +131,7 @@ describe('useFormML', () => {
       expect(onSubmit).toBeCalledWith(expectedData)
     })
 
-    test('should provide latest data to callback', () => {
+    test('should provide latest data to submit handler', () => {
       // Arrange
       const stubFormML = new FormML(dummyDsl)
       const spiedGetTypedData = vi.spyOn(stubFormML, 'getTypedData')
@@ -167,7 +167,7 @@ describe('useFormML', () => {
       expect(preventDefault).toBeCalled()
     })
 
-    test('should not call callback if form is invalid', () => {
+    test('should not call submit handler if form is invalid', () => {
       // Arrange
       const onSubmit = vi.fn()
       const stubFormML = new FormML(dummyDsl)
@@ -182,6 +182,27 @@ describe('useFormML', () => {
 
       // Assert
       expect(onSubmit).not.toBeCalled()
+    })
+
+    test('should call error handler with errors if form is invalid', () => {
+      // Arrange
+      const onError = vi.fn()
+      const stubFormML = new FormML(dummyDsl)
+      const spiedValidate = vi.spyOn(stubFormML, 'validate')
+      const errors = [
+        { message: 'Error message' },
+        { message: 'Unknown field error' },
+      ]
+      spiedValidate.mockReturnValue({ errors, isValid: false })
+      vi.mocked(FormML).mockReturnValue(stubFormML)
+      const { result } = renderHook(() => useFormML(dummyDsl))
+      const eventHandler = result.current.handleSubmit(() => {}, onError)
+
+      // Act
+      eventHandler(dummyEvent)
+
+      // Assert
+      expect(onError).toBeCalledWith(errors)
     })
 
     // TODO: touch all fields before submit

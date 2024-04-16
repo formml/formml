@@ -2,7 +2,12 @@ import { Field } from '@formml/dsl'
 
 import { PrimitivesType } from '../JsTypes.js'
 
-const validate = (value: PrimitivesType, schema: Field) => {
+export type ValidationError = { message: string }
+
+const validate = (
+  value: PrimitivesType,
+  schema: Field,
+): ValidationError | undefined => {
   for (const annotation of schema.annotations) {
     if (annotation.name === 'required') {
       if (value === undefined) {
