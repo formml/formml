@@ -1,15 +1,23 @@
-import { renderHook, screen, waitFor } from '@testing-library/react'
+import { act, renderHook, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 
 import { FormML } from '../FormML.js'
 import { useField } from '../useField.js'
 import { renderHookWithContext } from './helpers/renderHookWithContext.js'
 import { renderWithContext } from './helpers/renderWithContext.js'
+import suppressErrorOutput from './helpers/suppressErrorOutput.js'
 
 describe('useField', () => {
   describe('hook only', () => {
-    // mute react warnings for uncaught errors in console
-    vi.spyOn(console, 'error').mockImplementation(() => vi.fn())
+    let restoreConsole: () => void
+
+    beforeAll(() => {
+      restoreConsole = suppressErrorOutput()
+    })
+
+    afterAll(() => {
+      restoreConsole()
+    })
 
     test('should throw if has no context', () => {
       const dummyIndex = {}
@@ -82,7 +90,7 @@ describe('useField', () => {
       })
     })
 
-    test('should return new value if onChange triggered', async () => {
+    test('should return new value if onChange triggered', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
@@ -94,15 +102,17 @@ describe('useField', () => {
       const { result } = renderHookWithContext(() => useField(index), formML)
 
       // Act
-      result.current.field.onChange({
-        target: { value: '1' },
-      } as unknown as React.ChangeEvent<HTMLInputElement>)
+      act(() => {
+        result.current.field.onChange({
+          target: { value: '1' },
+        } as unknown as React.ChangeEvent<HTMLInputElement>)
+      })
 
       // Assert
-      await waitFor(() => expect(result.current.field.value).toEqual('1'))
+      expect(result.current.field.value).toEqual('1')
     })
 
-    test('should return new touched if onBlur triggered', async () => {
+    test('should return new touched if onBlur triggered', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
@@ -114,13 +124,15 @@ describe('useField', () => {
       const { result } = renderHookWithContext(() => useField(index), formML)
 
       // Act
-      result.current.field.onBlur({} as unknown as React.FocusEvent)
+      act(() => {
+        result.current.field.onBlur({} as unknown as React.FocusEvent)
+      })
 
       // Assert
-      await waitFor(() => expect(result.current.meta.touched).toBe(true))
+      expect(result.current.meta.touched).toBe(true)
     })
 
-    test('should return new typed value if onBlur triggered', async () => {
+    test('should return new typed value if onBlur triggered', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
@@ -132,16 +144,18 @@ describe('useField', () => {
       const { result } = renderHookWithContext(() => useField(index), formML)
 
       // Act
-      result.current.field.onChange({
-        target: { value: '123' },
-      } as unknown as React.ChangeEvent<HTMLInputElement>)
-      result.current.field.onBlur({} as unknown as React.FocusEvent)
+      act(() => {
+        result.current.field.onChange({
+          target: { value: '123' },
+        } as unknown as React.ChangeEvent<HTMLInputElement>)
+        result.current.field.onBlur({} as unknown as React.FocusEvent)
+      })
 
       // Assert
-      await waitFor(() => expect(result.current.meta.typedValue).toEqual('123'))
+      expect(result.current.meta.typedValue).toEqual('123')
     })
 
-    test('should return new typed value if not-first-time onBlur triggered', async () => {
+    test('should return new typed value if not-first-time onBlur triggered', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
@@ -153,35 +167,37 @@ describe('useField', () => {
       const { result } = renderHookWithContext(() => useField(index), formML)
 
       // Act
-      result.current.field.onChange({
-        target: { value: 'first time' },
-      } as unknown as React.ChangeEvent<HTMLInputElement>)
-      await waitFor(() =>
-        expect(result.current.field.value).toEqual('first time'),
-      )
-      result.current.field.onBlur({} as unknown as React.FocusEvent)
+      act(() => {
+        result.current.field.onChange({
+          target: { value: 'first time' },
+        } as unknown as React.ChangeEvent<HTMLInputElement>)
+      })
+
+      expect(result.current.field.value).toEqual('first time')
+
+      act(() => {
+        result.current.field.onBlur({} as unknown as React.FocusEvent)
+      })
 
       // Assert
-      await waitFor(() =>
-        expect(result.current.meta.typedValue).toEqual('first time'),
-      )
+      expect(result.current.meta.typedValue).toEqual('first time')
 
       // Act
-      result.current.field.onChange({
-        target: { value: 'second time' },
-      } as unknown as React.ChangeEvent<HTMLInputElement>)
-      await waitFor(() =>
-        expect(result.current.field.value).toEqual('second time'),
-      )
-      result.current.field.onBlur({} as unknown as React.FocusEvent)
+      act(() => {
+        result.current.field.onChange({
+          target: { value: 'second time' },
+        } as unknown as React.ChangeEvent<HTMLInputElement>)
+      })
+      expect(result.current.field.value).toEqual('second time')
+      act(() => {
+        result.current.field.onBlur({} as unknown as React.FocusEvent)
+      })
 
       // Assert
-      await waitFor(() =>
-        expect(result.current.meta.typedValue).toEqual('second time'),
-      )
+      expect(result.current.meta.typedValue).toEqual('second time')
     })
 
-    test('should return new validation result if onBlur triggered', async () => {
+    test('should return new validation result if onBlur triggered', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
@@ -194,17 +210,17 @@ describe('useField', () => {
       const { result } = renderHookWithContext(() => useField(index), formML)
 
       // Act
-      result.current.field.onBlur({} as unknown as React.FocusEvent)
+      act(() => {
+        result.current.field.onBlur({} as unknown as React.FocusEvent)
+      })
 
       // Assert
-      await waitFor(() =>
-        expect(result.current.meta.error).toEqual({
-          message: expect.any(String),
-        }),
-      )
+      expect(result.current.meta.error).toEqual({
+        message: expect.any(String),
+      })
     })
 
-    test('should return new validation result if onChange triggered', async () => {
+    test('should return new validation result if onChange triggered', () => {
       // Arrange
       const dsl = `
         form ExampleForm {
@@ -217,16 +233,16 @@ describe('useField', () => {
       const { result } = renderHookWithContext(() => useField(index), formML)
 
       // Act
-      result.current.field.onChange({
-        target: { value: '' },
-      } as unknown as React.ChangeEvent<HTMLInputElement>)
+      act(() => {
+        result.current.field.onChange({
+          target: { value: '' },
+        } as unknown as React.ChangeEvent<HTMLInputElement>)
+      })
 
       // Assert
-      await waitFor(() =>
-        expect(result.current.meta.error).toEqual({
-          message: expect.any(String),
-        }),
-      )
+      expect(result.current.meta.error).toEqual({
+        message: expect.any(String),
+      })
     })
   })
 

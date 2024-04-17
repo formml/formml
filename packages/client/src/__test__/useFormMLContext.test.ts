@@ -3,10 +3,18 @@ import { RenderHookResult, renderHook } from '@testing-library/react'
 import { FormML } from '../FormML.js'
 import { useFormMLContext } from '../useFormMLContext.js'
 import { renderHookWithContext } from './helpers/renderHookWithContext.js'
+import suppressErrorOutput from './helpers/suppressErrorOutput.js'
 
 describe('useFormMLContext', () => {
-  // mute react warnings for uncaught errors in console
-  vi.spyOn(console, 'error').mockImplementation(() => vi.fn())
+  let restoreConsole: () => void
+
+  beforeAll(() => {
+    restoreConsole = suppressErrorOutput()
+  })
+
+  afterAll(() => {
+    restoreConsole()
+  })
 
   test('should throw if has no provider', () => {
     expect(() => renderHook(() => useFormMLContext())).toThrow(
