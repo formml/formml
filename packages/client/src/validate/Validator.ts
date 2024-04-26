@@ -5,7 +5,7 @@ import * as JsType from '../JsTypes.js'
 export default class Validator {
   constructor(_schema: Field) {}
 
-  validate(_value: JsType.PrimitivesType) {
+  validate(_value: JsType.PrimitiveType) {
     return { errors: [], isValid: true }
   }
 }

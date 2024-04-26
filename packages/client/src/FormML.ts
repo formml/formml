@@ -11,11 +11,11 @@ export type FieldResult = DeepReadonly<{
   rawValue: string
   schema: Field
   setRawValue: (value: string) => void
-  setTypedValue: (value: JsTypes.PrimitivesType) => void
-  setValue: (value: JsTypes.PrimitivesType) => void
+  setTypedValue: (value: JsTypes.PrimitiveType) => void
+  setValue: (value: JsTypes.PrimitiveType) => void
   touch: () => void
   touched: boolean
-  value: JsTypes.PrimitivesType
+  value: JsTypes.PrimitiveType
 }>
 
 function buildIndexes(schema: FormMLSchema) {
@@ -41,15 +41,15 @@ export class FormML {
     {
       commitRawValue: () => void
       setRawValue: (value: string) => void
-      setTypedValue: (value: JsTypes.PrimitivesType) => void
-      setValue: (value: JsTypes.PrimitivesType) => void
+      setTypedValue: (value: JsTypes.PrimitiveType) => void
+      setValue: (value: JsTypes.PrimitiveType) => void
       touch: () => void
     }
   > = new Map()
   private readonly _indexToSchema: WeakMap<object, Field>
   private static readonly _parse = createParser()
   private readonly _schema: FormMLSchema
-  private readonly _typedValuesProxy: Record<string, JsTypes.PrimitivesType> =
+  private readonly _typedValuesProxy: Record<string, JsTypes.PrimitiveType> =
     reactive({})
   private readonly _valuesProxy: Record<string, string> = reactive({})
 
@@ -138,10 +138,10 @@ export class FormML {
         setRawValue: (value: string) => {
           this.setRawValue(index, value)
         },
-        setTypedValue: (value: JsTypes.PrimitivesType) => {
+        setTypedValue: (value: JsTypes.PrimitiveType) => {
           this.setTypedValue(index, value)
         },
-        setValue: (value: JsTypes.PrimitivesType) => {
+        setValue: (value: JsTypes.PrimitiveType) => {
           this.setValue(index, value)
         },
         touch: () => {
@@ -164,7 +164,7 @@ export class FormML {
     )
   }
 
-  setTypedValue(index: object, value: JsTypes.PrimitivesType) {
+  setTypedValue(index: object, value: JsTypes.PrimitiveType) {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
 
@@ -175,7 +175,7 @@ export class FormML {
     this._fieldsMetaProxy[name].error = validate(value, schema)
   }
 
-  setValue(index: object, value: JsTypes.PrimitivesType) {
+  setValue(index: object, value: JsTypes.PrimitiveType) {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
 

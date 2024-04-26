@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 
 import { assertNever } from './utils/assertNever.js'
 
-export type PrimitivesTypeMapping = {
+export type PrimitiveTypeMapping = {
   bool: boolean | undefined
   datetime: Date | undefined
   decimal: BigNumber | undefined
@@ -13,7 +13,7 @@ export type PrimitivesTypeMapping = {
   text: string | undefined
 }
 
-export type PrimitivesType = PrimitivesTypeMapping[keyof PrimitivesTypeMapping]
+export type PrimitiveType = PrimitiveTypeMapping[keyof PrimitiveTypeMapping]
 
 export function toTyped(rawValue: string, type: DslTypes.PrimitiveType) {
   if (rawValue === '' && type !== 'text') {
@@ -36,7 +36,7 @@ export function toTyped(rawValue: string, type: DslTypes.PrimitiveType) {
   }
 }
 
-export function toRaw(value: PrimitivesType): string {
+export function toRaw(value: PrimitiveType): string {
   if (typeof value === 'boolean') {
     return value ? 'true' : 'false'
   }
