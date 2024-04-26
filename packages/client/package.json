@@ -46,7 +46,8 @@
     "@vue/reactivity": "^3.4.3",
     "bignumber.js": "^9.1.2",
     "dayjs": "^1.11.10",
-    "use-sync-external-store": "^1.2.0"
+    "use-sync-external-store": "^1.2.0",
+    "valibot": "^0.30.0"
   },
   "peerDependencies": {
     "react": "^18.2.0",
