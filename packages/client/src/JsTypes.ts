@@ -21,6 +21,7 @@ export function toTyped(rawValue: string, type: DslTypes.PrimitiveType) {
   }
   switch (type) {
     case 'bool':
+      // TODO: convert string to boolean directly
       return rawValue === 'true' ? true : false
     case 'decimal':
       return new BigNumber(rawValue)
