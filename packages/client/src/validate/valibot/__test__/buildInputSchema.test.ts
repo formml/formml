@@ -1,5 +1,5 @@
 import { Field, Form } from '@formml/dsl'
-import { SpecialSchema } from 'valibot'
+import { SpecialSchema, StringSchema } from 'valibot'
 
 import buildInputSchema from '../buildInputSchema.js'
 import * as i from '../inputSchemas.js'
@@ -42,6 +42,63 @@ describe('buildInputSchema', () => {
 
       // Assert
       expect(schema).toBe(dummyNumberSchema)
+    })
+
+    test('should return custom datetime given a datetime field', () => {
+      // Arrange
+      const datetimeField: Field = {
+        $container: {} as Form,
+        $type: 'Field',
+        annotations: [],
+        name: 'datetimeField',
+        type: 'datetime',
+      }
+      const dummyDatetimeSchema = {} as SpecialSchema<string>
+      vi.mocked(i.datetime).mockReturnValue(dummyDatetimeSchema)
+
+      // Act
+      const schema = buildInputSchema(datetimeField)
+
+      // Assert
+      expect(schema).toBe(dummyDatetimeSchema)
+    })
+
+    test('should return custom bool given a bool field', () => {
+      // Arrange
+      const boolField: Field = {
+        $container: {} as Form,
+        $type: 'Field',
+        annotations: [],
+        name: 'boolField',
+        type: 'bool',
+      }
+      const dummyBoolSchema = {} as StringSchema
+      vi.mocked(i.bool).mockReturnValue(dummyBoolSchema)
+
+      // Act
+      const schema = buildInputSchema(boolField)
+
+      // Assert
+      expect(schema).toBe(dummyBoolSchema)
+    })
+
+    test('should return custom decimal given a decimal field', () => {
+      // Arrange
+      const decimalField: Field = {
+        $container: {} as Form,
+        $type: 'Field',
+        annotations: [],
+        name: 'decimalField',
+        type: 'decimal',
+      }
+      const dummyDecimalSchema = {} as SpecialSchema<string>
+      vi.mocked(i.decimal).mockReturnValue(dummyDecimalSchema)
+
+      // Act
+      const schema = buildInputSchema(decimalField)
+
+      // Assert
+      expect(schema).toBe(dummyDecimalSchema)
     })
   })
 })
