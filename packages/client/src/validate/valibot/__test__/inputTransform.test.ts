@@ -1,4 +1,4 @@
-import { safeParse } from 'valibot'
+import * as v from 'valibot'
 
 import * as i from '../inputTransform.js'
 
@@ -9,7 +9,7 @@ describe('input transform', () => {
       const schema = i.asNumber()
 
       // Act
-      const result = safeParse(schema, '123')
+      const result = v.safeParse(schema, '123')
 
       // Assert
 
@@ -21,7 +21,7 @@ describe('input transform', () => {
       const schema = i.asNumber()
 
       // Act
-      const result = safeParse(schema, 'abc')
+      const result = v.safeParse(schema, 'abc')
 
       // Assert
       expect(result.success).toBe(false)
@@ -30,19 +30,31 @@ describe('input transform', () => {
           {
             "abortEarly": undefined,
             "abortPipeEarly": undefined,
-            "context": "special",
-            "expected": "unknown",
+            "context": "decimal",
+            "expected": null,
             "input": "abc",
-            "issues": undefined,
             "lang": undefined,
-            "message": "Invalid type: Expected unknown but received "abc"",
+            "message": "Invalid decimal: Received "abc"",
             "path": undefined,
-            "reason": "type",
+            "reason": "string",
             "received": ""abc"",
+            "requirement": /\\^\\\\d\\+\\$/u,
             "skipPipe": undefined,
           },
         ]
       `)
+    })
+
+    test('should transform input to number before give it to inner schema', () => {
+      // Arrange
+      const schema = i.asNumber(v.literal(123))
+
+      // Act
+      const result = v.safeParse(schema, '123')
+
+      // Assert
+      expect(result.success).toBe(true)
+      expect(result.output).toBe(123)
     })
   })
 
@@ -53,7 +65,7 @@ describe('input transform', () => {
 
       // Act
 
-      const result = safeParse(schema, '2024-01-01T00:00:00Z')
+      const result = v.safeParse(schema, '2024-01-01T00:00:00Z')
 
       // Assert
       expect(result.success).toBe(true)
@@ -66,7 +78,7 @@ describe('input transform', () => {
       const schema = i.asBool()
 
       // Act
-      const result = safeParse(schema, 'true')
+      const result = v.safeParse(schema, 'true')
 
       // Assert
       expect(result.success).toBe(true)
@@ -79,7 +91,7 @@ describe('input transform', () => {
       const schema = i.asDecimal()
 
       // Act
-      const result = safeParse(schema, '123.45')
+      const result = v.safeParse(schema, '123.45')
 
       // Assert
       expect(result.success).toBe(true)

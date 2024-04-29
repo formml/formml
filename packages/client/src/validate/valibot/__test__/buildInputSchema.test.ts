@@ -34,7 +34,7 @@ describe('buildInputSchema', () => {
         name: 'numberField',
         type: 'num',
       }
-      const dummyNumberSchema = {} as SpecialSchema<string>
+      const dummyNumberSchema = {} as never
       vi.mocked(i.asNumber).mockReturnValue(dummyNumberSchema)
 
       // Act
