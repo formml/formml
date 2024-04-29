@@ -2,9 +2,9 @@ import { Field, Form } from '@formml/dsl'
 import { SpecialSchema, StringSchema } from 'valibot'
 
 import buildInputSchema from '../buildInputSchema.js'
-import * as i from '../inputSchemas.js'
+import * as i from '../inputTransform.js'
 
-vi.mock('../inputSchemas.js')
+vi.mock('../inputTransform.js')
 
 describe('buildInputSchema', () => {
   describe('types', () => {
@@ -35,7 +35,7 @@ describe('buildInputSchema', () => {
         type: 'num',
       }
       const dummyNumberSchema = {} as SpecialSchema<string>
-      vi.mocked(i.number).mockReturnValue(dummyNumberSchema)
+      vi.mocked(i.asNumber).mockReturnValue(dummyNumberSchema)
 
       // Act
       const schema = buildInputSchema(numberField)
@@ -54,7 +54,7 @@ describe('buildInputSchema', () => {
         type: 'datetime',
       }
       const dummyDatetimeSchema = {} as SpecialSchema<string>
-      vi.mocked(i.datetime).mockReturnValue(dummyDatetimeSchema)
+      vi.mocked(i.asDatetime).mockReturnValue(dummyDatetimeSchema)
 
       // Act
       const schema = buildInputSchema(datetimeField)
@@ -73,7 +73,7 @@ describe('buildInputSchema', () => {
         type: 'bool',
       }
       const dummyBoolSchema = {} as StringSchema
-      vi.mocked(i.bool).mockReturnValue(dummyBoolSchema)
+      vi.mocked(i.asBool).mockReturnValue(dummyBoolSchema)
 
       // Act
       const schema = buildInputSchema(boolField)
@@ -92,7 +92,7 @@ describe('buildInputSchema', () => {
         type: 'decimal',
       }
       const dummyDecimalSchema = {} as SpecialSchema<string>
-      vi.mocked(i.decimal).mockReturnValue(dummyDecimalSchema)
+      vi.mocked(i.asDecimal).mockReturnValue(dummyDecimalSchema)
 
       // Act
       const schema = buildInputSchema(decimalField)

@@ -2,7 +2,7 @@ import { Field } from '@formml/dsl'
 import * as v from 'valibot'
 
 import { assertNever } from '../../utils/assertNever.js'
-import * as i from './inputSchemas.js'
+import * as i from './inputTransform.js'
 
 export default function buildInputSchema(schema: Field) {
   if (schema.type === 'text') {
@@ -10,19 +10,19 @@ export default function buildInputSchema(schema: Field) {
   }
 
   if (schema.type === 'num') {
-    return i.number()
+    return i.asNumber()
   }
 
   if (schema.type === 'bool') {
-    return i.bool()
+    return i.asBool()
   }
 
   if (schema.type === 'datetime') {
-    return i.datetime()
+    return i.asDatetime()
   }
 
   if (schema.type === 'decimal') {
-    return i.decimal()
+    return i.asDecimal()
   }
 
   return assertNever`Unsupported field type: ${schema.type}`

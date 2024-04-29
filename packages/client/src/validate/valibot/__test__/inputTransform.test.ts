@@ -1,12 +1,12 @@
 import { safeParse } from 'valibot'
 
-import * as i from '../inputSchemas.js'
+import * as i from '../inputTransform.js'
 
-describe('input schemas', () => {
+describe('input transform', () => {
   describe('number', () => {
     test('should validate a number string', () => {
       // Arrange
-      const schema = i.number()
+      const schema = i.asNumber()
 
       // Act
       const result = safeParse(schema, '123')
@@ -20,7 +20,7 @@ describe('input schemas', () => {
   describe('datetime', () => {
     test('should validate a datetime string', () => {
       // Arrange
-      const schema = i.datetime()
+      const schema = i.asDatetime()
 
       // Act
 
@@ -34,7 +34,7 @@ describe('input schemas', () => {
   describe('bool', () => {
     test('should validate a bool string', () => {
       // Arrange
-      const schema = i.bool()
+      const schema = i.asBool()
 
       // Act
       const result = safeParse(schema, 'true')
@@ -47,7 +47,7 @@ describe('input schemas', () => {
   describe('decimal', () => {
     test('should validate a decimal string', () => {
       // Arrange
-      const schema = i.decimal()
+      const schema = i.asDecimal()
 
       // Act
       const result = safeParse(schema, '123.45')
