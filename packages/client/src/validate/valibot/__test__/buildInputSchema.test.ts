@@ -35,7 +35,7 @@ describe('buildInputSchema', () => {
         type: 'num',
       }
       const dummyNumberSchema = {} as never
-      vi.mocked(i.asNumber).mockReturnValue(dummyNumberSchema)
+      vi.mocked(i.toNumber).mockReturnValue(dummyNumberSchema)
 
       // Act
       const schema = buildInputSchema(numberField)
@@ -54,7 +54,7 @@ describe('buildInputSchema', () => {
         type: 'datetime',
       }
       const dummyDatetimeSchema = {} as SpecialSchema<string>
-      vi.mocked(i.asDatetime).mockReturnValue(dummyDatetimeSchema)
+      vi.mocked(i.toDatetime).mockReturnValue(dummyDatetimeSchema)
 
       // Act
       const schema = buildInputSchema(datetimeField)
@@ -73,7 +73,7 @@ describe('buildInputSchema', () => {
         type: 'bool',
       }
       const dummyBoolSchema = {} as StringSchema
-      vi.mocked(i.asBool).mockReturnValue(dummyBoolSchema)
+      vi.mocked(i.toBool).mockReturnValue(dummyBoolSchema)
 
       // Act
       const schema = buildInputSchema(boolField)
@@ -92,7 +92,7 @@ describe('buildInputSchema', () => {
         type: 'decimal',
       }
       const dummyDecimalSchema = {} as SpecialSchema<string>
-      vi.mocked(i.asDecimal).mockReturnValue(dummyDecimalSchema)
+      vi.mocked(i.toDecimal).mockReturnValue(dummyDecimalSchema)
 
       // Act
       const schema = buildInputSchema(decimalField)

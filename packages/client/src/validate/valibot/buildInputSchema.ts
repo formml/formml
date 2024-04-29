@@ -10,19 +10,19 @@ export default function buildInputSchema(schema: Field) {
   }
 
   if (schema.type === 'num') {
-    return i.asNumber()
+    return i.toNumber()
   }
 
   if (schema.type === 'bool') {
-    return i.asBool()
+    return i.toBool()
   }
 
   if (schema.type === 'datetime') {
-    return i.asDatetime()
+    return i.toDatetime()
   }
 
   if (schema.type === 'decimal') {
-    return i.asDecimal()
+    return i.toDecimal()
   }
 
   return assertNever`Unsupported field type: ${schema.type}`

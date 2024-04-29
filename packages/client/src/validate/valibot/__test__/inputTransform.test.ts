@@ -6,7 +6,7 @@ describe('input transform', () => {
   describe('number', () => {
     test('should validate a number string', () => {
       // Arrange
-      const schema = i.asNumber()
+      const schema = i.toNumber()
 
       // Act
       const result = v.safeParse(schema, '123')
@@ -18,7 +18,7 @@ describe('input transform', () => {
 
     test('should invalidate a non-number string', () => {
       // Arrange
-      const schema = i.asNumber()
+      const schema = i.toNumber()
 
       // Act
       const result = v.safeParse(schema, 'abc')
@@ -47,7 +47,7 @@ describe('input transform', () => {
 
     test('should transform input to number before give it to inner schema', () => {
       // Arrange
-      const schema = i.asNumber(v.literal(123))
+      const schema = i.toNumber(v.literal(123))
 
       // Act
       const result = v.safeParse(schema, '123')
@@ -61,7 +61,7 @@ describe('input transform', () => {
   describe('datetime', () => {
     test('should validate a datetime string', () => {
       // Arrange
-      const schema = i.asDatetime()
+      const schema = i.toDatetime()
 
       // Act
 
@@ -75,7 +75,7 @@ describe('input transform', () => {
   describe('bool', () => {
     test('should validate a bool string', () => {
       // Arrange
-      const schema = i.asBool()
+      const schema = i.toBool()
 
       // Act
       const result = v.safeParse(schema, 'true')
@@ -88,7 +88,7 @@ describe('input transform', () => {
   describe('decimal', () => {
     test('should validate a decimal string', () => {
       // Arrange
-      const schema = i.asDecimal()
+      const schema = i.toDecimal()
 
       // Act
       const result = v.safeParse(schema, '123.45')
