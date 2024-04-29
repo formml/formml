@@ -37,7 +37,7 @@ describe('buildInputSchema', () => {
         bool: i.toBool,
         datetime: i.toDatetime,
         decimal: i.toDecimal,
-        num: i.toNumber,
+        num: i.toNum,
       }
 
       test('should validate and transform input firstly with custom transformer', () => {

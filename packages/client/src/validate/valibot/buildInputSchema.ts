@@ -10,7 +10,7 @@ export default function buildInputSchema(formmlSchema: Field) {
   }
 
   if (formmlSchema.type === 'num') {
-    return i.toNumber()
+    return i.toNum()
   }
 
   if (formmlSchema.type === 'bool') {

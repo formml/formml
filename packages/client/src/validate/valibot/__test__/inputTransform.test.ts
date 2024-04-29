@@ -7,7 +7,7 @@ describe('input transform', () => {
   describe('number', () => {
     test('should validate a number string', () => {
       // Arrange
-      const schema = i.toNumber()
+      const schema = i.toNum()
 
       // Act
       const result = v.safeParse(schema, '123')
@@ -19,7 +19,7 @@ describe('input transform', () => {
 
     test('should invalidate a non-number string', () => {
       // Arrange
-      const schema = i.toNumber()
+      const schema = i.toNum()
 
       // Act
       const result = v.safeParse(schema, 'abc')
@@ -48,7 +48,7 @@ describe('input transform', () => {
 
     test('should transform input to number before give it to inner schema', () => {
       // Arrange
-      const schema = i.toNumber(v.literal(123))
+      const schema = i.toNum(v.literal(123))
 
       // Act
       const result = v.safeParse(schema, '123')

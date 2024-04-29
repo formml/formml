@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import * as v from 'valibot'
 
-export const toNumber = (schema?: v.BaseSchema) =>
+export const toNum = (schema?: v.BaseSchema) =>
   v.transform(v.string([v.decimal()]), Number, schema)
 export const toDatetime = (schema?: v.BaseSchema) =>
   v.transform<v.StringSchema, dayjs.Dayjs>(
