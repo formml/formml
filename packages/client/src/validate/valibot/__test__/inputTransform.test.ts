@@ -15,6 +15,35 @@ describe('input transform', () => {
 
       expect(result.success).toBe(true)
     })
+
+    test('should invalidate a non-number string', () => {
+      // Arrange
+      const schema = i.asNumber()
+
+      // Act
+      const result = safeParse(schema, 'abc')
+
+      // Assert
+      expect(result.success).toBe(false)
+      expect(result.issues).toMatchInlineSnapshot(`
+        [
+          {
+            "abortEarly": undefined,
+            "abortPipeEarly": undefined,
+            "context": "special",
+            "expected": "unknown",
+            "input": "abc",
+            "issues": undefined,
+            "lang": undefined,
+            "message": "Invalid type: Expected unknown but received "abc"",
+            "path": undefined,
+            "reason": "type",
+            "received": ""abc"",
+            "skipPipe": undefined,
+          },
+        ]
+      `)
+    })
   })
 
   describe('datetime', () => {
