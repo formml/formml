@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import * as v from 'valibot'
 
 import * as i from '../inputTransform.js'
@@ -69,6 +70,26 @@ describe('input transform', () => {
 
       // Assert
       expect(result.success).toBe(true)
+    })
+
+    test('should transform input to dayjs object before give it to inner schema', () => {
+      // Arrange
+      const schema = i.toDatetime(
+        v.unknown([
+          v.custom(
+            (value) =>
+              dayjs.isDayjs(value) && value.isSame('2024-01-01T00:00:00Z'),
+          ),
+        ]),
+      )
+
+      // Act
+      const result = v.safeParse(schema, '2024-01-01T00:00:00Z')
+
+      // Assert
+      expect(result.success).toBe(true)
+      expect(result.typed).toBe(true)
+      expect(result.output).toBeInstanceOf(dayjs)
     })
   })
 
