@@ -1,3 +1,4 @@
+import { BigNumber } from 'bignumber.js'
 import dayjs from 'dayjs'
 import * as v from 'valibot'
 
@@ -128,6 +129,20 @@ describe('input transform', () => {
 
       // Assert
       expect(result.success).toBe(true)
+    })
+
+    test('should transform input to big number before give it to inner schema', () => {
+      // Arrange
+      const schema = i.toDecimal(
+        v.instance(BigNumber, [v.custom((value) => value.eq('123.45'))]),
+      )
+
+      // Act
+      const result = v.safeParse(schema, '123.45')
+
+      // Assert
+      expect(result.success).toBe(true)
+      expect(result.output).toBeInstanceOf(BigNumber)
     })
   })
 })
