@@ -9,6 +9,7 @@ export const toDatetime = (schema?: v.BaseSchema) =>
     dayjs,
     schema,
   )
-export const toBool = () => v.string()
+export const toBool = (schema?: v.BaseSchema) =>
+  v.transform(v.string(), Boolean, schema)
 export const toDecimal = () =>
   v.special<string>((input) => !isNaN(Number(input)))

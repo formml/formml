@@ -104,6 +104,18 @@ describe('input transform', () => {
       // Assert
       expect(result.success).toBe(true)
     })
+
+    test('should transform input to boolean before give it to inner schema', () => {
+      // Arrange
+      const schema = i.toBool(v.literal(true))
+
+      // Act
+      const result = v.safeParse(schema, 'true')
+
+      // Assert
+      expect(result.success).toBe(true)
+      expect(result.output).toBe(true)
+    })
   })
 
   describe('decimal', () => {
