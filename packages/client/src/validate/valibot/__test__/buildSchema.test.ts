@@ -76,5 +76,26 @@ describe('buildSchema', () => {
         })
       },
     )
+
+    test.each(['text', 'num', 'bool', 'datetime', 'decimal'] as const)(
+      'should be optional by default',
+      (type) => {
+        // Arrange
+        const field: Field = {
+          $container: {} as Form,
+          $type: 'Field',
+          annotations: [],
+          name: 'field',
+          type,
+        }
+
+        // Act
+        const schema = buildSchema(field)
+        const result = v.safeParse(schema, undefined)
+
+        // Assert
+        expect(result.success).toBe(true)
+      },
+    )
   })
 })

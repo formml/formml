@@ -5,7 +5,7 @@ import * as v from 'valibot'
 
 import { assertNever } from '../../utils/assertNever.js'
 
-export default function buildSchema(formmlSchema: Field) {
+const type = (formmlSchema: Field) => {
   if (formmlSchema.type === 'text') {
     return v.string()
   }
@@ -22,4 +22,8 @@ export default function buildSchema(formmlSchema: Field) {
     return v.instance(BigNumber)
   }
   return assertNever`Unsupported type ${formmlSchema.type}`
+}
+
+export default function buildSchema(formmlSchema: Field) {
+  return v.optional(type(formmlSchema))
 }
