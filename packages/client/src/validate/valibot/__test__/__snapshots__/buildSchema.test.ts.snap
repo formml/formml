@@ -1,5 +1,62 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`buildSchema > integration > types - bool > should invalidate non-boolean input if field type is bool 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "context": "boolean",
+    "expected": "boolean",
+    "input": "abc",
+    "issues": undefined,
+    "lang": undefined,
+    "message": "Invalid type: Expected boolean but received "abc"",
+    "path": undefined,
+    "reason": "type",
+    "received": ""abc"",
+    "skipPipe": undefined,
+  },
+]
+`;
+
+exports[`buildSchema > integration > types - datetime > should invalidate non-dayjs input if field type is datetime 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "context": "special",
+    "expected": "unknown",
+    "input": 2024-01-01T00:00:00.000Z,
+    "issues": undefined,
+    "lang": undefined,
+    "message": "Invalid type: Expected unknown but received Date",
+    "path": undefined,
+    "reason": "type",
+    "received": "Date",
+    "skipPipe": undefined,
+  },
+]
+`;
+
+exports[`buildSchema > integration > types - decimal > should invalidate non-BigNumber input if field type is decimal 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "context": "instance",
+    "expected": "BigNumber",
+    "input": 123.45,
+    "issues": undefined,
+    "lang": undefined,
+    "message": "Invalid type: Expected BigNumber but received 123.45",
+    "path": undefined,
+    "reason": "type",
+    "received": "123.45",
+    "skipPipe": undefined,
+  },
+]
+`;
+
 exports[`buildSchema > integration > types - num > should invalidate non-number input if field type is num 1`] = `
 [
   {
