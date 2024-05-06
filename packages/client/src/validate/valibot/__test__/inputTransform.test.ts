@@ -18,6 +18,20 @@ describe('input transform', () => {
       expect(result.success).toBe(true)
     })
 
+    test.each(['', '  ', ' \n\t'])(
+      'should validate a blank string',
+      (input) => {
+        // Arrange
+        const schema = i.toNum()
+
+        // Act
+        const result = v.safeParse(schema, input)
+
+        // Assert
+        expect(result.success).toBe(true)
+      },
+    )
+
     test('should invalidate a non-number string', () => {
       // Arrange
       const schema = i.toNum()
@@ -32,15 +46,15 @@ describe('input transform', () => {
           {
             "abortEarly": undefined,
             "abortPipeEarly": undefined,
-            "context": "decimal",
+            "context": "custom",
             "expected": null,
             "input": "abc",
             "lang": undefined,
-            "message": "Invalid decimal: Received "abc"",
+            "message": "Invalid input: Received "abc"",
             "path": undefined,
             "reason": "string",
             "received": ""abc"",
-            "requirement": /\\^\\\\d\\+\\$/u,
+            "requirement": [Function],
             "skipPipe": undefined,
           },
         ]
