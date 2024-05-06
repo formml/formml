@@ -24,6 +24,12 @@ const type = (formmlSchema: Field) => {
   return assertNever`Unsupported type ${formmlSchema.type}`
 }
 
+const isRequired = (formmlSchema: Field) =>
+  formmlSchema.annotations.some((a) => a.name === 'required')
+
 export default function buildSchema(formmlSchema: Field) {
+  if (isRequired(formmlSchema)) {
+    return type(formmlSchema)
+  }
   return v.optional(type(formmlSchema))
 }

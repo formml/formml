@@ -1,5 +1,100 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`buildSchema > integration > required > should invalidate undefined if field is required 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "context": "string",
+    "expected": "string",
+    "input": undefined,
+    "issues": undefined,
+    "lang": undefined,
+    "message": "Invalid type: Expected string but received undefined",
+    "path": undefined,
+    "reason": "type",
+    "received": "undefined",
+    "skipPipe": undefined,
+  },
+]
+`;
+
+exports[`buildSchema > integration > required > should invalidate undefined if field is required 2`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "context": "number",
+    "expected": "number",
+    "input": undefined,
+    "issues": undefined,
+    "lang": undefined,
+    "message": "Invalid type: Expected number but received undefined",
+    "path": undefined,
+    "reason": "type",
+    "received": "undefined",
+    "skipPipe": undefined,
+  },
+]
+`;
+
+exports[`buildSchema > integration > required > should invalidate undefined if field is required 3`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "context": "boolean",
+    "expected": "boolean",
+    "input": undefined,
+    "issues": undefined,
+    "lang": undefined,
+    "message": "Invalid type: Expected boolean but received undefined",
+    "path": undefined,
+    "reason": "type",
+    "received": "undefined",
+    "skipPipe": undefined,
+  },
+]
+`;
+
+exports[`buildSchema > integration > required > should invalidate undefined if field is required 4`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "context": "special",
+    "expected": "unknown",
+    "input": undefined,
+    "issues": undefined,
+    "lang": undefined,
+    "message": "Invalid type: Expected unknown but received undefined",
+    "path": undefined,
+    "reason": "type",
+    "received": "undefined",
+    "skipPipe": undefined,
+  },
+]
+`;
+
+exports[`buildSchema > integration > required > should invalidate undefined if field is required 5`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "context": "instance",
+    "expected": "BigNumber",
+    "input": undefined,
+    "issues": undefined,
+    "lang": undefined,
+    "message": "Invalid type: Expected BigNumber but received undefined",
+    "path": undefined,
+    "reason": "type",
+    "received": "undefined",
+    "skipPipe": undefined,
+  },
+]
+`;
+
 exports[`buildSchema > integration > types - bool > should invalidate non-boolean input if field type is bool 1`] = `
 [
   {
