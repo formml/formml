@@ -3,11 +3,12 @@ import { DeepReadonly, reactive, toRaw } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
 
 import * as JsTypes from './JsTypes.js'
-import validate from './validate/index.js'
+import { ValidationError, createInputValidator } from './validator/index.js'
+import { Validator } from './validator/index.js'
 
 export type FieldResult = DeepReadonly<{
   commitRawValue: () => void
-  error: FieldError | undefined
+  error: ValidationError | undefined
   rawValue: string
   schema: Field
   setRawValue: (value: string) => void
@@ -20,7 +21,7 @@ export type FieldResult = DeepReadonly<{
 
 function buildIndexes(schema: FormMLSchema) {
   const indexRoot: Record<string, object> = {}
-  const indexToSchema = new WeakMap<object, Field>()
+  const indexToSchema = new Map<object, Field>()
   for (const field of schema.form.fields) {
     const fieldIndex = { $type: field.type }
     indexRoot[field.name] = fieldIndex
@@ -29,12 +30,20 @@ function buildIndexes(schema: FormMLSchema) {
   return [indexRoot, indexToSchema] as const
 }
 
-export type FieldError = { message: string }
+function buildInputValidators(
+  indexToSchema: Map<object, Field>,
+): Map<object, Validator<string>> {
+  const validators = new Map<object, Validator<string>>()
+  for (const [index, schema] of indexToSchema) {
+    validators.set(index, createInputValidator(schema))
+  }
+  return validators
+}
 
 export class FormML {
   private readonly _fieldsMetaProxy: Record<
     string,
-    { error: FieldError | undefined; touched: boolean }
+    { error: ValidationError | undefined; touched: boolean }
   > = reactive({})
   private readonly _indexToHelpers: Map<
     object,
@@ -46,7 +55,8 @@ export class FormML {
       touch: () => void
     }
   > = new Map()
-  private readonly _indexToSchema: WeakMap<object, Field>
+  private readonly _indexToInputValidator: Map<object, Validator<string>>
+  private readonly _indexToSchema: Map<object, Field>
   private static readonly _parse = createParser()
   private readonly _schema: FormMLSchema
   private readonly _typedValuesProxy: Record<string, JsTypes.PrimitiveType> =
@@ -58,6 +68,7 @@ export class FormML {
   constructor(schema: string) {
     this._schema = FormML._parse(schema)
     ;[this.indexRoot, this._indexToSchema] = buildIndexes(this._schema)
+    this._indexToInputValidator = buildInputValidators(this._indexToSchema)
   }
 
   private assertInitialized(
@@ -93,9 +104,10 @@ export class FormML {
 
     this.assertInitialized(name, { methodName: 'commitRawValue' })
 
-    const typedValue = JsTypes.toTyped(this._valuesProxy[name], type)
-    this._typedValuesProxy[name] = typedValue
-    this._fieldsMetaProxy[name].error = validate(typedValue, schema)
+    const rawValue = this._valuesProxy[name]
+    this._typedValuesProxy[name] = JsTypes.toTyped(rawValue, type)
+    this._fieldsMetaProxy[name].error =
+      this._indexToInputValidator.get(index)!(rawValue).errors?.[0]
   }
 
   getField(index: object): FieldResult {
@@ -153,15 +165,13 @@ export class FormML {
 
   setRawValue(index: object, value: string) {
     const schema = this.getSchemaByIndex(index)
-    const { name, type } = schema
+    const { name } = schema
 
     this.assertInitialized(name, { methodName: 'setRawValue' })
 
     this._valuesProxy[name] = value
-    this._fieldsMetaProxy[name].error = validate(
-      JsTypes.toTyped(value, type),
-      schema,
-    )
+    this._fieldsMetaProxy[name].error =
+      this._indexToInputValidator.get(index)!(value).errors?.[0]
   }
 
   setTypedValue(index: object, value: JsTypes.PrimitiveType) {
@@ -171,8 +181,10 @@ export class FormML {
     this.assertInitialized(name, { methodName: 'setTypedValue' })
 
     this._typedValuesProxy[name] = value
-    this._valuesProxy[name] = JsTypes.toRaw(value)
-    this._fieldsMetaProxy[name].error = validate(value, schema)
+    const rawValue = JsTypes.toRaw(value)
+    this._valuesProxy[name] = rawValue
+    this._fieldsMetaProxy[name].error =
+      this._indexToInputValidator.get(index)!(rawValue).errors?.[0]
   }
 
   setValue(index: object, value: JsTypes.PrimitiveType) {
@@ -182,8 +194,10 @@ export class FormML {
     this.assertInitialized(name, { methodName: 'setValue' })
 
     this._typedValuesProxy[name] = value
-    this._valuesProxy[name] = JsTypes.toRaw(value)
-    this._fieldsMetaProxy[name].error = validate(value, schema)
+    const rawValue = JsTypes.toRaw(value)
+    this._valuesProxy[name] = rawValue
+    this._fieldsMetaProxy[name].error =
+      this._indexToInputValidator.get(index)!(rawValue).errors?.[0]
   }
 
   subscribe(index: object, callback: () => void): () => void {
@@ -210,10 +224,9 @@ export class FormML {
     this.assertInitialized(name, { methodName: 'touch' })
 
     this._fieldsMetaProxy[name].touched = true
-    this._fieldsMetaProxy[name].error = validate(
-      this._typedValuesProxy[name],
-      schema,
-    )
+    this._fieldsMetaProxy[name].error = this._indexToInputValidator.get(index)!(
+      this._valuesProxy[name],
+    ).errors?.[0]
   }
 
   validate() {
@@ -223,14 +236,16 @@ export class FormML {
     for (const index of Object.values(this.indexRoot)) {
       const schema = this.getSchemaByIndex(index)
       const name = schema.name
-      const result = validate(this._typedValuesProxy[name], schema)
+      const result = this._indexToInputValidator.get(index)!(
+        this._valuesProxy[name],
+      )
 
-      if (result) {
-        errors.push(result)
+      if (!result.isValid) {
+        errors.push(...result.errors)
       }
 
       this.initField(index)
-      this._fieldsMetaProxy[name].error = result
+      this._fieldsMetaProxy[name].error = result.errors?.[0]
     }
     return { errors, isValid: errors.length === 0 }
   }

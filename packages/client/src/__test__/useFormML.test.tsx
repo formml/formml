@@ -104,7 +104,8 @@ describe('useFormML', () => {
     const dummyDsl = `
       form ExampleForm {
         num numberField
-      }`
+      }
+    `
     const dummyEvent = new SubmitEvent(
       'submit',
     ) as unknown as React.FormEvent<HTMLFormElement>
@@ -123,6 +124,7 @@ describe('useFormML', () => {
 
       // Act
       const { result } = renderHook(() => useFormML(dummyDsl))
+      result.current.instance.initField(result.current.$form['numberField'])
       const eventHandler = result.current.handleSubmit(onSubmit)
       eventHandler(dummyEvent)
 
@@ -133,22 +135,23 @@ describe('useFormML', () => {
 
     test('should provide latest data to submit handler', () => {
       // Arrange
+      const expectedData = {
+        numberField: 123.45,
+      }
+
       const stubFormML = new FormML(dummyDsl)
-      const spiedGetTypedData = vi.spyOn(stubFormML, 'getTypedData')
+      vi.spyOn(stubFormML, 'getTypedData').mockReturnValue(expectedData)
+      vi.spyOn(stubFormML, 'validate').mockReturnValue({
+        errors: [],
+        isValid: true,
+      })
+
       vi.mocked(FormML).mockReturnValue(stubFormML)
       const { result } = renderHook(() => useFormML(dummyDsl))
-
       const onSubmit = vi.fn()
-      const eventHandler = result.current.handleSubmit(onSubmit)
-
-      const expectedData = {
-        fieldA: 'abc',
-        fieldB: 123.45,
-      }
-      spiedGetTypedData.mockReturnValue(expectedData)
 
       // Act
-      eventHandler(dummyEvent)
+      result.current.handleSubmit(onSubmit)(dummyEvent)
 
       // Assert
       expect(onSubmit).toBeCalledWith(expectedData, dummyEvent)
@@ -160,6 +163,7 @@ describe('useFormML', () => {
 
       // Act
       const { result } = renderHook(() => useFormML(dummyDsl))
+      result.current.instance.initField(result.current.$form['numberField'])
       const eventHandler = result.current.handleSubmit(onSubmit)
       eventHandler(dummyEvent)
 

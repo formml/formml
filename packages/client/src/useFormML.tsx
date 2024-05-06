@@ -3,7 +3,7 @@ import React from 'react'
 import { FormML } from './FormML.js'
 import { FormMLProvider } from './useFormMLContext.js'
 import { useConstant } from './utils/useConstant.js'
-import { ValidationError } from './validate/index.js'
+import { ValidationError } from './validator/index.js'
 
 export type SubmitHandler = (
   data: object,

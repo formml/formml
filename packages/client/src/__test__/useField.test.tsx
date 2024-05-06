@@ -215,9 +215,11 @@ describe('useField', () => {
       })
 
       // Assert
-      expect(result.current.meta.error).toEqual({
-        message: expect.any(String),
-      })
+      expect(result.current.meta.error).toEqual(
+        expect.objectContaining({
+          message: expect.any(String),
+        }),
+      )
     })
 
     test('should return new validation result if onChange triggered', () => {
@@ -240,9 +242,11 @@ describe('useField', () => {
       })
 
       // Assert
-      expect(result.current.meta.error).toEqual({
-        message: expect.any(String),
-      })
+      expect(result.current.meta.error).toEqual(
+        expect.objectContaining({
+          message: expect.any(String),
+        }),
+      )
     })
   })
 

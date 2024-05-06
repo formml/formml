@@ -3,8 +3,9 @@ import { type DeepReadonly } from '@vue/reactivity'
 import { useCallback, useMemo } from 'react'
 import { useSyncExternalStore } from 'use-sync-external-store/shim'
 
-import type { FieldError, FieldResult } from './FormML.js'
+import type { FieldResult } from './FormML.js'
 import type { PrimitiveType } from './JsTypes.js'
+import type { ValidationError } from './validator/index.js'
 
 import { useFormMLContext } from './useFormMLContext.js'
 import { createMemoSelectorGrouper } from './utils/createMemoSelectorGrouper.js'
@@ -17,7 +18,7 @@ export type FieldProps = {
 }
 
 export type FieldMetaData = {
-  error: FieldError | undefined
+  error: ValidationError | undefined
   schema: Field
   touched: boolean
   typedValue: PrimitiveType
