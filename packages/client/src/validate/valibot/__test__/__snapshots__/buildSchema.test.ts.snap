@@ -1,5 +1,24 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`buildSchema > integration > required > should invalidate empty string if a text field is required 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "context": "min_length",
+    "expected": ">=1",
+    "input": "",
+    "lang": undefined,
+    "message": "Invalid length: Expected >=1 but received 0",
+    "path": undefined,
+    "reason": "string",
+    "received": "0",
+    "requirement": 1,
+    "skipPipe": undefined,
+  },
+]
+`;
+
 exports[`buildSchema > integration > required > should invalidate undefined if field is required 1`] = `
 [
   {

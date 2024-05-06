@@ -5,8 +5,16 @@ import * as v from 'valibot'
 
 import { assertNever } from '../../utils/assertNever.js'
 
-const type = (formmlSchema: Field) => {
+const type = (
+  formmlSchema: Field,
+  options?: Partial<{
+    notEmpty: boolean
+  }>,
+) => {
   if (formmlSchema.type === 'text') {
+    if (options?.notEmpty) {
+      return v.string([v.minLength(1)])
+    }
     return v.string()
   }
   if (formmlSchema.type === 'num') {
@@ -29,7 +37,7 @@ const isRequired = (formmlSchema: Field) =>
 
 export default function buildSchema(formmlSchema: Field) {
   if (isRequired(formmlSchema)) {
-    return type(formmlSchema)
+    return type(formmlSchema, { notEmpty: true })
   }
   return v.optional(type(formmlSchema))
 }

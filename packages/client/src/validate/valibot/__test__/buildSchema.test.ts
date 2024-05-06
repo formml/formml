@@ -126,6 +126,31 @@ describe('buildSchema', () => {
           expect(result.issues).toMatchSnapshot()
         },
       )
+
+      test('should invalidate empty string if a text field is required', () => {
+        // Arrange
+        const field: Field = {
+          $container: {} as Form,
+          $type: 'Field',
+          annotations: [
+            {
+              $container: {} as Field,
+              $type: 'Annotation',
+              name: 'required',
+            },
+          ],
+          name: 'field',
+          type: 'text',
+        }
+
+        // Act
+        const schema = buildSchema(field)
+        const result = v.safeParse(schema, '')
+
+        // Assert
+        expect(result.success).toBe(false)
+        expect(result.issues).toMatchSnapshot()
+      })
     })
   })
 })
