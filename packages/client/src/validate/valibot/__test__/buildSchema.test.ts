@@ -5,20 +5,33 @@ import buildSchema from '../buildSchema.js'
 
 describe('buildSchema', () => {
   describe('integration', () => {
-    describe('type', () => {
-      test('should validate string input if field type is text', () => {
+    describe.each(['text', 'num'] as const)('types - %s', (type) => {
+      const fixtures = {
+        num: {
+          expectedType: 'number',
+          invalidInput: 'abc',
+          validInput: 123,
+        },
+        text: {
+          expectedType: 'string',
+          invalidInput: 123,
+          validInput: 'abc',
+        },
+      }
+
+      test(`should validate ${fixtures[type].expectedType} input if field type is ${type}`, () => {
         // Arrange
         const field: Field = {
           $container: {} as Form,
           $type: 'Field',
           annotations: [],
           name: 'field',
-          type: 'text',
+          type,
         }
 
         // Act
         const schema = buildSchema(field)
-        const result = v.safeParse(schema, 'abc')
+        const result = v.safeParse(schema, fixtures[type].validInput)
 
         // Assert
         expect(result.success).toBe(true)
@@ -40,24 +53,7 @@ describe('buildSchema', () => {
 
         // Assert
         expect(result.success).toBe(false)
-        expect(result.issues).toMatchInlineSnapshot(`
-          [
-            {
-              "abortEarly": undefined,
-              "abortPipeEarly": undefined,
-              "context": "string",
-              "expected": "string",
-              "input": 123,
-              "issues": undefined,
-              "lang": undefined,
-              "message": "Invalid type: Expected string but received 123",
-              "path": undefined,
-              "reason": "type",
-              "received": "123",
-              "skipPipe": undefined,
-            },
-          ]
-        `)
+        expect(result.issues).toMatchSnapshot()
       })
     })
   })

@@ -1,0 +1,39 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`buildSchema > integration > types - num > should invalidate non-string input if field type is text 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "context": "string",
+    "expected": "string",
+    "input": 123,
+    "issues": undefined,
+    "lang": undefined,
+    "message": "Invalid type: Expected string but received 123",
+    "path": undefined,
+    "reason": "type",
+    "received": "123",
+    "skipPipe": undefined,
+  },
+]
+`;
+
+exports[`buildSchema > integration > types - text > should invalidate non-string input if field type is text 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "context": "string",
+    "expected": "string",
+    "input": 123,
+    "issues": undefined,
+    "lang": undefined,
+    "message": "Invalid type: Expected string but received 123",
+    "path": undefined,
+    "reason": "type",
+    "received": "123",
+    "skipPipe": undefined,
+  },
+]
+`;
