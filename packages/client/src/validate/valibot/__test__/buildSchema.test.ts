@@ -37,19 +37,19 @@ describe('buildSchema', () => {
         expect(result.success).toBe(true)
       })
 
-      test('should invalidate non-string input if field type is text', () => {
+      test(`should invalidate non-${fixtures[type].expectedType} input if field type is ${type}`, () => {
         // Arrange
         const field: Field = {
           $container: {} as Form,
           $type: 'Field',
           annotations: [],
           name: 'field',
-          type: 'text',
+          type,
         }
 
         // Act
         const schema = buildSchema(field)
-        const result = v.safeParse(schema, 123)
+        const result = v.safeParse(schema, fixtures[type].invalidInput)
 
         // Assert
         expect(result.success).toBe(false)
