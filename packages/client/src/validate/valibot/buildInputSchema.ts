@@ -5,24 +5,26 @@ import buildSchema from './buildSchema.js'
 import * as i from './inputTransform.js'
 
 export default function buildInputSchema(formmlSchema: Field) {
+  const typedSchema = buildSchema(formmlSchema)
+
   if (formmlSchema.type === 'text') {
-    return buildSchema(formmlSchema)
+    return typedSchema
   }
 
   if (formmlSchema.type === 'num') {
-    return i.toNum()
+    return i.toNum(typedSchema)
   }
 
   if (formmlSchema.type === 'bool') {
-    return i.toBool()
+    return i.toBool(typedSchema)
   }
 
   if (formmlSchema.type === 'datetime') {
-    return i.toDatetime()
+    return i.toDatetime(typedSchema)
   }
 
   if (formmlSchema.type === 'decimal') {
-    return i.toDecimal()
+    return i.toDecimal(typedSchema)
   }
 
   return assertNever`Unsupported field type: ${formmlSchema.type}`

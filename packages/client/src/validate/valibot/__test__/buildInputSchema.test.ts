@@ -58,6 +58,26 @@ describe('buildInputSchema', () => {
         // Assert
         expect(schema).toBe(dummySchema)
       })
+
+      test('should wrap the inner typed valibot schema', () => {
+        // Arrange
+        const field: Field = {
+          $container: {} as Form,
+          $type: 'Field',
+          annotations: [],
+          name: 'field',
+          type,
+        }
+        const typedSchema = {} as never
+        vi.mocked(buildSchema).mockReturnValue(typedSchema)
+
+        // Act
+        buildInputSchema(field)
+
+        // Assert
+        expect(buildSchema).toBeCalledWith(field)
+        expect(transformer[type]).toBeCalledWith(typedSchema)
+      })
     },
   )
 })
