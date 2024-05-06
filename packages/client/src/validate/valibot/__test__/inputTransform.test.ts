@@ -72,6 +72,21 @@ describe('input transform', () => {
       expect(result.success).toBe(true)
       expect(result.output).toBe(123)
     })
+
+    test.each(['', '  ', ' \n\t'])(
+      'should transform empty string to undefined',
+      (input) => {
+        // Arrange
+        const schema = i.toNum(v.undefined_())
+
+        // Act
+        const result = v.safeParse(schema, input)
+
+        // Assert
+        expect(result.success).toBe(true)
+        expect(result.output).toBeUndefined()
+      },
+    )
   })
 
   describe('datetime', () => {

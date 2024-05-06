@@ -3,9 +3,9 @@ import dayjs from 'dayjs'
 import * as v from 'valibot'
 
 export const toNum = (schema?: v.BaseSchema) =>
-  v.transform<v.StringSchema, number>(
+  v.transform<v.StringSchema, number | undefined>(
     v.string([v.custom((i) => !isNaN(Number(i)))]),
-    Number,
+    (i) => (i.trim() === '' ? undefined : Number(i)),
     schema,
   )
 export const toDatetime = (schema?: v.BaseSchema) =>
