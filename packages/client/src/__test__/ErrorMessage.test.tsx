@@ -119,32 +119,35 @@ describe('ErrorMessage', () => {
   })
 
   describe('appearance', () => {
-    test('should render nothing if no error', () => {
-      // Arrange
-      const schema = `
-        form ExampleForm {
-          text textField
+    test.each([{}, { as: 'div' }])(
+      'should render nothing if no error',
+      (props) => {
+        // Arrange
+        const schema = `
+          form ExampleForm {
+            text textField
+          }
+        `
+        const Form = () => {
+          const { $form, FormML } = useFormML(schema)
+          return (
+            <FormML>
+              <Field $bind={$form['textField']} />
+              <div data-testid="error-message">
+                <ErrorMessage $bind={$form['textField']} {...props} />
+              </div>
+            </FormML>
+          )
         }
-      `
-      const Form = () => {
-        const { $form, FormML } = useFormML(schema)
-        return (
-          <FormML>
-            <Field $bind={$form['textField']} />
-            <div data-testid="error-message">
-              <ErrorMessage $bind={$form['textField']} />
-            </div>
-          </FormML>
-        )
-      }
 
-      // Act
-      render(<Form />)
+        // Act
+        render(<Form />)
 
-      // Assert
-      const div = screen.getByTestId('error-message')
-      expect(div).toBeEmptyDOMElement()
-    })
+        // Assert
+        const div = screen.getByTestId('error-message')
+        expect(div).toBeEmptyDOMElement()
+      },
+    )
 
     test('should render as string by default', async () => {
       // Arrange
@@ -318,5 +321,9 @@ describe('ErrorMessage', () => {
         expect(ref.current).toBe(element)
       })
     })
+
+    test.todo('as custom component')
+
+    test.todo('as render function')
   })
 })
