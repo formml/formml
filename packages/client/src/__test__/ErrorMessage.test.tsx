@@ -116,4 +116,33 @@ describe('ErrorMessage', () => {
       )
     })
   })
+
+  describe('appearance', () => {
+    test('should render nothing if no error message', () => {
+      // Arrange
+      const schema = `
+        form ExampleForm {
+          text textField
+        }
+      `
+      const Form = () => {
+        const { $form, FormML } = useFormML(schema)
+        return (
+          <FormML>
+            <Field $bind={$form['textField']} />
+            <span data-testid="error-message">
+              <ErrorMessage $bind={$form['textField']} />
+            </span>
+          </FormML>
+        )
+      }
+
+      // Act
+      render(<Form />)
+
+      // Assert
+      const span = screen.getByTestId('error-message')
+      expect(span.hasChildNodes()).toBe(false)
+    })
+  })
 })
