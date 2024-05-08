@@ -118,7 +118,7 @@ describe('ErrorMessage', () => {
   })
 
   describe('appearance', () => {
-    test('should render nothing if no error message', () => {
+    test('should render nothing if no error', () => {
       // Arrange
       const schema = `
         form ExampleForm {
@@ -130,9 +130,9 @@ describe('ErrorMessage', () => {
         return (
           <FormML>
             <Field $bind={$form['textField']} />
-            <span data-testid="error-message">
+            <div data-testid="error-message">
               <ErrorMessage $bind={$form['textField']} />
-            </span>
+            </div>
           </FormML>
         )
       }
@@ -141,8 +141,39 @@ describe('ErrorMessage', () => {
       render(<Form />)
 
       // Assert
-      const span = screen.getByTestId('error-message')
-      expect(span.hasChildNodes()).toBe(false)
+      const div = screen.getByTestId('error-message')
+      expect(div).toBeEmptyDOMElement()
+    })
+
+    test('should render as string by default', async () => {
+      // Arrange
+      const schema = `
+        form ExampleForm {
+          @required
+          text textField
+        }
+      `
+      const Form = () => {
+        const { $form, FormML } = useFormML(schema)
+        return (
+          <FormML>
+            <Field $bind={$form['textField']} />
+            <div data-testid="error-message">
+              <ErrorMessage $bind={$form['textField']} />
+            </div>
+          </FormML>
+        )
+      }
+
+      // Act
+      render(<Form />)
+      const input = screen.getByRole('textbox')
+      const user = userEvent.setup()
+      await user.type(input, '{A}{Backspace}')
+
+      // Assert
+      const div = screen.getByTestId('error-message')
+      expect(div.firstChild?.nodeType).toBe(Node.TEXT_NODE)
     })
   })
 })
