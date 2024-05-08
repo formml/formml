@@ -175,5 +175,42 @@ describe('ErrorMessage', () => {
       const div = screen.getByTestId('error-message')
       expect(div.firstChild?.nodeType).toBe(Node.TEXT_NODE)
     })
+
+    describe('as HTML element', () => {
+      test.each(['div', 'p', 'h1', 'span'] as const)(
+        'should render as HTML element (%s) if specified',
+        async (tagName) => {
+          // Arrange
+          const schema = `
+            form ExampleForm {
+              @required
+              text textField
+            }
+          `
+          const Form = () => {
+            const { $form, FormML } = useFormML(schema)
+            return (
+              <FormML>
+                <Field $bind={$form['textField']} />
+                <div data-testid="error-message">
+                  <ErrorMessage $bind={$form['textField']} as={tagName} />
+                </div>
+              </FormML>
+            )
+          }
+
+          // Act
+          render(<Form />)
+          const input = screen.getByRole('textbox')
+          const user = userEvent.setup()
+          await user.type(input, '{A}{Backspace}')
+
+          // Assert
+          const div = screen.getByTestId('error-message')
+          expect(div.firstChild?.nodeName).toBe(tagName.toUpperCase())
+          expect(div.firstChild?.textContent).toMatch(/\S+/)
+        },
+      )
+    })
   })
 })
