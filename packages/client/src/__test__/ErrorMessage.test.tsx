@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
+import React from 'react'
 
 import ErrorMessage from '../ErrorMessage.js'
 import { Field } from '../Field.js'
@@ -280,6 +281,41 @@ describe('ErrorMessage', () => {
           const element = screen.getByTestId('error-message')
           expect(element).toHaveAttribute('value', '3')
         })
+      })
+
+      test('should accept ref', async () => {
+        // Arrange
+        const schema = `
+          form ExampleForm {
+            @required
+            text textField
+          }
+        `
+        const ref = React.createRef<HTMLDivElement>()
+        const Form = () => {
+          const { $form, FormML } = useFormML(schema)
+          return (
+            <FormML>
+              <Field $bind={$form['textField']} />
+              <ErrorMessage
+                $bind={$form['textField']}
+                as="div"
+                data-testid="error-message"
+                ref={ref}
+              />
+            </FormML>
+          )
+        }
+
+        // Act
+        render(<Form />)
+        const input = screen.getByRole('textbox')
+        const user = userEvent.setup()
+        await user.type(input, '{A}{Backspace}')
+
+        // Assert
+        const element = screen.getByTestId('error-message')
+        expect(ref.current).toBe(element)
       })
     })
   })
