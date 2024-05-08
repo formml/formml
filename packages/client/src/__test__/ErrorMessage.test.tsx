@@ -246,6 +246,40 @@ describe('ErrorMessage', () => {
           const element = screen.getByTestId('error-message')
           expect(element).toHaveAttribute('for', 'some-id')
         })
+
+        test('li', async () => {
+          // Arrange
+          const schema = `
+            form ExampleForm {
+              @required
+              text textField
+            }
+          `
+          const Form = () => {
+            const { $form, FormML } = useFormML(schema)
+            return (
+              <FormML>
+                <Field $bind={$form['textField']} />
+                <ErrorMessage
+                  $bind={$form['textField']}
+                  as="li"
+                  data-testid="error-message"
+                  value="3"
+                />
+              </FormML>
+            )
+          }
+
+          // Act
+          render(<Form />)
+          const input = screen.getByRole('textbox')
+          const user = userEvent.setup()
+          await user.type(input, '{A}{Backspace}')
+
+          // Assert
+          const element = screen.getByTestId('error-message')
+          expect(element).toHaveAttribute('value', '3')
+        })
       })
     })
   })
