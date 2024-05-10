@@ -1,6 +1,7 @@
 import { Field } from '../../src/Field.js'
 import { useFormML } from '../../src/useFormML.js'
 import schema from './SignUp.formml?raw'
+import './styles.css'
 
 const submitData = (data: unknown) => {
   alert('logged!')
@@ -12,15 +13,7 @@ export default function SignUpForm() {
   return (
     <FormML>
       <h2>Sign up your account</h2>
-      <form
-        onSubmit={handleSubmit(submitData)}
-        style={{
-          display: 'grid',
-          gap: '15px',
-          gridTemplateColumns: '1fr 1fr',
-          width: '500px',
-        }}
-      >
+      <form className="form-container" onSubmit={handleSubmit(submitData)}>
         <label htmlFor="username">Username</label>
         <Field $bind={$form['username']} id="username" />
 
@@ -47,7 +40,7 @@ export default function SignUpForm() {
           id="receiveMarketingEmails"
         />
 
-        <button style={{ gridColumn: '1 / -1' }}>Sign up!</button>
+        <button className="submit-btn">Sign up!</button>
       </form>
     </FormML>
   )

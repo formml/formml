@@ -1,0 +1,10 @@
+.form-container {
+  display: grid;
+  gap: 15px;
+  grid-template-columns: 1fr 1fr;
+  width: 500px;
+}
+
+.submit-btn {
+  grid-column: 1 / -1;
+}
