@@ -20,7 +20,7 @@ export function useFormML(schema: string) {
       onError?: SubmitErrorHandler,
     ): React.FormEventHandler<HTMLFormElement> =>
     (event) => {
-      // TODO: prevent default
+      event.preventDefault()
       const result = formML.validate()
       if (result.isValid) {
         return onSubmit(formML.getTypedData(), event)

@@ -118,6 +118,23 @@ describe('useFormML', () => {
       expect(result.current.handleSubmit).toBeTypeOf('function')
     })
 
+    test('should prevent default by default', () => {
+      // Arrange
+      const onSubmit = vi.fn()
+      const mockedPreventDefault = vi.fn()
+
+      // Act
+      const { result } = renderHook(() => useFormML(dummyDsl))
+      result.current.instance.initField(result.current.$form['numberField'])
+      const eventHandler = result.current.handleSubmit(onSubmit)
+      eventHandler({
+        preventDefault: mockedPreventDefault,
+      } as unknown as React.FormEvent<HTMLFormElement>)
+
+      // Assert
+      expect(mockedPreventDefault).toBeCalled()
+    })
+
     test('should provide data to submit handler', () => {
       // Arrange
       const onSubmit = vi.fn()
