@@ -3,8 +3,18 @@
   gap: 15px;
   grid-template-columns: 1fr 1fr;
   width: 500px;
-}
 
-.submit-btn {
-  grid-column: 1 / -1;
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    span {
+      color: red;
+    }
+  }
+
+  button {
+    grid-column: 1 / -1;
+  }
 }

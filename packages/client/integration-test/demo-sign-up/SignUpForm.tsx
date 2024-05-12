@@ -1,3 +1,4 @@
+import ErrorMessage from '../../src/ErrorMessage.js'
 import { Field } from '../../src/Field.js'
 import { useFormML } from '../../src/useFormML.js'
 import schema from './SignUp.formml?raw'
@@ -15,32 +16,53 @@ export default function SignUpForm() {
       <h2>Sign up your account</h2>
       <form className="form-container" onSubmit={handleSubmit(submitData)}>
         <label htmlFor="username">Username</label>
-        <Field $bind={$form['username']} id="username" />
+        <div>
+          <Field $bind={$form['username']} id="username" />
+          <ErrorMessage $bind={$form['username']} as="span" />
+        </div>
 
         <label htmlFor="password">Password</label>
-        <Field $bind={$form['password']} id="password" />
+        <div>
+          <Field $bind={$form['password']} id="password" />
+          <ErrorMessage $bind={$form['password']} as="span" />
+        </div>
 
         <label htmlFor="phoneNumber">Phone number</label>
-        <Field $bind={$form['phoneNumber']} id="phoneNumber" />
+        <div>
+          <Field $bind={$form['phoneNumber']} id="phoneNumber" />
+          <ErrorMessage $bind={$form['phoneNumber']} as="span" />
+        </div>
 
         <label htmlFor="birthDay">Birth day</label>
-        <Field $bind={$form['birthDay']} id="birthDay" />
+        <div>
+          <Field $bind={$form['birthDay']} id="birthDay" />
+          <ErrorMessage $bind={$form['birthDay']} as="span" />
+        </div>
 
         <label htmlFor="age">Age</label>
-        <Field $bind={$form['age']} id="age" />
+        <div>
+          <Field $bind={$form['age']} id="age" />
+          <ErrorMessage $bind={$form['age']} as="span" />
+        </div>
 
         <label htmlFor="biography">Biography</label>
-        <Field $bind={$form['biography']} as="textarea" id="biography" />
+        <div>
+          <Field $bind={$form['biography']} as="textarea" id="biography" />
+          <ErrorMessage $bind={$form['biography']} as="span" />
+        </div>
 
         <label htmlFor="receiveMarketingEmails">
           Want to receive marketing emails?
         </label>
-        <Field
-          $bind={$form['receiveMarketingEmails']}
-          id="receiveMarketingEmails"
-        />
+        <div>
+          <Field
+            $bind={$form['receiveMarketingEmails']}
+            id="receiveMarketingEmails"
+          />
+          <ErrorMessage $bind={$form['receiveMarketingEmails']} as="span" />
+        </div>
 
-        <button className="submit-btn">Sign up!</button>
+        <button>Sign up!</button>
       </form>
     </FormML>
   )
