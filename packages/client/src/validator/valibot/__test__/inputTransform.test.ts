@@ -90,13 +90,19 @@ describe('input transform', () => {
   })
 
   describe('datetime', () => {
-    test('should validate a datetime string', () => {
+    test.each([
+      '2024-01-01',
+      '2024-01-01T00:00:00',
+      '2024-01-01T00:00:00Z',
+      '2024-01-01T00:00:00.000Z',
+      '2024-01-01T00:00:00.000000Z',
+      '2024-01-01T00:00:00+01:00',
+    ])('should validate any datetime-like string', (input) => {
       // Arrange
       const schema = i.toDatetime()
 
       // Act
-
-      const result = v.safeParse(schema, '2024-01-01T00:00:00Z')
+      const result = v.safeParse(schema, input)
 
       // Assert
       expect(result.success).toBe(true)

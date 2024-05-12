@@ -10,7 +10,7 @@ export const toNum = (schema?: v.BaseSchema) =>
   )
 export const toDatetime = (schema?: v.BaseSchema) =>
   v.transform<v.StringSchema, dayjs.Dayjs>(
-    v.string([v.isoTimestamp()]),
+    v.string([v.custom((i) => dayjs(i).isValid())]),
     dayjs,
     schema,
   )
