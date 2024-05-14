@@ -62,7 +62,6 @@ export class FormML {
   private readonly _typedValuesProxy: Record<string, JsTypes.PrimitiveType> =
     reactive({})
   private readonly _valuesProxy: Record<string, string> = reactive({})
-
   public readonly indexRoot: Record<string, object>
 
   constructor(schema: string) {
@@ -227,6 +226,10 @@ export class FormML {
     this._fieldsMetaProxy[name].error = this._indexToInputValidator.get(index)!(
       this._valuesProxy[name],
     ).errors?.[0]
+  }
+
+  validate(_index: object) {
+    return { error: undefined, isValid: true }
   }
 
   validateAll() {

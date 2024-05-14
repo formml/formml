@@ -828,6 +828,31 @@ describe('FormML', () => {
         expect(() => formML.getField(index)).not.toThrow()
       })
     })
+
+    describe('validate', () => {
+      test('should return valid when no error', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            @required
+            num numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+        formML.initField(index)
+
+        const pack = formML.getField(index)
+        pack.setRawValue('123')
+        pack.commitRawValue()
+
+        // Act
+        const result = formML.validate(index)
+
+        // Assert
+        expect(result).toEqual({ error: undefined, isValid: true })
+      })
+    })
   })
 
   describe('behaviors', () => {
