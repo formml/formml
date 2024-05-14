@@ -8,8 +8,6 @@
     "declarationMap": true,
     "isolatedModules": true,
     "moduleResolution": "NodeNext",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "noUncheckedIndexedAccess": false,
     "target": "es2015",
     "module": "NodeNext",
