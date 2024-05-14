@@ -158,7 +158,7 @@ describe('useFormML', () => {
 
       const stubFormML = new FormML(dummyDsl)
       vi.spyOn(stubFormML, 'getTypedData').mockReturnValue(expectedData)
-      vi.spyOn(stubFormML, 'validate').mockReturnValue({
+      vi.spyOn(stubFormML, 'validateAll').mockReturnValue({
         errors: [],
         isValid: true,
       })
@@ -192,7 +192,7 @@ describe('useFormML', () => {
       // Arrange
       const onSubmit = vi.fn()
       const stubFormML = new FormML(dummyDsl)
-      const spiedValidate = vi.spyOn(stubFormML, 'validate')
+      const spiedValidate = vi.spyOn(stubFormML, 'validateAll')
       spiedValidate.mockReturnValue({ errors: [], isValid: false })
       vi.mocked(FormML).mockReturnValue(stubFormML)
       const { result } = renderHook(() => useFormML(dummyDsl))
@@ -209,7 +209,7 @@ describe('useFormML', () => {
       // Arrange
       const onError = vi.fn()
       const stubFormML = new FormML(dummyDsl)
-      const spiedValidate = vi.spyOn(stubFormML, 'validate')
+      const spiedValidate = vi.spyOn(stubFormML, 'validateAll')
       const errors = [
         { message: 'Error message' },
         { message: 'Unknown field error' },

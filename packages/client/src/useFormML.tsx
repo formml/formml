@@ -21,7 +21,7 @@ export function useFormML(schema: string) {
     ): React.FormEventHandler<HTMLFormElement> =>
     (event) => {
       event.preventDefault()
-      const result = formML.validate()
+      const result = formML.validateAll()
       if (result.isValid) {
         return onSubmit(formML.getTypedData(), event)
       }

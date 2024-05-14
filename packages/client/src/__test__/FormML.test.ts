@@ -706,7 +706,7 @@ describe('FormML', () => {
       })
     })
 
-    describe('validate', () => {
+    describe('validateAll', () => {
       test('should return valid when no error', () => {
         // Arrange
         const dsl = `
@@ -725,7 +725,7 @@ describe('FormML', () => {
         pack.commitRawValue()
 
         // Assert
-        const result = formML.validate()
+        const result = formML.validateAll()
         expect(result).toEqual({ errors: [], isValid: true })
       })
 
@@ -747,7 +747,7 @@ describe('FormML', () => {
         pack.commitRawValue()
 
         // Assert
-        const result = formML.validate()
+        const result = formML.validateAll()
         expect(result.isValid).toBe(false)
         expect(result.errors).toHaveLength(1)
       })
@@ -778,7 +778,7 @@ describe('FormML', () => {
         pack2.commitRawValue()
 
         // Assert
-        const result = formML.validate()
+        const result = formML.validateAll()
         expect(result.isValid).toBe(false)
         expect(result.errors).toHaveLength(2)
       })
@@ -800,7 +800,7 @@ describe('FormML', () => {
         expect(pack.error).toBeUndefined()
 
         // Act
-        formML.validate()
+        formML.validateAll()
 
         // Assert
         const pack2 = formML.getField(index)
@@ -822,7 +822,7 @@ describe('FormML', () => {
         const index = formML.indexRoot['numberField']
 
         // Act
-        formML.validate()
+        formML.validateAll()
 
         // Assert
         expect(() => formML.getField(index)).not.toThrow()
@@ -831,7 +831,7 @@ describe('FormML', () => {
   })
 
   describe('behaviors', () => {
-    describe('validation', () => {
+    describe('field validation', () => {
       test('should no error by default', () => {
         // Arrange
         const dsl = `

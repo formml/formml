@@ -229,7 +229,7 @@ export class FormML {
     ).errors?.[0]
   }
 
-  validate() {
+  validateAll() {
     const errors = []
 
     // TODO: pre-build validation schemas, and find by index
