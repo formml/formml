@@ -852,6 +852,28 @@ describe('FormML', () => {
         // Assert
         expect(result).toEqual({ error: undefined, isValid: true })
       })
+
+      test('should return error details when validation fails', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            @required
+            num numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+        formML.initField(index)
+
+        // Act
+        const result = formML.validate(index)
+
+        // Assert
+        expect(result.isValid).toBe(false)
+        expect(result.error).toEqual(
+          expect.objectContaining({ message: expect.any(String) }),
+        )
+      })
     })
   })
 

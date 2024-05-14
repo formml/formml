@@ -228,8 +228,19 @@ export class FormML {
     ).errors?.[0]
   }
 
-  validate(_index: object) {
-    return { error: undefined, isValid: true }
+  validate(index: object) {
+    const schema = this.getSchemaByIndex(index)
+    const name = schema.name
+
+    const result = this._indexToInputValidator.get(index)!(
+      this._valuesProxy[name],
+    )
+
+    if (result.isValid) {
+      return { error: undefined, isValid: true as const }
+    }
+
+    return { error: result.errors[0], isValid: false as const }
   }
 
   validateAll() {
