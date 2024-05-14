@@ -3,7 +3,7 @@ import { BigNumber } from 'bignumber.js'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc.js'
 
-import { FormML } from '../FormML.js'
+import { FormML, FormMLConfigs } from '../FormML.js'
 
 dayjs.extend(utc)
 
@@ -16,6 +16,50 @@ describe('FormML', () => {
       // Act & Assert
       expect(() => new FormML(invalidSchema)).toThrow(FormMLParseError)
     })
+
+    test('should use default configs if not provided', () => {
+      // Arrange
+      const defaultConfigs: FormMLConfigs = {
+        validateOn: {
+          initial: 'blur',
+          subsequent: 'change',
+        },
+      }
+      const dsl = `
+        form ExampleForm {
+          num numberField
+        }
+      `
+
+      // Act
+      const form = new FormML(dsl)
+
+      // Assert
+      expect(form.configs).toEqual(defaultConfigs)
+    })
+
+    test('should use provided configs', () => {
+      // Arrange
+      const configs: FormMLConfigs = {
+        validateOn: {
+          initial: 'change',
+          subsequent: 'blur',
+        },
+      }
+      const dsl = `
+        form ExampleForm {
+          num numberField
+        }
+      `
+
+      // Act
+      const form = new FormML(dsl, configs)
+
+      // Assert
+      expect(form.configs).toEqual(configs)
+    })
+
+    test.todo('merge configs')
   })
 
   describe('apis', () => {

@@ -6,6 +6,14 @@ import * as JsTypes from './JsTypes.js'
 import { ValidationError, createInputValidator } from './validator/index.js'
 import { Validator } from './validator/index.js'
 
+export type FormMLEvent = 'blur' | 'change' | 'submit'
+export type FormMLConfigs = {
+  validateOn: {
+    initial: FormMLEvent
+    subsequent: FormMLEvent
+  }
+}
+
 export type FieldResult = DeepReadonly<{
   commitRawValue: () => void
   error: ValidationError | undefined
@@ -62,9 +70,17 @@ export class FormML {
   private readonly _typedValuesProxy: Record<string, JsTypes.PrimitiveType> =
     reactive({})
   private readonly _valuesProxy: Record<string, string> = reactive({})
+
+  public readonly configs: FormMLConfigs
   public readonly indexRoot: Record<string, object>
 
-  constructor(schema: string) {
+  constructor(schema: string, configs?: FormMLConfigs) {
+    this.configs = configs || {
+      validateOn: {
+        initial: 'blur',
+        subsequent: 'change',
+      },
+    }
     this._schema = FormML._parse(schema)
     ;[this.indexRoot, this._indexToSchema] = buildIndexes(this._schema)
     this._indexToInputValidator = buildInputValidators(this._indexToSchema)

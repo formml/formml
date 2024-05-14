@@ -1,6 +1,6 @@
-import { FormML } from '../FormML.js'
+import { FormML, FormMLEvent } from '../FormML.js'
 
-export default function validate(_option: { eventName: string }) {
+export default function validate({ eventName }: { eventName: FormMLEvent }) {
   return function decorator(
     originalMethod: (
       this: FormML,
@@ -18,7 +18,9 @@ export default function validate(_option: { eventName: string }) {
       ..._args: unknown[]
     ) {
       const result = originalMethod.call(this, index, ..._args)
-      this.validate(index)
+      if (this.configs.validateOn.initial === eventName) {
+        this.validate(index)
+      }
       return result
     }
   }
