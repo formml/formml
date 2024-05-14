@@ -110,6 +110,7 @@ describe('FormML', () => {
       'setTypedValue',
       'commitRawValue',
       'touch',
+      'validate',
     ] as const)(
       'index validity and field initialization check - "%s"',
       (methodName) => {

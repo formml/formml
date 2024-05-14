@@ -232,6 +232,8 @@ export class FormML {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
 
+    this.assertInitialized(name, { methodName: 'validate' })
+
     const result = this._indexToInputValidator.get(index)!(
       this._valuesProxy[name],
     )
