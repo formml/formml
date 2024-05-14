@@ -240,7 +240,9 @@ export class FormML {
       return { error: undefined, isValid: true as const }
     }
 
-    return { error: result.errors[0], isValid: false as const }
+    const error = result.errors[0]
+    this._fieldsMetaProxy[name].error = error
+    return { error, isValid: false as const }
   }
 
   validateAll() {
