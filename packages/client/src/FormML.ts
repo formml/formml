@@ -6,8 +6,8 @@ import * as JsTypes from './JsTypes.js'
 import { ValidationError, createInputValidator } from './validator/index.js'
 import { Validator } from './validator/index.js'
 
-export type FormMLEvent = 'blur' | 'change' | 'submit'
-export type FormMLConfigs = {
+export type FormMLEvent = 'all' | 'blur' | 'change' | 'submit'
+export type FormMLOptions = {
   validateOn: {
     initial: FormMLEvent
     subsequent: FormMLEvent
@@ -71,14 +71,14 @@ export class FormML {
     reactive({})
   private readonly _valuesProxy: Record<string, string> = reactive({})
 
-  public readonly configs: FormMLConfigs
   public readonly indexRoot: Record<string, object>
+  public readonly options: FormMLOptions
 
-  constructor(schema: string, configs?: FormMLConfigs) {
-    this.configs = configs || {
+  constructor(schema: string, options?: FormMLOptions) {
+    this.options = options || {
       validateOn: {
-        initial: 'blur',
-        subsequent: 'change',
+        initial: 'all',
+        subsequent: 'all',
       },
     }
     this._schema = FormML._parse(schema)

@@ -3,7 +3,7 @@ import { BigNumber } from 'bignumber.js'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc.js'
 
-import { FormML, FormMLConfigs } from '../FormML.js'
+import { FormML, FormMLOptions } from '../FormML.js'
 
 dayjs.extend(utc)
 
@@ -17,12 +17,12 @@ describe('FormML', () => {
       expect(() => new FormML(invalidSchema)).toThrow(FormMLParseError)
     })
 
-    test('should use default configs if not provided', () => {
+    test('should apply default options if not provided', () => {
       // Arrange
-      const defaultConfigs: FormMLConfigs = {
+      const defaultOptions: FormMLOptions = {
         validateOn: {
-          initial: 'blur',
-          subsequent: 'change',
+          initial: 'all',
+          subsequent: 'all',
         },
       }
       const dsl = `
@@ -35,12 +35,12 @@ describe('FormML', () => {
       const form = new FormML(dsl)
 
       // Assert
-      expect(form.configs).toEqual(defaultConfigs)
+      expect(form.options).toEqual(defaultOptions)
     })
 
-    test('should use provided configs', () => {
+    test('should use provided options', () => {
       // Arrange
-      const configs: FormMLConfigs = {
+      const options: FormMLOptions = {
         validateOn: {
           initial: 'change',
           subsequent: 'blur',
@@ -53,13 +53,13 @@ describe('FormML', () => {
       `
 
       // Act
-      const form = new FormML(dsl, configs)
+      const form = new FormML(dsl, options)
 
       // Assert
-      expect(form.configs).toEqual(configs)
+      expect(form.options).toEqual(options)
     })
 
-    test.todo('merge configs')
+    test.todo('merge options')
   })
 
   describe('apis', () => {

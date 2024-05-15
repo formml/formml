@@ -14,7 +14,7 @@ export default function validate({ eventName }: { eventName: FormMLEvent }) {
       ..._args: TArgs
     ) {
       const result = originalMethod.call(this, index, ..._args)
-      if (this.configs.validateOn.initial === eventName) {
+      if (this.options.validateOn.initial === eventName) {
         this.validate(index)
       }
       return result

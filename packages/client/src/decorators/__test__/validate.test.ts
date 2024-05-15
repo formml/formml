@@ -7,7 +7,7 @@ describe('validate', () => {
       // Arrange
       const mockedValidate = vi.fn()
       const form = {
-        configs: { validateOn: { initial: 'change' } },
+        options: { validateOn: { initial: 'change' } },
         validate: mockedValidate,
       } as unknown as FormML
       const dummyIndex = {}
@@ -28,7 +28,7 @@ describe('validate', () => {
       const mockedValidate = vi.fn(() => executions.push('validate'))
       const mockedOriginalMethod = vi.fn(() => executions.push('original'))
       const form = {
-        configs: { validateOn: { initial: 'change' } },
+        options: { validateOn: { initial: 'change' } },
         validate: mockedValidate,
       } as unknown as FormML
       const dummyIndex = {}
@@ -47,7 +47,7 @@ describe('validate', () => {
       // Arrange
       const mockedValidate = vi.fn()
       const form = {
-        configs: { validateOn: { initial: 'change' } },
+        options: { validateOn: { initial: 'change' } },
         validate: mockedValidate,
       } as unknown as FormML
       const dummyIndex = {}
