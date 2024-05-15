@@ -53,6 +53,7 @@
     "turbo": "^1.13.2",
     "typescript": "~5.3.3",
     "vite": "~5.0.10",
+    "vite-plugin-typescript-transform": "file:../vite-plugin-typescript-transform",
     "vitest": "~1.5.0"
   }
 }

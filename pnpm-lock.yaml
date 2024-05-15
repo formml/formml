@@ -130,6 +130,9 @@ importers:
       vite:
         specifier: ~5.0.10
         version: 5.0.10(@types/node@20.10.5)
+      vite-plugin-typescript-transform:
+        specifier: file:../vite-plugin-typescript-transform
+        version: file:../vite-plugin-typescript-transform(typescript@5.3.3)(vite@5.0.10)
       vitest:
         specifier: ~1.5.0
         version: 1.5.0(@types/node@20.10.5)(@vitest/ui@1.5.0)(jsdom@23.0.1)
@@ -10271,4 +10274,18 @@ packages:
         integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==,
       }
     engines: { node: '>=12.20' }
+    dev: true
+
+  file:../vite-plugin-typescript-transform(typescript@5.3.3)(vite@5.0.10):
+    resolution:
+      { directory: ../vite-plugin-typescript-transform, type: directory }
+    id: file:../vite-plugin-typescript-transform
+    name: vite-plugin-typescript-transform
+    engines: { node: '> 14.18' }
+    peerDependencies:
+      typescript: '>= 4'
+      vite: '>= 4'
+    dependencies:
+      typescript: 5.3.3
+      vite: 5.0.10(@types/node@20.10.5)
     dev: true
