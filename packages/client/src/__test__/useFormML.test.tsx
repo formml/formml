@@ -1,7 +1,7 @@
 import { render, renderHook } from '@testing-library/react'
 import { Profiler } from 'react'
 
-import { FormML } from '../FormML.js'
+import { FormML, FormMLOptions } from '../FormML.js'
 import { useFormML } from '../useFormML.js'
 import { useFormMLContext } from '../useFormMLContext.js'
 
@@ -14,6 +14,21 @@ vi.mock('../FormML.js', async (importOriginal) => {
 })
 
 describe('useFormML', () => {
+  test('should new FormML with given arguments', () => {
+    // Arrange
+    const dsl = `
+      form ExampleForm {
+        text textField
+      }
+    `
+    const options = {} as FormMLOptions
+    // Act
+    renderHook(() => useFormML(dsl, options))
+
+    // Assert
+    expect(FormML).toBeCalledWith(dsl, options)
+  })
+
   describe('$form', () => {
     test('should generate simple field indexes according to schema', () => {
       // Arrange

@@ -11,8 +11,8 @@ export type SubmitHandler = (
 ) => void
 export type SubmitErrorHandler = (errors: ValidationError[]) => void
 
-export function useFormML(schema: string) {
-  const formML = useConstant(() => new FormML(schema), [schema])
+export function useFormML(...props: ConstructorParameters<typeof FormML>) {
+  const formML = useConstant(() => new FormML(...props), props)
 
   const handleSubmit =
     (
