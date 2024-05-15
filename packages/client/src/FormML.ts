@@ -3,6 +3,7 @@ import { DeepReadonly, reactive, toRaw } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
 
 import * as JsTypes from './JsTypes.js'
+import validate from './decorators/validate.js'
 import { ValidationError, createInputValidator } from './validator/index.js'
 import { Validator } from './validator/index.js'
 
@@ -121,8 +122,6 @@ export class FormML {
 
     const rawValue = this._valuesProxy[name]
     this._typedValuesProxy[name] = JsTypes.toTyped(rawValue, type)
-    this._fieldsMetaProxy[name].error =
-      this._indexToInputValidator.get(index)!(rawValue).errors?.[0]
   }
 
   getField(index: object): FieldResult {
@@ -178,6 +177,7 @@ export class FormML {
     }
   }
 
+  @validate({ eventName: 'change' })
   setRawValue(index: object, value: string) {
     const schema = this.getSchemaByIndex(index)
     const { name } = schema
@@ -185,10 +185,9 @@ export class FormML {
     this.assertInitialized(name, { methodName: 'setRawValue' })
 
     this._valuesProxy[name] = value
-    this._fieldsMetaProxy[name].error =
-      this._indexToInputValidator.get(index)!(value).errors?.[0]
   }
 
+  @validate({ eventName: 'change' })
   setTypedValue(index: object, value: JsTypes.PrimitiveType) {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
@@ -196,12 +195,10 @@ export class FormML {
     this.assertInitialized(name, { methodName: 'setTypedValue' })
 
     this._typedValuesProxy[name] = value
-    const rawValue = JsTypes.toRaw(value)
-    this._valuesProxy[name] = rawValue
-    this._fieldsMetaProxy[name].error =
-      this._indexToInputValidator.get(index)!(rawValue).errors?.[0]
+    this._valuesProxy[name] = JsTypes.toRaw(value)
   }
 
+  @validate({ eventName: 'change' })
   setValue(index: object, value: JsTypes.PrimitiveType) {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
@@ -209,10 +206,7 @@ export class FormML {
     this.assertInitialized(name, { methodName: 'setValue' })
 
     this._typedValuesProxy[name] = value
-    const rawValue = JsTypes.toRaw(value)
-    this._valuesProxy[name] = rawValue
-    this._fieldsMetaProxy[name].error =
-      this._indexToInputValidator.get(index)!(rawValue).errors?.[0]
+    this._valuesProxy[name] = JsTypes.toRaw(value)
   }
 
   subscribe(index: object, callback: () => void): () => void {
@@ -232,6 +226,7 @@ export class FormML {
     )
   }
 
+  @validate({ eventName: 'blur' })
   touch(index: object) {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
@@ -239,9 +234,6 @@ export class FormML {
     this.assertInitialized(name, { methodName: 'touch' })
 
     this._fieldsMetaProxy[name].touched = true
-    this._fieldsMetaProxy[name].error = this._indexToInputValidator.get(index)!(
-      this._valuesProxy[name],
-    ).errors?.[0]
   }
 
   validate(index: object) {
