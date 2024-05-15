@@ -119,7 +119,7 @@ describe('FormML', () => {
           value: undefined,
 
           // Part: touch
-          touch: expect.any(Function),
+          blur: expect.any(Function),
           touched: false,
         })
       })
@@ -153,7 +153,7 @@ describe('FormML', () => {
       'setValue',
       'setTypedValue',
       'commitRawValue',
-      'touch',
+      'blur',
       'validate',
     ] as const)(
       'index validity and field initialization check - "%s"',
@@ -237,7 +237,7 @@ describe('FormML', () => {
           value: undefined,
 
           // Part: touch
-          touch: expect.any(Function),
+          blur: expect.any(Function),
           touched: false,
         })
       })
@@ -301,7 +301,7 @@ describe('FormML', () => {
           expect(newPack.rawValue).toEqual('123')
         })
 
-        test('should always be touched after touches field', () => {
+        test('should always be touched after blurs field', () => {
           // Arrange
           const dsl = `
             form ExampleForm {
@@ -316,14 +316,14 @@ describe('FormML', () => {
           expect(firstPack.touched).toBe(false)
 
           // Act
-          firstPack.touch()
+          firstPack.blur()
 
           // Assert
           const secondPack = formML.getField(index)
           expect(secondPack.touched).toBe(true)
 
           // Act
-          secondPack.touch()
+          secondPack.blur()
 
           // Assert
           const thirdPack = formML.getField(index)
@@ -468,7 +468,7 @@ describe('FormML', () => {
           'commitRawValue',
           'setRawValue',
           'setValue',
-          'touch',
+          'blur',
         ] as const)('should always return same references for "%s"', (key) => {
           // Arrange
           const dsl = `
@@ -486,7 +486,7 @@ describe('FormML', () => {
           firstPack.setRawValue('123')
           firstPack.commitRawValue()
           firstPack.setValue('456')
-          firstPack.touch()
+          firstPack.blur()
 
           // Assert
           const secondPack = formML.getField(index)
@@ -532,7 +532,7 @@ describe('FormML', () => {
 
         // Act
         const pack = formML.getField(index)
-        pack.touch()
+        pack.blur()
 
         // Assert
         expect(callback).toBeCalledTimes(1)
@@ -720,8 +720,8 @@ describe('FormML', () => {
       )
     })
 
-    describe('touch', () => {
-      test('should always be touched after touches field', () => {
+    describe('blur', () => {
+      test('should always be touched after blurs field', () => {
         // Arrange
         const dsl = `
           form ExampleForm {
@@ -736,14 +736,14 @@ describe('FormML', () => {
         expect(firstPack.touched).toBe(false)
 
         // Act
-        formML.touch(index)
+        formML.blur(index)
 
         // Assert
         const secondPack = formML.getField(index)
         expect(secondPack.touched).toBe(true)
 
         // Act
-        formML.touch(index)
+        formML.blur(index)
 
         // Assert
         const thirdPack = formML.getField(index)
@@ -1019,7 +1019,7 @@ describe('FormML', () => {
         },
       )
 
-      test('should do validation when touching field', () => {
+      test('should do validation when blurring field', () => {
         // Arrange
         const dsl = `
           form ExampleForm {
@@ -1032,7 +1032,7 @@ describe('FormML', () => {
         formML.initField(index)
 
         // Act
-        formML.touch(index)
+        formML.blur(index)
         const pack = formML.getField(index)
 
         // Assert

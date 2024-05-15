@@ -16,6 +16,7 @@ export type FormMLOptions = {
 }
 
 export type FieldResult = DeepReadonly<{
+  blur: () => void
   commitRawValue: () => void
   error: ValidationError | undefined
   rawValue: string
@@ -23,7 +24,6 @@ export type FieldResult = DeepReadonly<{
   setRawValue: (value: string) => void
   setTypedValue: (value: JsTypes.PrimitiveType) => void
   setValue: (value: JsTypes.PrimitiveType) => void
-  touch: () => void
   touched: boolean
   value: JsTypes.PrimitiveType
 }>
@@ -57,11 +57,11 @@ export class FormML {
   private readonly _indexToHelpers: Map<
     object,
     {
+      blur: () => void
       commitRawValue: () => void
       setRawValue: (value: string) => void
       setTypedValue: (value: JsTypes.PrimitiveType) => void
       setValue: (value: JsTypes.PrimitiveType) => void
-      touch: () => void
     }
   > = new Map()
   private readonly _indexToInputValidator: Map<object, Validator<string>>
@@ -114,6 +114,16 @@ export class FormML {
     return this._valuesProxy[name] !== undefined
   }
 
+  @validate({ eventName: 'blur' })
+  blur(index: object) {
+    const schema = this.getSchemaByIndex(index)
+    const name = schema.name
+
+    this.assertInitialized(name, { methodName: 'blur' })
+
+    this._fieldsMetaProxy[name].touched = true
+  }
+
   commitRawValue(index: object) {
     const schema = this.getSchemaByIndex(index)
     const { name, type } = schema
@@ -158,6 +168,9 @@ export class FormML {
 
     if (!this._indexToHelpers.has(index)) {
       this._indexToHelpers.set(index, {
+        blur: () => {
+          this.blur(index)
+        },
         commitRawValue: () => {
           this.commitRawValue(index)
         },
@@ -169,9 +182,6 @@ export class FormML {
         },
         setValue: (value: JsTypes.PrimitiveType) => {
           this.setValue(index, value)
-        },
-        touch: () => {
-          this.touch(index)
         },
       })
     }
@@ -224,16 +234,6 @@ export class FormML {
       ],
       () => callback(),
     )
-  }
-
-  @validate({ eventName: 'blur' })
-  touch(index: object) {
-    const schema = this.getSchemaByIndex(index)
-    const name = schema.name
-
-    this.assertInitialized(name, { methodName: 'touch' })
-
-    this._fieldsMetaProxy[name].touched = true
   }
 
   validate(index: object) {

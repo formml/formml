@@ -72,10 +72,10 @@ describe('useField', () => {
           value: '',
         },
         helpers: {
+          blur: expect.any(Function),
           commitRawValue: expect.any(Function),
           setRawValue: expect.any(Function),
           setTypedValue: expect.any(Function),
-          touch: expect.any(Function),
         },
         meta: {
           error: undefined,

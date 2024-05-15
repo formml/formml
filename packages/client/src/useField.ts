@@ -25,10 +25,10 @@ export type FieldMetaData = {
 }
 
 export type FieldHelpers = {
+  blur: () => void
   commitRawValue: () => void
   setRawValue: (value: string) => void
   setTypedValue: (value: PrimitiveType) => void
-  touch: () => void
 }
 
 export type FieldPack = {
@@ -41,20 +41,20 @@ export type FieldPackReadonly = DeepReadonly<FieldPack>
 
 const selectFieldPackByIndex = createMemoSelectorGrouper(
   (
+    blur: FieldResult['blur'],
     commitRawValue: FieldResult['commitRawValue'],
     error: FieldResult['error'],
     rawValue: FieldResult['rawValue'],
     schema: FieldResult['schema'],
     setRawValue: FieldResult['setRawValue'],
     setTypedValue: FieldResult['setTypedValue'],
-    touch: FieldResult['touch'],
     touched: FieldResult['touched'],
     value: FieldResult['value'],
   ): FieldPackReadonly => ({
     field: {
       name: schema.name,
       onBlur: () => {
-        touch()
+        blur()
         commitRawValue()
       },
       onChange: (e) => {
@@ -63,10 +63,10 @@ const selectFieldPackByIndex = createMemoSelectorGrouper(
       value: rawValue,
     },
     helpers: {
+      blur,
       commitRawValue,
       setRawValue,
       setTypedValue,
-      touch,
     },
     meta: {
       error,
@@ -86,13 +86,13 @@ export function useField(index: object): FieldPackReadonly {
     () => {
       const field = formML.getField(index)
       return selectFieldPackByIndex(index)(
+        field.blur,
         field.commitRawValue,
         field.error,
         field.rawValue,
         field.schema,
         field.setRawValue,
         field.setTypedValue,
-        field.touch,
         field.touched,
         field.value,
       )

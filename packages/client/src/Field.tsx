@@ -18,7 +18,7 @@ function selectInputProps({ field, helpers, meta }: FieldPackReadonly) {
       checked: (meta.typedValue as boolean | undefined) ?? false, // TODO: optimize type
       name: field.name,
       onBlur: () => {
-        helpers.touch()
+        helpers.blur()
       },
       onChange: (e: ChangeEvent<HTMLInputElement>) => {
         helpers.setTypedValue(e.target.checked)
