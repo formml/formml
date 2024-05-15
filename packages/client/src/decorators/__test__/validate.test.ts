@@ -22,6 +22,28 @@ describe('validate', () => {
       expect(mockedValidate).toBeCalledWith(dummyIndex)
     })
 
+    test.each(['change', 'blur', 'submit'] as const)(
+      'should always do validation if configured event is all',
+      (eventName) => {
+        // Arrange
+        const mockedValidate = vi.fn()
+        const form = {
+          options: { validateOn: { initial: 'all' } },
+          validate: mockedValidate,
+        } as unknown as FormML
+        const dummyIndex = {}
+        const dummyContext = {} as ClassMethodDecoratorContext
+
+        // Act
+        const decorator = validate({ eventName })
+        const decoratedMethod = decorator(() => {}, dummyContext)
+        decoratedMethod.call(form, dummyIndex)
+
+        // Assert
+        expect(mockedValidate).toBeCalledWith(dummyIndex)
+      },
+    )
+
     test('should do validation after execution of original method', () => {
       // Arrange
       const executions: string[] = []
