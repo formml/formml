@@ -970,77 +970,139 @@ describe('FormML', () => {
         expect(pack.error).toBeUndefined()
       })
 
-      test('should do validation when setting raw value', () => {
-        // Arrange
-        const dsl = `
-          form ExampleForm {
-            @required
-            num numberField
+      describe.each`
+        triggerEvent | setRawValue | setValue | setTypedValue | blur
+        ${'all'}     | ${true}     | ${true}  | ${true}       | ${true}
+        ${'change'}  | ${true}     | ${true}  | ${true}       | ${false}
+        ${'blur'}    | ${false}    | ${false} | ${false}      | ${true}
+        ${'submit'}  | ${false}    | ${false} | ${false}      | ${false}
+      `(
+        'initial validation - $triggerEvent',
+        ({ blur, setRawValue, setTypedValue, setValue, triggerEvent }) => {
+          const options: FormMLOptions = {
+            validateOn: {
+              initial: triggerEvent,
+              subsequent: 'all',
+            },
           }
-        `
-        const formML = new FormML(dsl)
-        const index = formML.indexRoot['numberField']
-        formML.initField(index)
 
-        // Act
-        formML.setRawValue(index, '')
-        const pack = formML.getField(index)
+          test(`should ${
+            setRawValue ? 'do' : 'not do'
+          } validation when setting raw value`, () => {
+            // Arrange
+            const dsl = `
+              form ExampleForm {
+                @required
+                num numberField
+              }
+            `
+            const formML = new FormML(dsl, options)
+            const index = formML.indexRoot['numberField']
+            formML.initField(index)
 
-        // Assert
-        expect(pack.error).toBeDefined()
-        expect(pack.error).toEqual(
-          expect.objectContaining({ message: expect.any(String) }),
-        )
-      })
+            // Act
+            formML.setRawValue(index, '')
+            const pack = formML.getField(index)
 
-      test.each(['setValue', 'setTypedValue'] as const)(
-        'should do validation when setting typed value',
-        (methodName) => {
-          // Arrange
-          const dsl = `
-          form ExampleForm {
-            @required
-            num numberField
-          }
-        `
-          const formML = new FormML(dsl)
-          const index = formML.indexRoot['numberField']
-          formML.initField(index)
+            // Assert
+            if (setRawValue) {
+              expect(pack.error).toBeDefined()
+              expect(pack.error).toEqual(
+                expect.objectContaining({ message: expect.any(String) }),
+              )
+            } else {
+              expect(pack.error).toBeUndefined()
+            }
+          })
 
-          // Act
-          formML[methodName](index, undefined)
-          const pack = formML.getField(index)
+          test(`should ${
+            setValue ? 'do' : 'not do'
+          } validation when setting value`, () => {
+            // Arrange
+            const dsl = `
+              form ExampleForm {
+                @required
+                num numberField
+              }
+            `
+            const formML = new FormML(dsl, options)
+            const index = formML.indexRoot['numberField']
+            formML.initField(index)
 
-          // Assert
-          expect(pack.error).toBeDefined()
-          expect(pack.error).toEqual(
-            expect.objectContaining({ message: expect.any(String) }),
-          )
+            // Act
+            formML.setValue(index, undefined)
+            const pack = formML.getField(index)
+
+            // Assert
+            if (setValue) {
+              expect(pack.error).toBeDefined()
+              expect(pack.error).toEqual(
+                expect.objectContaining({ message: expect.any(String) }),
+              )
+            } else {
+              expect(pack.error).toBeUndefined()
+            }
+          })
+
+          test(`should ${
+            setTypedValue ? 'do' : 'not do'
+          } validation when setting typed value`, () => {
+            // Arrange
+            const dsl = `
+              form ExampleForm {
+                @required
+                num numberField
+              }
+            `
+            const formML = new FormML(dsl, options)
+            const index = formML.indexRoot['numberField']
+            formML.initField(index)
+
+            // Act
+            formML.setTypedValue(index, undefined)
+            const pack = formML.getField(index)
+
+            // Assert
+            if (setTypedValue) {
+              expect(pack.error).toBeDefined()
+              expect(pack.error).toEqual(
+                expect.objectContaining({ message: expect.any(String) }),
+              )
+            } else {
+              expect(pack.error).toBeUndefined()
+            }
+          })
+
+          test(`should ${
+            blur ? 'do' : 'not do'
+          } validation when blurring field`, () => {
+            // Arrange
+            const dsl = `
+              form ExampleForm {
+                @required
+                num numberField
+              }
+            `
+            const formML = new FormML(dsl, options)
+            const index = formML.indexRoot['numberField']
+            formML.initField(index)
+
+            // Act
+            formML.blur(index)
+            const pack = formML.getField(index)
+
+            // Assert
+            if (blur) {
+              expect(pack.error).toBeDefined()
+              expect(pack.error).toEqual(
+                expect.objectContaining({ message: expect.any(String) }),
+              )
+            } else {
+              expect(pack.error).toBeUndefined()
+            }
+          })
         },
       )
-
-      test('should do validation when blurring field', () => {
-        // Arrange
-        const dsl = `
-          form ExampleForm {
-            @required
-            num numberField
-          }
-        `
-        const formML = new FormML(dsl)
-        const index = formML.indexRoot['numberField']
-        formML.initField(index)
-
-        // Act
-        formML.blur(index)
-        const pack = formML.getField(index)
-
-        // Assert
-        expect(pack.error).toBeDefined()
-        expect(pack.error).toEqual(
-          expect.objectContaining({ message: expect.any(String) }),
-        )
-      })
 
       // TODO: multiple errors
     })
