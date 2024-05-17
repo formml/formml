@@ -7,6 +7,7 @@ describe('validate', () => {
       // Arrange
       const mockedValidate = vi.fn()
       const form = {
+        getField: () => ({ _internalState: { isInitiallyValidated: false } }),
         options: { validateOn: { initial: 'change' } },
         validate: mockedValidate,
       } as unknown as FormML
@@ -28,6 +29,7 @@ describe('validate', () => {
         // Arrange
         const mockedValidate = vi.fn()
         const form = {
+          getField: () => ({ _internalState: { isInitiallyValidated: false } }),
           options: { validateOn: { initial: 'all' } },
           validate: mockedValidate,
         } as unknown as FormML
@@ -50,6 +52,7 @@ describe('validate', () => {
       const mockedValidate = vi.fn(() => executions.push('validate'))
       const mockedOriginalMethod = vi.fn(() => executions.push('original'))
       const form = {
+        getField: () => ({ _internalState: { isInitiallyValidated: false } }),
         options: { validateOn: { initial: 'change' } },
         validate: mockedValidate,
       } as unknown as FormML
@@ -69,6 +72,7 @@ describe('validate', () => {
       // Arrange
       const mockedValidate = vi.fn()
       const form = {
+        getField: () => ({ _internalState: { isInitiallyValidated: false } }),
         options: { validateOn: { initial: 'change' } },
         validate: mockedValidate,
       } as unknown as FormML
@@ -78,6 +82,27 @@ describe('validate', () => {
       // Act
       const decorator = validate({ eventName: 'submit' })
       const decoratedMethod = decorator(() => {}, dummyContext)
+      decoratedMethod.call(form, dummyIndex)
+
+      // Assert
+      expect(mockedValidate).not.toBeCalled()
+    })
+
+    test('should not do validation if event name matches but it is not initial validation', () => {
+      // Arrange
+      const mockedValidate = vi.fn()
+      const form = {
+        getField: () => ({ _internalState: { isInitiallyValidated: true } }),
+        options: { validateOn: { initial: 'change', subsequent: 'blur' } },
+        validate: mockedValidate,
+      } as unknown as FormML
+      const dummyIndex = {}
+      const dummyContext = {} as ClassMethodDecoratorContext
+
+      const decorator = validate({ eventName: 'change' })
+      const decoratedMethod = decorator(() => {}, dummyContext)
+
+      // Act
       decoratedMethod.call(form, dummyIndex)
 
       // Assert

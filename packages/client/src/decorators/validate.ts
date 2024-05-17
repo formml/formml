@@ -15,9 +15,11 @@ export default function validate({ eventName }: { eventName: FormMLEvent }) {
     ) {
       const result = originalMethod.call(this, index, ..._args)
       const initial = this.options.validateOn.initial
-      if (initial === 'all' || initial === eventName) {
+      const isInitiallyValidated =
+        this.getField(index)._internalState.isInitiallyValidated
+      !isInitiallyValidated &&
+        (initial === 'all' || initial === eventName) &&
         this.validate(index)
-      }
       return result
     }
   }
