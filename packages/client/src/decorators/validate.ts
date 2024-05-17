@@ -14,12 +14,15 @@ export default function validate({ eventName }: { eventName: FormMLEvent }) {
       ..._args: TArgs
     ) {
       const result = originalMethod.call(this, index, ..._args)
-      const initial = this.options.validateOn.initial
-      const isInitiallyValidated =
-        this.getField(index)._internalState.isInitiallyValidated
-      !isInitiallyValidated &&
-        (initial === 'all' || initial === eventName) &&
+      const { initial, subsequent } = this.options.validateOn
+      const isInitial =
+        !this.getField(index)._internalState.isInitiallyValidated
+      const condition = isInitial ? initial : subsequent
+
+      if (condition === 'all' || condition === eventName) {
         this.validate(index)
+      }
+
       return result
     }
   }

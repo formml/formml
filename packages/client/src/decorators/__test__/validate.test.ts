@@ -109,4 +109,90 @@ describe('validate', () => {
       expect(mockedValidate).not.toBeCalled()
     })
   })
+
+  describe('subsequent validation', () => {
+    test('should do validation if given event name matches configured event', () => {
+      // Arrange
+      const mockedValidate = vi.fn()
+      const form = {
+        getField: () => ({ _internalState: { isInitiallyValidated: true } }),
+        options: { validateOn: { initial: 'change', subsequent: 'blur' } },
+        validate: mockedValidate,
+      } as unknown as FormML
+      const dummyIndex = {}
+      const dummyContext = {} as ClassMethodDecoratorContext
+
+      // Act
+      const decorator = validate({ eventName: 'blur' })
+      const decoratedMethod = decorator(() => {}, dummyContext)
+      decoratedMethod.call(form, dummyIndex)
+
+      // Assert
+      expect(mockedValidate).toBeCalledWith(dummyIndex)
+    })
+
+    test.each(['change', 'blur', 'submit'] as const)(
+      'should always do validation if configured event is all',
+      (eventName) => {
+        // Arrange
+        const mockedValidate = vi.fn()
+        const form = {
+          getField: () => ({ _internalState: { isInitiallyValidated: true } }),
+          options: { validateOn: { initial: 'change', subsequent: 'all' } },
+          validate: mockedValidate,
+        } as unknown as FormML
+        const dummyIndex = {}
+        const dummyContext = {} as ClassMethodDecoratorContext
+
+        // Act
+        const decorator = validate({ eventName })
+        const decoratedMethod = decorator(() => {}, dummyContext)
+        decoratedMethod.call(form, dummyIndex)
+
+        // Assert
+        expect(mockedValidate).toBeCalledWith(dummyIndex)
+      },
+    )
+
+    test('should not do validation if given event name do not match configured event', () => {
+      // Arrange
+      const mockedValidate = vi.fn()
+      const form = {
+        getField: () => ({ _internalState: { isInitiallyValidated: true } }),
+        options: { validateOn: { initial: 'change', subsequent: 'blur' } },
+        validate: mockedValidate,
+      } as unknown as FormML
+      const dummyIndex = {}
+      const dummyContext = {} as ClassMethodDecoratorContext
+
+      // Act
+      const decorator = validate({ eventName: 'change' })
+      const decoratedMethod = decorator(() => {}, dummyContext)
+      decoratedMethod.call(form, dummyIndex)
+
+      // Assert
+      expect(mockedValidate).not.toBeCalled()
+    })
+
+    test('should not do validation if event name matches but it is not subsequent validation', () => {
+      // Arrange
+      const mockedValidate = vi.fn()
+      const form = {
+        getField: () => ({ _internalState: { isInitiallyValidated: false } }),
+        options: { validateOn: { initial: 'change', subsequent: 'blur' } },
+        validate: mockedValidate,
+      } as unknown as FormML
+      const dummyIndex = {}
+      const dummyContext = {} as ClassMethodDecoratorContext
+
+      const decorator = validate({ eventName: 'blur' })
+      const decoratedMethod = decorator(() => {}, dummyContext)
+
+      // Act
+      decoratedMethod.call(form, dummyIndex)
+
+      // Assert
+      expect(mockedValidate).not.toBeCalled()
+    })
+  })
 })
