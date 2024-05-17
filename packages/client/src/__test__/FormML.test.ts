@@ -1070,9 +1070,9 @@ describe('FormML', () => {
 
             // Act
             formML.setRawValue(index, '')
-            const pack = formML.getField(index)
 
             // Assert
+            const pack = formML.getField(index)
             if (setRawValue) {
               expect(pack.error).toBeDefined()
               expect(pack.error).toEqual(
@@ -1099,9 +1099,9 @@ describe('FormML', () => {
 
             // Act
             formML.setValue(index, undefined)
-            const pack = formML.getField(index)
 
             // Assert
+            const pack = formML.getField(index)
             if (setValue) {
               expect(pack.error).toBeDefined()
               expect(pack.error).toEqual(
@@ -1128,9 +1128,9 @@ describe('FormML', () => {
 
             // Act
             formML.setTypedValue(index, undefined)
-            const pack = formML.getField(index)
 
             // Assert
+            const pack = formML.getField(index)
             if (setTypedValue) {
               expect(pack.error).toBeDefined()
               expect(pack.error).toEqual(
@@ -1157,9 +1157,172 @@ describe('FormML', () => {
 
             // Act
             formML.blur(index)
-            const pack = formML.getField(index)
 
             // Assert
+            const pack = formML.getField(index)
+            if (blur) {
+              expect(pack.error).toBeDefined()
+              expect(pack.error).toEqual(
+                expect.objectContaining({ message: expect.any(String) }),
+              )
+            } else {
+              expect(pack.error).toBeUndefined()
+            }
+          })
+        },
+      )
+
+      describe.each`
+        triggerEvent | setRawValue | setValue | setTypedValue | blur
+        ${'all'}     | ${true}     | ${true}  | ${true}       | ${true}
+        ${'change'}  | ${true}     | ${true}  | ${true}       | ${false}
+        ${'blur'}    | ${false}    | ${false} | ${false}      | ${true}
+        ${'submit'}  | ${false}    | ${false} | ${false}      | ${false}
+      `(
+        'subsequent validation - $triggerEvent',
+        ({ blur, setRawValue, setTypedValue, setValue, triggerEvent }) => {
+          const options: FormMLOptions = {
+            validateOn: {
+              initial: 'change',
+              subsequent: triggerEvent,
+            },
+          }
+
+          test(`should ${
+            setRawValue ? 'do' : 'not do'
+          } validation when setting raw value`, () => {
+            // Arrange
+            const dsl = `
+              form ExampleForm {
+                @required
+                num numberField
+              }
+            `
+            const formML = new FormML(dsl, options)
+            const index = formML.indexRoot['numberField']
+            formML.initField(index)
+
+            // Act
+            formML.setRawValue(index, '123') // trigger initial validation
+
+            // Assert
+            expect(
+              formML.getField(index)._internalState.isInitiallyValidated,
+            ).toBe(true)
+
+            // Act
+            formML.setRawValue(index, '')
+
+            // Assert
+            const pack = formML.getField(index)
+            if (setRawValue) {
+              expect(pack.error).toBeDefined()
+              expect(pack.error).toEqual(
+                expect.objectContaining({ message: expect.any(String) }),
+              )
+            } else {
+              expect(pack.error).toBeUndefined()
+            }
+          })
+
+          test(`should ${
+            setValue ? 'do' : 'not do'
+          } validation when setting value`, () => {
+            // Arrange
+            const dsl = `
+              form ExampleForm {
+                @required
+                num numberField
+              }
+            `
+            const formML = new FormML(dsl, options)
+            const index = formML.indexRoot['numberField']
+            formML.initField(index)
+
+            // Act
+            formML.setRawValue(index, '123') // trigger initial validation
+
+            // Assert
+            expect(
+              formML.getField(index)._internalState.isInitiallyValidated,
+            ).toBe(true)
+
+            // Act
+            formML.setValue(index, undefined)
+
+            // Assert
+            const pack = formML.getField(index)
+            if (setValue) {
+              expect(pack.error).toBeDefined()
+              expect(pack.error).toEqual(
+                expect.objectContaining({ message: expect.any(String) }),
+              )
+            } else {
+              expect(pack.error).toBeUndefined()
+            }
+          })
+
+          test(`should ${
+            setTypedValue ? 'do' : 'not do'
+          } validation when setting typed value`, () => {
+            // Arrange
+            const dsl = `
+              form ExampleForm {
+                @required
+                num numberField
+              }
+            `
+            const formML = new FormML(dsl, options)
+            const index = formML.indexRoot['numberField']
+            formML.initField(index)
+
+            // Act
+            formML.setRawValue(index, '123') // trigger initial validation
+
+            // Assert
+            expect(
+              formML.getField(index)._internalState.isInitiallyValidated,
+            ).toBe(true)
+
+            // Act
+            formML.setTypedValue(index, undefined)
+
+            // Assert
+            const pack = formML.getField(index)
+            if (setTypedValue) {
+              expect(pack.error).toBeDefined()
+              expect(pack.error).toEqual(
+                expect.objectContaining({ message: expect.any(String) }),
+              )
+            } else {
+              expect(pack.error).toBeUndefined()
+            }
+          })
+
+          test(`should ${
+            blur ? 'do' : 'not do'
+          } validation when blurring field`, () => {
+            // Arrange
+            const dsl = `
+              form ExampleForm {
+                @required
+                num numberField
+              }
+            `
+            const formML = new FormML(dsl, options)
+            const index = formML.indexRoot['numberField']
+            formML.initField(index)
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            ;(formML as any)._fieldsInternalState[
+              'numberField'
+            ].isInitiallyValidated = true // force field to be initially validated
+
+            // Act
+            formML.blur(index)
+
+            // Assert
+            const pack = formML.getField(index)
             if (blur) {
               expect(pack.error).toBeDefined()
               expect(pack.error).toEqual(
