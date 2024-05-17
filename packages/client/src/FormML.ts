@@ -16,6 +16,7 @@ export type FormMLOptions = {
 }
 
 export type FieldResult = DeepReadonly<{
+  _internalState: { isInitiallyValidated: boolean }
   blur: () => void
   commitRawValue: () => void
   error: ValidationError | undefined
@@ -50,6 +51,10 @@ function buildInputValidators(
 }
 
 export class FormML {
+  private readonly _fieldsInternalState: Record<
+    string,
+    { isInitiallyValidated: boolean }
+  > = {}
   private readonly _fieldsMetaProxy: Record<
     string,
     { error: ValidationError | undefined; touched: boolean }
@@ -141,6 +146,7 @@ export class FormML {
     this.assertInitialized(name, { methodName: 'getField' })
 
     return {
+      _internalState: this._fieldsInternalState[name],
       error: toRaw(this._fieldsMetaProxy[name].error),
       rawValue: toRaw(this._valuesProxy[name]), // to raw for every value from proxies
       schema,
@@ -164,6 +170,10 @@ export class FormML {
 
     if (this._fieldsMetaProxy[name] === undefined) {
       this._fieldsMetaProxy[name] = { error: undefined, touched: false }
+    }
+
+    if (this._fieldsInternalState[name] === undefined) {
+      this._fieldsInternalState[name] = { isInitiallyValidated: false }
     }
 
     if (!this._indexToHelpers.has(index)) {
@@ -245,6 +255,7 @@ export class FormML {
     const result = this._indexToInputValidator.get(index)!(
       this._valuesProxy[name],
     )
+    this._fieldsInternalState[name].isInitiallyValidated = true
 
     if (result.isValid) {
       return { error: undefined, isValid: true as const }
@@ -271,6 +282,7 @@ export class FormML {
       }
 
       this.initField(index)
+      this._fieldsInternalState[name].isInitiallyValidated = true
       this._fieldsMetaProxy[name].error = result.errors?.[0]
     }
     return { errors, isValid: errors.length === 0 }

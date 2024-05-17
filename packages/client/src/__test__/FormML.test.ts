@@ -101,6 +101,9 @@ describe('FormML', () => {
         let pack: unknown
         expect(() => (pack = formML.getField(index))).not.toThrow()
         expect(pack).toEqual({
+          _internalState: {
+            isInitiallyValidated: false,
+          },
           error: undefined,
           schema: expect.objectContaining({
             $type: 'Field',
@@ -219,6 +222,9 @@ describe('FormML', () => {
 
         // Assert
         expect(pack).toEqual({
+          _internalState: {
+            isInitiallyValidated: false,
+          },
           error: undefined,
           schema: expect.objectContaining({
             $type: 'Field',
@@ -460,6 +466,28 @@ describe('FormML', () => {
             )
           },
         )
+
+        test('should be initially validated after any validation', () => {
+          // Arrange
+          const dsl = `
+            form ExampleForm {
+              num numberField
+            }
+          `
+          const formML = new FormML(dsl, {
+            validateOn: { initial: 'change', subsequent: 'change' },
+          })
+          const index = formML.indexRoot['numberField']
+          formML.initField(index)
+
+          // Act
+          const pack = formML.getField(index)
+          pack.setRawValue('') // trigger validation
+
+          // Assert
+          const newPack = formML.getField(index)
+          expect(newPack._internalState.isInitiallyValidated).toBe(true)
+        })
       })
 
       describe('caches', () => {
@@ -872,6 +900,26 @@ describe('FormML', () => {
         // Assert
         expect(() => formML.getField(index)).not.toThrow()
       })
+
+      test('should update is field initially validated', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            @required
+            num numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+        formML.initField(index)
+
+        // Act
+        formML.validateAll()
+
+        // Assert
+        const pack = formML.getField(index)
+        expect(pack._internalState.isInitiallyValidated).toBe(true)
+      })
     })
 
     describe('validate', () => {
@@ -945,6 +993,26 @@ describe('FormML', () => {
         expect(pack2.error).toEqual(
           expect.objectContaining({ message: expect.any(String) }),
         )
+      })
+
+      test('should update is field initially validated', () => {
+        // Arrange
+        const dsl = `
+          form ExampleForm {
+            @required
+            num numberField
+          }
+        `
+        const formML = new FormML(dsl)
+        const index = formML.indexRoot['numberField']
+        formML.initField(index)
+
+        // Act
+        formML.validate(index)
+
+        // Assert
+        const pack = formML.getField(index)
+        expect(pack._internalState.isInitiallyValidated).toBe(true)
       })
     })
   })
