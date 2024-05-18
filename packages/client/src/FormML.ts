@@ -246,7 +246,11 @@ export class FormML {
     )
   }
 
-  validate(index: object) {
+  validate(
+    index: object,
+  ):
+    | { error: ValidationError; isValid: false }
+    | { error: undefined; isValid: true } {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
 
@@ -258,12 +262,13 @@ export class FormML {
     this._fieldsInternalState[name].isInitiallyValidated = true
 
     if (result.isValid) {
-      return { error: undefined, isValid: true as const }
+      this._fieldsMetaProxy[name].error = undefined
+      return { error: undefined, isValid: true }
     }
 
     const error = result.errors[0]
-    this._fieldsMetaProxy[name].error = error
-    return { error, isValid: false as const }
+    this._fieldsMetaProxy[name].error = error // TODO: low performance because of reference change even though they have same content
+    return { error, isValid: false }
   }
 
   validateAll() {

@@ -968,7 +968,7 @@ describe('FormML', () => {
         )
       })
 
-      test('should update field error when validation fails', () => {
+      test('should update field error after every validation', () => {
         // Arrange
         const dsl = `
           form ExampleForm {
@@ -976,7 +976,9 @@ describe('FormML', () => {
             num numberField
           }
         `
-        const formML = new FormML(dsl)
+        const formML = new FormML(dsl, {
+          validateOn: { initial: 'submit', subsequent: 'submit' },
+        })
         const index = formML.indexRoot['numberField']
         formML.initField(index)
 
@@ -993,6 +995,14 @@ describe('FormML', () => {
         expect(pack2.error).toEqual(
           expect.objectContaining({ message: expect.any(String) }),
         )
+
+        // Act
+        formML.setRawValue(index, '123')
+        formML.validate(index)
+
+        // Assert
+        const pack3 = formML.getField(index)
+        expect(pack3.error).toBeUndefined()
       })
 
       test('should update is field initially validated', () => {
