@@ -21,8 +21,8 @@ describe('FormML', () => {
       // Arrange
       const defaultOptions: FormMLOptions = {
         validateOn: {
-          initial: 'all',
-          subsequent: 'all',
+          initial: 'blur',
+          subsequent: 'change',
         },
       }
       const dsl = `
@@ -605,8 +605,7 @@ describe('FormML', () => {
         formML.subscribe(index, callback)
 
         // Act
-        const pack = formML.getField(index)
-        pack.setRawValue('')
+        formML.validate(index)
 
         // Assert
         expect(callback).toBeCalledTimes(1)

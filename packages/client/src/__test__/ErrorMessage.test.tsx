@@ -33,7 +33,8 @@ describe('ErrorMessage', () => {
       render(<Form />)
       const input = screen.getByRole('textbox')
       const user = userEvent.setup()
-      await user.type(input, '{A}{Backspace}')
+      await user.click(input)
+      await user.tab()
 
       // Assert
       const span = screen.getByTestId('error-message')
@@ -101,6 +102,7 @@ describe('ErrorMessage', () => {
       const input = screen.getByRole('textbox')
       const user = userEvent.setup()
       await user.type(input, 'not a valid number')
+      await user.tab()
 
       // Assert
       const span = screen.getByTestId('error-message')
@@ -173,7 +175,8 @@ describe('ErrorMessage', () => {
       render(<Form />)
       const input = screen.getByRole('textbox')
       const user = userEvent.setup()
-      await user.type(input, '{A}{Backspace}')
+      await user.click(input)
+      await user.tab()
 
       // Assert
       const div = screen.getByTestId('error-message')
@@ -207,7 +210,8 @@ describe('ErrorMessage', () => {
           render(<Form />)
           const input = screen.getByRole('textbox')
           const user = userEvent.setup()
-          await user.type(input, '{A}{Backspace}')
+          await user.click(input)
+          await user.tab()
 
           // Assert
           const div = screen.getByTestId('error-message')
@@ -244,7 +248,8 @@ describe('ErrorMessage', () => {
           render(<Form />)
           const input = screen.getByRole('textbox')
           const user = userEvent.setup()
-          await user.type(input, '{A}{Backspace}')
+          await user.click(input)
+          await user.tab()
 
           // Assert
           const element = screen.getByTestId('error-message')
@@ -278,7 +283,8 @@ describe('ErrorMessage', () => {
           render(<Form />)
           const input = screen.getByRole('textbox')
           const user = userEvent.setup()
-          await user.type(input, '{A}{Backspace}')
+          await user.click(input)
+          await user.tab()
 
           // Assert
           const element = screen.getByTestId('error-message')
@@ -314,7 +320,8 @@ describe('ErrorMessage', () => {
         render(<Form />)
         const input = screen.getByRole('textbox')
         const user = userEvent.setup()
-        await user.type(input, '{A}{Backspace}')
+        await user.click(input)
+        await user.tab()
 
         // Assert
         const element = screen.getByTestId('error-message')

@@ -83,8 +83,8 @@ export class FormML {
   constructor(schema: string, options?: FormMLOptions) {
     this.options = options || {
       validateOn: {
-        initial: 'all',
-        subsequent: 'all',
+        initial: 'blur',
+        subsequent: 'change',
       },
     }
     this._schema = FormML._parse(schema)
