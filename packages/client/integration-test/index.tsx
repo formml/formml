@@ -2,9 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import SignUpForm from './demo-sign-up/SignUpForm.js'
+import SimpleInputs from './demo-simple-inputs/SimpleInputs.js'
 
 const demos: Record<string, React.ComponentType> = {
   'Sign up': SignUpForm,
+  'Simple inputs': SimpleInputs,
 }
 
 const App = () => {

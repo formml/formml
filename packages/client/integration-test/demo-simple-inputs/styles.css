@@ -1,0 +1,14 @@
+.form {
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+
+    input {
+      margin: 0 0.5rem;
+    }
+
+    span {
+      color: red;
+    }
+  }
+}
