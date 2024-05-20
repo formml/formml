@@ -42,9 +42,31 @@ describe('JS types', () => {
         expect(result).toBe(123.45)
       })
 
+      test.each([
+        ['Infinity', Infinity],
+        ['-Infinity', -Infinity],
+      ])('should parse "%s" to %s', (input, expected) => {
+        // Act
+        const result = parse(input, 'num')
+
+        // Assert
+        expect(result).toBe(expected)
+      })
+
       test('should parse non-numeric string to undefined', () => {
         // Arrange
         const input = 'hello'
+
+        // Act
+        const result = parse(input, 'num')
+
+        // Assert
+        expect(result).toBeUndefined()
+      })
+
+      test('should parse "NaN" to undefined', () => {
+        // Arrange
+        const input = 'NaN'
 
         // Act
         const result = parse(input, 'num')
@@ -66,15 +88,17 @@ describe('JS types', () => {
     })
 
     describe('stringify', () => {
-      test('should stringify number to string', () => {
-        // Arrange
-        const data = 123.45
-
+      test.each([
+        [123.45, '123.45'],
+        [NaN, 'NaN'],
+        [Infinity, 'Infinity'],
+        [-Infinity, '-Infinity'],
+      ])('should stringify number %s to string "%s"', (data, expected) => {
         // Act
         const result = stringify(data)
 
         // Assert
-        expect(result).toBe('123.45')
+        expect(result).toBe(expected)
       })
     })
   })
