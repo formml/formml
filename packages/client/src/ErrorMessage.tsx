@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useField } from './useField.js'
 
-function ErrorMessage(
+function ErrorMessageImpl(
   {
     $bind,
     as,
@@ -29,7 +29,6 @@ type ErrorMessageComponent = {
   ): React.ReactNode
 }
 
-const ErrorMessageWrapper: ErrorMessageComponent =
-  React.forwardRef(ErrorMessage)
+const ErrorMessage: ErrorMessageComponent = React.forwardRef(ErrorMessageImpl)
 
-export default ErrorMessageWrapper
+export default ErrorMessage
