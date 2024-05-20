@@ -64,5 +64,18 @@ describe('JS types', () => {
         },
       )
     })
+
+    describe('stringify', () => {
+      test('should stringify number to string', () => {
+        // Arrange
+        const data = 123.45
+
+        // Act
+        const result = stringify(data)
+
+        // Assert
+        expect(result).toBe('123.45')
+      })
+    })
   })
 })
