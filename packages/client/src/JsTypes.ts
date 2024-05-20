@@ -36,7 +36,7 @@ export function parse(input: string, type: DslTypes.PrimitiveType) {
 
 export function stringify(value: PrimitiveType): string {
   if (typeof value === 'boolean') {
-    return value ? 'true' : 'false'
+    return value ? 'true' : ''
   }
   if (value instanceof BigNumber) {
     return value.toString()

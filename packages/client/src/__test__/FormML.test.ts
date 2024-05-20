@@ -381,7 +381,7 @@ describe('FormML', () => {
               ${'num'}      | ${123.45}                                        | ${'123.45'}
               ${'decimal'}  | ${new BigNumber('123.45')}                       | ${'123.45'}
               ${'bool'}     | ${true}                                          | ${'true'}
-              ${'bool'}     | ${false}                                         | ${'false'}
+              ${'bool'}     | ${false}                                         | ${''}
               ${'datetime'} | ${dayjs.utc('2024-01-01').utcOffset(8).toDate()} | ${'2024-01-01T00:00:00.000Z'}
             `(
               'should update both of value and raw value when set $fieldType value',

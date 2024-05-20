@@ -127,5 +127,29 @@ describe('JS types', () => {
         expect(result).toBe(false)
       })
     })
+
+    describe('stringify', () => {
+      test('should stringify true to "true"', () => {
+        // Arrange
+        const data = true
+
+        // Act
+        const result = stringify(data)
+
+        // Assert
+        expect(result).toBe('true')
+      })
+
+      test('should stringify false to empty string', () => {
+        // Arrange
+        const data = false
+
+        // Act
+        const result = stringify(data)
+
+        // Assert
+        expect(result).toBe('')
+      })
+    })
   })
 })
