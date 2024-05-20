@@ -52,6 +52,17 @@ describe('JS types', () => {
         // Assert
         expect(result).toBeUndefined()
       })
+
+      test.each(['', '  ', '\n', '\t'])(
+        'should parse empty string %j to undefined',
+        (input) => {
+          // Act
+          const result = parse(input, 'num')
+
+          // Assert
+          expect(result).toBeUndefined()
+        },
+      )
     })
   })
 })

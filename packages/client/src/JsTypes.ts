@@ -28,11 +28,11 @@ export function parse(input: string, type: DslTypes.PrimitiveType) {
     case 'datetime':
       return dayjs(input).toDate()
     case 'num': {
-      const result = Number(input)
-      if (isNaN(result)) {
+      if (input.trim() === '') {
         return undefined
       }
-      return result
+      const result = Number(input)
+      return isNaN(result) ? undefined : result
     }
     case 'text':
       return input
