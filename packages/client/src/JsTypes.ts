@@ -6,16 +6,23 @@ import dayjs from 'dayjs'
 import { assertNever } from './utils/assertNever.js'
 
 export type PrimitiveTypeMapping = {
-  bool: boolean | undefined
+  bool: boolean
   datetime: Date | undefined
   decimal: BigNumber | undefined
   num: number | undefined
-  text: string | undefined
+  text: string
 }
 
 export type PrimitiveType = PrimitiveTypeMapping[keyof PrimitiveTypeMapping]
 
-export function parse(input: string, type: DslTypes.PrimitiveType) {
+export function parse<TType extends DslTypes.PrimitiveType>(
+  input: string,
+  type: TType,
+): PrimitiveTypeMapping[TType]
+export function parse(
+  input: string,
+  type: DslTypes.PrimitiveType,
+): PrimitiveType {
   if (type === 'text') return input
 
   if (type === 'num') {
