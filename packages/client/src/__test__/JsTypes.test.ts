@@ -18,13 +18,39 @@ describe('JS types', () => {
     describe('stringify', () => {
       test('should keep string as is', () => {
         // Arrange
+        const data = 'hello'
+
+        // Act
+        const result = stringify(data)
+
+        // Assert
+        expect(result).toBe(data)
+      })
+    })
+  })
+
+  describe('num', () => {
+    describe('parse', () => {
+      test('should parse numeric string to number', () => {
+        // Arrange
+        const input = '123.45'
+
+        // Act
+        const result = parse(input, 'num')
+
+        // Assert
+        expect(result).toBe(123.45)
+      })
+
+      test('should parse non-numeric string to undefined', () => {
+        // Arrange
         const input = 'hello'
 
         // Act
-        const result = stringify(input)
+        const result = parse(input, 'num')
 
         // Assert
-        expect(result).toBe(input)
+        expect(result).toBeUndefined()
       })
     })
   })
