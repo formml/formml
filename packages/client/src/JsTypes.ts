@@ -16,30 +16,22 @@ export type PrimitiveTypeMapping = {
 export type PrimitiveType = PrimitiveTypeMapping[keyof PrimitiveTypeMapping]
 
 export function parse(input: string, type: DslTypes.PrimitiveType) {
-  if (input === '' && type !== 'text') {
-    return undefined
+  if (type === 'text') return input
+
+  if (type === 'num') {
+    if (input.trim() === '') return undefined
+
+    const result = Number(input)
+    return isNaN(result) ? undefined : result
   }
-  switch (type) {
-    case 'bool':
-      // TODO: convert string to boolean directly
-      return input === 'true' ? true : false
-    case 'decimal':
-      return new BigNumber(input)
-    case 'datetime':
-      return dayjs(input).toDate()
-    case 'num': {
-      if (input.trim() === '') {
-        return undefined
-      }
-      const result = Number(input)
-      return isNaN(result) ? undefined : result
-    }
-    case 'text':
-      return input
-    default: {
-      return assertNever`Unsupported type '${type}'`
-    }
-  }
+
+  if (type === 'bool') return Boolean(input)
+
+  if (type === 'decimal') return new BigNumber(input)
+
+  if (type === 'datetime') return dayjs(input).toDate()
+
+  return assertNever`Unsupported type '${type}'`
 }
 
 export function stringify(value: PrimitiveType): string {

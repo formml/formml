@@ -160,6 +160,7 @@ export class FormML {
     return toRaw(this._typedValuesProxy)
   }
 
+  // TODO: init fields in constructor
   initField(index: object) {
     const schema = this.getSchemaByIndex(index)
     const { name } = schema
@@ -167,6 +168,8 @@ export class FormML {
     if (this._valuesProxy[name] === undefined) {
       this._valuesProxy[name] = ''
     }
+
+    // TODO: set initial typed value
 
     if (this._fieldsMetaProxy[name] === undefined) {
       this._fieldsMetaProxy[name] = { error: undefined, touched: false }

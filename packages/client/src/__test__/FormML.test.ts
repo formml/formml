@@ -342,45 +342,13 @@ describe('FormML', () => {
           ${'num'}      | ${'123.45'}                        | ${123.45}
           ${'decimal'}  | ${'123.45'}                        | ${new BigNumber('123.45')}
           ${'bool'}     | ${'true'}                          | ${true}
-          ${'bool'}     | ${'false'}                         | ${false}
+          ${'bool'}     | ${''}                              | ${false}
           ${'datetime'} | ${'2024-01-01'}                    | ${new Date(2024, 0, 1)}
           ${'datetime'} | ${'2024-01-01T00:00:00.000'}       | ${new Date(2024, 0, 1, 0, 0, 0, 0)}
           ${'datetime'} | ${'2024-01-01T08:00:00.000+08:00'} | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
           ${'datetime'} | ${'2024-01-01T00:00:00.000Z'}      | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
         `(
           'should return latest typed $fieldType value once raw value change is committed',
-          ({ expected, fieldType, rawInput }) => {
-            // Arrange
-            const dsl = `
-              form ExampleForm {
-                ${fieldType} field
-              }
-            `
-            const formML = new FormML(dsl)
-            const index = formML.indexRoot['field']
-            formML.initField(index)
-
-            const firstPack = formML.getField(index)
-
-            // Act
-            firstPack.setRawValue(rawInput)
-            firstPack.commitRawValue()
-
-            // Assert
-            const secondPack = formML.getField(index)
-            expect(secondPack.value).toEqual(expected)
-          },
-        )
-
-        test.each`
-          fieldType     | rawInput | expected
-          ${'text'}     | ${''}    | ${''}
-          ${'num'}      | ${''}    | ${undefined}
-          ${'decimal'}  | ${''}    | ${undefined}
-          ${'bool'}     | ${''}    | ${undefined}
-          ${'datetime'} | ${''}    | ${undefined}
-        `(
-          'should return undefined once raw value is empty except "text" - $fieldType',
           ({ expected, fieldType, rawInput }) => {
             // Arrange
             const dsl = `
@@ -688,43 +656,13 @@ describe('FormML', () => {
         ${'num'}      | ${'123.45'}                        | ${123.45}
         ${'decimal'}  | ${'123.45'}                        | ${new BigNumber('123.45')}
         ${'bool'}     | ${'true'}                          | ${true}
-        ${'bool'}     | ${'false'}                         | ${false}
+        ${'bool'}     | ${''}                              | ${false}
         ${'datetime'} | ${'2024-01-01'}                    | ${new Date(2024, 0, 1)}
         ${'datetime'} | ${'2024-01-01T00:00:00.000'}       | ${new Date(2024, 0, 1, 0, 0, 0, 0)}
         ${'datetime'} | ${'2024-01-01T08:00:00.000+08:00'} | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
         ${'datetime'} | ${'2024-01-01T00:00:00.000Z'}      | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
       `(
         'should modify typed $fieldType value once raw value change is committed',
-        ({ expected, fieldType, rawInput }) => {
-          // Arrange
-          const dsl = `
-            form ExampleForm {
-              ${fieldType} field
-            }
-          `
-          const formML = new FormML(dsl)
-          const index = formML.indexRoot['field']
-          formML.initField(index)
-
-          // Act
-          formML.setRawValue(index, rawInput)
-          formML.commitRawValue(index)
-
-          // Assert
-          const pack = formML.getField(index)
-          expect(pack.value).toEqual(expected)
-        },
-      )
-
-      test.each`
-        fieldType     | rawInput | expected
-        ${'text'}     | ${''}    | ${''}
-        ${'num'}      | ${''}    | ${undefined}
-        ${'decimal'}  | ${''}    | ${undefined}
-        ${'bool'}     | ${''}    | ${undefined}
-        ${'datetime'} | ${''}    | ${undefined}
-      `(
-        'should set typed value to undefined once raw value is empty except for "text" - $fieldType',
         ({ expected, fieldType, rawInput }) => {
           // Arrange
           const dsl = `

@@ -102,4 +102,30 @@ describe('JS types', () => {
       })
     })
   })
+
+  describe('bool', () => {
+    describe('parse', () => {
+      test.each(['true', 'yes', '1', 'on', '   ', '\n', '\t'])(
+        'should parse non-empty string to true - %j',
+        (input) => {
+          // Act
+          const result = parse(input, 'bool')
+
+          // Assert
+          expect(result).toBe(true)
+        },
+      )
+
+      test('should parse empty string to false', () => {
+        // Arrange
+        const input = ''
+
+        // Act
+        const result = parse(input, 'bool')
+
+        // Assert
+        expect(result).toBe(false)
+      })
+    })
+  })
 })
