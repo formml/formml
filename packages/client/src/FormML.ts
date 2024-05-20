@@ -136,7 +136,7 @@ export class FormML {
     this.assertInitialized(name, { methodName: 'commitRawValue' })
 
     const rawValue = this._valuesProxy[name]
-    this._typedValuesProxy[name] = JsTypes.toTyped(rawValue, type)
+    this._typedValuesProxy[name] = JsTypes.parse(rawValue, type)
   }
 
   getField(index: object): FieldResult {
@@ -215,7 +215,7 @@ export class FormML {
     this.assertInitialized(name, { methodName: 'setTypedValue' })
 
     this._typedValuesProxy[name] = value
-    this._valuesProxy[name] = JsTypes.toRaw(value)
+    this._valuesProxy[name] = JsTypes.stringify(value)
   }
 
   @validate({ eventName: 'change' })
@@ -226,7 +226,7 @@ export class FormML {
     this.assertInitialized(name, { methodName: 'setValue' })
 
     this._typedValuesProxy[name] = value
-    this._valuesProxy[name] = JsTypes.toRaw(value)
+    this._valuesProxy[name] = JsTypes.stringify(value)
   }
 
   subscribe(index: object, callback: () => void): () => void {

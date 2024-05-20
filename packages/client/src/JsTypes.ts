@@ -15,7 +15,7 @@ export type PrimitiveTypeMapping = {
 
 export type PrimitiveType = PrimitiveTypeMapping[keyof PrimitiveTypeMapping]
 
-export function toTyped(rawValue: string, type: DslTypes.PrimitiveType) {
+export function parse(rawValue: string, type: DslTypes.PrimitiveType) {
   if (rawValue === '' && type !== 'text') {
     return undefined
   }
@@ -37,7 +37,7 @@ export function toTyped(rawValue: string, type: DslTypes.PrimitiveType) {
   }
 }
 
-export function toRaw(value: PrimitiveType): string {
+export function stringify(value: PrimitiveType): string {
   if (typeof value === 'boolean') {
     return value ? 'true' : 'false'
   }
