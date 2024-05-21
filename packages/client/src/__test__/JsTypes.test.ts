@@ -264,6 +264,17 @@ describe('JS types', () => {
           expect(result).toBeUndefined()
         },
       )
+
+      test('should parse non-numeric string to undefined', () => {
+        // Arrange
+        const input = 'hello'
+
+        // Act
+        const result = parse(input, 'decimal')
+
+        // Assert
+        expect(result).toBeUndefined()
+      })
     })
   })
 })
