@@ -1,3 +1,5 @@
+import { BigNumber } from 'bignumber.js'
+
 import { parse, stringify } from '../JsTypes.js'
 
 describe('JS types', () => {
@@ -220,6 +222,26 @@ describe('JS types', () => {
         // Assert
         expect(result).toBe('2024-01-01T00:00:00.000Z')
       })
+    })
+  })
+
+  describe('decimal', () => {
+    describe('parse', () => {
+      test.each([
+        ['123.45', new BigNumber(123.45)],
+        ['Infinity', new BigNumber(Infinity)],
+        ['-Infinity', new BigNumber(-Infinity)],
+      ])(
+        'should parse numeric string "%s" to BigNumber object',
+        (input, expected) => {
+          // Act
+          const result = parse(input, 'decimal')
+
+          // Assert
+          expect(result).toBeInstanceOf(BigNumber)
+          expect(result?.isEqualTo(expected)).toBe(true)
+        },
+      )
     })
   })
 })
