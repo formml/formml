@@ -167,6 +167,18 @@ describe('JS types', () => {
         },
       )
 
+      test.each(['2024-01-01T08:00:00+08:00', '2023-12-31T16:00:00.000-08:00'])(
+        'should parse timezone properly',
+        (input) => {
+          // Act
+          const result = parse(input, 'datetime')
+
+          // Assert
+          const expected = new Date(Date.UTC(2024, 0, 1))
+          expect(result?.getTime()).toBe(expected.getTime())
+        },
+      )
+
       test.each([
         '2024-01-01',
         '2024-01-01T00:00:00',
