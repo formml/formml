@@ -36,7 +36,11 @@ export function parse(
 
   if (type === 'decimal') return new BigNumber(input)
 
-  if (type === 'datetime') return dayjs(input).toDate()
+  if (type === 'datetime') {
+    const result = dayjs(input)
+    if (!result.isValid()) return undefined
+    return result.toDate()
+  }
 
   return assertNever`Unsupported type '${type}'`
 }

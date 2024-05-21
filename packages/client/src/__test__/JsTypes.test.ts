@@ -184,6 +184,17 @@ describe('JS types', () => {
           expect(result?.getTime()).toBe(expected.getTime())
         },
       )
+
+      test.each(['', '  ', '\n', '\t', 'hello'])(
+        'should parse invalid string %j to undefined',
+        (input) => {
+          // Act
+          const result = parse(input, 'datetime')
+
+          // Assert
+          expect(result).toBeUndefined()
+        },
+      )
     })
   })
 })
