@@ -276,5 +276,23 @@ describe('JS types', () => {
         expect(result).toBeUndefined()
       })
     })
+
+    describe('stringify', () => {
+      test.each([
+        [new BigNumber(123.45), '123.45'],
+        [new BigNumber(Infinity), 'Infinity'],
+        [new BigNumber(-Infinity), '-Infinity'],
+        [new BigNumber(NaN), 'NaN'],
+      ])(
+        'should stringify BigNumber object to string - "%s"',
+        (data, expected) => {
+          // Act
+          const result = stringify(data)
+
+          // Assert
+          expect(result).toBe(expected)
+        },
+      )
+    })
   })
 })
