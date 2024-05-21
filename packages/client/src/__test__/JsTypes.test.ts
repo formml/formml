@@ -208,5 +208,18 @@ describe('JS types', () => {
         },
       )
     })
+
+    describe('stringify', () => {
+      test('should stringify date object to UTC ISO string', () => {
+        // Arrange
+        const data = new Date(Date.UTC(2024, 0, 1))
+
+        // Act
+        const result = stringify(data)
+
+        // Assert
+        expect(result).toBe('2024-01-01T00:00:00.000Z')
+      })
+    })
   })
 })
