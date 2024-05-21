@@ -1,8 +1,26 @@
+import { PrimitiveType } from '@formml/dsl'
 import { BigNumber } from 'bignumber.js'
 
 import { parse, stringify } from '../JsTypes.js'
 
 describe('JS types', () => {
+  test('should throw error when parsing unknown type', () => {
+    // Arrange
+    const input = 'unknown'
+
+    // Act & Assert
+    expect(() => parse(input, 'unknown type' as PrimitiveType)).toThrow()
+  })
+
+  test('should throw error when stringifying unknown type', () => {
+    // Arrange
+    const data = new Error('unknown type')
+
+    // Act & Assert
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect(() => stringify(data as any)).toThrow()
+  })
+
   describe('text', () => {
     describe('parse', () => {
       test('should keep string as is', () => {
