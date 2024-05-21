@@ -34,7 +34,11 @@ export function parse(
 
   if (type === 'bool') return Boolean(input)
 
-  if (type === 'decimal') return new BigNumber(input)
+  if (type === 'decimal') {
+    const result = new BigNumber(input)
+    if (result.isNaN()) return undefined
+    return result
+  }
 
   if (type === 'datetime') {
     const result = dayjs(input)

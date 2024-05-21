@@ -242,6 +242,17 @@ describe('JS types', () => {
           expect(result?.isEqualTo(expected)).toBe(true)
         },
       )
+
+      test('should parse "NaN" to undefined', () => {
+        // Arrange
+        const input = 'NaN'
+
+        // Act
+        const result = parse(input, 'decimal')
+
+        // Assert
+        expect(result).toBeUndefined()
+      })
     })
   })
 })
