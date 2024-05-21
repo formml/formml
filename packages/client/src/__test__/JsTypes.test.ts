@@ -295,4 +295,15 @@ describe('JS types', () => {
       )
     })
   })
+
+  test('should stringify undefined to empty string', () => {
+    // Arrange
+    const data = undefined
+
+    // Act
+    const result = stringify(data)
+
+    // Assert
+    expect(result).toBe('')
+  })
 })
