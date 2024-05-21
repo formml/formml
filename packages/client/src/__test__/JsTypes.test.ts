@@ -1,11 +1,4 @@
-import dayjs from 'dayjs'
-import timezone from 'dayjs/plugin/timezone.js'
-import utc from 'dayjs/plugin/utc.js'
-
 import { parse, stringify } from '../JsTypes.js'
-
-dayjs.extend(utc)
-dayjs.extend(timezone)
 
 describe('JS types', () => {
   describe('text', () => {
@@ -163,14 +156,32 @@ describe('JS types', () => {
   describe('datetime', () => {
     describe('parse', () => {
       test.each(['2024-01-01T00:00:00Z', '2024-01-01T00:00:00.000Z'])(
-        'should parse UTC ISO string to dayjs object',
+        'should parse UTC ISO string to date object',
         (input) => {
           // Act
           const result = parse(input, 'datetime')
 
           // Assert
-          const expected = dayjs.utc('2024-01-01')
-          expect(expected.isSame(result)).toBe(true)
+          const expected = new Date(Date.UTC(2024, 0, 1))
+          expect(result?.getTime()).toBe(expected.getTime())
+        },
+      )
+
+      test.each([
+        '2024-01-01',
+        '2024-01-01T00:00:00',
+        '2024-01-01T00:00:00.000',
+      ])(
+        'should use current timezone when parsing non-timezone ISO string',
+        (input) => {
+          // Arrange
+          const expected = new Date(Date.UTC(2023, 11, 31, 16))
+
+          // Act
+          const result = parse(input, 'datetime')
+
+          // Assert
+          expect(result?.getTime()).toBe(expected.getTime())
         },
       )
     })
