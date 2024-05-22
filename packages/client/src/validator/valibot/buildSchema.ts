@@ -13,7 +13,7 @@ const type = (
 ) => {
   if (formmlSchema.type === 'text') {
     if (options?.notEmpty) {
-      return v.string([v.minLength(1)])
+      return v.pipe(v.string(), v.nonEmpty())
     }
     return v.string()
   }
@@ -24,7 +24,7 @@ const type = (
     return v.boolean()
   }
   if (formmlSchema.type === 'datetime') {
-    return v.special<dayjs.Dayjs>(dayjs.isDayjs)
+    return v.custom<dayjs.Dayjs>(dayjs.isDayjs)
   }
   if (formmlSchema.type === 'decimal') {
     return v.instance(BigNumber)
@@ -35,9 +35,23 @@ const type = (
 const isRequired = (formmlSchema: Field) =>
   formmlSchema.annotations.some((a) => a.name === 'required')
 
-export default function buildSchema(formmlSchema: Field) {
+type BuiltSchema<T extends Field> = T['type'] extends 'text'
+  ? v.GenericSchema<string>
+  : T['type'] extends 'num'
+    ? v.GenericSchema<number | undefined>
+    : T['type'] extends 'bool'
+      ? v.GenericSchema<boolean>
+      : T['type'] extends 'datetime'
+        ? v.GenericSchema<dayjs.Dayjs | undefined>
+        : T['type'] extends 'decimal'
+          ? v.GenericSchema<BigNumber | undefined>
+          : never
+
+export default function buildSchema<T extends Field>(
+  formmlSchema: T,
+): BuiltSchema<T> {
   if (isRequired(formmlSchema)) {
-    return type(formmlSchema, { notEmpty: true })
+    return type(formmlSchema, { notEmpty: true }) as unknown as BuiltSchema<T>
   }
-  return v.optional(type(formmlSchema))
+  return v.optional(type(formmlSchema)) as unknown as BuiltSchema<T>
 }

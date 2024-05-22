@@ -3,10 +3,17 @@ import * as v from 'valibot'
 
 import * as JsTypes from '../../../JsTypes.js'
 
-export default function toDatetime(schema?: v.BaseSchema) {
-  return v.transform(
-    v.string([v.custom((i) => dayjs(i).isValid())]),
-    JsTypes.parse('datetime'),
-    schema,
+export default function toDatetime(schema?: v.GenericSchema<Date>) {
+  if (schema)
+    return v.pipe(
+      v.string(),
+      v.check((i) => dayjs(i).isValid()),
+      v.transform(JsTypes.parse('datetime')),
+      schema,
+    )
+  return v.pipe(
+    v.string(),
+    v.check((i) => dayjs(i).isValid()),
+    v.transform(JsTypes.parse('datetime')),
   )
 }

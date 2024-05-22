@@ -164,8 +164,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0(react@18.2.0)
       valibot:
-        specifier: ^0.30.0
-        version: 0.30.0
+        specifier: ^0.31.0-rc.0
+        version: 0.31.0-rc.0
     devDependencies:
       '@formml/typescript-config':
         specifier: workspace:*
@@ -9615,10 +9615,10 @@ packages:
       }
     dev: true
 
-  /valibot@0.30.0:
+  /valibot@0.31.0-rc.0:
     resolution:
       {
-        integrity: sha512-5POBdbSkM+3nvJ6ZlyQHsggisfRtyT4tVTo1EIIShs6qCdXJnyWU5TJ68vr8iTg5zpOLjXLRiBqNx+9zwZz/rA==,
+        integrity: sha512-c8HERUa1wthubHtWn0EXJIw4itUEMq2WMZEVaV8zv0a0654aGDX+Ln1Ba5smAjFdntIn/0tDCqdeYYRibfhwtQ==,
       }
     dev: false
 

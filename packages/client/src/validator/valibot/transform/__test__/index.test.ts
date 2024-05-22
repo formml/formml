@@ -54,16 +54,17 @@ describe('transforms', () => {
           {
             "abortEarly": undefined,
             "abortPipeEarly": undefined,
-            "context": "custom",
             "expected": null,
             "input": "abc",
+            "issues": undefined,
+            "kind": "validation",
             "lang": undefined,
             "message": "Invalid input: Received "abc"",
             "path": undefined,
-            "reason": "string",
             "received": ""abc"",
             "requirement": [Function],
             "skipPipe": undefined,
+            "type": "check",
           },
         ]
       `)
@@ -129,7 +130,8 @@ describe('transforms', () => {
 
       // Act
       const result = v.safeParse(
-        transformer(v.literal('transformed value')),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        transformer(v.literal('transformed value') as any),
         input,
       )
 
