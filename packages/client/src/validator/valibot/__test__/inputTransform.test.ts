@@ -1,10 +1,18 @@
-import { BigNumber } from 'bignumber.js'
-import dayjs from 'dayjs'
 import * as v from 'valibot'
 
+import { parse } from '../../../JsTypes.js'
 import * as i from '../inputTransform.js'
 
+vi.mock('../../../JsTypes.js')
+
 describe('input transform', () => {
+  const mockCurriedParse = vi.fn()
+
+  beforeEach(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    vi.mocked(parse).mockReturnValue(mockCurriedParse as any)
+  })
+
   describe('number', () => {
     test('should validate a number string', () => {
       // Arrange
@@ -60,33 +68,6 @@ describe('input transform', () => {
         ]
       `)
     })
-
-    test('should transform input to number before give it to inner schema', () => {
-      // Arrange
-      const schema = i.toNum(v.literal(123))
-
-      // Act
-      const result = v.safeParse(schema, '123')
-
-      // Assert
-      expect(result.success).toBe(true)
-      expect(result.output).toBe(123)
-    })
-
-    test.each(['', '  ', ' \n\t'])(
-      'should transform empty string to undefined',
-      (input) => {
-        // Arrange
-        const schema = i.toNum(v.undefined_())
-
-        // Act
-        const result = v.safeParse(schema, input)
-
-        // Assert
-        expect(result.success).toBe(true)
-        expect(result.output).toBeUndefined()
-      },
-    )
   })
 
   describe('datetime', () => {
@@ -107,26 +88,6 @@ describe('input transform', () => {
       // Assert
       expect(result.success).toBe(true)
     })
-
-    test('should transform input to dayjs object before give it to inner schema', () => {
-      // Arrange
-      const schema = i.toDatetime(
-        v.unknown([
-          v.custom(
-            (value) =>
-              dayjs.isDayjs(value) && value.isSame('2024-01-01T00:00:00Z'),
-          ),
-        ]),
-      )
-
-      // Act
-      const result = v.safeParse(schema, '2024-01-01T00:00:00Z')
-
-      // Assert
-      expect(result.success).toBe(true)
-      expect(result.typed).toBe(true)
-      expect(result.output).toBeInstanceOf(dayjs)
-    })
   })
 
   describe('bool', () => {
@@ -139,18 +100,6 @@ describe('input transform', () => {
 
       // Assert
       expect(result.success).toBe(true)
-    })
-
-    test('should transform input to boolean before give it to inner schema', () => {
-      // Arrange
-      const schema = i.toBool(v.literal(true))
-
-      // Act
-      const result = v.safeParse(schema, 'true')
-
-      // Assert
-      expect(result.success).toBe(true)
-      expect(result.output).toBe(true)
     })
   })
 
@@ -165,19 +114,28 @@ describe('input transform', () => {
       // Assert
       expect(result.success).toBe(true)
     })
+  })
 
-    test('should transform input to big number before give it to inner schema', () => {
+  test.each([
+    { input: '123', transformer: i.toNum, type: 'num' },
+    { input: '2024-01-01', transformer: i.toDatetime, type: 'datetime' },
+    { input: 'true', transformer: i.toBool, type: 'bool' },
+    { input: '123.45', transformer: i.toDecimal, type: 'decimal' },
+  ])(
+    'should transform input with correct type $type when calling $transformer.name',
+    ({ input, transformer, type }) => {
       // Arrange
-      const schema = i.toDecimal(
-        v.instance(BigNumber, [v.custom((value) => value.eq('123.45'))]),
-      )
+      mockCurriedParse.mockReturnValue('transformed value')
 
       // Act
-      const result = v.safeParse(schema, '123.45')
+      const result = v.safeParse(
+        transformer(v.literal('transformed value')),
+        input,
+      )
 
       // Assert
+      expect(parse).toBeCalledWith(type)
       expect(result.success).toBe(true)
-      expect(result.output).toBeInstanceOf(BigNumber)
-    })
-  })
+    },
+  )
 })
