@@ -1,8 +1,9 @@
-import { Field } from '@formml/dsl'
+import { Field, PrimitiveType } from '@formml/dsl'
 import { BigNumber } from 'bignumber.js'
 import dayjs from 'dayjs'
 import * as v from 'valibot'
 
+import { PrimitiveTypeMapping } from '../../JsTypes.js'
 import { assertNever } from '../../utils/assertNever.js'
 
 const type = (
@@ -29,29 +30,18 @@ const type = (
   if (formmlSchema.type === 'decimal') {
     return v.instance(BigNumber)
   }
-  return assertNever`Unsupported type ${formmlSchema.type}`
+  return assertNever`Unsupported field schema: ${formmlSchema}`
 }
 
 const isRequired = (formmlSchema: Field) =>
   formmlSchema.annotations.some((a) => a.name === 'required')
 
-type BuiltSchema<T extends Field> = T['type'] extends 'text'
-  ? v.GenericSchema<string>
-  : T['type'] extends 'num'
-    ? v.GenericSchema<number | undefined>
-    : T['type'] extends 'bool'
-      ? v.GenericSchema<boolean>
-      : T['type'] extends 'datetime'
-        ? v.GenericSchema<dayjs.Dayjs | undefined>
-        : T['type'] extends 'decimal'
-          ? v.GenericSchema<BigNumber | undefined>
-          : never
-
-export default function buildSchema<T extends Field>(
-  formmlSchema: T,
-): BuiltSchema<T> {
+export default function buildSchema<T extends PrimitiveType>(
+  formmlSchema: Field<T>,
+): v.GenericSchema<PrimitiveTypeMapping[T]>
+export default function buildSchema(formmlSchema: Field) {
   if (isRequired(formmlSchema)) {
-    return type(formmlSchema, { notEmpty: true }) as unknown as BuiltSchema<T>
+    return type(formmlSchema, { notEmpty: true })
   }
-  return v.optional(type(formmlSchema)) as unknown as BuiltSchema<T>
+  return v.optional(type(formmlSchema))
 }

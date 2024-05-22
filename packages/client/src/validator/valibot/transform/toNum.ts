@@ -2,7 +2,7 @@ import * as v from 'valibot'
 
 import * as JsTypes from '../../../JsTypes.js'
 
-export default function toNum(schema?: v.GenericSchema<number>) {
+export default function toNum(schema?: v.GenericSchema<number | undefined>) {
   if (schema)
     return v.pipe(
       v.string(),

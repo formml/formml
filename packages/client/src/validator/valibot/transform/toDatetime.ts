@@ -3,7 +3,7 @@ import * as v from 'valibot'
 
 import * as JsTypes from '../../../JsTypes.js'
 
-export default function toDatetime(schema?: v.GenericSchema<Date>) {
+export default function toDatetime(schema?: v.GenericSchema<Date | undefined>) {
   if (schema)
     return v.pipe(
       v.string(),

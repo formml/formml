@@ -3,7 +3,9 @@ import * as v from 'valibot'
 
 import * as JsTypes from '../../../JsTypes.js'
 
-export default function toDecimal(schema?: v.GenericSchema<BigNumber>) {
+export default function toDecimal(
+  schema?: v.GenericSchema<BigNumber | undefined>,
+) {
   if (schema)
     return v.pipe(
       v.string(),
