@@ -15,14 +15,7 @@ export type PrimitiveTypeMapping = {
 
 export type PrimitiveType = PrimitiveTypeMapping[keyof PrimitiveTypeMapping]
 
-export function parse<TType extends DslTypes.PrimitiveType>(
-  input: string,
-  type: TType,
-): PrimitiveTypeMapping[TType]
-export function parse(
-  input: string,
-  type: DslTypes.PrimitiveType,
-): PrimitiveType {
+function parseImpl(input: string, type: DslTypes.PrimitiveType): PrimitiveType {
   if (type === 'text') return input
 
   if (type === 'num') {
@@ -47,6 +40,24 @@ export function parse(
   }
 
   return assertNever`Unsupported type '${type}'`
+}
+
+// curried parse
+export function parse<TType extends DslTypes.PrimitiveType>(
+  type: TType,
+): (input: string) => PrimitiveTypeMapping[TType]
+export function parse<TType extends DslTypes.PrimitiveType>(
+  input: string,
+  type: TType,
+): PrimitiveTypeMapping[TType]
+export function parse(
+  ...args: [DslTypes.PrimitiveType] | [string, DslTypes.PrimitiveType]
+): ((input: string) => PrimitiveType) | PrimitiveType {
+  if (args.length === 1) {
+    const [type] = args
+    return (input: string) => parseImpl(input, type)
+  }
+  return parseImpl(...args)
 }
 
 export function stringify(value: PrimitiveType): string {
