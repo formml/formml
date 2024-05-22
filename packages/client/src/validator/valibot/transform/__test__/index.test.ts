@@ -1,11 +1,11 @@
 import * as v from 'valibot'
 
-import { parse } from '../../../JsTypes.js'
-import * as i from '../inputTransform.js'
+import { parse } from '../../../../JsTypes.js'
+import * as t from '../index.js'
 
-vi.mock('../../../JsTypes.js')
+vi.mock('../../../../JsTypes.js')
 
-describe('input transform', () => {
+describe('transforms', () => {
   const mockCurriedParse = vi.fn()
 
   beforeEach(() => {
@@ -16,7 +16,7 @@ describe('input transform', () => {
   describe('number', () => {
     test('should validate a number string', () => {
       // Arrange
-      const schema = i.toNum()
+      const schema = t.toNum()
 
       // Act
       const result = v.safeParse(schema, '123')
@@ -30,7 +30,7 @@ describe('input transform', () => {
       'should validate a blank string',
       (input) => {
         // Arrange
-        const schema = i.toNum()
+        const schema = t.toNum()
 
         // Act
         const result = v.safeParse(schema, input)
@@ -42,7 +42,7 @@ describe('input transform', () => {
 
     test('should invalidate a non-number string', () => {
       // Arrange
-      const schema = i.toNum()
+      const schema = t.toNum()
 
       // Act
       const result = v.safeParse(schema, 'abc')
@@ -80,7 +80,7 @@ describe('input transform', () => {
       '2024-01-01T00:00:00+01:00',
     ])('should validate any datetime-like string', (input) => {
       // Arrange
-      const schema = i.toDatetime()
+      const schema = t.toDatetime()
 
       // Act
       const result = v.safeParse(schema, input)
@@ -93,7 +93,7 @@ describe('input transform', () => {
   describe('bool', () => {
     test('should validate a bool string', () => {
       // Arrange
-      const schema = i.toBool()
+      const schema = t.toBool()
 
       // Act
       const result = v.safeParse(schema, 'true')
@@ -106,7 +106,7 @@ describe('input transform', () => {
   describe('decimal', () => {
     test('should validate a decimal string', () => {
       // Arrange
-      const schema = i.toDecimal()
+      const schema = t.toDecimal()
 
       // Act
       const result = v.safeParse(schema, '123.45')
@@ -117,10 +117,10 @@ describe('input transform', () => {
   })
 
   test.each([
-    { input: '123', transformer: i.toNum, type: 'num' },
-    { input: '2024-01-01', transformer: i.toDatetime, type: 'datetime' },
-    { input: 'true', transformer: i.toBool, type: 'bool' },
-    { input: '123.45', transformer: i.toDecimal, type: 'decimal' },
+    { input: '123', transformer: t.toNum, type: 'num' },
+    { input: '2024-01-01', transformer: t.toDatetime, type: 'datetime' },
+    { input: 'true', transformer: t.toBool, type: 'bool' },
+    { input: '123.45', transformer: t.toDecimal, type: 'decimal' },
   ])(
     'should transform input with correct type $type when calling $transformer.name',
     ({ input, transformer, type }) => {

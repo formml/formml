@@ -2,9 +2,9 @@ import { Field, Form } from '@formml/dsl'
 
 import buildInputSchema from '../buildInputSchema.js'
 import buildSchema from '../buildSchema.js'
-import * as i from '../inputTransform.js'
+import * as t from '../transform/index.js'
 
-vi.mock('../inputTransform.js')
+vi.mock('../transform/index.js')
 vi.mock('../buildSchema.js')
 
 describe('buildInputSchema', () => {
@@ -34,10 +34,10 @@ describe('buildInputSchema', () => {
     '%s',
     (type) => {
       const transformer = {
-        bool: i.toBool,
-        datetime: i.toDatetime,
-        decimal: i.toDecimal,
-        num: i.toNum,
+        bool: t.toBool,
+        datetime: t.toDatetime,
+        decimal: t.toDecimal,
+        num: t.toNum,
       }
 
       test('should validate and transform input firstly with custom transformer', () => {
