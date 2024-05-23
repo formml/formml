@@ -98,4 +98,34 @@ describe('num', () => {
       ]
     `)
   })
+
+  test('should accept custom message', () => {
+    // Arrange
+    const schema = v.pipe(v.string(), num('Custom message'))
+
+    // Act
+    const result = v.safeParse(schema, 'abc')
+
+    // Assert
+    expect(result.success).toBe(false)
+    expect(result.issues).toMatchInlineSnapshot(`
+      [
+        {
+          "abortEarly": undefined,
+          "abortPipeEarly": undefined,
+          "expected": "numerical",
+          "input": "abc",
+          "issues": undefined,
+          "kind": "validation",
+          "lang": undefined,
+          "message": "Custom message",
+          "path": undefined,
+          "received": ""abc"",
+          "requirement": [Function],
+          "skipPipe": undefined,
+          "type": "num",
+        },
+      ]
+    `)
+  })
 })

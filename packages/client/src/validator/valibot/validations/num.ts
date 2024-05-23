@@ -54,11 +54,31 @@ export interface NumAction<
    */
   readonly type: 'num'
 }
+/**
+ * Creates a num validation action.
+ *
+ * @returns A num action.
+ */
+export default function num<TInput extends string>(): NumAction<
+  TInput,
+  undefined
+>
 
-export default function num(): NumAction<
-  string,
-  ErrorMessage<NumIssue<string>> | undefined
-> {
+/**
+ * Creates a num validation action.
+ *
+ * @param message The error message.
+ *
+ * @returns A num action.
+ */
+export default function num<
+  TInput extends string,
+  const TMessage extends ErrorMessage<NumIssue<TInput>> | undefined,
+>(message: TMessage): NumAction<TInput, TMessage>
+
+export default function num(
+  message?: ErrorMessage<NumIssue<string>>,
+): NumAction<string, ErrorMessage<NumIssue<string>> | undefined> {
   return {
     _run(dataset, config) {
       if (dataset.typed && !this.requirement(dataset.value)) {
@@ -69,7 +89,7 @@ export default function num(): NumAction<
     async: false,
     expects: 'numerical',
     kind: 'validation',
-    message: undefined,
+    message,
     reference: num,
     requirement: (value) => !isNaN(Number(value)),
     type: 'num',
