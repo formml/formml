@@ -1,11 +1,11 @@
 import * as v from 'valibot'
 
-import num from '../num.js'
+import decimal from '../decimal.js'
 
-describe('num', () => {
+describe('decimal', () => {
   test('should validate a numerical string', () => {
     // Arrange
-    const schema = v.pipe(v.string(), num())
+    const schema = v.pipe(v.string(), decimal())
 
     // Act
     const result = v.safeParse(schema, '123')
@@ -18,7 +18,7 @@ describe('num', () => {
     'should validate infinities - "%s"',
     (input) => {
       // Arrange
-      const schema = v.pipe(v.string(), num())
+      const schema = v.pipe(v.string(), decimal())
 
       // Act
       const result = v.safeParse(schema, input)
@@ -30,7 +30,7 @@ describe('num', () => {
 
   test.each(['', '  ', ' \n\t'])('should validate a blank string', (input) => {
     // Arrange
-    const schema = v.pipe(v.string(), num())
+    const schema = v.pipe(v.string(), decimal())
 
     // Act
     const result = v.safeParse(schema, input)
@@ -41,7 +41,7 @@ describe('num', () => {
 
   test('should invalidate a non-numerical string', () => {
     // Arrange
-    const schema = v.pipe(v.string(), num())
+    const schema = v.pipe(v.string(), decimal())
 
     // Act
     const result = v.safeParse(schema, 'abc')
@@ -63,7 +63,7 @@ describe('num', () => {
           "received": ""abc"",
           "requirement": [Function],
           "skipPipe": undefined,
-          "type": "num",
+          "type": "decimal",
         },
       ]
     `)
@@ -71,7 +71,7 @@ describe('num', () => {
 
   test('should invalidate NaN', () => {
     // Arrange
-    const schema = v.pipe(v.string(), num())
+    const schema = v.pipe(v.string(), decimal())
 
     // Act
     const result = v.safeParse(schema, 'NaN')
@@ -93,7 +93,7 @@ describe('num', () => {
           "received": ""NaN"",
           "requirement": [Function],
           "skipPipe": undefined,
-          "type": "num",
+          "type": "decimal",
         },
       ]
     `)
@@ -101,7 +101,7 @@ describe('num', () => {
 
   test('should accept custom message', () => {
     // Arrange
-    const schema = v.pipe(v.string(), num('Custom message'))
+    const schema = v.pipe(v.string(), decimal('Custom message'))
 
     // Act
     const result = v.safeParse(schema, 'abc')
@@ -123,7 +123,7 @@ describe('num', () => {
           "received": ""abc"",
           "requirement": [Function],
           "skipPipe": undefined,
-          "type": "num",
+          "type": "decimal",
         },
       ]
     `)
