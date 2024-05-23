@@ -107,7 +107,7 @@ describe('ErrorMessage', () => {
       // Assert
       const span = screen.getByTestId('error-message')
       expect(span.textContent).toMatchInlineSnapshot(
-        `"Invalid input: Received "not a valid number""`,
+        `"Invalid input: Expected numerical but received "not a valid number""`,
       )
 
       // Act

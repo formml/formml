@@ -1,10 +1,14 @@
 import { Field, Form } from '@formml/dsl'
+import { pipe, string, transform } from 'valibot'
 
+import { parse } from '../../../JsTypes.js'
 import buildInputSchema from '../buildInputSchema.js'
 import buildSchema from '../buildSchema.js'
-import * as t from '../transform/index.js'
+import * as v from '../validations/index.js'
 
-vi.mock('../transform/index.js')
+vi.mock('valibot')
+vi.mock('../../../JsTypes.ts')
+vi.mock('../validations/index.js')
 vi.mock('../buildSchema.js')
 
 describe('buildInputSchema', () => {
@@ -33,14 +37,31 @@ describe('buildInputSchema', () => {
   describe.each(['num', 'bool', 'datetime', 'decimal'] as const)(
     '%s',
     (type) => {
-      const transformer = {
-        bool: t.toBool,
-        datetime: t.toDatetime,
-        decimal: t.toDecimal,
-        num: t.toNum,
-      }
+      test('should validate input with string schema', () => {
+        // Arrange
+        const field: Field = {
+          $container: {} as Form,
+          $type: 'Field',
+          annotations: [],
+          name: 'field',
+          type,
+        }
+        const dummyStringSchema = {} as never
+        vi.mocked(string).mockReturnValue(dummyStringSchema)
 
-      test('should validate and transform input firstly with custom transformer', () => {
+        // Act
+        buildInputSchema(field)
+
+        // Assert
+        expect(pipe).toBeCalledWith(
+          dummyStringSchema,
+          undefined,
+          undefined,
+          undefined,
+        )
+      })
+
+      test('should validate input with custom validation', () => {
         // Arrange
         const field: Field = {
           $container: {} as Form,
@@ -50,16 +71,49 @@ describe('buildInputSchema', () => {
           type,
         }
         const dummySchema = {} as never
-        vi.mocked(transformer[type]).mockReturnValue(dummySchema)
+        vi.mocked(v[type]).mockReturnValue(dummySchema)
 
         // Act
-        const schema = buildInputSchema(field)
+        buildInputSchema(field)
 
         // Assert
-        expect(schema).toBe(dummySchema)
+        expect(pipe).toBeCalledWith(
+          undefined,
+          dummySchema,
+          undefined,
+          undefined,
+        )
       })
 
-      test('should wrap the inner typed valibot schema', () => {
+      test('should transform the input with corresponding parser', () => {
+        // Arrange
+        const field: Field = {
+          $container: {} as Form,
+          $type: 'Field',
+          annotations: [],
+          name: 'field',
+          type,
+        }
+        const dummyParser = {} as never
+        vi.mocked(parse).mockReturnValue(dummyParser)
+        const dummyTransformAction = {} as never
+        vi.mocked(transform).mockReturnValue(dummyTransformAction)
+
+        // Act
+        buildInputSchema(field)
+
+        // Assert
+        expect(parse).toBeCalledWith(type)
+        expect(transform).toBeCalledWith(dummyParser)
+        expect(pipe).toBeCalledWith(
+          undefined,
+          undefined,
+          dummyTransformAction,
+          undefined,
+        )
+      })
+
+      test('should pipe inner typed schema to last', () => {
         // Arrange
         const field: Field = {
           $container: {} as Form,
@@ -76,7 +130,12 @@ describe('buildInputSchema', () => {
 
         // Assert
         expect(buildSchema).toBeCalledWith(field)
-        expect(transformer[type]).toBeCalledWith(typedSchema)
+        expect(pipe).toBeCalledWith(
+          undefined,
+          undefined,
+          undefined,
+          typedSchema,
+        )
       })
     },
   )
