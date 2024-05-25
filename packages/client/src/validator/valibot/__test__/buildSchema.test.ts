@@ -17,9 +17,9 @@ describe('buildSchema', () => {
             validInput: true,
           },
           datetime: {
-            expectedType: 'dayjs',
-            invalidInput: new Date('2024-01-01T00:00:00Z'),
-            validInput: dayjs('2024-01-01T00:00:00Z'),
+            expectedType: 'Date',
+            invalidInput: dayjs('2024-01-01T00:00:00Z'),
+            validInput: new Date('2024-01-01T00:00:00Z'),
           },
           decimal: {
             expectedType: 'BigNumber',

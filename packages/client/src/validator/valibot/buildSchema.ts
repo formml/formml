@@ -1,6 +1,5 @@
 import { Field, PrimitiveType } from '@formml/dsl'
 import { BigNumber } from 'bignumber.js'
-import dayjs from 'dayjs'
 import * as v from 'valibot'
 
 import { PrimitiveTypeMapping } from '../../JsTypes.js'
@@ -25,7 +24,7 @@ const type = (
     return v.boolean()
   }
   if (formmlSchema.type === 'datetime') {
-    return v.custom<dayjs.Dayjs>(dayjs.isDayjs)
+    return v.date()
   }
   if (formmlSchema.type === 'decimal') {
     return v.instance(BigNumber)

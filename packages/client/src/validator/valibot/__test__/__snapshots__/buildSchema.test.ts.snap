@@ -85,17 +85,17 @@ exports[`buildSchema > integration > required > should invalidate undefined if f
   {
     "abortEarly": undefined,
     "abortPipeEarly": undefined,
-    "expected": "unknown",
+    "expected": "Date",
     "input": undefined,
     "issues": undefined,
     "kind": "schema",
     "lang": undefined,
-    "message": "Invalid type: Expected unknown but received undefined",
+    "message": "Invalid type: Expected Date but received undefined",
     "path": undefined,
     "received": "undefined",
     "requirement": undefined,
     "skipPipe": undefined,
-    "type": "custom",
+    "type": "date",
   },
 ]
 `;
@@ -140,22 +140,22 @@ exports[`buildSchema > integration > types - bool > should invalidate non-boolea
 ]
 `;
 
-exports[`buildSchema > integration > types - datetime > should invalidate non-dayjs input if field type is datetime 1`] = `
+exports[`buildSchema > integration > types - datetime > should invalidate non-Date input if field type is datetime 1`] = `
 [
   {
     "abortEarly": undefined,
     "abortPipeEarly": undefined,
-    "expected": "unknown",
-    "input": 2024-01-01T00:00:00.000Z,
+    "expected": "Date",
+    "input": "2024-01-01T00:00:00.000Z",
     "issues": undefined,
     "kind": "schema",
     "lang": undefined,
-    "message": "Invalid type: Expected unknown but received Date",
+    "message": "Invalid type: Expected Date but received M",
     "path": undefined,
-    "received": "Date",
+    "received": "M",
     "requirement": undefined,
     "skipPipe": undefined,
-    "type": "custom",
+    "type": "date",
   },
 ]
 `;
