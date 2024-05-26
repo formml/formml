@@ -1,4 +1,4 @@
-import { Field } from '@formml/dsl'
+import { Field, Form, isForm } from '@formml/dsl'
 import * as v from 'valibot'
 
 import { parse } from '../JsTypes.js'
@@ -6,7 +6,7 @@ import { assertNever } from '../utils/assertNever.js'
 import buildSchema from './buildSchema.js'
 import * as c from './valibot/validations/index.js'
 
-export default function buildInputSchema(formmlSchema: Field) {
+function buildFieldSchema(formmlSchema: Field) {
   if (formmlSchema.type === 'text') {
     const typedSchema = buildSchema(formmlSchema)
     return typedSchema
@@ -43,4 +43,19 @@ export default function buildInputSchema(formmlSchema: Field) {
   }
 
   return assertNever`Unsupported field schema: ${formmlSchema}`
+}
+
+function buildFormSchema(formmlSchema: Form) {
+  const entries = formmlSchema.fields.map((field) => [
+    field.name,
+    buildFieldSchema(field),
+  ])
+  return v.strictObject(Object.fromEntries(entries))
+}
+
+export default function buildInputSchema(formmlSchema: Field | Form) {
+  if (isForm(formmlSchema)) {
+    return buildFormSchema(formmlSchema)
+  }
+  return buildFieldSchema(formmlSchema)
 }
