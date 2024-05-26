@@ -1,14 +1,12 @@
 import { Field, Form, FormMLSchema } from '@formml/dsl'
-import { pipe, strictObject, string, transform } from 'valibot'
+import { GenericSchema, SchemaWithPipe, transform } from 'valibot'
 
 import { parse } from '../../JsTypes.js'
 import buildInputSchema from '../buildInputSchema.js'
 import buildSchema from '../buildSchema.js'
 import * as v from '../valibot/validations/index.js'
 
-vi.mock('valibot')
 vi.mock('../../JsTypes.ts')
-vi.mock('../valibot/validations/index.js')
 vi.mock('../buildSchema.js')
 
 describe('buildInputSchema', () => {
@@ -47,18 +45,27 @@ describe('buildInputSchema', () => {
             name: 'field',
             type,
           }
-          const dummyStringSchema = {} as never
-          vi.mocked(string).mockReturnValue(dummyStringSchema)
 
           // Act
-          buildInputSchema(field)
+          const schema = buildInputSchema(field) as SchemaWithPipe<
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            [GenericSchema, ...any[]]
+          >
 
           // Assert
-          expect(pipe).toBeCalledWith(
-            dummyStringSchema,
-            undefined,
-            undefined,
-            undefined,
+          expect(schema).toEqual(
+            expect.objectContaining({
+              async: false,
+              kind: 'schema',
+              type: 'string',
+            }),
+          )
+          expect(schema.pipe[0]).toEqual(
+            expect.objectContaining({
+              async: false,
+              kind: 'schema',
+              type: 'string',
+            }),
           )
         })
 
@@ -71,19 +78,25 @@ describe('buildInputSchema', () => {
             name: 'field',
             type,
           }
-          const dummySchema = {} as never
-          vi.mocked(v[type]).mockReturnValue(dummySchema)
 
           // Act
-          buildInputSchema(field)
+          const schema = buildInputSchema(field) as SchemaWithPipe<
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            [GenericSchema, ...any[]]
+          >
 
           // Assert
-          expect(pipe).toBeCalledWith(
-            undefined,
-            dummySchema,
-            undefined,
-            undefined,
-          )
+          const validation = {
+            bool: v.bool(),
+            datetime: v.datetime(),
+            decimal: v.decimal(),
+            num: v.num(),
+          }
+          expect(schema.pipe[1]).toEqual({
+            ...validation[type],
+            _run: expect.any(Function),
+            requirement: expect.anything(),
+          })
         })
 
         test('should transform the input with corresponding parser', () => {
@@ -95,23 +108,22 @@ describe('buildInputSchema', () => {
             name: 'field',
             type,
           }
-          const dummyParser = {} as never
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const dummyParser = (() => undefined) as any
           vi.mocked(parse).mockReturnValue(dummyParser)
-          const dummyTransformAction = {} as never
-          vi.mocked(transform).mockReturnValue(dummyTransformAction)
 
           // Act
-          buildInputSchema(field)
+          const schema = buildInputSchema(field) as SchemaWithPipe<
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            [GenericSchema, ...any[]]
+          >
 
           // Assert
           expect(parse).toBeCalledWith(type)
-          expect(transform).toBeCalledWith(dummyParser)
-          expect(pipe).toBeCalledWith(
-            undefined,
-            undefined,
-            dummyTransformAction,
-            undefined,
-          )
+          expect(schema.pipe[2]).toEqual({
+            ...transform(dummyParser),
+            _run: expect.any(Function),
+          })
         })
 
         test('should pipe inner typed schema to last', () => {
@@ -123,20 +135,18 @@ describe('buildInputSchema', () => {
             name: 'field',
             type,
           }
-          const typedSchema = {} as never
-          vi.mocked(buildSchema).mockReturnValue(typedSchema)
+
+          const innerSchema = {} as never
+          vi.mocked(buildSchema).mockReturnValue(innerSchema)
 
           // Act
-          buildInputSchema(field)
+          const schema = buildInputSchema(field) as SchemaWithPipe<
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            [GenericSchema, ...any[]]
+          >
 
           // Assert
-          expect(buildSchema).toBeCalledWith(field)
-          expect(pipe).toBeCalledWith(
-            undefined,
-            undefined,
-            undefined,
-            typedSchema,
-          )
+          expect(schema.pipe[3]).toBe(innerSchema)
         })
       },
     )
@@ -166,18 +176,24 @@ describe('buildInputSchema', () => {
         ],
         name: 'ExampleForm',
       }
-      const dummyObjectSchema = {} as never
-      vi.mocked(strictObject).mockReturnValue(dummyObjectSchema)
+      const innerSchema = {} as never
+      vi.mocked(buildSchema).mockReturnValue(innerSchema)
 
       // Act
       const schema = buildInputSchema(form)
 
       // Assert
-      expect(schema).toBe(dummyObjectSchema)
-      expect(strictObject).toBeCalledWith({
-        numField: undefined,
-        textField: undefined,
-      })
+      expect(schema).toEqual(
+        expect.objectContaining({
+          async: false,
+          entries: {
+            numField: expect.any(Object),
+            textField: expect.any(Object),
+          },
+          kind: 'schema',
+          type: 'strict_object',
+        }),
+      )
     })
   })
 })
