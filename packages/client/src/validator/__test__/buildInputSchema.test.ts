@@ -1,14 +1,14 @@
 import { Field, Form } from '@formml/dsl'
 import { pipe, string, transform } from 'valibot'
 
-import { parse } from '../../../JsTypes.js'
+import { parse } from '../../JsTypes.js'
 import buildInputSchema from '../buildInputSchema.js'
 import buildSchema from '../buildSchema.js'
-import * as v from '../validations/index.js'
+import * as v from '../valibot/validations/index.js'
 
 vi.mock('valibot')
-vi.mock('../../../JsTypes.ts')
-vi.mock('../validations/index.js')
+vi.mock('../../JsTypes.ts')
+vi.mock('../valibot/validations/index.js')
 vi.mock('../buildSchema.js')
 
 describe('buildInputSchema', () => {

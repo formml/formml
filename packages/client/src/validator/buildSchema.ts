@@ -2,8 +2,8 @@ import { Field, PrimitiveType } from '@formml/dsl'
 import { BigNumber } from 'bignumber.js'
 import * as v from 'valibot'
 
-import { PrimitiveTypeMapping } from '../../JsTypes.js'
-import { assertNever } from '../../utils/assertNever.js'
+import { PrimitiveTypeMapping } from '../JsTypes.js'
+import { assertNever } from '../utils/assertNever.js'
 
 const type = (
   formmlSchema: Field,

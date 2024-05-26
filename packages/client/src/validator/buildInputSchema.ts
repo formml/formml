@@ -1,10 +1,10 @@
 import { Field } from '@formml/dsl'
 import * as v from 'valibot'
 
-import { parse } from '../../JsTypes.js'
-import { assertNever } from '../../utils/assertNever.js'
+import { parse } from '../JsTypes.js'
+import { assertNever } from '../utils/assertNever.js'
 import buildSchema from './buildSchema.js'
-import * as c from './validations/index.js'
+import * as c from './valibot/validations/index.js'
 
 export default function buildInputSchema(formmlSchema: Field) {
   if (formmlSchema.type === 'text') {

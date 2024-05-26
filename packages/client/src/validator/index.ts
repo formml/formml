@@ -1,7 +1,7 @@
 import { Field } from '@formml/dsl'
 import * as v from 'valibot'
 
-import buildInputSchema from './valibot/buildInputSchema.js'
+import buildInputSchema from './buildInputSchema.js'
 
 export type ValidationError = { message: string }
 
