@@ -438,48 +438,6 @@ describe('useField', () => {
       expect(spiedSubscribe).toBeCalledTimes(2)
     })
 
-    test('should init field only once', () => {
-      // Arrange
-      const dsl = `
-        form ExampleForm {
-          num numberField
-        }
-      `
-      const formML = new FormML(dsl)
-      const spiedInitField = vi.spyOn(formML, 'initField')
-      const index = formML.indexRoot['numberField']
-
-      // Act
-      const { rerender } = renderHookWithContext(() => useField(index), formML)
-      rerender()
-
-      // Assert
-      expect(spiedInitField).toBeCalledTimes(1)
-    })
-
-    test('should re-init field if index changes', () => {
-      // Arrange
-      const dsl = `
-        form ExampleForm {
-          num numberFieldA
-          num numberFieldB
-        }
-      `
-      const formML = new FormML(dsl)
-      const spiedInitField = vi.spyOn(formML, 'initField')
-      const indexA = formML.indexRoot['numberFieldA']
-      const indexB = formML.indexRoot['numberFieldB']
-
-      // Act
-      const { rerender } = renderHookWithContext((i) => useField(i), formML, {
-        initialProps: indexA,
-      })
-      rerender(indexB)
-
-      // Assert
-      expect(spiedInitField).toBeCalledTimes(2)
-    })
-
     test('should return stable reference when re-rendering', () => {
       // Arrange
       const dsl = `

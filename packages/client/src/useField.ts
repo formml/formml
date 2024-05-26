@@ -1,6 +1,6 @@
 import { Field } from '@formml/dsl'
 import { type DeepReadonly } from '@vue/reactivity'
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { useSyncExternalStore } from 'use-sync-external-store/shim'
 
 import type { FieldResult } from './FormML.js'
@@ -79,7 +79,6 @@ const selectFieldPackByIndex = createMemoSelectorGrouper(
 
 export function useField(index: object): FieldPackReadonly {
   const formML = useFormMLContext()
-  useMemo(() => formML.initField(index), [formML, index])
 
   return useSyncExternalStore(
     useCallback((cb) => formML.subscribe(index, cb), [formML, index]),

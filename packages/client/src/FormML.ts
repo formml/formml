@@ -90,16 +90,9 @@ export class FormML {
     this._schema = FormML._parse(schema)
     ;[this.indexRoot, this._indexToSchema] = buildIndexes(this._schema)
     this._indexToInputValidator = buildInputValidators(this._indexToSchema)
-  }
 
-  private assertInitialized(
-    name: string,
-    { methodName: caller }: { methodName: string },
-  ) {
-    if (!this.isInitialized(name)) {
-      throw new Error(
-        `Field "${name}" has not been initialized yet, please make sure to call \`initField\` before calling \`${caller}\``,
-      )
+    for (const fieldIndex of Object.values(this.indexRoot)) {
+      this.initField(fieldIndex)
     }
   }
 
@@ -115,16 +108,38 @@ export class FormML {
     return schema
   }
 
-  private isInitialized(name: string) {
-    return this._valuesProxy[name] !== undefined
+  private initField(index: object) {
+    const schema = this.getSchemaByIndex(index)
+    const { name } = schema
+
+    this._valuesProxy[name] = ''
+    this._typedValuesProxy[name] = JsTypes.parse('', schema.type)
+    this._fieldsMetaProxy[name] = { error: undefined, touched: false }
+
+    this._fieldsInternalState[name] = { isInitiallyValidated: false }
+    this._indexToHelpers.set(index, {
+      blur: () => {
+        this.blur(index)
+      },
+      commitRawValue: () => {
+        this.commitRawValue(index)
+      },
+      setRawValue: (value: string) => {
+        this.setRawValue(index, value)
+      },
+      setTypedValue: (value: JsTypes.PrimitiveType) => {
+        this.setTypedValue(index, value)
+      },
+      setValue: (value: JsTypes.PrimitiveType) => {
+        this.setValue(index, value)
+      },
+    })
   }
 
   @validate({ eventName: 'blur' })
   blur(index: object) {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
-
-    this.assertInitialized(name, { methodName: 'blur' })
 
     this._fieldsMetaProxy[name].touched = true
   }
@@ -133,8 +148,6 @@ export class FormML {
     const schema = this.getSchemaByIndex(index)
     const { name, type } = schema
 
-    this.assertInitialized(name, { methodName: 'commitRawValue' })
-
     const rawValue = this._valuesProxy[name]
     this._typedValuesProxy[name] = JsTypes.parse(rawValue, type)
   }
@@ -142,8 +155,6 @@ export class FormML {
   getField(index: object): FieldResult {
     const schema = this.getSchemaByIndex(index)
     const { name } = schema
-
-    this.assertInitialized(name, { methodName: 'getField' })
 
     return {
       _internalState: this._fieldsInternalState[name],
@@ -160,52 +171,10 @@ export class FormML {
     return toRaw(this._typedValuesProxy)
   }
 
-  // TODO: init fields in constructor
-  initField(index: object) {
-    const schema = this.getSchemaByIndex(index)
-    const { name } = schema
-
-    if (this._valuesProxy[name] === undefined) {
-      this._valuesProxy[name] = ''
-    }
-
-    // TODO: set initial typed value
-
-    if (this._fieldsMetaProxy[name] === undefined) {
-      this._fieldsMetaProxy[name] = { error: undefined, touched: false }
-    }
-
-    if (this._fieldsInternalState[name] === undefined) {
-      this._fieldsInternalState[name] = { isInitiallyValidated: false }
-    }
-
-    if (!this._indexToHelpers.has(index)) {
-      this._indexToHelpers.set(index, {
-        blur: () => {
-          this.blur(index)
-        },
-        commitRawValue: () => {
-          this.commitRawValue(index)
-        },
-        setRawValue: (value: string) => {
-          this.setRawValue(index, value)
-        },
-        setTypedValue: (value: JsTypes.PrimitiveType) => {
-          this.setTypedValue(index, value)
-        },
-        setValue: (value: JsTypes.PrimitiveType) => {
-          this.setValue(index, value)
-        },
-      })
-    }
-  }
-
   @validate({ eventName: 'change' })
   setRawValue(index: object, value: string) {
     const schema = this.getSchemaByIndex(index)
     const { name } = schema
-
-    this.assertInitialized(name, { methodName: 'setRawValue' })
 
     this._valuesProxy[name] = value
   }
@@ -214,8 +183,6 @@ export class FormML {
   setTypedValue(index: object, value: JsTypes.PrimitiveType) {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
-
-    this.assertInitialized(name, { methodName: 'setTypedValue' })
 
     this._typedValuesProxy[name] = value
     this._valuesProxy[name] = JsTypes.stringify(value)
@@ -226,8 +193,6 @@ export class FormML {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
 
-    this.assertInitialized(name, { methodName: 'setValue' })
-
     this._typedValuesProxy[name] = value
     this._valuesProxy[name] = JsTypes.stringify(value)
   }
@@ -235,8 +200,6 @@ export class FormML {
   subscribe(index: object, callback: () => void): () => void {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
-
-    this.assertInitialized(name, { methodName: 'subscribe' })
 
     return watch(
       [
@@ -256,8 +219,6 @@ export class FormML {
     | { error: undefined; isValid: true } {
     const schema = this.getSchemaByIndex(index)
     const name = schema.name
-
-    this.assertInitialized(name, { methodName: 'validate' })
 
     const result = this._indexToInputValidator.get(index)!(
       this._valuesProxy[name],
@@ -289,7 +250,6 @@ export class FormML {
         errors.push(...result.errors)
       }
 
-      this.initField(index)
       this._fieldsInternalState[name].isInitiallyValidated = true
       this._fieldsMetaProxy[name].error = result.errors?.[0]
     }

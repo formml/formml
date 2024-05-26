@@ -60,11 +60,90 @@ describe('FormML', () => {
     })
 
     test.todo('merge options')
+
+    test('should initialize all fields', () => {
+      // Arrange
+      const fixtures = [
+        {
+          defaultValue: undefined,
+          name: 'numberField',
+          type: 'num',
+        },
+        {
+          defaultValue: undefined,
+          name: 'decimalField',
+          type: 'decimal',
+        },
+        {
+          defaultValue: '',
+          name: 'textField',
+          type: 'text',
+        },
+        {
+          defaultValue: false,
+          name: 'boolField',
+          type: 'bool',
+        },
+        {
+          defaultValue: undefined,
+          name: 'datetimeField',
+          type: 'datetime',
+        },
+      ]
+
+      const dsl = `
+        form ExampleForm {
+          ${fixtures.map((f) => `${f.type} ${f.name}`).join('\n')}
+        }
+      `
+      // Act
+      const formML = new FormML(dsl)
+
+      // Assert
+      for (const fixture of fixtures) {
+        const pack = formML.getField(formML.indexRoot[fixture.name])
+        expect(pack).toEqual({
+          _internalState: {
+            isInitiallyValidated: false,
+          },
+          error: undefined,
+          schema: expect.objectContaining({
+            $type: 'Field',
+            name: fixture.name,
+            type: fixture.type,
+          }),
+
+          // Part: raw value
+          commitRawValue: expect.any(Function),
+          rawValue: '',
+          setRawValue: expect.any(Function),
+
+          // Part: value
+          setTypedValue: expect.any(Function),
+          setValue: expect.any(Function),
+          value: fixture.defaultValue,
+
+          // Part: touch
+          blur: expect.any(Function),
+          touched: false,
+        })
+      }
+    })
   })
 
   describe('apis', () => {
-    describe('initField', () => {
-      test('should throw if index can not be recognized', () => {
+    test.each([
+      'getField',
+      'subscribe',
+      'setRawValue',
+      'setValue',
+      'setTypedValue',
+      'commitRawValue',
+      'blur',
+      'validate',
+    ] as const)(
+      'should throw if index can not be recognized - "%s"',
+      (methodName) => {
         // Arrange
         const schema = `
           form ExampleForm {
@@ -79,130 +158,14 @@ describe('FormML', () => {
 
         // Act & Assert
         const invalidIndex = {}
-        expect(() => formML.initField(invalidIndex)).toThrow(
-          /Given index is invalid, index provided:[\s\S]+/g,
-        )
-      })
-
-      test('should initialize field if given field is not initialized yet', () => {
-        // Arrange
-        const dsl = `
-          form ExampleForm {
-            num numberField
-          }
-        `
-        const formML = new FormML(dsl)
-        const index = formML.indexRoot['numberField']
-
-        // Act
-        formML.initField(index)
-
-        // Assert
-        let pack: unknown
-        expect(() => (pack = formML.getField(index))).not.toThrow()
-        expect(pack).toEqual({
-          _internalState: {
-            isInitiallyValidated: false,
-          },
-          error: undefined,
-          schema: expect.objectContaining({
-            $type: 'Field',
-            name: 'numberField',
-            type: 'num',
-          }),
-
-          // Part: raw value
-          commitRawValue: expect.any(Function),
-          rawValue: '',
-          setRawValue: expect.any(Function),
-
-          // Part: value
-          setTypedValue: expect.any(Function),
-          setValue: expect.any(Function),
-          value: undefined,
-
-          // Part: touch
-          blur: expect.any(Function),
-          touched: false,
-        })
-      })
-
-      test('should do nothing if given field has been initialized', () => {
-        // Arrange
-        const dsl = `
-          form ExampleForm {
-            num numberField
-          }
-        `
-        const formML = new FormML(dsl)
-        const index = formML.indexRoot['numberField']
-
-        formML.initField(index)
-        const firstPack = formML.getField(index)
-
-        // Act
-        formML.initField(index)
-        const secondPack = formML.getField(index)
-
-        // Assert
-        expect(secondPack).toEqual(firstPack)
-      })
-    })
-
-    describe.each([
-      'getField',
-      'subscribe',
-      'setRawValue',
-      'setValue',
-      'setTypedValue',
-      'commitRawValue',
-      'blur',
-      'validate',
-    ] as const)(
-      'index validity and field initialization check - "%s"',
-      (methodName) => {
-        test('should throw if index can not be recognized', () => {
-          // Arrange
-          const schema = `
-            form ExampleForm {
-              num   numberField
-              decimal decimalField
-              text     textField
-              bool	 boolField
-              datetime datetimeField
-            }
-          `
-          const formML = new FormML(schema)
-
-          // Act & Assert
-          const invalidIndex = {}
-          expect(() =>
-            (formML[methodName] as (index: object) => void)(invalidIndex),
-          ).toThrow(/Given index is invalid, index provided:[\s\S]+/g)
-        })
-
-        test('should throw when field is not initialized', () => {
-          // Arrange
-          const dsl = `
-            form ExampleForm {
-              num numberField
-            }
-          `
-          const formML = new FormML(dsl)
-          const index = formML.indexRoot['numberField']
-
-          // Act & Assert
-          expect(() =>
-            (formML[methodName] as (index: object) => void)(index),
-          ).toThrow(
-            `Field "numberField" has not been initialized yet, please make sure to call \`initField\` before calling \`${methodName}\``,
-          )
-        })
+        expect(() =>
+          (formML[methodName] as (index: object) => void)(invalidIndex),
+        ).toThrow(/Given index is invalid, index provided:[\s\S]+/g)
       },
     )
 
     describe('getField', () => {
-      test('should return initial field pack', () => {
+      test('should return initial field pack by default', () => {
         // Arrange
         const dsl = `
           form ExampleForm {
@@ -215,7 +178,6 @@ describe('FormML', () => {
         `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
-        formML.initField(index)
 
         // Act
         const pack = formML.getField(index)
@@ -271,7 +233,6 @@ describe('FormML', () => {
             `
             const formML = new FormML(dsl)
             const index = formML.indexRoot[fieldName]
-            formML.initField(index)
 
             // Act
             const pack = formML.getField(index)
@@ -296,7 +257,7 @@ describe('FormML', () => {
           `
           const formML = new FormML(dsl)
           const index = formML.indexRoot['numberField']
-          formML.initField(index)
+
           const pack = formML.getField(index)
 
           // Act
@@ -316,7 +277,6 @@ describe('FormML', () => {
           `
           const formML = new FormML(dsl)
           const index = formML.indexRoot['numberField']
-          formML.initField(index)
 
           const firstPack = formML.getField(index)
           expect(firstPack.touched).toBe(false)
@@ -358,7 +318,6 @@ describe('FormML', () => {
             `
             const formML = new FormML(dsl)
             const index = formML.indexRoot['field']
-            formML.initField(index)
 
             const firstPack = formML.getField(index)
 
@@ -394,7 +353,6 @@ describe('FormML', () => {
                 `
                 const formML = new FormML(dsl)
                 const index = formML.indexRoot['field']
-                formML.initField(index)
 
                 const firstPack = formML.getField(index)
 
@@ -419,7 +377,6 @@ describe('FormML', () => {
                 `
                 const formML = new FormML(dsl)
                 const index = formML.indexRoot['field']
-                formML.initField(index)
 
                 const firstPack = formML.getField(index)
 
@@ -446,7 +403,6 @@ describe('FormML', () => {
             validateOn: { initial: 'change', subsequent: 'change' },
           })
           const index = formML.indexRoot['numberField']
-          formML.initField(index)
 
           // Act
           const pack = formML.getField(index)
@@ -474,7 +430,6 @@ describe('FormML', () => {
           `
           const formML = new FormML(dsl)
           const index = formML.indexRoot['numberField']
-          formML.initField(index)
 
           const firstPack = formML.getField(index)
 
@@ -502,7 +457,7 @@ describe('FormML', () => {
         const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
         const callback = vi.fn()
-        formML.initField(index)
+
         formML.subscribe(index, callback)
 
         // Act
@@ -523,7 +478,7 @@ describe('FormML', () => {
         const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
         const callback = vi.fn()
-        formML.initField(index)
+
         formML.subscribe(index, callback)
 
         // Act
@@ -544,7 +499,7 @@ describe('FormML', () => {
         const formML = new FormML(schema)
         const index = formML.indexRoot['textField']
         const callback = vi.fn()
-        formML.initField(index)
+
         formML.subscribe(index, callback)
 
         // Act
@@ -569,7 +524,7 @@ describe('FormML', () => {
         const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
         const callback = vi.fn()
-        formML.initField(index)
+
         formML.subscribe(index, callback)
 
         // Act
@@ -590,7 +545,6 @@ describe('FormML', () => {
       `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
-        formML.initField(index)
 
         // Act
         formML.setRawValue(index, '123')
@@ -613,7 +567,6 @@ describe('FormML', () => {
           `
           const formML = new FormML(dsl)
           const index = formML.indexRoot['numberField']
-          formML.initField(index)
 
           // Act
           formML[methodName](index, 123)
@@ -635,7 +588,6 @@ describe('FormML', () => {
             `
             const formML = new FormML(dsl)
             const index = formML.indexRoot['field']
-            formML.initField(index)
 
             // Act
             formML[methodName](index, undefined)
@@ -672,7 +624,6 @@ describe('FormML', () => {
           `
           const formML = new FormML(dsl)
           const index = formML.indexRoot['field']
-          formML.initField(index)
 
           // Act
           formML.setRawValue(index, rawInput)
@@ -695,7 +646,6 @@ describe('FormML', () => {
         `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
-        formML.initField(index)
 
         const firstPack = formML.getField(index)
         expect(firstPack.touched).toBe(false)
@@ -727,7 +677,6 @@ describe('FormML', () => {
         `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
-        formML.initField(index)
 
         // Act
         const pack = formML.getField(index)
@@ -749,7 +698,6 @@ describe('FormML', () => {
         `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
-        formML.initField(index)
 
         // Act
         const pack = formML.getField(index)
@@ -775,8 +723,6 @@ describe('FormML', () => {
         const formML = new FormML(dsl)
         const index1 = formML.indexRoot['numberField1']
         const index2 = formML.indexRoot['numberField2']
-        formML.initField(index1)
-        formML.initField(index2)
 
         // Act
         const pack1 = formML.getField(index1)
@@ -803,7 +749,6 @@ describe('FormML', () => {
         `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
-        formML.initField(index)
 
         // Assert
         const pack = formML.getField(index)
@@ -820,24 +765,6 @@ describe('FormML', () => {
         )
       })
 
-      test('should initialize fields if not initialized', () => {
-        // Arrange
-        const dsl = `
-          form ExampleForm {
-            @required
-            num numberField
-          }
-        `
-        const formML = new FormML(dsl)
-        const index = formML.indexRoot['numberField']
-
-        // Act
-        formML.validateAll()
-
-        // Assert
-        expect(() => formML.getField(index)).not.toThrow()
-      })
-
       test('should update is field initially validated', () => {
         // Arrange
         const dsl = `
@@ -848,7 +775,6 @@ describe('FormML', () => {
         `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
-        formML.initField(index)
 
         // Act
         formML.validateAll()
@@ -870,7 +796,6 @@ describe('FormML', () => {
         `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
-        formML.initField(index)
 
         const pack = formML.getField(index)
         pack.setRawValue('123')
@@ -893,7 +818,6 @@ describe('FormML', () => {
         `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
-        formML.initField(index)
 
         // Act
         const result = formML.validate(index)
@@ -917,7 +841,6 @@ describe('FormML', () => {
           validateOn: { initial: 'submit', subsequent: 'submit' },
         })
         const index = formML.indexRoot['numberField']
-        formML.initField(index)
 
         // Assert
         const pack = formML.getField(index)
@@ -952,7 +875,6 @@ describe('FormML', () => {
         `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
-        formML.initField(index)
 
         // Act
         formML.validate(index)
@@ -976,7 +898,6 @@ describe('FormML', () => {
         `
         const formML = new FormML(dsl)
         const index = formML.indexRoot['numberField']
-        formML.initField(index)
 
         // Act
         const pack = formML.getField(index)
@@ -1013,7 +934,6 @@ describe('FormML', () => {
             `
             const formML = new FormML(dsl, options)
             const index = formML.indexRoot['numberField']
-            formML.initField(index)
 
             // Act
             formML.setRawValue(index, '')
@@ -1042,7 +962,6 @@ describe('FormML', () => {
             `
             const formML = new FormML(dsl, options)
             const index = formML.indexRoot['numberField']
-            formML.initField(index)
 
             // Act
             formML.setValue(index, undefined)
@@ -1071,7 +990,6 @@ describe('FormML', () => {
             `
             const formML = new FormML(dsl, options)
             const index = formML.indexRoot['numberField']
-            formML.initField(index)
 
             // Act
             formML.setTypedValue(index, undefined)
@@ -1100,7 +1018,6 @@ describe('FormML', () => {
             `
             const formML = new FormML(dsl, options)
             const index = formML.indexRoot['numberField']
-            formML.initField(index)
 
             // Act
             formML.blur(index)
@@ -1147,7 +1064,6 @@ describe('FormML', () => {
             `
             const formML = new FormML(dsl, options)
             const index = formML.indexRoot['numberField']
-            formML.initField(index)
 
             // Act
             formML.setRawValue(index, '123') // trigger initial validation
@@ -1184,7 +1100,6 @@ describe('FormML', () => {
             `
             const formML = new FormML(dsl, options)
             const index = formML.indexRoot['numberField']
-            formML.initField(index)
 
             // Act
             formML.setRawValue(index, '123') // trigger initial validation
@@ -1221,7 +1136,6 @@ describe('FormML', () => {
             `
             const formML = new FormML(dsl, options)
             const index = formML.indexRoot['numberField']
-            formML.initField(index)
 
             // Act
             formML.setRawValue(index, '123') // trigger initial validation
@@ -1258,7 +1172,6 @@ describe('FormML', () => {
             `
             const formML = new FormML(dsl, options)
             const index = formML.indexRoot['numberField']
-            formML.initField(index)
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             ;(formML as any)._fieldsInternalState[

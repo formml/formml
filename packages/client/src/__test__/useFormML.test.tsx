@@ -140,7 +140,6 @@ describe('useFormML', () => {
 
       // Act
       const { result } = renderHook(() => useFormML(dummyDsl))
-      result.current.instance.initField(result.current.$form['numberField'])
       const eventHandler = result.current.handleSubmit(onSubmit)
       eventHandler({
         preventDefault: mockedPreventDefault,
@@ -156,7 +155,6 @@ describe('useFormML', () => {
 
       // Act
       const { result } = renderHook(() => useFormML(dummyDsl))
-      result.current.instance.initField(result.current.$form['numberField'])
       const eventHandler = result.current.handleSubmit(onSubmit)
       eventHandler(dummyEvent)
 
@@ -195,7 +193,6 @@ describe('useFormML', () => {
 
       // Act
       const { result } = renderHook(() => useFormML(dummyDsl))
-      result.current.instance.initField(result.current.$form['numberField'])
       const eventHandler = result.current.handleSubmit(onSubmit)
       eventHandler(dummyEvent)
 
