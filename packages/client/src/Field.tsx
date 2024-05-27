@@ -1,10 +1,10 @@
 import dayjs from 'dayjs'
 import { ChangeEvent, ForwardedRef, forwardRef } from 'react'
 
-import { FieldPackReadonly, useField } from './useField.js'
+import { FieldPack, useField } from './useField.js'
 import { omit } from './utils/omit.js'
 
-function selectInputProps({ field, helpers, meta }: FieldPackReadonly) {
+function selectInputProps({ field, helpers, meta }: FieldPack) {
   const type = meta.schema.type
 
   if (type === 'num' || type === 'decimal') {

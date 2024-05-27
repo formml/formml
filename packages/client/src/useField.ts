@@ -1,5 +1,4 @@
 import { Field } from '@formml/dsl'
-import { type DeepReadonly } from '@vue/reactivity'
 import { useCallback } from 'react'
 import { useSyncExternalStore } from 'use-sync-external-store/shim'
 
@@ -37,8 +36,6 @@ export type FieldPack = {
   meta: FieldMetaData
 }
 
-export type FieldPackReadonly = DeepReadonly<FieldPack>
-
 const selectFieldPackByIndex = createMemoSelectorGrouper(
   (
     blur: FieldResult['blur'],
@@ -50,7 +47,7 @@ const selectFieldPackByIndex = createMemoSelectorGrouper(
     setTypedValue: FieldResult['setTypedValue'],
     touched: FieldResult['touched'],
     value: FieldResult['value'],
-  ): FieldPackReadonly => ({
+  ): FieldPack => ({
     field: {
       name: schema.name,
       onBlur: () => {
@@ -77,7 +74,7 @@ const selectFieldPackByIndex = createMemoSelectorGrouper(
   }),
 )
 
-export function useField(index: object): FieldPackReadonly {
+export function useField(index: object): FieldPack {
   const formML = useFormMLContext()
 
   return useSyncExternalStore(

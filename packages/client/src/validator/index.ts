@@ -1,9 +1,9 @@
-import { Field } from '@formml/dsl'
+import { Field, Form } from '@formml/dsl'
 import * as v from 'valibot'
 
 import buildInputSchema from './buildInputSchema.js'
 
-export type ValidationError = { message: string }
+export type ValidationError = v.GenericIssue
 
 export type ValidationResult =
   | { errors: ValidationError[]; isValid: false }
@@ -12,10 +12,10 @@ export type ValidationResult =
 export type Validator<TInput = unknown> = (value: TInput) => ValidationResult
 
 export const createInputValidator = <TInput = unknown>(
-  schema: Field,
+  schema: Field | Form,
 ): Validator<TInput> => {
   const valibotSchema = buildInputSchema(schema)
-  return (value: TInput): ValidationResult => {
+  return (value) => {
     const result = v.safeParse(valibotSchema, value)
     return result.success
       ? { errors: undefined, isValid: true }

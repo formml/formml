@@ -1,5 +1,7 @@
+import type { ObjectPathItem } from 'valibot'
+
 import { Field, FormMLSchema, createParser } from '@formml/dsl'
-import { DeepReadonly, reactive, toRaw } from '@vue/reactivity'
+import { reactive, toRaw } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
 
 import * as JsTypes from './JsTypes.js'
@@ -15,7 +17,7 @@ export type FormMLOptions = {
   }
 }
 
-export type FieldResult = DeepReadonly<{
+export type FieldResult = {
   _internalState: { isInitiallyValidated: boolean }
   blur: () => void
   commitRawValue: () => void
@@ -27,7 +29,7 @@ export type FieldResult = DeepReadonly<{
   setValue: (value: JsTypes.PrimitiveType) => void
   touched: boolean
   value: JsTypes.PrimitiveType
-}>
+}
 
 function buildIndexes(schema: FormMLSchema) {
   const indexRoot: Record<string, object> = {}
@@ -59,6 +61,7 @@ export class FormML {
     string,
     { error: ValidationError | undefined; touched: boolean }
   > = reactive({})
+  private readonly _formValidator: Validator<Record<string, string>>
   private readonly _indexToHelpers: Map<
     object,
     {
@@ -90,6 +93,7 @@ export class FormML {
     this._schema = FormML._parse(schema)
     ;[this.indexRoot, this._indexToSchema] = buildIndexes(this._schema)
     this._indexToInputValidator = buildInputValidators(this._indexToSchema)
+    this._formValidator = createInputValidator(this._schema.form)
 
     for (const fieldIndex of Object.values(this.indexRoot)) {
       this.initField(fieldIndex)
@@ -236,23 +240,21 @@ export class FormML {
   }
 
   validateAll() {
-    const errors = []
+    const result = this._formValidator(this._valuesProxy)
 
-    // TODO: pre-build validation schemas, and find by index
-    for (const index of Object.values(this.indexRoot)) {
-      const schema = this.getSchemaByIndex(index)
-      const name = schema.name
-      const result = this._indexToInputValidator.get(index)!(
-        this._valuesProxy[name],
-      )
+    Object.values(this._fieldsInternalState).forEach((state) => {
+      state.isInitiallyValidated = true
+    })
 
-      if (!result.isValid) {
-        errors.push(...result.errors)
+    if (!result.isValid) {
+      for (const error of result.errors) {
+        // Assuming only one level of nestings for now
+        const fieldKey = (error.path?.[0] as ObjectPathItem | undefined)?.key
+        if (fieldKey) {
+          this._fieldsMetaProxy[fieldKey].error = error
+        }
       }
-
-      this._fieldsInternalState[name].isInitiallyValidated = true
-      this._fieldsMetaProxy[name].error = result.errors?.[0]
     }
-    return { errors, isValid: errors.length === 0 }
+    return result
   }
 }

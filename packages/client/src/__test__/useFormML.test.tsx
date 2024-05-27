@@ -4,6 +4,7 @@ import { Profiler } from 'react'
 import { FormML, FormMLOptions } from '../FormML.js'
 import { useFormML } from '../useFormML.js'
 import { useFormMLContext } from '../useFormMLContext.js'
+import { ValidationError } from '../validator/index.js'
 
 vi.mock('../FormML.js', async (importOriginal) => {
   const { FormML: realFormML } =
@@ -172,7 +173,7 @@ describe('useFormML', () => {
       const stubFormML = new FormML(dummyDsl)
       vi.spyOn(stubFormML, 'getTypedData').mockReturnValue(expectedData)
       vi.spyOn(stubFormML, 'validateAll').mockReturnValue({
-        errors: [],
+        errors: undefined,
         isValid: true,
       })
 
@@ -225,7 +226,7 @@ describe('useFormML', () => {
       const errors = [
         { message: 'Error message' },
         { message: 'Unknown field error' },
-      ]
+      ] as ValidationError[]
       spiedValidate.mockReturnValue({ errors, isValid: false })
       vi.mocked(FormML).mockReturnValue(stubFormML)
       const { result } = renderHook(() => useFormML(dummyDsl))

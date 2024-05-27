@@ -685,7 +685,7 @@ describe('FormML', () => {
 
         // Assert
         const result = formML.validateAll()
-        expect(result).toEqual({ errors: [], isValid: true })
+        expect(result).toEqual({ errors: undefined, isValid: true })
       })
 
       test('should return error details when validation fails', () => {
