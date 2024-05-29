@@ -70,5 +70,34 @@ describe('options', () => {
         foo: 'bar',
       })
     })
+
+    test('should deep merge given options and default options', () => {
+      // Arrange
+      const defaultOptions = {
+        baz: 123,
+        foo: {
+          bar: 'baz',
+          car: 'tar',
+        },
+      }
+      const givenOptions = {
+        baz: 456,
+        foo: {
+          bar: 'car',
+        },
+      }
+
+      // Act
+      const options = mergeOptions(givenOptions, defaultOptions)
+
+      // Assert
+      expect(options).toEqual({
+        baz: 456,
+        foo: {
+          bar: 'car',
+          car: 'tar',
+        },
+      })
+    })
   })
 })
