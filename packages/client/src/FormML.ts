@@ -91,6 +91,8 @@ export class FormML {
       },
     }
     this._schema = FormML._parse(schema)
+
+    // TODO: index manager
     ;[this.indexRoot, this._indexToSchema] = buildIndexes(this._schema)
     this._indexToInputValidator = buildInputValidators(this._indexToSchema)
     this._formValidator = createInputValidator(this._schema.form)
