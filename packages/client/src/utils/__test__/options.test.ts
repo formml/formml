@@ -29,5 +29,26 @@ describe('options', () => {
       // Assert
       expect(options).toEqual(defaultOptions)
     })
+
+    test('should apply given options if provided', () => {
+      // Arrange
+      const defaultOptions = {
+        baz: 123,
+        foo: 'bar',
+      }
+      const givenOptions = {
+        baz: 456,
+        foo: 'car',
+      }
+
+      // Act
+      const options = mergeOptions(givenOptions, defaultOptions)
+
+      // Assert
+      expect(options).toEqual({
+        baz: 456,
+        foo: 'car',
+      })
+    })
   })
 })

@@ -1,3 +1,6 @@
-export function mergeOptions(options: unknown, defaults: object): object {
-  return defaults
+export function mergeOptions<T extends object>(
+  options: Partial<T> | undefined,
+  defaults: T,
+): T {
+  return { ...defaults, ...options }
 }
