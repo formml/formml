@@ -59,7 +59,30 @@ describe('FormML', () => {
       expect(form.options).toEqual(options)
     })
 
-    test.todo('merge options')
+    test('should merge default and provided options', () => {
+      // Arrange
+      const options = {
+        validateOn: {
+          initial: 'change',
+        },
+      } as const
+      const dsl = `
+        form ExampleForm {
+          num numberField
+        }
+      `
+
+      // Act
+      const form = new FormML(dsl, options)
+
+      // Assert
+      expect(form.options).toEqual({
+        validateOn: {
+          initial: 'change',
+          subsequent: 'change',
+        },
+      })
+    })
 
     test('should initialize all fields', () => {
       // Arrange

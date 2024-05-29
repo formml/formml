@@ -6,6 +6,7 @@ import { watch } from '@vue-reactivity/watch'
 
 import * as JsTypes from './JsTypes.js'
 import validate from './decorators/validate.js'
+import { DeepPartial, mergeOptions } from './utils/options.js'
 import { ValidationError, createInputValidator } from './validator/index.js'
 import { Validator } from './validator/index.js'
 
@@ -83,13 +84,13 @@ export class FormML {
   public readonly indexRoot: Record<string, object>
   public readonly options: FormMLOptions
 
-  constructor(schema: string, options?: FormMLOptions) {
-    this.options = options || {
+  constructor(schema: string, options?: DeepPartial<FormMLOptions>) {
+    this.options = mergeOptions(options, {
       validateOn: {
         initial: 'blur',
         subsequent: 'change',
       },
-    }
+    })
     this._schema = FormML._parse(schema)
 
     // TODO: index manager
