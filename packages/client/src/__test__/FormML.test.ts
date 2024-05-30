@@ -20,7 +20,7 @@ describe('FormML', () => {
     test('should apply default options if not provided', () => {
       // Arrange
       const defaultOptions: FormMLOptions = {
-        validateOn: {
+        preValidateOn: {
           initial: 'blur',
           subsequent: 'change',
         },
@@ -41,7 +41,7 @@ describe('FormML', () => {
     test('should use provided options', () => {
       // Arrange
       const options: FormMLOptions = {
-        validateOn: {
+        preValidateOn: {
           initial: 'change',
           subsequent: 'blur',
         },
@@ -62,7 +62,7 @@ describe('FormML', () => {
     test('should merge default and provided options', () => {
       // Arrange
       const options = {
-        validateOn: {
+        preValidateOn: {
           initial: 'change',
         },
       } as const
@@ -77,7 +77,7 @@ describe('FormML', () => {
 
       // Assert
       expect(form.options).toEqual({
-        validateOn: {
+        preValidateOn: {
           initial: 'change',
           subsequent: 'change',
         },
@@ -423,7 +423,7 @@ describe('FormML', () => {
             }
           `
           const formML = new FormML(dsl, {
-            validateOn: { initial: 'change', subsequent: 'change' },
+            preValidateOn: { initial: 'change', subsequent: 'change' },
           })
           const index = formML.indexRoot['numberField']
 
@@ -861,7 +861,7 @@ describe('FormML', () => {
           }
         `
         const formML = new FormML(dsl, {
-          validateOn: { initial: 'submit', subsequent: 'submit' },
+          preValidateOn: { initial: 'none', subsequent: 'none' },
         })
         const index = formML.indexRoot['numberField']
 
@@ -939,7 +939,7 @@ describe('FormML', () => {
         'initial validation - $triggerEvent',
         ({ blur, setRawValue, setTypedValue, setValue, triggerEvent }) => {
           const options: FormMLOptions = {
-            validateOn: {
+            preValidateOn: {
               initial: triggerEvent,
               subsequent: 'all',
             },
@@ -1069,7 +1069,7 @@ describe('FormML', () => {
         'subsequent validation - $triggerEvent',
         ({ blur, setRawValue, setTypedValue, setValue, triggerEvent }) => {
           const options: FormMLOptions = {
-            validateOn: {
+            preValidateOn: {
               initial: 'change',
               subsequent: triggerEvent,
             },

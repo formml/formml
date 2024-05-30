@@ -14,7 +14,7 @@ export default function validate({ eventName }: { eventName: FormMLEvent }) {
       ..._args: TArgs
     ) {
       const result = originalMethod.call(this, index, ..._args)
-      const { initial, subsequent } = this.options.validateOn
+      const { initial, subsequent } = this.options.preValidateOn
       const isInitial =
         !this.getField(index)._internalState.isInitiallyValidated
       const condition = isInitial ? initial : subsequent

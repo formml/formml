@@ -8,7 +8,7 @@ describe('validate', () => {
       const mockedValidate = vi.fn()
       const form = {
         getField: () => ({ _internalState: { isInitiallyValidated: false } }),
-        options: { validateOn: { initial: 'change' } },
+        options: { preValidateOn: { initial: 'change' } },
         validate: mockedValidate,
       } as unknown as FormML
       const dummyIndex = {}
@@ -23,14 +23,14 @@ describe('validate', () => {
       expect(mockedValidate).toBeCalledWith(dummyIndex)
     })
 
-    test.each(['change', 'blur', 'submit'] as const)(
+    test.each(['change', 'blur', 'none'] as const)(
       'should always do validation if configured event is all',
       (eventName) => {
         // Arrange
         const mockedValidate = vi.fn()
         const form = {
           getField: () => ({ _internalState: { isInitiallyValidated: false } }),
-          options: { validateOn: { initial: 'all' } },
+          options: { preValidateOn: { initial: 'all' } },
           validate: mockedValidate,
         } as unknown as FormML
         const dummyIndex = {}
@@ -53,7 +53,7 @@ describe('validate', () => {
       const mockedOriginalMethod = vi.fn(() => executions.push('original'))
       const form = {
         getField: () => ({ _internalState: { isInitiallyValidated: false } }),
-        options: { validateOn: { initial: 'change' } },
+        options: { preValidateOn: { initial: 'change' } },
         validate: mockedValidate,
       } as unknown as FormML
       const dummyIndex = {}
@@ -73,14 +73,14 @@ describe('validate', () => {
       const mockedValidate = vi.fn()
       const form = {
         getField: () => ({ _internalState: { isInitiallyValidated: false } }),
-        options: { validateOn: { initial: 'change' } },
+        options: { preValidateOn: { initial: 'change' } },
         validate: mockedValidate,
       } as unknown as FormML
       const dummyIndex = {}
       const dummyContext = {} as ClassMethodDecoratorContext
 
       // Act
-      const decorator = validate({ eventName: 'submit' })
+      const decorator = validate({ eventName: 'none' })
       const decoratedMethod = decorator(() => {}, dummyContext)
       decoratedMethod.call(form, dummyIndex)
 
@@ -93,7 +93,7 @@ describe('validate', () => {
       const mockedValidate = vi.fn()
       const form = {
         getField: () => ({ _internalState: { isInitiallyValidated: true } }),
-        options: { validateOn: { initial: 'change', subsequent: 'blur' } },
+        options: { preValidateOn: { initial: 'change', subsequent: 'blur' } },
         validate: mockedValidate,
       } as unknown as FormML
       const dummyIndex = {}
@@ -116,7 +116,7 @@ describe('validate', () => {
       const mockedValidate = vi.fn()
       const form = {
         getField: () => ({ _internalState: { isInitiallyValidated: true } }),
-        options: { validateOn: { initial: 'change', subsequent: 'blur' } },
+        options: { preValidateOn: { initial: 'change', subsequent: 'blur' } },
         validate: mockedValidate,
       } as unknown as FormML
       const dummyIndex = {}
@@ -131,14 +131,14 @@ describe('validate', () => {
       expect(mockedValidate).toBeCalledWith(dummyIndex)
     })
 
-    test.each(['change', 'blur', 'submit'] as const)(
+    test.each(['change', 'blur', 'none'] as const)(
       'should always do validation if configured event is all',
       (eventName) => {
         // Arrange
         const mockedValidate = vi.fn()
         const form = {
           getField: () => ({ _internalState: { isInitiallyValidated: true } }),
-          options: { validateOn: { initial: 'change', subsequent: 'all' } },
+          options: { preValidateOn: { initial: 'change', subsequent: 'all' } },
           validate: mockedValidate,
         } as unknown as FormML
         const dummyIndex = {}
@@ -159,7 +159,7 @@ describe('validate', () => {
       const mockedValidate = vi.fn()
       const form = {
         getField: () => ({ _internalState: { isInitiallyValidated: true } }),
-        options: { validateOn: { initial: 'change', subsequent: 'blur' } },
+        options: { preValidateOn: { initial: 'change', subsequent: 'blur' } },
         validate: mockedValidate,
       } as unknown as FormML
       const dummyIndex = {}
@@ -179,7 +179,7 @@ describe('validate', () => {
       const mockedValidate = vi.fn()
       const form = {
         getField: () => ({ _internalState: { isInitiallyValidated: false } }),
-        options: { validateOn: { initial: 'change', subsequent: 'blur' } },
+        options: { preValidateOn: { initial: 'change', subsequent: 'blur' } },
         validate: mockedValidate,
       } as unknown as FormML
       const dummyIndex = {}

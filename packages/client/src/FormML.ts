@@ -10,9 +10,9 @@ import { DeepPartial, mergeOptions } from './utils/options.js'
 import { ValidationError, createInputValidator } from './validator/index.js'
 import { Validator } from './validator/index.js'
 
-export type FormMLEvent = 'all' | 'blur' | 'change' | 'submit'
+export type FormMLEvent = 'all' | 'blur' | 'change' | 'none'
 export type FormMLOptions = {
-  validateOn: {
+  preValidateOn: {
     initial: FormMLEvent
     subsequent: FormMLEvent
   }
@@ -86,7 +86,7 @@ export class FormML {
 
   constructor(schema: string, options?: DeepPartial<FormMLOptions>) {
     this.options = mergeOptions(options, {
-      validateOn: {
+      preValidateOn: {
         initial: 'blur',
         subsequent: 'change',
       },
