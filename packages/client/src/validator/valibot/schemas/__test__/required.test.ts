@@ -74,7 +74,7 @@ describe('required', () => {
           "issues": undefined,
           "kind": "schema",
           "lang": undefined,
-          "message": "Invalid type: Expected !undefined but received undefined",
+          "message": "Invalid input: Field is required",
           "path": undefined,
           "received": "undefined",
           "requirement": undefined,

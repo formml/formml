@@ -94,7 +94,7 @@ export function required(
     _run(dataset, config) {
       // If value is `undefined`, add issue and return dataset
       if (dataset.value === undefined) {
-        _addIssue(this, 'type', dataset, config)
+        _addIssue(this, 'input', dataset, config)
         return dataset
       }
 
@@ -110,7 +110,12 @@ export function required(
     async: false,
     expects: '!undefined',
     kind: 'schema',
-    message,
+    message:
+      message ??
+      ((issue) =>
+        typeof issue.input === 'undefined'
+          ? 'Invalid input: Field is required'
+          : issue.message),
     reference: required,
     type: 'required',
     wrapped,
