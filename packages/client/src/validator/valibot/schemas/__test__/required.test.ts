@@ -54,4 +54,34 @@ describe('required', () => {
       ]
     `)
   })
+
+  test('should invalidate if input is undefined', () => {
+    // Arrange
+    const schema = required(v.any())
+
+    // Act
+    const result = v.safeParse(schema, undefined)
+
+    // Assert
+    expect(result.success).toBe(false)
+    expect(result.issues).toMatchInlineSnapshot(`
+      [
+        {
+          "abortEarly": undefined,
+          "abortPipeEarly": undefined,
+          "expected": "!undefined",
+          "input": undefined,
+          "issues": undefined,
+          "kind": "schema",
+          "lang": undefined,
+          "message": "Invalid type: Expected !undefined but received undefined",
+          "path": undefined,
+          "received": "undefined",
+          "requirement": undefined,
+          "skipPipe": undefined,
+          "type": "required",
+        },
+      ]
+    `)
+  })
 })

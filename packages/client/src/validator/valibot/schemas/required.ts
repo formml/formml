@@ -6,19 +6,36 @@ import {
   InferNonOptionalInput,
   InferNonOptionalIssue,
   InferNonOptionalOutput,
-  NonOptionalIssue,
 } from 'valibot'
 
 /**
- * Non optional schema type.
+ * Required issue type.
  */
-export interface NonOptionalSchema<
+export interface RequiredIssue extends BaseIssue<unknown> {
+  /**
+   * The expected property.
+   */
+  readonly expected: '!undefined' | 'not blank'
+  /**
+   * The issue kind.
+   */
+  readonly kind: 'schema'
+  /**
+   * The issue type.
+   */
+  readonly type: 'required'
+}
+
+/**
+ * Required schema type.
+ */
+export interface RequiredSchema<
   TWrapped extends BaseSchema<unknown, unknown, BaseIssue<unknown>>,
-  TMessage extends ErrorMessage<NonOptionalIssue> | undefined,
+  TMessage extends ErrorMessage<RequiredIssue> | undefined,
 > extends BaseSchema<
     InferNonOptionalInput<TWrapped>,
     InferNonOptionalOutput<TWrapped>,
-    InferNonOptionalIssue<TWrapped> | NonOptionalIssue
+    InferNonOptionalIssue<TWrapped> | RequiredIssue
   > {
   /**
    * The expected property.
@@ -35,7 +52,7 @@ export interface NonOptionalSchema<
   /**
    * The schema type.
    */
-  readonly type: 'non_optional'
+  readonly type: 'required'
   /**
    * The wrapped schema.
    */
@@ -43,35 +60,35 @@ export interface NonOptionalSchema<
 }
 
 /**
- * Creates a non optional schema.
+ * Creates a required schema.
  *
  * @param wrapped The wrapped schema.
  *
- * @returns A non optional schema.
+ * @returns A required schema.
  */
 export function required<
   const TWrapped extends BaseSchema<unknown, unknown, BaseIssue<unknown>>,
->(wrapped: TWrapped): NonOptionalSchema<TWrapped, undefined>
+>(wrapped: TWrapped): RequiredSchema<TWrapped, undefined>
 
 /**
- * Creates a non optional schema.
+ * Creates a required schema.
  *
  * @param wrapped The wrapped schema.
  * @param message The error message.
  *
- * @returns A non optional schema.
+ * @returns A required schema.
  */
 export function required<
   const TWrapped extends BaseSchema<unknown, unknown, BaseIssue<unknown>>,
-  const TMessage extends ErrorMessage<NonOptionalIssue> | undefined,
->(wrapped: TWrapped, message: TMessage): NonOptionalSchema<TWrapped, TMessage>
+  const TMessage extends ErrorMessage<RequiredIssue> | undefined,
+>(wrapped: TWrapped, message: TMessage): RequiredSchema<TWrapped, TMessage>
 
 export function required(
   wrapped: BaseSchema<unknown, unknown, BaseIssue<unknown>>,
-  message?: ErrorMessage<NonOptionalIssue> | undefined,
-): NonOptionalSchema<
+  message?: ErrorMessage<RequiredIssue> | undefined,
+): RequiredSchema<
   BaseSchema<unknown, unknown, BaseIssue<unknown>>,
-  ErrorMessage<NonOptionalIssue> | undefined
+  ErrorMessage<RequiredIssue> | undefined
 > {
   return {
     _run(dataset, config) {
@@ -89,7 +106,7 @@ export function required(
     kind: 'schema',
     message,
     reference: required,
-    type: 'non_optional',
+    type: 'required',
     wrapped,
   }
 }
