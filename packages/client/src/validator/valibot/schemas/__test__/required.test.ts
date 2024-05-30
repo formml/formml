@@ -99,4 +99,34 @@ describe('required', () => {
       expect(result.issues).toMatchSnapshot()
     },
   )
+
+  test('should allow to override default error message', () => {
+    // Arrange
+    const schema = required(v.any(), 'Custom error message')
+
+    // Act
+    const result = v.safeParse(schema, undefined)
+
+    // Assert
+    expect(result.success).toBe(false)
+    expect(result.issues).toMatchInlineSnapshot(`
+      [
+        {
+          "abortEarly": undefined,
+          "abortPipeEarly": undefined,
+          "expected": "!undefined",
+          "input": undefined,
+          "issues": undefined,
+          "kind": "schema",
+          "lang": undefined,
+          "message": "Custom error message",
+          "path": undefined,
+          "received": "undefined",
+          "requirement": undefined,
+          "skipPipe": undefined,
+          "type": "required",
+        },
+      ]
+    `)
+  })
 })
