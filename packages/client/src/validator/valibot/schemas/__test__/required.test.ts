@@ -14,6 +14,17 @@ describe('required', () => {
     expect(result.success).toBe(true)
   })
 
+  test('should validate if input is string and not blank', () => {
+    // Arrange
+    const schema = required(v.string())
+
+    // Act
+    const result = v.safeParse(schema, 'hello')
+
+    // Assert
+    expect(result.success).toBe(true)
+  })
+
   test('should forward input to wrapped schema if validation passes', () => {
     // Arrange
     const schema = required(v.string())
