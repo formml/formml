@@ -115,7 +115,7 @@ describe('ErrorMessage', () => {
 
       // Assert
       expect(span.textContent).toMatchInlineSnapshot(
-        `"Invalid type: Expected number but received undefined"`,
+        `"Invalid input: Field is required"`,
       )
     })
   })

@@ -4,17 +4,10 @@ import * as v from 'valibot'
 
 import { PrimitiveTypeMapping } from '../JsTypes.js'
 import { assertNever } from '../utils/assertNever.js'
+import { required } from './valibot/schemas/required.js'
 
-const type = (
-  formmlSchema: Field,
-  options?: Partial<{
-    notEmpty: boolean
-  }>,
-) => {
+const type = (formmlSchema: Field) => {
   if (formmlSchema.type === 'text') {
-    if (options?.notEmpty) {
-      return v.pipe(v.string(), v.nonEmpty())
-    }
     return v.string()
   }
   if (formmlSchema.type === 'num') {
@@ -39,8 +32,10 @@ export default function buildSchema<T extends PrimitiveType>(
   formmlSchema: Field<T>,
 ): v.GenericSchema<PrimitiveTypeMapping[T]>
 export default function buildSchema(formmlSchema: Field) {
+  const baseSchema = v.optional(type(formmlSchema))
+
   if (isRequired(formmlSchema)) {
-    return type(formmlSchema, { notEmpty: true })
+    return required(baseSchema)
   }
-  return v.optional(type(formmlSchema))
+  return baseSchema
 }
