@@ -53,7 +53,7 @@ describe('grammar', () => {
   })
 
   describe('validation annotations', () => {
-    describe('non-parameter annotation', () => {
+    describe('non-argument annotation', () => {
       test('one line', () => {
         const content = `
           form ExampleForm {
@@ -80,6 +80,17 @@ describe('grammar', () => {
           form ExampleForm {
             @required1
             @required2
+            num numberField
+          }
+        `
+        const ast = parser(content)
+        expect(serialize(ast)).toMatchSnapshot()
+      })
+
+      test('annotation with parentheses', () => {
+        const content = `
+          form ExampleForm {
+            @required()
             num numberField
           }
         `
