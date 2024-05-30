@@ -1,0 +1,107 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`required > should invalidate if input is string but blank - "   " 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "not blank",
+    "input": "   ",
+    "issues": undefined,
+    "kind": "schema",
+    "lang": undefined,
+    "message": "Invalid input: Expected not blank but received "   "",
+    "path": undefined,
+    "received": ""   "",
+    "requirement": undefined,
+    "skipPipe": undefined,
+    "type": "required",
+  },
+]
+`;
+
+exports[`required > should invalidate if input is string but blank - "" 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "not blank",
+    "input": "",
+    "issues": undefined,
+    "kind": "schema",
+    "lang": undefined,
+    "message": "Invalid input: Expected not blank but received """,
+    "path": undefined,
+    "received": """",
+    "requirement": undefined,
+    "skipPipe": undefined,
+    "type": "required",
+  },
+]
+`;
+
+exports[`required > should invalidate if input is string but blank - "\\n" 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "not blank",
+    "input": "
+",
+    "issues": undefined,
+    "kind": "schema",
+    "lang": undefined,
+    "message": "Invalid input: Expected not blank but received "
+"",
+    "path": undefined,
+    "received": ""
+"",
+    "requirement": undefined,
+    "skipPipe": undefined,
+    "type": "required",
+  },
+]
+`;
+
+exports[`required > should invalidate if input is string but blank - "\\r" 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "not blank",
+    "input": "
+",
+    "issues": undefined,
+    "kind": "schema",
+    "lang": undefined,
+    "message": "Invalid input: Expected not blank but received "
+"",
+    "path": undefined,
+    "received": ""
+"",
+    "requirement": undefined,
+    "skipPipe": undefined,
+    "type": "required",
+  },
+]
+`;
+
+exports[`required > should invalidate if input is string but blank - "\\t" 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "not blank",
+    "input": "	",
+    "issues": undefined,
+    "kind": "schema",
+    "lang": undefined,
+    "message": "Invalid input: Expected not blank but received "	"",
+    "path": undefined,
+    "received": ""	"",
+    "requirement": undefined,
+    "skipPipe": undefined,
+    "type": "required",
+  },
+]
+`;

@@ -84,4 +84,19 @@ describe('required', () => {
       ]
     `)
   })
+
+  test.each(['', '   ', '\n', '\t', '\r'])(
+    'should invalidate if input is string but blank - %j',
+    (input) => {
+      // Arrange
+      const schema = required(v.string())
+
+      // Act
+      const result = v.safeParse(schema, input)
+
+      // Assert
+      expect(result.success).toBe(false)
+      expect(result.issues).toMatchSnapshot()
+    },
+  )
 })

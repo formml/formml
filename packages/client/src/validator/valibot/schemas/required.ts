@@ -98,6 +98,12 @@ export function required(
         return dataset
       }
 
+      // If value is string but blank, add issue and return dataset
+      if (typeof dataset.value === 'string' && dataset.value.trim() === '') {
+        _addIssue(this, 'input', dataset, config, { expected: 'not blank' })
+        return dataset
+      }
+
       // Otherwise, return dataset of wrapped schema
       return this.wrapped._run(dataset, config)
     },
