@@ -118,6 +118,24 @@ describe('grammar', () => {
         const ast = await parser(content)
         expect(serialize(ast)).toMatchSnapshot()
       })
+
+      describe('argument type', () => {
+        describe('JS-like literals', () => {
+          test.each([`'single quotes'`, `"double quotes"`])(
+            'string - %j',
+            async (input) => {
+              const content = `
+                form ExampleForm {
+                  @any(${input})
+                  num numberField
+                }
+              `
+              const ast = await parser(content)
+              expect(serialize(ast)).toMatchSnapshot()
+            },
+          )
+        })
+      })
     })
   })
 })
