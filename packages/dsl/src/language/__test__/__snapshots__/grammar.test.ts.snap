@@ -72,7 +72,6 @@ exports[`grammar > validation annotations > annotation with arguments > allows t
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "range",
             "args": [
               {
                 "$type": "Number_",
@@ -82,7 +81,9 @@ exports[`grammar > validation annotations > annotation with arguments > allows t
                 "$type": "Number_",
                 "value": 20
               }
-            ]
+            ],
+            "name": "range",
+            "namedArgs": []
           }
         ],
         "type": "num",
@@ -105,13 +106,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "any",
             "args": [
               {
                 "$type": "Boolean",
                 "value": false
               }
-            ]
+            ],
+            "name": "any",
+            "namedArgs": []
           }
         ],
         "type": "num",
@@ -134,13 +136,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "any",
             "args": [
               {
                 "$type": "Boolean",
                 "value": true
               }
-            ]
+            ],
+            "name": "any",
+            "namedArgs": []
           }
         ],
         "type": "num",
@@ -163,12 +166,13 @@ exports[`grammar > validation annotations > annotation with arguments > argument
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "any",
             "args": [
               {
                 "$type": "Null"
               }
-            ]
+            ],
+            "name": "any",
+            "namedArgs": []
           }
         ],
         "type": "num",
@@ -191,13 +195,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "any",
             "args": [
               {
                 "$type": "Number_",
                 "value": -123
               }
-            ]
+            ],
+            "name": "any",
+            "namedArgs": []
           }
         ],
         "type": "num",
@@ -220,13 +225,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "any",
             "args": [
               {
                 "$type": "Number_",
                 "value": -123.456
               }
-            ]
+            ],
+            "name": "any",
+            "namedArgs": []
           }
         ],
         "type": "num",
@@ -249,13 +255,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "any",
             "args": [
               {
                 "$type": "Number_",
                 "value": 0
               }
-            ]
+            ],
+            "name": "any",
+            "namedArgs": []
           }
         ],
         "type": "num",
@@ -278,13 +285,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "any",
             "args": [
               {
                 "$type": "Number_",
                 "value": 123
               }
-            ]
+            ],
+            "name": "any",
+            "namedArgs": []
           }
         ],
         "type": "num",
@@ -307,13 +315,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "any",
             "args": [
               {
                 "$type": "Number_",
                 "value": 123.456
               }
-            ]
+            ],
+            "name": "any",
+            "namedArgs": []
           }
         ],
         "type": "num",
@@ -336,13 +345,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "any",
             "args": [
               {
                 "$type": "SQString",
                 "value": "'single quotes'"
               }
-            ]
+            ],
+            "name": "any",
+            "namedArgs": []
           }
         ],
         "type": "num",
@@ -365,13 +375,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "any",
             "args": [
               {
                 "$type": "DQString",
                 "value": "\\"double quotes\\""
               }
-            ]
+            ],
+            "name": "any",
+            "namedArgs": []
           }
         ],
         "type": "num",
@@ -382,7 +393,7 @@ exports[`grammar > validation annotations > annotation with arguments > argument
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > multiple arguments 1`] = `
+exports[`grammar > validation annotations > annotation with arguments > named arguments > one argument 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -394,7 +405,40 @@ exports[`grammar > validation annotations > annotation with arguments > multiple
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "range",
+            "namedArgs": [
+              {
+                "$type": "NamedArgument",
+                "name": "value",
+                "value": {
+                  "$type": "Number_",
+                  "value": 10
+                }
+              }
+            ],
+            "name": "min",
+            "args": []
+          }
+        ],
+        "type": "num",
+        "name": "numberField"
+      }
+    ]
+  }
+}"
+`;
+
+exports[`grammar > validation annotations > annotation with arguments > positional arguments > multiple arguments 1`] = `
+"{
+  "$type": "FormMLSchema",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "annotations": [
+          {
+            "$type": "Annotation",
             "args": [
               {
                 "$type": "Number_",
@@ -404,7 +448,9 @@ exports[`grammar > validation annotations > annotation with arguments > multiple
                 "$type": "Number_",
                 "value": 20
               }
-            ]
+            ],
+            "name": "range",
+            "namedArgs": []
           }
         ],
         "type": "num",
@@ -415,7 +461,7 @@ exports[`grammar > validation annotations > annotation with arguments > multiple
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > one argument 1`] = `
+exports[`grammar > validation annotations > annotation with arguments > positional arguments > one argument 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -427,13 +473,14 @@ exports[`grammar > validation annotations > annotation with arguments > one argu
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "min",
             "args": [
               {
                 "$type": "Number_",
                 "value": 10
               }
-            ]
+            ],
+            "name": "min",
+            "namedArgs": []
           }
         ],
         "type": "num",
@@ -457,7 +504,8 @@ exports[`grammar > validation annotations > non-argument annotation > annotation
           {
             "$type": "Annotation",
             "name": "required",
-            "args": []
+            "args": [],
+            "namedArgs": []
           }
         ],
         "type": "num",
@@ -481,12 +529,14 @@ exports[`grammar > validation annotations > non-argument annotation > multiple a
           {
             "$type": "Annotation",
             "name": "required1",
-            "args": []
+            "args": [],
+            "namedArgs": []
           },
           {
             "$type": "Annotation",
             "name": "required2",
-            "args": []
+            "args": [],
+            "namedArgs": []
           }
         ],
         "type": "num",
@@ -510,7 +560,8 @@ exports[`grammar > validation annotations > non-argument annotation > multiple l
           {
             "$type": "Annotation",
             "name": "required",
-            "args": []
+            "args": [],
+            "namedArgs": []
           }
         ],
         "type": "num",
@@ -534,7 +585,8 @@ exports[`grammar > validation annotations > non-argument annotation > one line 1
           {
             "$type": "Annotation",
             "name": "required",
-            "args": []
+            "args": [],
+            "namedArgs": []
           }
         ],
         "type": "num",

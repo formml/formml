@@ -120,26 +120,41 @@ describe('grammar', () => {
     })
 
     describe('annotation with arguments', () => {
-      test('one argument', async () => {
-        const content = `
-          form ExampleForm {
-            @min(10)
-            num numberField
-          }
-        `
-        const ast = await parser(content)
-        expect(serialize(ast)).toMatchSnapshot()
+      describe('positional arguments', () => {
+        test('one argument', async () => {
+          const content = `
+            form ExampleForm {
+              @min(10)
+              num numberField
+            }
+          `
+          const ast = await parser(content)
+          expect(serialize(ast)).toMatchSnapshot()
+        })
+
+        test('multiple arguments', async () => {
+          const content = `
+            form ExampleForm {
+              @range(10, 20)
+              num numberField
+            }
+          `
+          const ast = await parser(content)
+          expect(serialize(ast)).toMatchSnapshot()
+        })
       })
 
-      test('multiple arguments', async () => {
-        const content = `
-          form ExampleForm {
-            @range(10, 20)
-            num numberField
-          }
-        `
-        const ast = await parser(content)
-        expect(serialize(ast)).toMatchSnapshot()
+      describe('named arguments', () => {
+        test('one argument', async () => {
+          const content = `
+            form ExampleForm {
+              @min(value: 10)
+              num numberField
+            }
+          `
+          const ast = await parser(content)
+          expect(serialize(ast)).toMatchSnapshot()
+        })
       })
 
       test('allows trailing comma', async () => {
