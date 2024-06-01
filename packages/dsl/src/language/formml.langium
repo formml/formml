@@ -21,7 +21,7 @@ PrimitiveType returns string:
 // Literals
 
 Literal:
-  Number_ | SQString | DQString | Boolean;
+  Number_ | SQString | DQString | Boolean | Null;
 
 terminal NUMBER returns number: /-?(?:0|[1-9]\d*)(?:\.[0-9]+)?/;
 Number_:
@@ -38,6 +38,9 @@ DQString:
 terminal BOOLEAN returns boolean: /true|false/;
 Boolean:
   value=BOOLEAN;
+
+Null:
+  {infer Null} 'null';
 
 hidden terminal ML_COMMENT: /\/\*[\s\S]*?\*\//;
 hidden terminal SL_COMMENT: /\/\/[^\n\r]*/;

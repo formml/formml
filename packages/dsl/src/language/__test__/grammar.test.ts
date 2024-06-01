@@ -184,6 +184,17 @@ describe('grammar', () => {
             const ast = await parser(content)
             expect(serialize(ast)).toMatchSnapshot()
           })
+
+          test('null', async () => {
+            const content = `
+              form ExampleForm {
+                @any(null)
+                num numberField
+              }
+            `
+            const ast = await parser(content)
+            expect(serialize(ast)).toMatchSnapshot()
+          })
         })
       })
     })
