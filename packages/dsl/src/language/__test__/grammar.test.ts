@@ -153,6 +153,16 @@ describe('grammar', () => {
         expect(serialize(ast)).toMatchSnapshot()
       })
 
+      test('disallows more than one trailing comma', async () => {
+        const content = `
+          form ExampleForm {
+            @range(10, 20, ,)
+            num numberField
+          }
+        `
+        await expect(parser(content)).rejects.toThrow()
+      })
+
       describe('argument type', () => {
         describe('JS-like literals', () => {
           test.each([`'single quotes'`, `"double quotes"`])(
