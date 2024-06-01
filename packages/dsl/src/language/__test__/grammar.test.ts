@@ -17,7 +17,14 @@ describe('grammar', () => {
       .then((x) => x.parseResult)
       .then((r) =>
         r.lexerErrors.length > 0 || r.parserErrors.length > 0
-          ? Promise.reject(new Error('Parsing failed'))
+          ? Promise.reject(
+              new Error(
+                'Parsing failed with errors:\n' +
+                  [...r.lexerErrors, ...r.parserErrors]
+                    .map((e) => e.message)
+                    .join('\n'),
+              ),
+            )
           : r.value,
       )
 
@@ -166,6 +173,17 @@ describe('grammar', () => {
               await expect(parser(content)).rejects.toThrow()
             },
           )
+
+          test.each(['true', 'false'])('boolean - %j', async (input) => {
+            const content = `
+              form ExampleForm {
+                @any(${input})
+                num numberField
+              }
+            `
+            const ast = await parser(content)
+            expect(serialize(ast)).toMatchSnapshot()
+          })
         })
       })
     })

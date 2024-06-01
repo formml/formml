@@ -60,6 +60,64 @@ exports[`grammar > syntax > comments 1`] = `
 }"
 `;
 
+exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > boolean - "false" 1`] = `
+"{
+  "$type": "FormMLSchema",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "annotations": [
+          {
+            "$type": "Annotation",
+            "name": "any",
+            "args": [
+              {
+                "$type": "Boolean",
+                "value": false
+              }
+            ]
+          }
+        ],
+        "type": "num",
+        "name": "numberField"
+      }
+    ]
+  }
+}"
+`;
+
+exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > boolean - "true" 1`] = `
+"{
+  "$type": "FormMLSchema",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "annotations": [
+          {
+            "$type": "Annotation",
+            "name": "any",
+            "args": [
+              {
+                "$type": "Boolean",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "type": "num",
+        "name": "numberField"
+      }
+    ]
+  }
+}"
+`;
+
 exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > number - "-123" 1`] = `
 "{
   "$type": "FormMLSchema",

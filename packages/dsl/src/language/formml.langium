@@ -17,13 +17,11 @@ Annotation:
 PrimitiveType returns string:
   'text' | 'num' | 'decimal' | 'bool' | 'datetime';
 
-hidden terminal WS: /\s+/;
-terminal ID: /[_$a-zA-Z][\w_]*/;
 
 // Literals
 
 Literal:
-  Number_ | SQString | DQString;
+  Number_ | SQString | DQString | Boolean;
 
 terminal NUMBER returns number: /-?(?:0|[1-9]\d*)(?:\.[0-9]+)?/;
 Number_:
@@ -37,5 +35,14 @@ terminal DQ_STRING: /"[^"]*"/;
 DQString:
   value=DQ_STRING;
 
+terminal BOOLEAN returns boolean: /true|false/;
+Boolean:
+  value=BOOLEAN;
+
 hidden terminal ML_COMMENT: /\/\*[\s\S]*?\*\//;
 hidden terminal SL_COMMENT: /\/\/[^\n\r]*/;
+
+hidden terminal WS: /\s+/;
+
+// Lowest-precedence tokens
+terminal ID: /[_$a-zA-Z][\w_]*/;
