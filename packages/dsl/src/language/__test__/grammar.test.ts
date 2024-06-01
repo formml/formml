@@ -221,6 +221,19 @@ describe('grammar', () => {
         })
       })
 
+      test('mixes positional and named arguments', async () => {
+        const content = `
+          form ExampleForm {
+            @range(10, max: 20)
+            num numberField
+          }
+        `
+        const ast = await parser(content)
+        expect(serialize(ast)).toMatchSnapshot()
+      })
+
+      test.todo('disallows named arguments appear before positional arguments')
+
       describe('argument type', () => {
         describe('JS-like literals', () => {
           test.each([`'single quotes'`, `"double quotes"`])(

@@ -379,6 +379,46 @@ exports[`grammar > validation annotations > annotation with arguments > argument
 }"
 `;
 
+exports[`grammar > validation annotations > annotation with arguments > mixes positional and named arguments 1`] = `
+"{
+  "$type": "FormMLSchema",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "annotations": [
+          {
+            "$type": "Annotation",
+            "args": [
+              {
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "Number_",
+                  "value": 10
+                }
+              },
+              {
+                "$type": "NamedArgument",
+                "name": "max",
+                "value": {
+                  "$type": "Number_",
+                  "value": 20
+                }
+              }
+            ],
+            "name": "range"
+          }
+        ],
+        "type": "num",
+        "name": "numberField"
+      }
+    ]
+  }
+}"
+`;
+
 exports[`grammar > validation annotations > annotation with arguments > named arguments > allows trailing comma 1`] = `
 "{
   "$type": "FormMLSchema",
