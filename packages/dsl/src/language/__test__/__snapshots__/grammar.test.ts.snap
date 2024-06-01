@@ -60,6 +60,151 @@ exports[`grammar > syntax > comments 1`] = `
 }"
 `;
 
+exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > number - "-123" 1`] = `
+"{
+  "$type": "FormMLSchema",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "annotations": [
+          {
+            "$type": "Annotation",
+            "name": "any",
+            "args": [
+              {
+                "$type": "Number_",
+                "value": -123
+              }
+            ]
+          }
+        ],
+        "type": "num",
+        "name": "numberField"
+      }
+    ]
+  }
+}"
+`;
+
+exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > number - "-123.456" 1`] = `
+"{
+  "$type": "FormMLSchema",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "annotations": [
+          {
+            "$type": "Annotation",
+            "name": "any",
+            "args": [
+              {
+                "$type": "Number_",
+                "value": -123.456
+              }
+            ]
+          }
+        ],
+        "type": "num",
+        "name": "numberField"
+      }
+    ]
+  }
+}"
+`;
+
+exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > number - "0" 1`] = `
+"{
+  "$type": "FormMLSchema",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "annotations": [
+          {
+            "$type": "Annotation",
+            "name": "any",
+            "args": [
+              {
+                "$type": "Number_",
+                "value": 0
+              }
+            ]
+          }
+        ],
+        "type": "num",
+        "name": "numberField"
+      }
+    ]
+  }
+}"
+`;
+
+exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > number - "123" 1`] = `
+"{
+  "$type": "FormMLSchema",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "annotations": [
+          {
+            "$type": "Annotation",
+            "name": "any",
+            "args": [
+              {
+                "$type": "Number_",
+                "value": 123
+              }
+            ]
+          }
+        ],
+        "type": "num",
+        "name": "numberField"
+      }
+    ]
+  }
+}"
+`;
+
+exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > number - "123.456" 1`] = `
+"{
+  "$type": "FormMLSchema",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "annotations": [
+          {
+            "$type": "Annotation",
+            "name": "any",
+            "args": [
+              {
+                "$type": "Number_",
+                "value": 123.456
+              }
+            ]
+          }
+        ],
+        "type": "num",
+        "name": "numberField"
+      }
+    ]
+  }
+}"
+`;
+
 exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > string - "'single quotes'" 1`] = `
 "{
   "$type": "FormMLSchema",

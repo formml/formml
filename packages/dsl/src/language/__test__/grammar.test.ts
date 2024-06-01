@@ -134,6 +134,20 @@ describe('grammar', () => {
               expect(serialize(ast)).toMatchSnapshot()
             },
           )
+
+          test.each(['0', '123', '-123', '123.456', '-123.456'])(
+            'number - %j',
+            async (input) => {
+              const content = `
+                form ExampleForm {
+                  @any(${input})
+                  num numberField
+                }
+              `
+              const ast = await parser(content)
+              expect(serialize(ast)).toMatchSnapshot()
+            },
+          )
         })
       })
     })
