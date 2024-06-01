@@ -11,15 +11,14 @@ Form:
 Field:
   (annotations+=Annotation)* type=PrimitiveType name=ID;
 
-NamedArgument:
-  name=ID ':' value=Literal;
+Argument:
+  {infer PositionalArgument} value=Literal | {infer NamedArgument} name=ID ':' value=Literal;
 
-fragment FunctionArguments:
-  (args+=Literal ',')* ((args+=Literal)? | (namedArgs+=NamedArgument)?);
-
+fragment Arguments:
+  (args+=Argument ',')* (args+=Argument)?;
 
 Annotation:
-  '@' name=ID ('(' FunctionArguments ')')?;
+  '@' name=ID ('(' Arguments ')')?;
 
 PrimitiveType returns string:
   'text' | 'num' | 'decimal' | 'bool' | 'datetime';

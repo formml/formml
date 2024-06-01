@@ -74,12 +74,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
             "$type": "Annotation",
             "args": [
               {
-                "$type": "Boolean",
-                "value": false
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "Boolean",
+                  "value": false
+                }
               }
             ],
-            "name": "any",
-            "namedArgs": []
+            "name": "any"
           }
         ],
         "type": "num",
@@ -104,12 +106,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
             "$type": "Annotation",
             "args": [
               {
-                "$type": "Boolean",
-                "value": true
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "Boolean",
+                  "value": true
+                }
               }
             ],
-            "name": "any",
-            "namedArgs": []
+            "name": "any"
           }
         ],
         "type": "num",
@@ -134,11 +138,13 @@ exports[`grammar > validation annotations > annotation with arguments > argument
             "$type": "Annotation",
             "args": [
               {
-                "$type": "Null"
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "Null"
+                }
               }
             ],
-            "name": "any",
-            "namedArgs": []
+            "name": "any"
           }
         ],
         "type": "num",
@@ -163,12 +169,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
             "$type": "Annotation",
             "args": [
               {
-                "$type": "Number_",
-                "value": -123
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "Number_",
+                  "value": -123
+                }
               }
             ],
-            "name": "any",
-            "namedArgs": []
+            "name": "any"
           }
         ],
         "type": "num",
@@ -193,12 +201,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
             "$type": "Annotation",
             "args": [
               {
-                "$type": "Number_",
-                "value": -123.456
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "Number_",
+                  "value": -123.456
+                }
               }
             ],
-            "name": "any",
-            "namedArgs": []
+            "name": "any"
           }
         ],
         "type": "num",
@@ -223,12 +233,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
             "$type": "Annotation",
             "args": [
               {
-                "$type": "Number_",
-                "value": 0
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "Number_",
+                  "value": 0
+                }
               }
             ],
-            "name": "any",
-            "namedArgs": []
+            "name": "any"
           }
         ],
         "type": "num",
@@ -253,12 +265,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
             "$type": "Annotation",
             "args": [
               {
-                "$type": "Number_",
-                "value": 123
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "Number_",
+                  "value": 123
+                }
               }
             ],
-            "name": "any",
-            "namedArgs": []
+            "name": "any"
           }
         ],
         "type": "num",
@@ -283,12 +297,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
             "$type": "Annotation",
             "args": [
               {
-                "$type": "Number_",
-                "value": 123.456
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "Number_",
+                  "value": 123.456
+                }
               }
             ],
-            "name": "any",
-            "namedArgs": []
+            "name": "any"
           }
         ],
         "type": "num",
@@ -313,12 +329,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
             "$type": "Annotation",
             "args": [
               {
-                "$type": "SQString",
-                "value": "'single quotes'"
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "SQString",
+                  "value": "'single quotes'"
+                }
               }
             ],
-            "name": "any",
-            "namedArgs": []
+            "name": "any"
           }
         ],
         "type": "num",
@@ -343,12 +361,14 @@ exports[`grammar > validation annotations > annotation with arguments > argument
             "$type": "Annotation",
             "args": [
               {
-                "$type": "DQString",
-                "value": "\\"double quotes\\""
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "DQString",
+                  "value": "\\"double quotes\\""
+                }
               }
             ],
-            "name": "any",
-            "namedArgs": []
+            "name": "any"
           }
         ],
         "type": "num",
@@ -371,7 +391,7 @@ exports[`grammar > validation annotations > annotation with arguments > named ar
         "annotations": [
           {
             "$type": "Annotation",
-            "namedArgs": [
+            "args": [
               {
                 "$type": "NamedArgument",
                 "name": "value",
@@ -381,8 +401,7 @@ exports[`grammar > validation annotations > annotation with arguments > named ar
                 }
               }
             ],
-            "name": "min",
-            "args": []
+            "name": "min"
           }
         ],
         "type": "num",
@@ -407,16 +426,21 @@ exports[`grammar > validation annotations > annotation with arguments > position
             "$type": "Annotation",
             "args": [
               {
-                "$type": "Number_",
-                "value": 10
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "Number_",
+                  "value": 10
+                }
               },
               {
-                "$type": "Number_",
-                "value": 20
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "Number_",
+                  "value": 20
+                }
               }
             ],
-            "name": "range",
-            "namedArgs": []
+            "name": "range"
           }
         ],
         "type": "num",
@@ -441,16 +465,21 @@ exports[`grammar > validation annotations > annotation with arguments > position
             "$type": "Annotation",
             "args": [
               {
-                "$type": "Number_",
-                "value": 10
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "Number_",
+                  "value": 10
+                }
               },
               {
-                "$type": "Number_",
-                "value": 20
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "Number_",
+                  "value": 20
+                }
               }
             ],
-            "name": "range",
-            "namedArgs": []
+            "name": "range"
           }
         ],
         "type": "num",
@@ -475,12 +504,14 @@ exports[`grammar > validation annotations > annotation with arguments > position
             "$type": "Annotation",
             "args": [
               {
-                "$type": "Number_",
-                "value": 10
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "Number_",
+                  "value": 10
+                }
               }
             ],
-            "name": "min",
-            "namedArgs": []
+            "name": "min"
           }
         ],
         "type": "num",
@@ -504,8 +535,7 @@ exports[`grammar > validation annotations > non-argument annotation > annotation
           {
             "$type": "Annotation",
             "name": "required",
-            "args": [],
-            "namedArgs": []
+            "args": []
           }
         ],
         "type": "num",
@@ -529,14 +559,12 @@ exports[`grammar > validation annotations > non-argument annotation > multiple a
           {
             "$type": "Annotation",
             "name": "required1",
-            "args": [],
-            "namedArgs": []
+            "args": []
           },
           {
             "$type": "Annotation",
             "name": "required2",
-            "args": [],
-            "namedArgs": []
+            "args": []
           }
         ],
         "type": "num",
@@ -560,8 +588,7 @@ exports[`grammar > validation annotations > non-argument annotation > multiple l
           {
             "$type": "Annotation",
             "name": "required",
-            "args": [],
-            "namedArgs": []
+            "args": []
           }
         ],
         "type": "num",
@@ -585,8 +612,7 @@ exports[`grammar > validation annotations > non-argument annotation > one line 1
           {
             "$type": "Annotation",
             "name": "required",
-            "args": [],
-            "namedArgs": []
+            "args": []
           }
         ],
         "type": "num",
