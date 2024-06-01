@@ -12,7 +12,7 @@ Field:
   (annotations+=Annotation)* type=PrimitiveType name=ID;
 
 Annotation:
-  '@' name=ID ('(' (args+=Literal)? ')')?;
+  '@' name=ID ('(' (args+=Literal ',')* (args+=Literal)? ')')?;
 
 PrimitiveType returns string:
   'text' | 'num' | 'decimal' | 'bool' | 'datetime';
