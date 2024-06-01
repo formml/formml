@@ -12,13 +12,14 @@ Field:
   (annotations+=Annotation)* type=PrimitiveType name=ID;
 
 Annotation:
-  '@' name=ID ('('')')?;
+  '@' name=ID ('(' (args+=NUMBER)? ')')?;
 
 PrimitiveType returns string:
   'text' | 'num' | 'decimal' | 'bool' | 'datetime';
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_$a-zA-Z][\w_]*/;
+terminal NUMBER returns number: /[0-9]+(\.[0-9]+)?/;
 
 hidden terminal ML_COMMENT: /\/\*[\s\S]*?\*\//;
 hidden terminal SL_COMMENT: /\/\/[^\n\r]*/;

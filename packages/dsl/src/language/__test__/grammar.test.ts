@@ -98,5 +98,18 @@ describe('grammar', () => {
         expect(serialize(ast)).toMatchSnapshot()
       })
     })
+
+    describe('annotation with arguments', () => {
+      test('one argument', () => {
+        const content = `
+          form ExampleForm {
+            @min(10)
+            num numberField
+          }
+        `
+        const ast = parser(content)
+        expect(serialize(ast)).toMatchSnapshot()
+      })
+    })
   })
 })

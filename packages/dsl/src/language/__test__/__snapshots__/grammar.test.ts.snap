@@ -60,6 +60,32 @@ exports[`grammar > syntax > comments 1`] = `
 }"
 `;
 
+exports[`grammar > validation annotations > annotation with arguments > one argument 1`] = `
+"{
+  "$type": "FormMLSchema",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "annotations": [
+          {
+            "$type": "Annotation",
+            "name": "min",
+            "args": [
+              10
+            ]
+          }
+        ],
+        "type": "num",
+        "name": "numberField"
+      }
+    ]
+  }
+}"
+`;
+
 exports[`grammar > validation annotations > non-argument annotation > annotation with parentheses 1`] = `
 "{
   "$type": "FormMLSchema",
@@ -72,7 +98,8 @@ exports[`grammar > validation annotations > non-argument annotation > annotation
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "required"
+            "name": "required",
+            "args": []
           }
         ],
         "type": "num",
@@ -95,11 +122,13 @@ exports[`grammar > validation annotations > non-argument annotation > multiple a
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "required1"
+            "name": "required1",
+            "args": []
           },
           {
             "$type": "Annotation",
-            "name": "required2"
+            "name": "required2",
+            "args": []
           }
         ],
         "type": "num",
@@ -122,7 +151,8 @@ exports[`grammar > validation annotations > non-argument annotation > multiple l
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "required"
+            "name": "required",
+            "args": []
           }
         ],
         "type": "num",
@@ -145,7 +175,8 @@ exports[`grammar > validation annotations > non-argument annotation > one line 1
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "required"
+            "name": "required",
+            "args": []
           }
         ],
         "type": "num",
