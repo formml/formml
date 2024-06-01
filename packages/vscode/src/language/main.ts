@@ -1,5 +1,5 @@
 import { createFormMLServices } from '@formml/dsl'
-import { startLanguageServer } from 'langium'
+import { startLanguageServer } from 'langium/lsp'
 import { NodeFileSystem } from 'langium/node'
 import {
   ProposedFeatures,

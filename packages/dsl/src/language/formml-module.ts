@@ -1,14 +1,12 @@
+import { EmptyFileSystem, type Module, inject } from 'langium'
 import {
-  DefaultSharedModuleContext,
-  EmptyFileSystem,
-  LangiumServices,
-  LangiumSharedServices,
-  Module,
-  PartialLangiumServices,
+  type DefaultSharedModuleContext,
+  type LangiumServices,
+  type LangiumSharedServices,
+  type PartialLangiumServices,
   createDefaultModule,
   createDefaultSharedModule,
-  inject,
-} from 'langium'
+} from 'langium/lsp'
 
 import {
   FormMLGeneratedModule,
@@ -75,6 +73,11 @@ export function createFormMLServices(context: DefaultSharedModuleContext): {
   )
   shared.ServiceRegistry.register(FormML)
   // registerValidationChecks(FormML)
+  if (!context.connection) {
+    // We don't run inside a language server
+    // Therefore, initialize the configuration provider instantly
+    void shared.workspace.ConfigurationProvider.initialized({})
+  }
   return { FormML, shared }
 }
 

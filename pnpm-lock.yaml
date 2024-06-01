@@ -101,8 +101,8 @@ importers:
         specifier: ^23.0.1
         version: 23.0.1
       langium-cli:
-        specifier: ^2.1.0
-        version: 2.1.0
+        specifier: ^3.0.3
+        version: 3.0.3
       lint-staged:
         specifier: ^15.2.0
         version: 15.2.0
@@ -177,8 +177,8 @@ importers:
   packages/dsl:
     dependencies:
       langium:
-        specifier: ^2.1.3
-        version: 2.1.3
+        specifier: ^3.0.0
+        version: 3.0.0
     devDependencies:
       '@formml/typescript-config':
         specifier: workspace:*
@@ -197,8 +197,8 @@ importers:
         specifier: workspace:^
         version: link:../dsl
       langium:
-        specifier: ^2.1.3
-        version: 2.1.3
+        specifier: ^3.0.0
+        version: 3.0.0
       vscode-languageclient:
         specifier: ~9.0.1
         version: 9.0.1
@@ -6402,10 +6402,10 @@ packages:
     engines: { node: '>=6' }
     dev: true
 
-  /langium-cli@2.1.0:
+  /langium-cli@3.0.3:
     resolution:
       {
-        integrity: sha512-Gbj4CvfAc1gP/6ihxikd2Je95j1FWjXZu8bbji2/t2vQ6kEP+vs9Fx7kSGOM0AbU/hjZfy6E35bJPOdwsiyqTA==,
+        integrity: sha512-g6PdhEq5IiYWK/oiySILglPvFdK6ofQdzC+U7PJmFH++bDKu0DGdxjWzDauUN5WUDyVQETWKgtYDmmbcxPzN0w==,
       }
     engines: { node: '>=16.0.0' }
     hasBin: true
@@ -6414,25 +6414,25 @@ packages:
       commander: 11.0.0
       fs-extra: 11.1.1
       jsonschema: 1.4.1
-      langium: 2.1.3
-      langium-railroad: 2.1.0
+      langium: 3.0.0
+      langium-railroad: 3.0.0
       lodash: 4.17.21
     dev: true
 
-  /langium-railroad@2.1.0:
+  /langium-railroad@3.0.0:
     resolution:
       {
-        integrity: sha512-2IeAIUSTQzbDjNnJA+0ql8tyN/mhCSN4FS50Mo9LOtLj523qUEBwHflDmCiOGZzW9iZdni6NXJgh8nLqjhTlDw==,
+        integrity: sha512-GQOnQBGl5gJqzgK/4bKvJO5QhJGNnprpYH6Fghbl4FviVLHwP6yzyqiouDelLSoCadChCr2JqKaBp5HXv7CgWw==,
       }
     dependencies:
-      langium: 2.1.3
+      langium: 3.0.0
       railroad-diagrams: 1.0.0
     dev: true
 
-  /langium@2.1.3:
+  /langium@3.0.0:
     resolution:
       {
-        integrity: sha512-/WN1xHoNBg0mi1Jp9ydMFSHIv8Jhq7K+0stNVURdoG4NgZx4/06AfNeeixmmU8X842wBl9gFZJP5O93Ge5Oasw==,
+        integrity: sha512-+Ez9EoiByeoTu/2BXmEaZ06iPNXM6thWJp02KfBO/raSMyCJ4jw7AkWWa+zBCTm0+Tw1Fj9FOxdqSskyN5nAwg==,
       }
     engines: { node: '>=16.0.0' }
     dependencies:

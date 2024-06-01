@@ -1,5 +1,6 @@
+import type * as vscode from 'vscode'
+
 import * as path from 'path'
-import * as vscode from 'vscode'
 import {
   LanguageClient,
   LanguageClientOptions,
@@ -49,17 +50,9 @@ function startLanguageClient(context: vscode.ExtensionContext): LanguageClient {
     run: { module: serverModule, transport: TransportKind.ipc },
   }
 
-  const fileSystemWatcher =
-    vscode.workspace.createFileSystemWatcher('**/*.formml')
-  context.subscriptions.push(fileSystemWatcher)
-
   // Options to control the language client
   const clientOptions: LanguageClientOptions = {
     documentSelector: [{ language: 'formml', scheme: 'file' }],
-    synchronize: {
-      // Notify the server about file changes to files contained in the workspace
-      fileEvents: fileSystemWatcher,
-    },
   }
 
   // Create the language client and start the client.

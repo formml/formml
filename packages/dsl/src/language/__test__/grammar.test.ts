@@ -1,15 +1,23 @@
+import { parseHelper } from 'langium/test'
+
 import { createInMemoryServices } from '../formml-module.js'
 import { FormMLSchema } from '../generated/ast.js'
-import { FormMLParserError, createParser } from '../parser.js'
 
 describe('grammar', () => {
   const services = createInMemoryServices()
   const serialize = (ast: FormMLSchema) =>
     services.FormML.serializer.JsonSerializer.serialize(ast, { space: 2 })
-  const parser = createParser(services.FormML)
+  const parser = (input: string) =>
+    parseHelper<FormMLSchema>(services.FormML)(input)
+      .then((x) => x.parseResult)
+      .then((r) =>
+        r.lexerErrors.length > 0 || r.parserErrors.length > 0
+          ? Promise.reject(new Error('Parsing failed'))
+          : r.value,
+      )
 
   describe('syntax', () => {
-    test('comments', () => {
+    test('comments', async () => {
       const content = `
         // inline comment
 
@@ -22,13 +30,13 @@ describe('grammar', () => {
         }
       `
 
-      const ast = parser(content)
+      const ast = await parser(content)
       expect(serialize(ast)).toMatchSnapshot()
     })
   })
 
   describe('simple fields', () => {
-    test('primitives', () => {
+    test('primitives', async () => {
       const content = `
         form ExampleForm {
           num      numberField
@@ -38,44 +46,44 @@ describe('grammar', () => {
           datetime datetimeField
         }
       `
-      const ast = parser(content)
+      const ast = await parser(content)
       expect(serialize(ast)).toMatchSnapshot()
     })
 
-    test('invalidate unknown types', () => {
+    test('invalidate unknown types', async () => {
       const content = `
         form ExampleForm {
           unknown invalidType
         }
       `
-      expect(() => parser(content)).toThrow(FormMLParserError)
+      await expect(() => parser(content)).rejects.toThrow()
     })
   })
 
   describe('validation annotations', () => {
     describe('non-argument annotation', () => {
-      test('one line', () => {
+      test('one line', async () => {
         const content = `
           form ExampleForm {
             @required num numberField
           }
         `
-        const ast = parser(content)
+        const ast = await parser(content)
         expect(serialize(ast)).toMatchSnapshot()
       })
 
-      test('multiple lines', () => {
+      test('multiple lines', async () => {
         const content = `
           form ExampleForm {
             @required
             num numberField
           }
         `
-        const ast = parser(content)
+        const ast = await parser(content)
         expect(serialize(ast)).toMatchSnapshot()
       })
 
-      test('multiple annotations', () => {
+      test('multiple annotations', async () => {
         const content = `
           form ExampleForm {
             @required1
@@ -83,31 +91,31 @@ describe('grammar', () => {
             num numberField
           }
         `
-        const ast = parser(content)
+        const ast = await parser(content)
         expect(serialize(ast)).toMatchSnapshot()
       })
 
-      test('annotation with parentheses', () => {
+      test('annotation with parentheses', async () => {
         const content = `
           form ExampleForm {
             @required()
             num numberField
           }
         `
-        const ast = parser(content)
+        const ast = await parser(content)
         expect(serialize(ast)).toMatchSnapshot()
       })
     })
 
     describe('annotation with arguments', () => {
-      test('one argument', () => {
+      test('one argument', async () => {
         const content = `
           form ExampleForm {
             @min(10)
             num numberField
           }
         `
-        const ast = parser(content)
+        const ast = await parser(content)
         expect(serialize(ast)).toMatchSnapshot()
       })
     })
