@@ -35,7 +35,8 @@ terminal DQ_STRING: /"[^"]*"/;
 DQString:
   value=DQ_STRING;
 
-terminal BOOLEAN returns boolean: /true|false/;
+BOOLEAN returns boolean:
+  'true' | 'false';
 Boolean:
   value=BOOLEAN;
 
