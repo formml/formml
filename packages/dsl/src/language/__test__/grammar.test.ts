@@ -1,10 +1,15 @@
-import { parseHelper } from 'langium/test'
+import { clearDocuments, parseHelper } from 'langium/test'
 
 import { createInMemoryServices } from '../formml-module.js'
 import { FormMLSchema } from '../generated/ast.js'
 
 describe('grammar', () => {
   const services = createInMemoryServices()
+
+  beforeEach(async () => {
+    await clearDocuments(services.FormML)
+  })
+
   const serialize = (ast: FormMLSchema) =>
     services.FormML.serializer.JsonSerializer.serialize(ast, { space: 2 })
   const parser = (input: string) =>
@@ -56,7 +61,7 @@ describe('grammar', () => {
           unknown invalidType
         }
       `
-      await expect(() => parser(content)).rejects.toThrow()
+      await expect(parser(content)).rejects.toThrow()
     })
   })
 
@@ -146,6 +151,19 @@ describe('grammar', () => {
               `
               const ast = await parser(content)
               expect(serialize(ast)).toMatchSnapshot()
+            },
+          )
+
+          test.each(['0123', '-0123', '0123.456', '-0123.456', '0000123'])(
+            'numbers should prevent leading zeros - %j',
+            async (input) => {
+              const content = `
+                form ExampleForm {
+                  @any(${input})
+                  num numberField
+                }
+              `
+              await expect(parser(content)).rejects.toThrow()
             },
           )
         })

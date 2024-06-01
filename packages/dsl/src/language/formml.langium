@@ -21,10 +21,11 @@ hidden terminal WS: /\s+/;
 terminal ID: /[_$a-zA-Z][\w_]*/;
 
 // Literals
+
 Literal:
   Number_ | SQString | DQString;
 
-terminal NUMBER returns number: /-?[0-9]+(\.[0-9]+)?/;
+terminal NUMBER returns number: /-?(?:0|[1-9]\d*)(?:\.[0-9]+)?/;
 Number_:
   value=NUMBER;
 
