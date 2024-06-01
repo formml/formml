@@ -142,6 +142,27 @@ describe('grammar', () => {
           const ast = await parser(content)
           expect(serialize(ast)).toMatchSnapshot()
         })
+
+        test('allows trailing comma', async () => {
+          const content = `
+            form ExampleForm {
+              @range(10, 20,)
+              num numberField
+            }
+          `
+          const ast = await parser(content)
+          expect(serialize(ast)).toMatchSnapshot()
+        })
+
+        test('disallows more than one trailing comma', async () => {
+          const content = `
+            form ExampleForm {
+              @range(10, 20, ,)
+              num numberField
+            }
+          `
+          await expect(parser(content)).rejects.toThrow()
+        })
       })
 
       describe('named arguments', () => {
@@ -155,27 +176,6 @@ describe('grammar', () => {
           const ast = await parser(content)
           expect(serialize(ast)).toMatchSnapshot()
         })
-      })
-
-      test('allows trailing comma', async () => {
-        const content = `
-          form ExampleForm {
-            @range(10, 20,)
-            num numberField
-          }
-        `
-        const ast = await parser(content)
-        expect(serialize(ast)).toMatchSnapshot()
-      })
-
-      test('disallows more than one trailing comma', async () => {
-        const content = `
-          form ExampleForm {
-            @range(10, 20, ,)
-            num numberField
-          }
-        `
-        await expect(parser(content)).rejects.toThrow()
       })
 
       describe('argument type', () => {
