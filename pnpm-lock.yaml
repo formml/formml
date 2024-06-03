@@ -186,6 +186,9 @@ importers:
       eslint-config-formml:
         specifier: workspace:*
         version: link:../eslint-config-formml
+      vscode-languageserver-types:
+        specifier: ^3.17.5
+        version: 3.17.5
 
   packages/eslint-config-formml: {}
 

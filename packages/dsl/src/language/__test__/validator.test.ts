@@ -14,6 +14,18 @@ describe('validator', () => {
     parseHelper<FormMLSchema>(services.FormML)(input, { validation: true })
 
   describe('annotation', () => {
+    test('should error when annotation call is not immediately followed by @ sign', async () => {
+      const input = `
+        form ExampleForm {
+          @     required
+          num numberField
+        }
+      `
+      const { diagnostics } = await parser(input)
+      expect(diagnostics).toHaveLength(1)
+      expect(diagnostics).toMatchSnapshot()
+    })
+
     test('should error when named arguments appear before positional arguments', async () => {
       const input = `
         form ExampleForm {

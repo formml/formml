@@ -1,5 +1,30 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`validator > annotation > should error when annotation call is not immediately followed by @ sign 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Expect an annotation call immediately after "@" sign, but found whitespaces.",
+    "range": {
+      "end": {
+        "character": 16,
+        "line": 2,
+      },
+      "start": {
+        "character": 11,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
 exports[`validator > annotation > should error when named arguments appear before positional arguments - multiple appearances 1`] = `
 [
   {

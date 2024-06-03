@@ -1,4 +1,6 @@
-import { ValidationAcceptor, ValidationChecks } from 'langium'
+import type { Range } from 'vscode-languageserver-types'
+
+import { GrammarUtils, ValidationAcceptor, ValidationChecks } from 'langium'
 
 import type { FormMLServices } from './formml-module.js'
 
@@ -11,7 +13,10 @@ export function registerValidationChecks(services: FormMLServices) {
   const registry = services.validation.ValidationRegistry
   const validator = services.validation.FormMLValidator
   const checks: ValidationChecks<ast.FormMLAstType> = {
-    Annotation: validator.checkAnnotationCallArguments,
+    Annotation: [
+      validator.checkAnnotationCallArguments,
+      validator.checkNoSpacesAfterAnnotationSign,
+    ],
   }
   registry.register(checks, validator)
 }
@@ -39,6 +44,41 @@ export class FormMLValidator {
         )
         namedArgs.length = 0 // reset array
       }
+    }
+  }
+
+  checkNoSpacesAfterAnnotationSign = (
+    annotation: ast.Annotation,
+    accept: ValidationAcceptor,
+  ) => {
+    if (!annotation.$cstNode) return
+
+    const atSignNode = GrammarUtils.findNodeForKeyword(annotation.$cstNode, '@')
+    const nameNode = GrammarUtils.findNodeForProperty(
+      annotation.$cstNode,
+      'name',
+    )
+
+    const isAdjacent = (firstRange: Range, secondRange: Range) =>
+      firstRange.end.line === secondRange.start.line &&
+      firstRange.end.character === secondRange.start.character
+
+    if (
+      atSignNode &&
+      nameNode &&
+      !isAdjacent(atSignNode.range, nameNode.range)
+    ) {
+      accept(
+        'error',
+        'Expect an annotation call immediately after "@" sign, but found whitespaces.',
+        {
+          node: annotation,
+          range: {
+            end: nameNode.range.start,
+            start: atSignNode.range.end,
+          },
+        },
+      )
     }
   }
 }

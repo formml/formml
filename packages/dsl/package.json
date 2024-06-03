@@ -35,7 +35,8 @@
   },
   "devDependencies": {
     "@formml/typescript-config": "workspace:*",
-    "eslint-config-formml": "workspace:*"
+    "eslint-config-formml": "workspace:*",
+    "vscode-languageserver-types": "^3.17.5"
   },
   "exports": "./dist/index.js"
 }
