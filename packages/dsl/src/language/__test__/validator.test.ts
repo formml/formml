@@ -23,28 +23,19 @@ describe('validator', () => {
       `
       const { diagnostics } = await parser(input)
       expect(diagnostics).toHaveLength(1)
-      expect(diagnostics?.[0]).toMatchInlineSnapshot(`
-        {
-          "code": undefined,
-          "codeDescription": undefined,
-          "data": undefined,
-          "message": "Named argument can only appear after all positional arguments.",
-          "range": {
-            "end": {
-              "character": 23,
-              "line": 2,
-            },
-            "start": {
-              "character": 17,
-              "line": 2,
-            },
-          },
-          "relatedInformation": undefined,
-          "severity": 1,
-          "source": "formml",
-          "tags": undefined,
+      expect(diagnostics).toMatchSnapshot()
+    })
+
+    test('should error when named arguments appear before positional arguments - multiple appearances', async () => {
+      const input = `
+        form ExampleForm {
+          @any(1, name1: "value1", 2, name2: "value2", name3: "value3", 3, name4: "value4")
+          num numberField
         }
-      `)
+      `
+      const { diagnostics } = await parser(input)
+      expect(diagnostics).toHaveLength(3)
+      expect(diagnostics).toMatchSnapshot()
     })
   })
 })

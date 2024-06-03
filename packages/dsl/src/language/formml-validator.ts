@@ -37,6 +37,7 @@ export class FormMLValidator {
             { node: namedArg },
           ),
         )
+        namedArgs.length = 0 // reset array
       }
     }
   }

@@ -1,0 +1,91 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`validator > annotation > should error when named arguments appear before positional arguments - multiple appearances 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Named argument can only appear after all positional arguments.",
+    "range": {
+      "end": {
+        "character": 33,
+        "line": 2,
+      },
+      "start": {
+        "character": 18,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Named argument can only appear after all positional arguments.",
+    "range": {
+      "end": {
+        "character": 53,
+        "line": 2,
+      },
+      "start": {
+        "character": 38,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Named argument can only appear after all positional arguments.",
+    "range": {
+      "end": {
+        "character": 70,
+        "line": 2,
+      },
+      "start": {
+        "character": 55,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
+exports[`validator > annotation > should error when named arguments appear before positional arguments 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Named argument can only appear after all positional arguments.",
+    "range": {
+      "end": {
+        "character": 23,
+        "line": 2,
+      },
+      "start": {
+        "character": 17,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
