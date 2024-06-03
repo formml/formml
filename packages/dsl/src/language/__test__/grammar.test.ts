@@ -232,7 +232,15 @@ describe('grammar', () => {
         expect(serialize(ast)).toMatchSnapshot()
       })
 
-      test.todo('disallows named arguments appear before positional arguments')
+      test('does not check named argument positions in parsing', async () => {
+        const content = `
+          form ExampleForm {
+            @range(min: 10, 20)
+            num numberField
+          }
+        `
+        await expect(parser(content)).resolves.not.toThrow()
+      })
 
       describe('argument type', () => {
         describe('JS-like literals', () => {
