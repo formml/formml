@@ -56,6 +56,17 @@
           ".formml"
         ],
         "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "formml-declaration",
+        "aliases": [
+          "FormML Declaration",
+          "formml-declaration"
+        ],
+        "extensions": [
+          ".d.formml"
+        ],
+        "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
@@ -63,11 +74,13 @@
         "language": "formml",
         "scopeName": "source.formml",
         "path": "./syntaxes/formml.tmLanguage.json"
+      },
+      {
+        "language": "formml-declaration",
+        "scopeName": "source.formml-declaration",
+        "path": "./syntaxes/formml-declaration.tmLanguage.json"
       }
     ]
   },
-  "activationEvents": [
-    "onLanguage:formml"
-  ],
   "main": "./dist/index.cjs"
 }

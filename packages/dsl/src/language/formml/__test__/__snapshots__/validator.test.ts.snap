@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`validator > annotation > should error when annotation call is not immediately followed by @ sign 1`] = `
+exports[`formml validator > annotation > should error when annotation call is not immediately followed by @ sign 1`] = `
 [
   {
     "code": undefined,
@@ -25,7 +25,7 @@ exports[`validator > annotation > should error when annotation call is not immed
 ]
 `;
 
-exports[`validator > annotation > should error when named arguments appear before positional arguments - multiple appearances 1`] = `
+exports[`formml validator > annotation > should error when named arguments appear before positional arguments - multiple appearances 1`] = `
 [
   {
     "code": undefined,
@@ -90,7 +90,7 @@ exports[`validator > annotation > should error when named arguments appear befor
 ]
 `;
 
-exports[`validator > annotation > should error when named arguments appear before positional arguments 1`] = `
+exports[`formml validator > annotation > should error when named arguments appear before positional arguments 1`] = `
 [
   {
     "code": undefined,

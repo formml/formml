@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`grammar > simple fields > primitives 1`] = `
+exports[`formml grammar > simple fields > primitives 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -42,7 +42,7 @@ exports[`grammar > simple fields > primitives 1`] = `
 }"
 `;
 
-exports[`grammar > syntax > comments 1`] = `
+exports[`formml grammar > syntax > comments 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -60,7 +60,7 @@ exports[`grammar > syntax > comments 1`] = `
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > boolean - "false" 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > argument type > JS-like literals > boolean - "false" 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -92,7 +92,7 @@ exports[`grammar > validation annotations > annotation with arguments > argument
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > boolean - "true" 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > argument type > JS-like literals > boolean - "true" 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -124,7 +124,7 @@ exports[`grammar > validation annotations > annotation with arguments > argument
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > null 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > argument type > JS-like literals > null 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -155,7 +155,7 @@ exports[`grammar > validation annotations > annotation with arguments > argument
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > number - "-123" 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > argument type > JS-like literals > number - "-123" 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -187,7 +187,7 @@ exports[`grammar > validation annotations > annotation with arguments > argument
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > number - "-123.456" 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > argument type > JS-like literals > number - "-123.456" 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -219,7 +219,7 @@ exports[`grammar > validation annotations > annotation with arguments > argument
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > number - "0" 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > argument type > JS-like literals > number - "0" 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -251,7 +251,7 @@ exports[`grammar > validation annotations > annotation with arguments > argument
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > number - "123" 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > argument type > JS-like literals > number - "123" 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -283,7 +283,7 @@ exports[`grammar > validation annotations > annotation with arguments > argument
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > number - "123.456" 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > argument type > JS-like literals > number - "123.456" 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -315,7 +315,7 @@ exports[`grammar > validation annotations > annotation with arguments > argument
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > string - "'single quotes'" 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > argument type > JS-like literals > string - "'single quotes'" 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -347,7 +347,7 @@ exports[`grammar > validation annotations > annotation with arguments > argument
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > argument type > JS-like literals > string - "\\"double quotes\\"" 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > argument type > JS-like literals > string - "\\"double quotes\\"" 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -379,7 +379,7 @@ exports[`grammar > validation annotations > annotation with arguments > argument
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > mixes positional and named arguments 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > mixes positional and named arguments 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -419,7 +419,7 @@ exports[`grammar > validation annotations > annotation with arguments > mixes po
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > named arguments > allows trailing comma 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > named arguments > allows trailing comma 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -460,7 +460,7 @@ exports[`grammar > validation annotations > annotation with arguments > named ar
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > named arguments > multiple arguments 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > named arguments > multiple arguments 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -501,7 +501,7 @@ exports[`grammar > validation annotations > annotation with arguments > named ar
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > named arguments > multiple arguments with any order 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > named arguments > multiple arguments with any order 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -542,7 +542,7 @@ exports[`grammar > validation annotations > annotation with arguments > named ar
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > named arguments > one argument 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > named arguments > one argument 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -575,7 +575,7 @@ exports[`grammar > validation annotations > annotation with arguments > named ar
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > positional arguments > allows trailing comma 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > positional arguments > allows trailing comma 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -614,7 +614,7 @@ exports[`grammar > validation annotations > annotation with arguments > position
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > positional arguments > multiple arguments 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > positional arguments > multiple arguments 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -653,7 +653,7 @@ exports[`grammar > validation annotations > annotation with arguments > position
 }"
 `;
 
-exports[`grammar > validation annotations > annotation with arguments > positional arguments > one argument 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > positional arguments > one argument 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -685,7 +685,7 @@ exports[`grammar > validation annotations > annotation with arguments > position
 }"
 `;
 
-exports[`grammar > validation annotations > non-argument annotation > annotation with parentheses 1`] = `
+exports[`formml grammar > validation annotations > non-argument annotation > annotation with parentheses 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -709,7 +709,7 @@ exports[`grammar > validation annotations > non-argument annotation > annotation
 }"
 `;
 
-exports[`grammar > validation annotations > non-argument annotation > multiple annotations 1`] = `
+exports[`formml grammar > validation annotations > non-argument annotation > multiple annotations 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -738,7 +738,7 @@ exports[`grammar > validation annotations > non-argument annotation > multiple a
 }"
 `;
 
-exports[`grammar > validation annotations > non-argument annotation > multiple lines 1`] = `
+exports[`formml grammar > validation annotations > non-argument annotation > multiple lines 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -762,7 +762,7 @@ exports[`grammar > validation annotations > non-argument annotation > multiple l
 }"
 `;
 
-exports[`grammar > validation annotations > non-argument annotation > one line 1`] = `
+exports[`formml grammar > validation annotations > non-argument annotation > one line 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {

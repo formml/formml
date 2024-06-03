@@ -8,6 +8,14 @@
       "textMate": {
         "out": "../vscode/syntaxes/formml.tmLanguage.json"
       }
+    },
+    {
+      "id": "formml-declaration",
+      "grammar": "src/language/formml-declaration/formml-declaration.langium",
+      "fileExtensions": [".d.formml"],
+      "textMate": {
+        "out": "../vscode/syntaxes/formml-declaration.tmLanguage.json"
+      }
     }
   ],
   "out": "src/language/generated"

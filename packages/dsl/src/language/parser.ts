@@ -1,9 +1,7 @@
 import { ParseResult } from 'langium'
 
-import {
-  FormMLServices,
-  createInMemoryServices,
-} from './formml/formml-module.js'
+import { createInMemoryAggregateServices } from './aggregate-module.js'
+import { FormMLServices } from './formml/formml-module.js'
 import { FormMLSchema } from './generated/ast.js'
 
 export class FormMLParseError extends Error {
@@ -36,7 +34,7 @@ export class FormMLLexerError extends FormMLParseError {
 }
 
 export const createParser = (services?: FormMLServices) => {
-  const _services = services ?? createInMemoryServices().FormML
+  const _services = services ?? createInMemoryAggregateServices().FormML
   return (schema: string) => {
     const parseResult =
       _services.parser.LangiumParser.parse<FormMLSchema>(schema)

@@ -1,4 +1,4 @@
-import { createFormMLServices } from '@formml/dsl'
+import { createAggregateServices } from '@formml/dsl'
 import { startLanguageServer } from 'langium/lsp'
 import { NodeFileSystem } from 'langium/node'
 import {
@@ -10,7 +10,7 @@ import {
 const connection = createConnection(ProposedFeatures.all)
 
 // Inject the shared services and language-specific services
-const { shared } = createFormMLServices({ connection, ...NodeFileSystem })
+const { shared } = createAggregateServices({ connection, ...NodeFileSystem })
 
 // Start the language server with the shared services
 startLanguageServer(shared)

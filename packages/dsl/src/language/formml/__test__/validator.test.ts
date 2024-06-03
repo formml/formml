@@ -1,10 +1,10 @@
 import { clearDocuments, parseHelper } from 'langium/test'
 
+import { createInMemoryAggregateServices } from '../../aggregate-module.js'
 import { FormMLSchema } from '../../index.js'
-import { createInMemoryServices } from '../formml-module.js'
 
-describe('validator', () => {
-  const services = createInMemoryServices()
+describe('formml validator', () => {
+  const services = createInMemoryAggregateServices()
 
   afterEach(async () => {
     await clearDocuments(services.FormML)

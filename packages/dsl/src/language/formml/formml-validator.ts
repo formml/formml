@@ -9,7 +9,7 @@ import * as ast from '../generated/ast.js'
 /**
  * Register custom validation checks.
  */
-export function registerValidationChecks(services: FormMLServices) {
+export function registerFormMLValidationChecks(services: FormMLServices) {
   const registry = services.validation.ValidationRegistry
   const validator = services.validation.FormMLValidator
   const checks: ValidationChecks<ast.FormMLAstType> = {
