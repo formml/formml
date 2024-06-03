@@ -6,7 +6,7 @@ import { FormMLSchema } from '../generated/ast.js'
 describe('grammar', () => {
   const services = createInMemoryServices()
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await clearDocuments(services.FormML)
   })
 

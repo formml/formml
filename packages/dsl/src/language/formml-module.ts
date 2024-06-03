@@ -9,17 +9,20 @@ import {
 } from 'langium/lsp'
 
 import {
+  FormMLValidator,
+  registerValidationChecks,
+} from './formml-validator.js'
+import {
   FormMLGeneratedModule,
   FormMLGeneratedSharedModule,
 } from './generated/module.js'
-// import { FormMLValidator, registerValidationChecks } from './formml-validator'
 
 /**
  * Declaration of custom services - add your own service classes here.
  */
 export type FormMLAddedServices = {
   validation: {
-    // FormMLValidator: FormMLValidator
+    FormMLValidator: FormMLValidator
   }
 }
 
@@ -39,7 +42,7 @@ export const FormMLModule: Module<
   PartialLangiumServices & FormMLAddedServices
 > = {
   validation: {
-    // FormMLValidator: () => new FormMLValidator(),
+    FormMLValidator: () => new FormMLValidator(),
   },
 }
 
@@ -72,7 +75,7 @@ export function createFormMLServices(context: DefaultSharedModuleContext): {
     FormMLModule,
   )
   shared.ServiceRegistry.register(FormML)
-  // registerValidationChecks(FormML)
+  registerValidationChecks(FormML)
   if (!context.connection) {
     // We don't run inside a language server
     // Therefore, initialize the configuration provider instantly

@@ -1,35 +1,43 @@
-// import { ValidationAcceptor, ValidationChecks } from 'langium'
-// import { FormMLAstType } from './generated/ast'
-// import type { FormMLServices } from './formml-module'
+import { ValidationAcceptor, ValidationChecks } from 'langium'
 
-// /**
-//  * Register custom validation checks.
-//  */
-// export function registerValidationChecks(services: FormMLServices) {
-//   const registry = services.validation.ValidationRegistry
-//   const validator = services.validation.FormMLValidator
-//   const checks: ValidationChecks<FormMLAstType> = {
-//     Person: validator.checkPersonStartsWithCapital,
-//   }
-//   registry.register(checks, validator)
-// }
+import type { FormMLServices } from './formml-module.js'
 
-// /**
-//  * Implementation of custom validations.
-//  */
-// export class FormMLValidator {
-//   checkPersonStartsWithCapital(
-//     person: Person,
-//     accept: ValidationAcceptor
-//   ): void {
-//     if (person.name) {
-//       const firstChar = person.name.substring(0, 1)
-//       if (firstChar.toUpperCase() !== firstChar) {
-//         accept('warning', 'Person name should start with a capital.', {
-//           node: person,
-//           property: 'name',
-//         })
-//       }
-//     }
-//   }
-// }
+import * as ast from './generated/ast.js'
+
+/**
+ * Register custom validation checks.
+ */
+export function registerValidationChecks(services: FormMLServices) {
+  const registry = services.validation.ValidationRegistry
+  const validator = services.validation.FormMLValidator
+  const checks: ValidationChecks<ast.FormMLAstType> = {
+    Annotation: validator.checkAnnotationCallArguments,
+  }
+  registry.register(checks, validator)
+}
+
+/**
+ * Implementation of custom validations.
+ */
+export class FormMLValidator {
+  checkAnnotationCallArguments = (
+    annotation: ast.Annotation,
+    accept: ValidationAcceptor,
+  ) => {
+    const namedArgs: ast.NamedArgument[] = []
+    for (const arg of annotation.args) {
+      if (ast.isNamedArgument(arg)) {
+        namedArgs.push(arg)
+      }
+      if (ast.isPositionalArgument(arg)) {
+        namedArgs.forEach((namedArg) =>
+          accept(
+            'error',
+            'Named argument can only appear after all positional arguments.',
+            { node: namedArg },
+          ),
+        )
+      }
+    }
+  }
+}
