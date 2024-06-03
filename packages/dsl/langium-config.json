@@ -3,7 +3,7 @@
   "languages": [
     {
       "id": "formml",
-      "grammar": "src/language/formml.langium",
+      "grammar": "src/language/formml/formml.langium",
       "fileExtensions": [".formml"],
       "textMate": {
         "out": "../vscode/syntaxes/formml.tmLanguage.json"

@@ -1,7 +1,7 @@
 import { clearDocuments, parseHelper } from 'langium/test'
 
+import { FormMLSchema } from '../../generated/ast.js'
 import { createInMemoryServices } from '../formml-module.js'
-import { FormMLSchema } from '../generated/ast.js'
 
 describe('grammar', () => {
   const services = createInMemoryServices()

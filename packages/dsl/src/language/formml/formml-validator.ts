@@ -4,7 +4,7 @@ import { GrammarUtils, ValidationAcceptor, ValidationChecks } from 'langium'
 
 import type { FormMLServices } from './formml-module.js'
 
-import * as ast from './generated/ast.js'
+import * as ast from '../generated/ast.js'
 
 /**
  * Register custom validation checks.

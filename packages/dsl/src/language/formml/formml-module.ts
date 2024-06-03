@@ -9,13 +9,13 @@ import {
 } from 'langium/lsp'
 
 import {
+  FormMLGeneratedModule,
+  FormMLGeneratedSharedModule,
+} from '../generated/module.js'
+import {
   FormMLValidator,
   registerValidationChecks,
 } from './formml-validator.js'
-import {
-  FormMLGeneratedModule,
-  FormMLGeneratedSharedModule,
-} from './generated/module.js'
 
 /**
  * Declaration of custom services - add your own service classes here.
