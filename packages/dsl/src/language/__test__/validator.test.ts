@@ -14,6 +14,17 @@ describe('validator', () => {
     parseHelper<FormMLSchema>(services.FormML)(input, { validation: true })
 
   describe('annotation', () => {
+    test('should no error when annotation is valid', async () => {
+      const input = `
+        form ExampleForm {
+          @range(0, max: 100)
+          num numberField
+        }
+      `
+      const { diagnostics } = await parser(input)
+      expect(diagnostics).toHaveLength(0)
+    })
+
     test('should error when annotation call is not immediately followed by @ sign', async () => {
       const input = `
         form ExampleForm {
