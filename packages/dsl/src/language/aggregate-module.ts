@@ -17,6 +17,7 @@ import {
   FormMLGeneratedModule,
   FormMLGeneratedSharedModule,
 } from './generated/module.js'
+import LongestMatchServiceRegistry from './overrides/LongestMatchServiceRegistry.js'
 
 /**
  * Create the full set of services required by Langium.
@@ -41,6 +42,9 @@ export function createAggregateServices(context: DefaultSharedModuleContext): {
   const shared = inject(
     createDefaultSharedModule(context),
     FormMLGeneratedSharedModule,
+    {
+      ServiceRegistry: () => new LongestMatchServiceRegistry(),
+    },
   )
   const FormML = inject(
     createDefaultModule({ shared }),
