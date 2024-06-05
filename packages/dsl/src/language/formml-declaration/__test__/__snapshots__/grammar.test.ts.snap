@@ -52,3 +52,21 @@ exports[`formml declaration grammar > annotation > declare annotation with one p
   ]
 }"
 `;
+
+exports[`formml declaration grammar > annotation > parameters allow trailing comma 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "newAnnotation",
+      "parameters": [
+        {
+          "$type": "Parameter",
+          "name": "name"
+        }
+      ]
+    }
+  ]
+}"
+`;

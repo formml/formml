@@ -48,5 +48,16 @@ describe('formml declaration grammar', () => {
       const ast = await parser(input)
       expect(serialize(ast)).toMatchSnapshot()
     })
+
+    test('parameters allow trailing comma', async () => {
+      const input = `annot fun newAnnotation(name,)`
+      const ast = await parser(input)
+      expect(serialize(ast)).toMatchSnapshot()
+    })
+
+    test('parameters disallow more than one trailing commas', async () => {
+      const input = `annot fun newAnnotation(name,,)`
+      await expect(parser(input)).rejects.toThrow()
+    })
   })
 })
