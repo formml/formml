@@ -6,7 +6,26 @@ exports[`formml declaration grammar > annotation > declare annotation 1`] = `
   "declarations": [
     {
       "$type": "AnnotationDeclaration",
-      "name": "newAnnotation"
+      "name": "newAnnotation",
+      "parameters": []
+    }
+  ]
+}"
+`;
+
+exports[`formml declaration grammar > annotation > declare annotation with one parameter 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "newAnnotation",
+      "parameters": [
+        {
+          "$type": "Parameter",
+          "name": "name"
+        }
+      ]
     }
   ]
 }"

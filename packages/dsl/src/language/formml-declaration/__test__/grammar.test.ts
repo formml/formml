@@ -36,5 +36,11 @@ describe('formml declaration grammar', () => {
       const ast = await parser(input)
       expect(serialize(ast)).toMatchSnapshot()
     })
+
+    test('declare annotation with one parameter', async () => {
+      const input = `annot fun newAnnotation(name)`
+      const ast = await parser(input)
+      expect(serialize(ast)).toMatchSnapshot()
+    })
   })
 })

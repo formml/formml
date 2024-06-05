@@ -9,5 +9,8 @@ Declaration:
   FunctionDeclaration;
 
 FunctionDeclaration:
-  {infer AnnotationDeclaration} 'annot' 'fun' name=ID '(' ')';
+  {infer AnnotationDeclaration} 'annot' 'fun' name=ID '(' (parameters+=Parameter)* ')';
+
+Parameter:
+  name=ID;
 
