@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`formml declaration grammar > annotation > declare annotation 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "newAnnotation"
+    }
+  ]
+}"
+`;

@@ -3,5 +3,11 @@ grammar FormMLDeclaration
 import '../common/common'
 
 entry FormMLDeclaration:
-  name=ID;
+  (declarations+=Declaration)+;
+
+Declaration:
+  FunctionDeclaration;
+
+FunctionDeclaration:
+  {infer AnnotationDeclaration} 'annot' 'fun' name=ID '(' ')';
 
