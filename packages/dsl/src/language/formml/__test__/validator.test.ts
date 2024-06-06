@@ -121,5 +121,17 @@ describe('formml validator', () => {
       expect(diagnostics).toHaveLength(1)
       expect(diagnostics).toMatchSnapshot()
     })
+
+    test('should error given unknown named argument', async () => {
+      const input = `
+        form ExampleForm {
+          @range(0, unknown: 100)
+          num numberField
+        }
+      `
+      const { diagnostics } = await parser(input)
+      expect(diagnostics).toHaveLength(1)
+      expect(diagnostics).toMatchSnapshot()
+    })
   })
 })

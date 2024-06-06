@@ -30,6 +30,7 @@ export class FormMLValidator {
     accept: ValidationAcceptor,
   ) => {
     const declaration = annotation.call.ref
+    const paramIsAssigned: Record<string, boolean> = {}
     if (declaration) {
       if (annotation.args.length > declaration.parameters.length) {
         accept(
@@ -47,11 +48,25 @@ export class FormMLValidator {
           },
         )
       }
+      declaration.parameters.forEach((param) => {
+        paramIsAssigned[param.name] = false
+      })
     }
     const namedArgs: ast.NamedArgument[] = []
     for (const arg of annotation.args) {
       if (ast.isNamedArgument(arg)) {
         namedArgs.push(arg)
+        if (!(arg.name in paramIsAssigned)) {
+          accept(
+            'error',
+            `Unknown parameter "${arg.name}", expected one of ${Object.keys(
+              paramIsAssigned,
+            )
+              .map((k) => `"${k}"`)
+              .join(' | ')}`,
+            { node: arg },
+          )
+        }
       }
       if (ast.isPositionalArgument(arg)) {
         namedArgs.forEach((namedArg) =>

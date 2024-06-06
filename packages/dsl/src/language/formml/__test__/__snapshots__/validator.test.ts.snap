@@ -25,6 +25,31 @@ exports[`formml validator > annotation > should error given too many arguments 1
 ]
 `;
 
+exports[`formml validator > annotation > should error given unknown named argument 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Unknown parameter "unknown", expected one of "min" | "max"",
+    "range": {
+      "end": {
+        "character": 32,
+        "line": 2,
+      },
+      "start": {
+        "character": 20,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
 exports[`formml validator > annotation > should error when annotation call is not immediately followed by @ sign 1`] = `
 [
   {
