@@ -54,9 +54,9 @@ export class FormMLValidator {
     if (!annotation.$cstNode) return
 
     const atSignNode = GrammarUtils.findNodeForKeyword(annotation.$cstNode, '@')
-    const nameNode = GrammarUtils.findNodeForProperty(
+    const callNode = GrammarUtils.findNodeForProperty(
       annotation.$cstNode,
-      'name',
+      'call',
     )
 
     const isAdjacent = (firstRange: Range, secondRange: Range) =>
@@ -65,8 +65,8 @@ export class FormMLValidator {
 
     if (
       atSignNode &&
-      nameNode &&
-      !isAdjacent(atSignNode.range, nameNode.range)
+      callNode &&
+      !isAdjacent(atSignNode.range, callNode.range)
     ) {
       accept(
         'error',
@@ -74,7 +74,7 @@ export class FormMLValidator {
         {
           node: annotation,
           range: {
-            end: nameNode.range.start,
+            end: callNode.range.start,
             start: atSignNode.range.end,
           },
         },

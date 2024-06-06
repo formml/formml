@@ -26,7 +26,7 @@ const type = (formmlSchema: Field) => {
 }
 
 const isRequired = (formmlSchema: Field) =>
-  formmlSchema.annotations.some((a) => a.name.$refText === 'required')
+  formmlSchema.annotations.some((a) => a.call.$refText === 'required')
 
 export default function buildSchema<T extends PrimitiveType>(
   formmlSchema: Field<T>,

@@ -33,7 +33,7 @@ exports[`formml validator > annotation > should error when called annotation is 
     "data": {
       "code": "linking-error",
       "containerType": "Annotation",
-      "property": "name",
+      "property": "call",
       "refText": "unknown",
     },
     "message": "Could not resolve reference to AnnotationDeclaration named 'unknown'.",

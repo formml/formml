@@ -21,7 +21,7 @@ fragment Arguments:
   (args+=Argument ',')* (args+=Argument)?;
 
 Annotation:
-  '@' name=[AnnotationDeclaration] ('(' Arguments ')')?;
+  '@' call=[AnnotationDeclaration] ('(' Arguments ')')?;
 
 PrimitiveType returns string:
   'text' | 'num' | 'decimal' | 'bool' | 'datetime';
