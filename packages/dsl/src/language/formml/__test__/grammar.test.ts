@@ -1,15 +1,32 @@
 import { clearDocuments, parseHelper } from 'langium/test'
 
 import { createInMemoryAggregateServices } from '../../aggregate-module.js'
-import { FormMLSchema } from '../../generated/ast.js'
+import { FormMLDeclaration, FormMLSchema } from '../../generated/ast.js'
 
 describe('formml grammar', () => {
   const services = createInMemoryAggregateServices()
 
   afterEach(async () => {
-    await clearDocuments(services.FormML)
+    await clearDocuments(services.shared)
   })
 
+  const loadDeclaration = (input: string, uri: string) =>
+    parseHelper<FormMLDeclaration>(services.FormMLDeclaration)(input, {
+      documentUri: uri,
+    })
+      .then((x) => x.parseResult)
+      .then((r) =>
+        r.lexerErrors.length > 0 || r.parserErrors.length > 0
+          ? Promise.reject(
+              new Error(
+                'Parsing failed with errors:\n' +
+                  [...r.lexerErrors, ...r.parserErrors]
+                    .map((e) => e.message)
+                    .join('\n'),
+              ),
+            )
+          : r.value,
+      )
   const serialize = (ast: FormMLSchema) =>
     services.FormML.serializer.JsonSerializer.serialize(ast, { space: 2 })
   const parser = (input: string) =>
@@ -73,6 +90,18 @@ describe('formml grammar', () => {
   })
 
   describe('validation annotations', () => {
+    beforeEach(async () => {
+      const annotations = `
+        annot fun required()
+        annot fun required1()
+        annot fun required2()
+        annot fun min(value)
+        annot fun range(min, max)
+        annot fun any(value)
+      `
+      await loadDeclaration(annotations, 'file:///builtin-annotations.d.formml')
+    })
+
     describe('non-argument annotation', () => {
       test('one line', async () => {
         const content = `

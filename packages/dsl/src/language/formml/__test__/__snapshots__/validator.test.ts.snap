@@ -25,6 +25,36 @@ exports[`formml validator > annotation > should error when annotation call is no
 ]
 `;
 
+exports[`formml validator > annotation > should error when called annotation is not defined 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": {
+      "code": "linking-error",
+      "containerType": "Annotation",
+      "property": "name",
+      "refText": "unknown",
+    },
+    "message": "Could not resolve reference to AnnotationDeclaration named 'unknown'.",
+    "range": {
+      "end": {
+        "character": 18,
+        "line": 2,
+      },
+      "start": {
+        "character": 11,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
 exports[`formml validator > annotation > should error when named arguments appear before positional arguments - multiple appearances 1`] = `
 [
   {

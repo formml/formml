@@ -1,6 +1,7 @@
 grammar FormML
 
 import '../common/common'
+import '../formml-declaration/formml-declaration'
 
 entry FormMLSchema:
   form=Form;
@@ -20,7 +21,7 @@ fragment Arguments:
   (args+=Argument ',')* (args+=Argument)?;
 
 Annotation:
-  '@' name=ID ('(' Arguments ')')?;
+  '@' name=[AnnotationDeclaration] ('(' Arguments ')')?;
 
 PrimitiveType returns string:
   'text' | 'num' | 'decimal' | 'bool' | 'datetime';

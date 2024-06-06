@@ -81,7 +81,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
                 }
               }
             ],
-            "name": "any"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@5"
+            }
           }
         ],
         "type": "num",
@@ -113,7 +115,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
                 }
               }
             ],
-            "name": "any"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@5"
+            }
           }
         ],
         "type": "num",
@@ -144,7 +148,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
                 }
               }
             ],
-            "name": "any"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@5"
+            }
           }
         ],
         "type": "num",
@@ -176,7 +182,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
                 }
               }
             ],
-            "name": "any"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@5"
+            }
           }
         ],
         "type": "num",
@@ -208,7 +216,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
                 }
               }
             ],
-            "name": "any"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@5"
+            }
           }
         ],
         "type": "num",
@@ -240,7 +250,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
                 }
               }
             ],
-            "name": "any"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@5"
+            }
           }
         ],
         "type": "num",
@@ -272,7 +284,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
                 }
               }
             ],
-            "name": "any"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@5"
+            }
           }
         ],
         "type": "num",
@@ -304,7 +318,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
                 }
               }
             ],
-            "name": "any"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@5"
+            }
           }
         ],
         "type": "num",
@@ -336,7 +352,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
                 }
               }
             ],
-            "name": "any"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@5"
+            }
           }
         ],
         "type": "num",
@@ -368,7 +386,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
                 }
               }
             ],
-            "name": "any"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@5"
+            }
           }
         ],
         "type": "num",
@@ -408,7 +428,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > m
                 }
               }
             ],
-            "name": "range"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@4"
+            }
           }
         ],
         "type": "num",
@@ -449,7 +471,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > n
                 }
               }
             ],
-            "name": "range"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@4"
+            }
           }
         ],
         "type": "num",
@@ -490,7 +514,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > n
                 }
               }
             ],
-            "name": "range"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@4"
+            }
           }
         ],
         "type": "num",
@@ -531,7 +557,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > n
                 }
               }
             ],
-            "name": "range"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@4"
+            }
           }
         ],
         "type": "num",
@@ -564,7 +592,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > n
                 }
               }
             ],
-            "name": "min"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@3"
+            }
           }
         ],
         "type": "num",
@@ -603,7 +633,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > p
                 }
               }
             ],
-            "name": "range"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@4"
+            }
           }
         ],
         "type": "num",
@@ -642,7 +674,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > p
                 }
               }
             ],
-            "name": "range"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@4"
+            }
           }
         ],
         "type": "num",
@@ -674,7 +708,9 @@ exports[`formml grammar > validation annotations > annotation with arguments > p
                 }
               }
             ],
-            "name": "min"
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@3"
+            }
           }
         ],
         "type": "num",
@@ -697,7 +733,9 @@ exports[`formml grammar > validation annotations > non-argument annotation > ann
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "required",
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@0"
+            },
             "args": []
           }
         ],
@@ -721,12 +759,16 @@ exports[`formml grammar > validation annotations > non-argument annotation > mul
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "required1",
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@1"
+            },
             "args": []
           },
           {
             "$type": "Annotation",
-            "name": "required2",
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@2"
+            },
             "args": []
           }
         ],
@@ -750,7 +792,9 @@ exports[`formml grammar > validation annotations > non-argument annotation > mul
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "required",
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@0"
+            },
             "args": []
           }
         ],
@@ -774,7 +818,9 @@ exports[`formml grammar > validation annotations > non-argument annotation > one
         "annotations": [
           {
             "$type": "Annotation",
-            "name": "required",
+            "name": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@0"
+            },
             "args": []
           }
         ],

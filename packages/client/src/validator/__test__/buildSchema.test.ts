@@ -111,7 +111,9 @@ describe('buildSchema', () => {
                 $container: {} as Field,
                 $type: 'Annotation',
                 args: [],
-                name: 'required',
+                name: {
+                  $refText: 'required',
+                } as never,
               },
             ],
             name: 'field',
@@ -138,7 +140,9 @@ describe('buildSchema', () => {
               $container: {} as Field,
               $type: 'Annotation',
               args: [],
-              name: 'required',
+              name: {
+                $refText: 'required',
+              } as never,
             },
           ],
           name: 'field',
