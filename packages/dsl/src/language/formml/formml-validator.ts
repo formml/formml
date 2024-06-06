@@ -63,10 +63,16 @@ export class FormMLValidator {
               paramIsAssigned,
             )
               .map((k) => `"${k}"`)
-              .join(' | ')}`,
+              .join(' | ')}.`,
             { node: arg },
           )
         }
+        if (paramIsAssigned[arg.name]) {
+          accept('error', `Duplicate assignment to parameter "${arg.name}".`, {
+            node: arg,
+          })
+        }
+        paramIsAssigned[arg.name] = true
       }
       if (ast.isPositionalArgument(arg)) {
         namedArgs.forEach((namedArg) =>

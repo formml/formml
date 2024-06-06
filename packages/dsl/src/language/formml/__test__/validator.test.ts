@@ -133,5 +133,17 @@ describe('formml validator', () => {
       expect(diagnostics).toHaveLength(1)
       expect(diagnostics).toMatchSnapshot()
     })
+
+    test('should error when re-assigning to same parameter', async () => {
+      const input = `
+        form ExampleForm {
+          @range(min: 10, min: 100)
+          num numberField
+        }
+      `
+      const { diagnostics } = await parser(input)
+      expect(diagnostics).toHaveLength(1)
+      expect(diagnostics).toMatchSnapshot()
+    })
   })
 })

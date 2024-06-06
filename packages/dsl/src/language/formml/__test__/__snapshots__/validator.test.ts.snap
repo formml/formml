@@ -31,7 +31,7 @@ exports[`formml validator > annotation > should error given unknown named argume
     "code": undefined,
     "codeDescription": undefined,
     "data": undefined,
-    "message": "Unknown parameter "unknown", expected one of "min" | "max"",
+    "message": "Unknown parameter "unknown", expected one of "min" | "max".",
     "range": {
       "end": {
         "character": 32,
@@ -184,6 +184,31 @@ exports[`formml validator > annotation > should error when named arguments appea
       },
       "start": {
         "character": 17,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
+exports[`formml validator > annotation > should error when re-assigning to same parameter 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Duplicate assignment to parameter "min".",
+    "range": {
+      "end": {
+        "character": 34,
+        "line": 2,
+      },
+      "start": {
+        "character": 26,
         "line": 2,
       },
     },
