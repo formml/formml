@@ -109,5 +109,17 @@ describe('formml validator', () => {
       const { diagnostics } = await parser(input)
       expect(diagnostics).toHaveLength(0)
     })
+
+    test('should error given too many arguments', async () => {
+      const input = `
+        form ExampleForm {
+          @range(0, 100, 200)
+          num numberField
+        }
+      `
+      const { diagnostics } = await parser(input)
+      expect(diagnostics).toHaveLength(1)
+      expect(diagnostics).toMatchSnapshot()
+    })
   })
 })

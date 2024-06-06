@@ -1,5 +1,30 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`formml validator > annotation > should error given too many arguments 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Expected 2 arguments, but got 3.",
+    "range": {
+      "end": {
+        "character": 28,
+        "line": 2,
+      },
+      "start": {
+        "character": 25,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
 exports[`formml validator > annotation > should error when annotation call is not immediately followed by @ sign 1`] = `
 [
   {

@@ -29,6 +29,25 @@ export class FormMLValidator {
     annotation: ast.Annotation,
     accept: ValidationAcceptor,
   ) => {
+    const declaration = annotation.call.ref
+    if (declaration) {
+      if (annotation.args.length > declaration.parameters.length) {
+        accept(
+          'error',
+          `Expected ${declaration.parameters.length} arguments, but got ${annotation.args.length}.`,
+          {
+            node: annotation,
+            range: {
+              end: annotation.args[annotation.args.length - 1].$cstNode!.range
+                .end,
+              start:
+                annotation.args[declaration.parameters.length].$cstNode!.range
+                  .start,
+            },
+          },
+        )
+      }
+    }
     const namedArgs: ast.NamedArgument[] = []
     for (const arg of annotation.args) {
       if (ast.isNamedArgument(arg)) {
