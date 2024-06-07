@@ -56,7 +56,7 @@ exports[`formml validator > annotation > should error when annotation call is no
     "code": undefined,
     "codeDescription": undefined,
     "data": undefined,
-    "message": "Expect an annotation call immediately after "@" sign, but found whitespaces.",
+    "message": "Expected an annotation call immediately after "@" sign, but found whitespaces.",
     "range": {
       "end": {
         "character": 16,

@@ -129,7 +129,7 @@ export class FormMLValidator {
     ) {
       accept(
         'error',
-        'Expect an annotation call immediately after "@" sign, but found whitespaces.',
+        'Expected an annotation call immediately after "@" sign, but found whitespaces.',
         {
           node: annotation,
           range: {
