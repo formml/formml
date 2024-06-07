@@ -14,7 +14,8 @@ export function registerFormMLValidationChecks(services: FormMLServices) {
   const validator = services.validation.FormMLValidator
   const checks: ValidationChecks<ast.FormMLAstType> = {
     Annotation: [
-      validator.checkAnnotationCallArguments,
+      validator.checkAnnotationCallArgumentsAssignment,
+      validator.checkAnnotationCallArgumentsOrder,
       validator.checkNoSpacesAfterAnnotationSign,
     ],
   }
@@ -25,68 +26,84 @@ export function registerFormMLValidationChecks(services: FormMLServices) {
  * Implementation of custom validations.
  */
 export class FormMLValidator {
-  checkAnnotationCallArguments = (
+  checkAnnotationCallArgumentsAssignment = (
     annotation: ast.Annotation,
     accept: ValidationAcceptor,
   ) => {
     const declaration = annotation.call.ref
-    const paramIsAssigned: Record<string, boolean> = {}
-    if (declaration) {
-      if (annotation.args.length > declaration.parameters.length) {
-        accept(
-          'error',
-          `Expected ${declaration.parameters.length} arguments, but got ${annotation.args.length}.`,
-          {
-            node: annotation,
-            range: {
-              end: annotation.args[annotation.args.length - 1].$cstNode!.range
-                .end,
-              start:
-                annotation.args[declaration.parameters.length].$cstNode!.range
-                  .start,
-            },
-          },
-        )
-      }
-      declaration.parameters.forEach((param) => {
-        paramIsAssigned[param.name] = false
-      })
+    if (!declaration) return
+
+    const paramNames = declaration.parameters.map((p) => p.name)
+    const paramNameSet = new Set(paramNames)
+
+    const expectedLength = paramNameSet.size
+    const actualLength = annotation.args.length
+    if (actualLength > expectedLength) {
+      const firstExtra = annotation.args[expectedLength].$cstNode
+      const lastExtra = annotation.args[actualLength - 1].$cstNode
+      const range = firstExtra &&
+        lastExtra && {
+          end: lastExtra.range.end,
+          start: firstExtra.range.start,
+        }
+
+      accept(
+        'error',
+        `Expected ${expectedLength} arguments, but got ${actualLength}.`,
+        {
+          node: annotation,
+          range,
+        },
+      )
     }
-    const namedArgs: ast.NamedArgument[] = []
+
+    const assignedParams = new Set<string>()
+
     annotation.args.forEach((arg, index) => {
       if (ast.isNamedArgument(arg)) {
-        namedArgs.push(arg)
-        if (!(arg.name in paramIsAssigned)) {
+        if (!paramNameSet.has(arg.name)) {
           accept(
             'error',
-            `Unknown parameter "${arg.name}", expected one of ${Object.keys(
-              paramIsAssigned,
-            )
+            `Unknown parameter "${arg.name}", expected one of ${paramNames
               .map((k) => `"${k}"`)
               .join(' | ')}.`,
             { node: arg },
           )
         }
-        if (paramIsAssigned[arg.name]) {
+        if (assignedParams.has(arg.name)) {
           accept('error', `Duplicate assignment to parameter "${arg.name}".`, {
             node: arg,
           })
         }
-        paramIsAssigned[arg.name] = true
+        assignedParams.add(arg.name)
       }
       if (ast.isPositionalArgument(arg)) {
-        namedArgs.forEach((namedArg) =>
+        const paramName: string | undefined = paramNames[index] // may out of range
+        paramName && assignedParams.add(paramName)
+      }
+    })
+  }
+
+  checkAnnotationCallArgumentsOrder = (
+    annotation: ast.Annotation,
+    accept: ValidationAcceptor,
+  ) => {
+    const namedArgs: ast.NamedArgument[] = []
+    for (const arg of annotation.args) {
+      if (ast.isNamedArgument(arg)) {
+        namedArgs.push(arg)
+      }
+      if (ast.isPositionalArgument(arg)) {
+        for (const namedArg of namedArgs) {
           accept(
             'error',
             'Named argument can only appear after all positional arguments.',
             { node: namedArg },
-          ),
-        )
+          )
+        }
         namedArgs.length = 0 // reset array
-        const paramName = declaration?.parameters[index]?.name
-        paramName && (paramIsAssigned[paramName] = true)
       }
-    })
+    }
   }
 
   checkNoSpacesAfterAnnotationSign = (
