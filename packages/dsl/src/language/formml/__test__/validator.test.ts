@@ -90,7 +90,7 @@ describe('formml validator', () => {
     test('should error when named arguments appear before positional arguments - multiple appearances', async () => {
       const input = `
         form ExampleForm {
-          @any(1, name1: "value1", 2, name2: "value2", name3: "value3", 3, name4: "value4")
+          @any(1, name2: "value2", 3, name4: "value4", name5: "value5", 6, name7: "value7")
           num numberField
         }
       `
@@ -138,6 +138,18 @@ describe('formml validator', () => {
       const input = `
         form ExampleForm {
           @range(min: 10, min: 100)
+          num numberField
+        }
+      `
+      const { diagnostics } = await parser(input)
+      expect(diagnostics).toHaveLength(1)
+      expect(diagnostics).toMatchSnapshot()
+    })
+
+    test('should error when re-assigning to same parameter - mix of named and positional arguments', async () => {
+      const input = `
+        form ExampleForm {
+          @range(10, min: 100)
           num numberField
         }
       `

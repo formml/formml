@@ -53,7 +53,7 @@ export class FormMLValidator {
       })
     }
     const namedArgs: ast.NamedArgument[] = []
-    for (const arg of annotation.args) {
+    annotation.args.forEach((arg, index) => {
       if (ast.isNamedArgument(arg)) {
         namedArgs.push(arg)
         if (!(arg.name in paramIsAssigned)) {
@@ -83,8 +83,10 @@ export class FormMLValidator {
           ),
         )
         namedArgs.length = 0 // reset array
+        const paramName = declaration?.parameters[index]?.name
+        paramName && (paramIsAssigned[paramName] = true)
       }
-    }
+    })
   }
 
   checkNoSpacesAfterAnnotationSign = (

@@ -195,6 +195,31 @@ exports[`formml validator > annotation > should error when named arguments appea
 ]
 `;
 
+exports[`formml validator > annotation > should error when re-assigning to same parameter - mix of named and positional arguments 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Duplicate assignment to parameter "min".",
+    "range": {
+      "end": {
+        "character": 29,
+        "line": 2,
+      },
+      "start": {
+        "character": 21,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
 exports[`formml validator > annotation > should error when re-assigning to same parameter 1`] = `
 [
   {
