@@ -8,10 +8,13 @@ import {
   TransportKind,
 } from 'vscode-languageclient/node.js'
 
+import { BuiltinsFileSystemProvider } from './BuiltinsFileSystemProvider.js'
+
 let client: LanguageClient
 
 // This function is called when the extension is activated.
 export function activate(context: vscode.ExtensionContext): void {
+  BuiltinsFileSystemProvider.register(context)
   client = startLanguageClient(context)
 }
 

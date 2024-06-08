@@ -16,7 +16,8 @@
   "files": [
     "dist",
     "src",
-    "!src/**/__test__"
+    "!src/**/__test__",
+    "builtins"
   ],
   "scripts": {
     "build": "rimraf dist/ && pnpm run build:vite",
@@ -38,5 +39,10 @@
     "eslint-config-formml": "workspace:*",
     "vscode-languageserver-types": "^3.17.5"
   },
-  "exports": "./dist/index.js"
+  "exports": {
+    ".": "./dist/index.js",
+    "./builtins/*.formml": {
+      "import": "./builtins/*.formml"
+    }
+  }
 }
