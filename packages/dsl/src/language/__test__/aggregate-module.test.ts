@@ -1,4 +1,5 @@
 import { URI } from 'langium'
+import { parseHelper } from 'langium/test'
 
 import { createInMemoryAggregateServices } from '../aggregate-module.js'
 
@@ -14,6 +15,24 @@ describe('aggregate module', () => {
         shared.ServiceRegistry.getServices(URI.parse(`file:///${fileName}`))
           .LanguageMetaData.languageId,
       ).toBe(expectedLanguageId)
+    },
+  )
+
+  test.each(['@required'])(
+    'should support built-in annotation "%s"',
+    async (annotation) => {
+      const services = createInMemoryAggregateServices()
+      await services.shared.workspace.WorkspaceManager.initialized({})
+      const input = `
+        form Example {
+          ${annotation}
+          text field
+        }
+      `
+      const result = await parseHelper(services.FormML)(input, {
+        validation: true,
+      })
+      expect(result.diagnostics).toEqual([])
     },
   )
 })

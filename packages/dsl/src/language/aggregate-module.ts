@@ -17,6 +17,7 @@ import {
   FormMLGeneratedModule,
   FormMLGeneratedSharedModule,
 } from './generated/module.js'
+import BuiltinsWorkspaceManager from './overrides/BuiltinsWorkspaceManager.js'
 import LongestMatchServiceRegistry from './overrides/LongestMatchServiceRegistry.js'
 
 /**
@@ -44,6 +45,9 @@ export function createAggregateServices(context: DefaultSharedModuleContext): {
     FormMLGeneratedSharedModule,
     {
       ServiceRegistry: () => new LongestMatchServiceRegistry(),
+      workspace: {
+        WorkspaceManager: (services) => new BuiltinsWorkspaceManager(services),
+      },
     },
   )
   const FormML = inject(
