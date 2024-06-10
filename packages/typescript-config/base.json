@@ -9,7 +9,7 @@
     "isolatedModules": true,
     "moduleResolution": "NodeNext",
     "noUncheckedIndexedAccess": false,
-    "target": "es2015",
+    "target": "ESNext",
     "module": "NodeNext",
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,

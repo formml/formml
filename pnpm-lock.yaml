@@ -130,6 +130,9 @@ importers:
       vite:
         specifier: ~5.0.10
         version: 5.0.10(@types/node@20.10.5)
+      vite-node:
+        specifier: ^1.6.0
+        version: 1.6.0(@types/node@20.10.5)
       vite-plugin-dts:
         specifier: ^3.9.1
         version: 3.9.1(@types/node@20.10.5)(typescript@5.3.3)(vite@5.0.10)
@@ -150,7 +153,7 @@ importers:
         version: link:../dsl
       '@vue-reactivity/watch':
         specifier: ^0.2.0
-        version: 0.2.0(@vue/reactivity@3.4.3)(@vue/shared@3.4.22)
+        version: 0.2.0(@vue/reactivity@3.4.3)(@vue/shared@3.4.27)
       '@vue/reactivity':
         specifier: ^3.4.3
         version: 3.4.3
@@ -2650,7 +2653,7 @@ packages:
       keytar: 7.9.0
     dev: true
 
-  /@vue-reactivity/watch@0.2.0(@vue/reactivity@3.4.3)(@vue/shared@3.4.22):
+  /@vue-reactivity/watch@0.2.0(@vue/reactivity@3.4.3)(@vue/shared@3.4.27):
     resolution:
       {
         integrity: sha512-U1asJgKuzZveyIbohN2TuLL17fz1MfYwq1WqL51UDSDwQmQzP63aC7D1I6XyH7U3Tfgj8OoGr/tZIqqy+rns0A==,
@@ -2660,7 +2663,7 @@ packages:
       '@vue/shared': '>=3.0.0-rc.1'
     dependencies:
       '@vue/reactivity': 3.4.3
-      '@vue/shared': 3.4.22
+      '@vue/shared': 3.4.27
       esbuild: 0.14.54
     dev: false
 
@@ -2724,13 +2727,13 @@ packages:
       {
         integrity: sha512-cg7R9XNk4ovV3bKka/1a464O2oY0l5Fyt0rwGR4hSJRPjUJ0WVjrPdsr4W0JbUriwiM8EKcCcCjeKN5pRMs2Zg==,
       }
+    dev: true
 
   /@vue/shared@3.4.27:
     resolution:
       {
         integrity: sha512-DL3NmY2OFlqmYYrzp39yi3LDkKxa5vZVwxWdQ3rG0ekuWscHraeIbnI8t+aZK7qhYqEqWKTUdijadunb9pnrgA==,
       }
-    dev: true
 
   /@vue/shared@3.4.3:
     resolution:
@@ -9998,6 +10001,30 @@ packages:
     resolution:
       {
         integrity: sha512-tV8h6gMj6vPzVCa7l+VGq9lwoJjW8Y79vst8QZZGiuRAfijU+EEWuc0kFpmndQrWhMMhet1jdSF+40KSZUqIIw==,
+      }
+    engines: { node: ^18.0.0 || >=20.0.0 }
+    hasBin: true
+    dependencies:
+      cac: 6.7.14
+      debug: 4.3.4
+      pathe: 1.1.2
+      picocolors: 1.0.0
+      vite: 5.0.10(@types/node@20.10.5)
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+    dev: true
+
+  /vite-node@1.6.0(@types/node@20.10.5):
+    resolution:
+      {
+        integrity: sha512-de6HJgzC+TFzOu0NTC4RAIsyf/DY/ibWDYQUcuEA84EMHhcefTUGkjFHKKEJhQN4A+6I0u++kr3l36ZF2d7XRw==,
       }
     engines: { node: ^18.0.0 || >=20.0.0 }
     hasBin: true

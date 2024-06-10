@@ -5,7 +5,8 @@
       "dependsOn": ["langium:generate"]
     },
     "build": {
-      "dependsOn": ["^build", "langium:generate"]
+      "dependsOn": ["^build", "langium:generate", "gen:interfaces"],
+      "outputs": ["dist/**"]
     },
     "langium:generate": {
       "outputs": ["src/language/generated/**", "syntaxes/**"]
@@ -13,6 +14,11 @@
     "langium:watch": {
       "cache": false,
       "persistent": true
+    },
+    "gen:interfaces": {
+      "dependsOn": ["langium:generate"],
+      "inputs": ["builtins/**", "scripts/generateInterfaces.ts"],
+      "outputs": ["interfaces/**"]
     }
   }
 }

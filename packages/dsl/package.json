@@ -17,19 +17,21 @@
     "dist",
     "src",
     "!src/**/__test__",
-    "builtins"
+    "builtins",
+    "interfaces"
   ],
   "scripts": {
     "build": "rimraf dist/ && pnpm run build:vite",
     "build:vite": "vite build",
-    "dev": "rimraf dist/ && pnpm run build:tsc --watch",
+    "dev": "rimraf dist/ && pnpm run build:vite --watch",
     "lint": "eslint . --ignore-path .gitignore",
     "lint:fix": "pnpm run lint --fix",
     "lint:type": "tsc",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "langium:generate": "langium generate",
-    "langium:watch": "langium generate --watch"
+    "langium:watch": "langium generate --watch",
+    "gen:interfaces": "vite-node ./scripts/generateInterfaces.ts && tsc -p tsconfig.interfaces.json"
   },
   "dependencies": {
     "langium": "^3.0.0"
@@ -41,8 +43,7 @@
   },
   "exports": {
     ".": "./dist/index.js",
-    "./builtins/*.formml": {
-      "import": "./builtins/*.formml"
-    }
+    "./builtins/*.formml": "./builtins/*.formml",
+    "./interfaces/*.js": "./interfaces/*.js"
   }
 }

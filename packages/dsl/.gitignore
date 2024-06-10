@@ -1,3 +1,4 @@
 node_modules/
 out/
 src/language/generated/
+interfaces/

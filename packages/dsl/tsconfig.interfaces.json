@@ -1,0 +1,4 @@
+{
+  "extends": "@formml/typescript-config/base.json",
+  "include": ["interfaces/**/*.ts"]
+}
