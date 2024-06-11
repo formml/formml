@@ -8,6 +8,18 @@ describe('annotationsReducer', () => {
     schema: v.string(),
   }
 
+  test('should throw if annotation is unknown', () => {
+    // Arrange
+    const action = {
+      name: 'unknown',
+      options: {},
+    }
+
+    // Act & Assert
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect(() => annotationsReducer(baseState, action as any)).toThrow()
+  })
+
   test('required - should wrap base schema with required schema', () => {
     // Arrange
     const action = {
