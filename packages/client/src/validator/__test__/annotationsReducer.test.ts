@@ -3,10 +3,7 @@ import * as v from 'valibot'
 import annotationsReducer from '../annotationsReducer.js'
 
 describe('annotationsReducer', () => {
-  const baseState = {
-    pipeline: [],
-    schema: v.string(),
-  }
+  const baseSchema = v.string()
 
   test('should throw if annotation is unknown', () => {
     // Arrange
@@ -17,7 +14,7 @@ describe('annotationsReducer', () => {
 
     // Act & Assert
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect(() => annotationsReducer(baseState, action as any)).toThrow()
+    expect(() => annotationsReducer(baseSchema, action as any)).toThrow()
   })
 
   test('required - should wrap base schema with required schema', () => {
@@ -28,17 +25,16 @@ describe('annotationsReducer', () => {
     } as const
 
     // Act
-    const result = annotationsReducer(baseState, action)
+    const schema = annotationsReducer(baseSchema, action)
 
     // Assert
-    expect(result).toEqual({
-      pipeline: [],
-      schema: expect.objectContaining({
+    expect(schema).toEqual(
+      expect.objectContaining({
         async: false,
         kind: 'schema',
         type: 'required',
-        wrapped: baseState.schema,
+        wrapped: baseSchema,
       }),
-    })
+    )
   })
 })

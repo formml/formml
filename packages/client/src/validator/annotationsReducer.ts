@@ -1,5 +1,5 @@
 import annotationsInterface from '@formml/dsl/interfaces/annotations.js'
-import { GenericSchema, GenericValidation } from 'valibot'
+import { GenericSchema } from 'valibot'
 
 import { assertNever } from '../utils/assertNever.js'
 import { required } from './valibot/schemas/required.js'
@@ -17,20 +17,12 @@ type IAnnotationAction = {
   }
 }[keyof IAnnotations]
 
-type IValidationComponents = {
-  pipeline: GenericValidation[]
-  schema: GenericSchema
-}
-
 function annotationsReducer(
-  components: IValidationComponents,
+  schema: GenericSchema,
   action: IAnnotationAction,
-): IValidationComponents {
+): GenericSchema {
   if (action.name === 'required') {
-    return {
-      ...components,
-      schema: required(components.schema),
-    }
+    return required(schema)
   }
   return assertNever`Unknown annotation "${action.name}".`
 }
