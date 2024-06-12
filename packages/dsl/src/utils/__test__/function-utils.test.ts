@@ -60,5 +60,48 @@ describe('function utils', () => {
         param3: 3,
       })
     })
+
+    test('should resolve named arguments by name', () => {
+      const args: Argument[] = [
+        {
+          $container: {} as never,
+          $type: 'NamedArgument',
+          name: 'arg1',
+          value: {
+            $container: {} as never,
+            $type: 'DQString',
+            value: '"value1"',
+          },
+        },
+        {
+          $container: {} as never,
+          $type: 'NamedArgument',
+          name: 'arg2',
+          value: {
+            $container: {} as never,
+            $type: 'Boolean',
+            value: true,
+          },
+        },
+        {
+          $container: {} as never,
+          $type: 'NamedArgument',
+          name: 'arg3',
+          value: {
+            $container: {} as never,
+            $type: 'Number_',
+            value: 3,
+          },
+        },
+      ]
+
+      const resolvedArgs = resolveArguments(args, [])
+
+      expect(resolvedArgs).toEqual({
+        arg1: 'value1',
+        arg2: true,
+        arg3: 3,
+      })
+    })
   })
 })
