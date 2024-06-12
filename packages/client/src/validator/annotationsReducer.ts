@@ -10,7 +10,7 @@ type Options<T extends readonly { name: string }[]> = {
   [K in T[number] as K['name']]: unknown
 }
 
-type IAnnotationAction = {
+export type IAnnotationAction = {
   [key in keyof IAnnotations]: {
     name: key
     options: Options<IAnnotations[key]>

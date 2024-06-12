@@ -3,7 +3,15 @@ import { BigNumber } from 'bignumber.js'
 import dayjs from 'dayjs'
 import * as v from 'valibot'
 
+import annotationsReducer from '../annotationsReducer.js'
 import buildSchema from '../buildSchema.js'
+
+vi.mock('../annotationsReducer.js', async (importActual) => {
+  const actual = await importActual<typeof import('../annotationsReducer.js')>()
+  return {
+    default: vi.fn(actual.default),
+  }
+})
 
 describe('buildSchema', () => {
   describe('integration', () => {
@@ -97,66 +105,44 @@ describe('buildSchema', () => {
         expect(result.success).toBe(true)
       },
     )
+  })
 
-    describe('required', () => {
-      test.each(['text', 'num', 'bool', 'datetime', 'decimal'] as const)(
-        'should invalidate undefined if field is required',
-        (type) => {
-          // Arrange
-          const field: Field = {
-            $container: {} as Form,
-            $type: 'Field',
-            annotations: [
-              {
-                $container: {} as Field,
-                $type: 'Annotation',
-                args: [],
-                call: {
-                  $refText: 'required',
-                } as never,
-              },
-            ],
-            name: 'field',
-            type,
-          }
-
-          // Act
-          const schema = buildSchema(field)
-          const result = v.safeParse(schema, undefined)
-
-          // Assert
-          expect(result.success).toBe(false)
-          expect(result.issues).toMatchSnapshot()
-        },
-      )
-
-      test('should invalidate empty string if a text field is required', () => {
-        // Arrange
-        const field: Field = {
-          $container: {} as Form,
-          $type: 'Field',
-          annotations: [
-            {
-              $container: {} as Field,
-              $type: 'Annotation',
-              args: [],
-              call: {
-                $refText: 'required',
-              } as never,
+  describe('unit test', () => {
+    test('should wrap base schema with annotations reducer', () => {
+      // Arrange
+      const field: Field = {
+        $container: {} as Form,
+        $type: 'Field',
+        annotations: [
+          {
+            $container: {} as Field,
+            $type: 'Annotation',
+            args: [],
+            call: {
+              $refText: 'required',
             },
-          ],
-          name: 'field',
-          type: 'text',
-        }
+          },
+        ],
+        name: 'field',
+        type: 'text',
+      }
+      const stubWrappedSchema = {} as v.GenericSchema
+      vi.mocked(annotationsReducer).mockReturnValueOnce(stubWrappedSchema)
 
-        // Act
-        const schema = buildSchema(field)
-        const result = v.safeParse(schema, '')
+      // Act
+      const schema = buildSchema(field)
 
-        // Assert
-        expect(result.success).toBe(false)
-        expect(result.issues).toMatchSnapshot()
-      })
+      // Assert
+      expect(annotationsReducer).toBeCalledWith(
+        expect.anything(),
+        {
+          name: 'required',
+          options: {},
+        },
+        expect.anything(),
+        expect.anything(),
+      )
+      expect(schema).toBe(stubWrappedSchema)
     })
   })
 })
