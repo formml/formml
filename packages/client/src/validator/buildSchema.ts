@@ -1,4 +1,5 @@
-import { Annotation, Field, PrimitiveType } from '@formml/dsl'
+import { Annotation, Field, PrimitiveType, resolveArguments } from '@formml/dsl'
+import annotationsInterface from '@formml/dsl/interfaces/annotations.js'
 import { BigNumber } from 'bignumber.js'
 import * as v from 'valibot'
 
@@ -26,9 +27,14 @@ const type = (formmlSchema: Field) => {
 }
 
 function buildAction(annotation: Annotation): IAnnotationAction {
+  // TODO: get info from real referred declaration and ensure type safety
+  const annotationName = annotation.call.$refText as IAnnotationAction['name']
   return {
-    name: annotation.call.$refText as IAnnotationAction['name'], // TODO: get info from real referred declaration and ensure type safety
-    options: {},
+    name: annotationName,
+    options: resolveArguments(
+      annotation.args,
+      annotationsInterface[annotationName],
+    ),
   }
 }
 

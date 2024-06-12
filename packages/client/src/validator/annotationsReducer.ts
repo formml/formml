@@ -1,3 +1,4 @@
+import { ArgsData } from '@formml/dsl'
 import annotationsInterface from '@formml/dsl/interfaces/annotations.js'
 import { GenericSchema } from 'valibot'
 
@@ -6,14 +7,10 @@ import { required } from './valibot/schemas/required.js'
 
 type IAnnotations = typeof annotationsInterface
 
-type Options<T extends readonly { name: string }[]> = {
-  [K in T[number] as K['name']]?: unknown
-}
-
 export type IAnnotationAction = {
   [key in keyof IAnnotations]: {
     name: key
-    options: Options<IAnnotations[key]>
+    options: ArgsData<IAnnotations[key]>
   }
 }[keyof IAnnotations]
 
