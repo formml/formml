@@ -21,7 +21,9 @@ describe('annotationsReducer', () => {
     // Arrange
     const action = {
       name: 'required',
-      options: {},
+      options: {
+        message: 'Custom message',
+      },
     } as const
 
     // Act
@@ -32,6 +34,7 @@ describe('annotationsReducer', () => {
       expect.objectContaining({
         async: false,
         kind: 'schema',
+        message: 'Custom message',
         type: 'required',
         wrapped: baseSchema,
       }),
