@@ -27,7 +27,7 @@
     "lint": "eslint . --ignore-path .gitignore",
     "lint:fix": "pnpm run lint --fix",
     "lint:type": "tsc",
-    "test": "vitest run",
+    "test": "vitest run --typecheck",
     "test:watch": "vitest watch",
     "langium:generate": "langium generate",
     "langium:watch": "langium generate --watch",

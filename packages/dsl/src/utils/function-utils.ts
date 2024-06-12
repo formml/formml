@@ -17,14 +17,18 @@ const resolveLiteral = (literal: Literal) => {
   return literal.value
 }
 
-export function resolveArguments(
+export type ArgsData<T extends readonly { name: string }[]> = {
+  [K in T[number] as K['name']]: unknown
+}
+
+export function resolveArguments<T extends readonly { name: string }[]>(
   args: Argument[],
-  declarations: { name: string }[],
-) {
+  declarations: T,
+): ArgsData<T> {
   return args.reduce((data, arg, index) => {
     if (isPositionalArgument(arg)) {
       return { ...data, [declarations[index].name]: resolveLiteral(arg.value) }
     }
     return { ...data, [arg.name]: resolveLiteral(arg.value) }
-  }, {})
+  }, {} as ArgsData<T>)
 }
