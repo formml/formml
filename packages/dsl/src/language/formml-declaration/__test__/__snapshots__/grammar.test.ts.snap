@@ -70,3 +70,123 @@ exports[`formml declaration grammar > annotation > parameters allow trailing com
   ]
 }"
 `;
+
+exports[`formml declaration grammar > annotation > type system > parameters can be primitive type "bool" 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "newAnnotation",
+      "parameters": [
+        {
+          "$type": "Parameter",
+          "name": "param1",
+          "type": "bool"
+        },
+        {
+          "$type": "Parameter",
+          "name": "param2",
+          "type": "bool"
+        }
+      ]
+    }
+  ]
+}"
+`;
+
+exports[`formml declaration grammar > annotation > type system > parameters can be primitive type "datetime" 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "newAnnotation",
+      "parameters": [
+        {
+          "$type": "Parameter",
+          "name": "param1",
+          "type": "datetime"
+        },
+        {
+          "$type": "Parameter",
+          "name": "param2",
+          "type": "datetime"
+        }
+      ]
+    }
+  ]
+}"
+`;
+
+exports[`formml declaration grammar > annotation > type system > parameters can be primitive type "decimal" 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "newAnnotation",
+      "parameters": [
+        {
+          "$type": "Parameter",
+          "name": "param1",
+          "type": "decimal"
+        },
+        {
+          "$type": "Parameter",
+          "name": "param2",
+          "type": "decimal"
+        }
+      ]
+    }
+  ]
+}"
+`;
+
+exports[`formml declaration grammar > annotation > type system > parameters can be primitive type "num" 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "newAnnotation",
+      "parameters": [
+        {
+          "$type": "Parameter",
+          "name": "param1",
+          "type": "num"
+        },
+        {
+          "$type": "Parameter",
+          "name": "param2",
+          "type": "num"
+        }
+      ]
+    }
+  ]
+}"
+`;
+
+exports[`formml declaration grammar > annotation > type system > parameters can be primitive type "text" 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "newAnnotation",
+      "parameters": [
+        {
+          "$type": "Parameter",
+          "name": "param1",
+          "type": "text"
+        },
+        {
+          "$type": "Parameter",
+          "name": "param2",
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}"
+`;

@@ -23,9 +23,6 @@ fragment Arguments:
 Annotation:
   '@' call=[AnnotationDeclaration] ('(' Arguments ')')?;
 
-PrimitiveType returns string:
-  'text' | 'num' | 'decimal' | 'bool' | 'datetime';
-
 
 // Literals
 

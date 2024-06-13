@@ -59,5 +59,16 @@ describe('formml declaration grammar', () => {
       const input = `annot fun newAnnotation(name,,)`
       await expect(parser(input)).rejects.toThrow()
     })
+
+    describe('type system', () => {
+      test.each(['text', 'num', 'bool', 'datetime', 'decimal'])(
+        'parameters can be primitive type "%s"',
+        async (type) => {
+          const input = `annot fun newAnnotation(param1: ${type}, param2: ${type})`
+          const ast = await parser(input)
+          expect(serialize(ast)).toMatchSnapshot()
+        },
+      )
+    })
   })
 })

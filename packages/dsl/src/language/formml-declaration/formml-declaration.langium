@@ -12,5 +12,5 @@ FunctionDeclaration:
   {infer AnnotationDeclaration} 'annot' 'fun' name=ID '(' (parameters+=Parameter ',')* (parameters+=Parameter)? ')';
 
 Parameter:
-  name=ID;
+  name=ID (':' type=PrimitiveType)?;
 
