@@ -35,7 +35,7 @@ describe('formml validator', () => {
       const annotations = `
         annot fun required()
         annot fun range(min, max)
-        annot fun any(name1, name2, name3, name4, name5, name6, name7, name8, name9, name10)
+        annot fun anything(name1, name2, name3, name4, name5, name6, name7, name8, name9, name10)
       `
       await loadDeclaration(annotations, 'file:///builtin-annotations.d.formml')
     })
@@ -90,7 +90,7 @@ describe('formml validator', () => {
     test('should error when named arguments appear before positional arguments - multiple appearances', async () => {
       const input = `
         form ExampleForm {
-          @any(1, name2: "value2", 3, name4: "value4", name5: "value5", 6, name7: "value7")
+          @anything(1, name2: "value2", 3, name4: "value4", name5: "value5", 6, name7: "value7")
           num numberField
         }
       `

@@ -12,7 +12,7 @@ Form:
   '}';
 
 Field:
-  (annotations+=Annotation)* type=PrimitiveType name=ID;
+  (annotations+=Annotation)* type=Primitive name=ID;
 
 Argument:
   {infer PositionalArgument} value=Literal | {infer NamedArgument} name=ID ':' value=Literal;

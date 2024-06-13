@@ -61,8 +61,14 @@ describe('formml declaration grammar', () => {
     })
 
     describe('type system', () => {
-      test('parameters should have an any type by default', async () => {
+      test('parameters can omit types', async () => {
         const input = `annot fun newAnnotation(param1, param2)`
+        const ast = await parser(input)
+        expect(serialize(ast)).toMatchSnapshot()
+      })
+
+      test('parameters can be any', async () => {
+        const input = `annot fun newAnnotation(param1: any, param2: any)`
         const ast = await parser(input)
         expect(serialize(ast)).toMatchSnapshot()
       })

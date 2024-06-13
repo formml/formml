@@ -1,4 +1,4 @@
-PrimitiveType returns string:
+Primitive returns string:
   'text' | 'num' | 'decimal' | 'bool' | 'datetime';
 
 hidden terminal ML_COMMENT: /\/\*[\s\S]*?\*\//;

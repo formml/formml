@@ -1,10 +1,10 @@
-import type { Field as CommonField, PrimitiveType } from '../generated/ast.js'
+import type { Field as CommonField, Primitive } from '../generated/ast.js'
 
-type FieldDef<T extends PrimitiveType> = Omit<CommonField, 'type'> & {
+type FieldDef<T extends Primitive> = Omit<CommonField, 'type'> & {
   type: T
 }
 
-type Field<T extends PrimitiveType = PrimitiveType> = T extends PrimitiveType
+type Field<T extends Primitive = Primitive> = T extends Primitive
   ? FieldDef<T>
   : never
 

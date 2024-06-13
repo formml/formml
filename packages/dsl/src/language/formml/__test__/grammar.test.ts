@@ -97,7 +97,7 @@ describe('formml grammar', () => {
         annot fun required2()
         annot fun min(value)
         annot fun range(min, max)
-        annot fun any(value)
+        annot fun anything(value)
       `
       await loadDeclaration(annotations, 'file:///builtin-annotations.d.formml')
     })
@@ -278,7 +278,7 @@ describe('formml grammar', () => {
             async (input) => {
               const content = `
                 form ExampleForm {
-                  @any(${input})
+                  @anything(${input})
                   num numberField
                 }
               `
@@ -292,7 +292,7 @@ describe('formml grammar', () => {
             async (input) => {
               const content = `
                 form ExampleForm {
-                  @any(${input})
+                  @anything(${input})
                   num numberField
                 }
               `
@@ -306,7 +306,7 @@ describe('formml grammar', () => {
             async (input) => {
               const content = `
                 form ExampleForm {
-                  @any(${input})
+                  @anything(${input})
                   num numberField
                 }
               `
@@ -317,7 +317,7 @@ describe('formml grammar', () => {
           test.each(['true', 'false'])('boolean - %j', async (input) => {
             const content = `
               form ExampleForm {
-                @any(${input})
+                @anything(${input})
                 num numberField
               }
             `
@@ -328,7 +328,7 @@ describe('formml grammar', () => {
           test('null', async () => {
             const content = `
               form ExampleForm {
-                @any(null)
+                @anything(null)
                 num numberField
               }
             `

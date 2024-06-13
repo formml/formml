@@ -114,33 +114,13 @@ exports[`formml validator > annotation > should error when named arguments appea
     "message": "Named argument can only appear after all positional arguments.",
     "range": {
       "end": {
-        "character": 33,
-        "line": 2,
-      },
-      "start": {
-        "character": 18,
-        "line": 2,
-      },
-    },
-    "relatedInformation": undefined,
-    "severity": 1,
-    "source": "formml",
-    "tags": undefined,
-  },
-  {
-    "code": undefined,
-    "codeDescription": undefined,
-    "data": undefined,
-    "message": "Named argument can only appear after all positional arguments.",
-    "range": {
-      "end": {
-        "character": 53,
-        "line": 2,
-      },
-      "start": {
         "character": 38,
         "line": 2,
       },
+      "start": {
+        "character": 23,
+        "line": 2,
+      },
     },
     "relatedInformation": undefined,
     "severity": 1,
@@ -154,11 +134,31 @@ exports[`formml validator > annotation > should error when named arguments appea
     "message": "Named argument can only appear after all positional arguments.",
     "range": {
       "end": {
-        "character": 70,
+        "character": 58,
         "line": 2,
       },
       "start": {
-        "character": 55,
+        "character": 43,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Named argument can only appear after all positional arguments.",
+    "range": {
+      "end": {
+        "character": 75,
+        "line": 2,
+      },
+      "start": {
+        "character": 60,
         "line": 2,
       },
     },

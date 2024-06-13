@@ -15,7 +15,7 @@ export type PrimitiveTypeMapping = {
 
 export type PrimitiveType = PrimitiveTypeMapping[keyof PrimitiveTypeMapping]
 
-function parseImpl(input: string, type: DslTypes.PrimitiveType): PrimitiveType {
+function parseImpl(input: string, type: DslTypes.Primitive): PrimitiveType {
   if (type === 'text') return input
 
   if (type === 'num') {
@@ -43,15 +43,15 @@ function parseImpl(input: string, type: DslTypes.PrimitiveType): PrimitiveType {
 }
 
 // curried parse
-export function parse<TType extends DslTypes.PrimitiveType>(
+export function parse<TType extends DslTypes.Primitive>(
   type: TType,
 ): (input: string) => PrimitiveTypeMapping[TType]
-export function parse<TType extends DslTypes.PrimitiveType>(
+export function parse<TType extends DslTypes.Primitive>(
   input: string,
   type: TType,
 ): PrimitiveTypeMapping[TType]
 export function parse(
-  ...args: [DslTypes.PrimitiveType] | [string, DslTypes.PrimitiveType]
+  ...args: [DslTypes.Primitive] | [string, DslTypes.Primitive]
 ): ((input: string) => PrimitiveType) | PrimitiveType {
   if (args.length === 1) {
     const [type] = args

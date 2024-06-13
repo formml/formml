@@ -1,4 +1,4 @@
-import { Annotation, Field, PrimitiveType, resolveArguments } from '@formml/dsl'
+import { Annotation, Field, Primitive, resolveArguments } from '@formml/dsl'
 import annotationsInterface from '@formml/dsl/interfaces/annotations.js'
 import { BigNumber } from 'bignumber.js'
 import * as v from 'valibot'
@@ -38,7 +38,7 @@ function buildAction(annotation: Annotation): IAnnotationAction {
   }
 }
 
-export default function buildSchema<T extends PrimitiveType>(
+export default function buildSchema<T extends Primitive>(
   formmlSchema: Field<T>,
 ): v.GenericSchema<PrimitiveTypeMapping[T]>
 export default function buildSchema(formmlSchema: Field) {

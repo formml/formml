@@ -23,13 +23,11 @@ exports[`formml declaration grammar > annotation > declare annotation with multi
       "parameters": [
         {
           "$type": "Parameter",
-          "name": "name",
-          "type": "any"
+          "name": "name"
         },
         {
           "$type": "Parameter",
-          "name": "value",
-          "type": "any"
+          "name": "value"
         }
       ]
     }
@@ -47,8 +45,7 @@ exports[`formml declaration grammar > annotation > declare annotation with one p
       "parameters": [
         {
           "$type": "Parameter",
-          "name": "name",
-          "type": "any"
+          "name": "name"
         }
       ]
     }
@@ -66,8 +63,37 @@ exports[`formml declaration grammar > annotation > parameters allow trailing com
       "parameters": [
         {
           "$type": "Parameter",
-          "name": "name",
-          "type": "any"
+          "name": "name"
+        }
+      ]
+    }
+  ]
+}"
+`;
+
+exports[`formml declaration grammar > annotation > type system > parameters can be any 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "newAnnotation",
+      "parameters": [
+        {
+          "$type": "Parameter",
+          "name": "param1",
+          "type": {
+            "$type": "AnyType",
+            "name": "any"
+          }
+        },
+        {
+          "$type": "Parameter",
+          "name": "param2",
+          "type": {
+            "$type": "AnyType",
+            "name": "any"
+          }
         }
       ]
     }
@@ -86,12 +112,18 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
         {
           "$type": "Parameter",
           "name": "param1",
-          "type": "bool"
+          "type": {
+            "$type": "PrimitiveType",
+            "name": "bool"
+          }
         },
         {
           "$type": "Parameter",
           "name": "param2",
-          "type": "bool"
+          "type": {
+            "$type": "PrimitiveType",
+            "name": "bool"
+          }
         }
       ]
     }
@@ -110,12 +142,18 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
         {
           "$type": "Parameter",
           "name": "param1",
-          "type": "datetime"
+          "type": {
+            "$type": "PrimitiveType",
+            "name": "datetime"
+          }
         },
         {
           "$type": "Parameter",
           "name": "param2",
-          "type": "datetime"
+          "type": {
+            "$type": "PrimitiveType",
+            "name": "datetime"
+          }
         }
       ]
     }
@@ -134,12 +172,18 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
         {
           "$type": "Parameter",
           "name": "param1",
-          "type": "decimal"
+          "type": {
+            "$type": "PrimitiveType",
+            "name": "decimal"
+          }
         },
         {
           "$type": "Parameter",
           "name": "param2",
-          "type": "decimal"
+          "type": {
+            "$type": "PrimitiveType",
+            "name": "decimal"
+          }
         }
       ]
     }
@@ -158,12 +202,18 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
         {
           "$type": "Parameter",
           "name": "param1",
-          "type": "num"
+          "type": {
+            "$type": "PrimitiveType",
+            "name": "num"
+          }
         },
         {
           "$type": "Parameter",
           "name": "param2",
-          "type": "num"
+          "type": {
+            "$type": "PrimitiveType",
+            "name": "num"
+          }
         }
       ]
     }
@@ -182,12 +232,18 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
         {
           "$type": "Parameter",
           "name": "param1",
-          "type": "text"
+          "type": {
+            "$type": "PrimitiveType",
+            "name": "text"
+          }
         },
         {
           "$type": "Parameter",
           "name": "param2",
-          "type": "text"
+          "type": {
+            "$type": "PrimitiveType",
+            "name": "text"
+          }
         }
       ]
     }
@@ -205,13 +261,11 @@ exports[`formml declaration grammar > annotation > type system > parameters shou
       "parameters": [
         {
           "$type": "Parameter",
-          "name": "param1",
-          "type": "any"
+          "name": "param1"
         },
         {
           "$type": "Parameter",
-          "name": "param2",
-          "type": "any"
+          "name": "param2"
         }
       ]
     }
