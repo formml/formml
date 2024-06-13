@@ -23,11 +23,13 @@ exports[`formml declaration grammar > annotation > declare annotation with multi
       "parameters": [
         {
           "$type": "Parameter",
-          "name": "name"
+          "name": "name",
+          "type": "any"
         },
         {
           "$type": "Parameter",
-          "name": "value"
+          "name": "value",
+          "type": "any"
         }
       ]
     }
@@ -45,7 +47,8 @@ exports[`formml declaration grammar > annotation > declare annotation with one p
       "parameters": [
         {
           "$type": "Parameter",
-          "name": "name"
+          "name": "name",
+          "type": "any"
         }
       ]
     }
@@ -63,7 +66,8 @@ exports[`formml declaration grammar > annotation > parameters allow trailing com
       "parameters": [
         {
           "$type": "Parameter",
-          "name": "name"
+          "name": "name",
+          "type": "any"
         }
       ]
     }
@@ -184,6 +188,30 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
           "$type": "Parameter",
           "name": "param2",
           "type": "text"
+        }
+      ]
+    }
+  ]
+}"
+`;
+
+exports[`formml declaration grammar > annotation > type system > parameters should have an any type by default 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "newAnnotation",
+      "parameters": [
+        {
+          "$type": "Parameter",
+          "name": "param1",
+          "type": "any"
+        },
+        {
+          "$type": "Parameter",
+          "name": "param2",
+          "type": "any"
         }
       ]
     }

@@ -9,8 +9,12 @@ Declaration:
   FunctionDeclaration;
 
 FunctionDeclaration:
-  {infer AnnotationDeclaration} 'annot' 'fun' name=ID '(' (parameters+=Parameter ',')* (parameters+=Parameter)? ')';
+  {infer AnnotationDeclaration} 'annot' 'fun' name=ID '(' (parameters+=ParameterNode ',')* (parameters+=ParameterNode)? ')';
 
-Parameter:
+interface Parameter {
+  name: string;
+  type: string = "any";
+}
+
+ParameterNode returns Parameter:
   name=ID (':' type=PrimitiveType)?;
-

@@ -61,6 +61,12 @@ describe('formml declaration grammar', () => {
     })
 
     describe('type system', () => {
+      test('parameters should have an any type by default', async () => {
+        const input = `annot fun newAnnotation(param1, param2)`
+        const ast = await parser(input)
+        expect(serialize(ast)).toMatchSnapshot()
+      })
+
       test.each(['text', 'num', 'bool', 'datetime', 'decimal'])(
         'parameters can be primitive type "%s"',
         async (type) => {
