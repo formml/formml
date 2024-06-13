@@ -12,7 +12,7 @@ FunctionDeclaration:
   {infer AnnotationDeclaration} 'annot' 'fun' name=ID '(' (parameters+=Parameter ',')* (parameters+=Parameter)? ')';
 
 Parameter:
-  name=ID (':' type=Type)?;
+  name=ID (optional?='?'? ':' type=Type)?;
 
 
 // Type system

@@ -39,16 +39,19 @@ describe('function utils', () => {
           $container: {} as never,
           $type: 'Parameter',
           name: 'param1',
+          optional: false,
         },
         {
           $container: {} as never,
           $type: 'Parameter',
           name: 'param2',
+          optional: false,
         },
         {
           $container: {} as never,
           $type: 'Parameter',
           name: 'param3',
+          optional: false,
         },
       ]
 

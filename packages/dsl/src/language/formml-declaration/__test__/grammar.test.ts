@@ -61,7 +61,7 @@ describe('formml declaration grammar', () => {
     })
 
     describe('type system', () => {
-      test('parameters can omit types', async () => {
+      test('parameters can omit type hint', async () => {
         const input = `annot fun newAnnotation(param1, param2)`
         const ast = await parser(input)
         expect(serialize(ast)).toMatchSnapshot()
@@ -81,6 +81,12 @@ describe('formml declaration grammar', () => {
           expect(serialize(ast)).toMatchSnapshot()
         },
       )
+
+      test('parameters can be optional', async () => {
+        const input = `annot fun newAnnotation(param1: num, param2?: any)`
+        const ast = await parser(input)
+        expect(serialize(ast)).toMatchSnapshot()
+      })
     })
   })
 })
