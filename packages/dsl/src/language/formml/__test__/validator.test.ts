@@ -158,7 +158,19 @@ describe('formml validator', () => {
       expect(diagnostics).toMatchSnapshot()
     })
 
-    describe('type system', () => {
+    describe.each([
+      {
+        argType: 'positional argument',
+        builder: (arg: Record<string, string>) => Object.values(arg).shift(),
+      },
+      {
+        argType: 'named argument',
+        builder: (arg: Record<string, string>) =>
+          Object.entries(arg)
+            .map(([k, v]) => `${k}: ${v}`)
+            .shift(),
+      },
+    ])('assignment type check - $argType', ({ builder: arg }) => {
       test.each([
         '"double quoted string"',
         "'single quoted string'",
@@ -170,11 +182,11 @@ describe('formml validator', () => {
         'can assign any value to a parameter without type hint',
         async (value) => {
           // Arrange
-          const declaration = 'annot fun test(value)'
+          const declaration = 'annot fun test(name)'
           await loadDeclaration(declaration, 'file:///test-annotation.d.formml')
           const input = `
             form ExampleForm {
-              @test(${value})
+              @test(${arg({ name: value })})
               num numberField
             }
           `
@@ -196,11 +208,11 @@ describe('formml validator', () => {
         'null',
       ])('can assign any value to a parameter with any type', async (value) => {
         // Arrange
-        const declaration = 'annot fun test(value: any)'
+        const declaration = 'annot fun test(name: any)'
         await loadDeclaration(declaration, 'file:///test-annotation.d.formml')
         const input = `
           form ExampleForm {
-            @test(${value})
+            @test(${arg({ name: value })})
             num numberField
           }
         `
