@@ -223,6 +223,33 @@ describe('formml validator', () => {
         // Assert
         expect(diagnostics).toHaveLength(0)
       })
+
+      test.each([
+        ['text', '"double quoted string"'],
+        ['text', "'single quoted string'"],
+        ['num', '123'],
+        ['bool', 'true'],
+        ['bool', 'false'],
+      ])(
+        'can assign correct typed value to a parameter with corresponding type hint - %s',
+        async (type, value) => {
+          // Arrange
+          const declaration = `annot fun test(name: ${type})`
+          await loadDeclaration(declaration, 'file:///test-annotation.d.formml')
+          const input = `
+            form ExampleForm {
+              @test(${arg({ name: value })})
+              num numberField
+            }
+          `
+
+          // Act
+          const { diagnostics } = await parser(input)
+
+          // Assert
+          expect(diagnostics).toHaveLength(0)
+        },
+      )
     })
   })
 })
