@@ -230,6 +230,9 @@ describe('formml validator', () => {
         ['num', '123'],
         ['bool', 'true'],
         ['bool', 'false'],
+        // Not implemented yet
+        // ['decimal', 'Decimal(123.45)'],
+        // ['datetime', 'Datetime("2024-01-01T00:00:00Z")'],
       ])(
         'can assign correct typed value to a parameter with corresponding type hint - %s',
         async (type, value) => {
@@ -248,6 +251,34 @@ describe('formml validator', () => {
 
           // Assert
           expect(diagnostics).toHaveLength(0)
+        },
+      )
+
+      test.each([
+        ['text', '123'],
+        ['num', '"double quoted string"'],
+        ['bool', '"double quoted string"'],
+        ['decimal', '123.45'],
+        ['datetime', '"2024-01-01T00:00:00Z"'],
+      ])(
+        'cannot assign incorrect typed value to a parameter with type hint - %s',
+        async (type, value) => {
+          // Arrange
+          const declaration = `annot fun test(name: ${type})`
+          await loadDeclaration(declaration, 'file:///test-annotation.d.formml')
+          const input = `
+            form ExampleForm {
+              @test(${arg({ name: value })})
+              num numberField
+            }
+          `
+
+          // Act
+          const { diagnostics } = await parser(input)
+
+          // Assert
+          expect(diagnostics).toHaveLength(1)
+          expect(diagnostics).toMatchSnapshot()
         },
       )
     })

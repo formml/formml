@@ -5,6 +5,7 @@ import { GrammarUtils, ValidationAcceptor, ValidationChecks } from 'langium'
 import type { FormMLServices } from './formml-module.js'
 
 import * as ast from '../generated/ast.js'
+import * as t from '../type-system/index.js'
 
 /**
  * Register custom validation checks.
@@ -33,10 +34,12 @@ export class FormMLValidator {
     const declaration = annotation.call.ref
     if (!declaration) return
 
-    const paramNames = declaration.parameters.map((p) => p.name)
-    const paramNameSet = new Set(paramNames)
+    const paramDeclaration = Object.fromEntries(
+      declaration.parameters.map((p) => [p.name, p]),
+    )
+    const paramNames = Object.keys(paramDeclaration)
 
-    const expectedLength = paramNameSet.size
+    const expectedLength = paramNames.length
     const actualLength = annotation.args.length
     if (actualLength > expectedLength) {
       const firstExtra = annotation.args[expectedLength].$cstNode
@@ -61,7 +64,7 @@ export class FormMLValidator {
 
     annotation.args.forEach((arg, index) => {
       if (ast.isNamedArgument(arg)) {
-        if (!paramNameSet.has(arg.name)) {
+        if (!(arg.name in paramDeclaration)) {
           accept(
             'error',
             `Unknown parameter "${arg.name}", expected one of ${paramNames
@@ -76,10 +79,30 @@ export class FormMLValidator {
           })
         }
         assignedParams.add(arg.name)
+
+        const argType = t.inferType(arg.value)
+        const declaredType = t.fromDeclaration(paramDeclaration[arg.name]?.type)
+        if (!t.isAssignable(argType, declaredType)) {
+          accept(
+            'error',
+            `Argument of type '${argType.toString()}' is not assignable to parameter of type '${declaredType.toString()}'.`,
+            { node: arg },
+          )
+        }
       }
       if (ast.isPositionalArgument(arg)) {
-        const paramName: string | undefined = paramNames[index] // may out of range
-        paramName && assignedParams.add(paramName)
+        const param: ast.Parameter | undefined = declaration.parameters[index] // may out of range
+        param && assignedParams.add(param.name)
+
+        const argType = t.inferType(arg.value)
+        const declaredType = t.fromDeclaration(param?.type)
+        if (!t.isAssignable(argType, declaredType)) {
+          accept(
+            'error',
+            `Argument of type '${argType.toString()}' is not assignable to parameter of type '${declaredType.toString()}'.`,
+            { node: arg },
+          )
+        }
       }
     })
   }

@@ -1,5 +1,255 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`formml validator > annotation > assignment type check - 'named argument' > cannot assign incorrect typed value to a parameter with type hint - bool 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Argument of type '"double quoted string"' is not assignable to parameter of type 'bool'.",
+    "range": {
+      "end": {
+        "character": 48,
+        "line": 2,
+      },
+      "start": {
+        "character": 20,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
+exports[`formml validator > annotation > assignment type check - 'named argument' > cannot assign incorrect typed value to a parameter with type hint - datetime 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Argument of type '"2024-01-01T00:00:00Z"' is not assignable to parameter of type 'datetime'.",
+    "range": {
+      "end": {
+        "character": 48,
+        "line": 2,
+      },
+      "start": {
+        "character": 20,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
+exports[`formml validator > annotation > assignment type check - 'named argument' > cannot assign incorrect typed value to a parameter with type hint - decimal 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Argument of type '123.45' is not assignable to parameter of type 'decimal'.",
+    "range": {
+      "end": {
+        "character": 32,
+        "line": 2,
+      },
+      "start": {
+        "character": 20,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
+exports[`formml validator > annotation > assignment type check - 'named argument' > cannot assign incorrect typed value to a parameter with type hint - num 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Argument of type '"double quoted string"' is not assignable to parameter of type 'num'.",
+    "range": {
+      "end": {
+        "character": 48,
+        "line": 2,
+      },
+      "start": {
+        "character": 20,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
+exports[`formml validator > annotation > assignment type check - 'named argument' > cannot assign incorrect typed value to a parameter with type hint - text 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Argument of type '123' is not assignable to parameter of type 'text'.",
+    "range": {
+      "end": {
+        "character": 29,
+        "line": 2,
+      },
+      "start": {
+        "character": 20,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
+exports[`formml validator > annotation > assignment type check - 'positional argument' > cannot assign incorrect typed value to a parameter with type hint - bool 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Argument of type '"double quoted string"' is not assignable to parameter of type 'bool'.",
+    "range": {
+      "end": {
+        "character": 42,
+        "line": 2,
+      },
+      "start": {
+        "character": 20,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
+exports[`formml validator > annotation > assignment type check - 'positional argument' > cannot assign incorrect typed value to a parameter with type hint - datetime 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Argument of type '"2024-01-01T00:00:00Z"' is not assignable to parameter of type 'datetime'.",
+    "range": {
+      "end": {
+        "character": 42,
+        "line": 2,
+      },
+      "start": {
+        "character": 20,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
+exports[`formml validator > annotation > assignment type check - 'positional argument' > cannot assign incorrect typed value to a parameter with type hint - decimal 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Argument of type '123.45' is not assignable to parameter of type 'decimal'.",
+    "range": {
+      "end": {
+        "character": 26,
+        "line": 2,
+      },
+      "start": {
+        "character": 20,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
+exports[`formml validator > annotation > assignment type check - 'positional argument' > cannot assign incorrect typed value to a parameter with type hint - num 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Argument of type '"double quoted string"' is not assignable to parameter of type 'num'.",
+    "range": {
+      "end": {
+        "character": 42,
+        "line": 2,
+      },
+      "start": {
+        "character": 20,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
+exports[`formml validator > annotation > assignment type check - 'positional argument' > cannot assign incorrect typed value to a parameter with type hint - text 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Argument of type '123' is not assignable to parameter of type 'text'.",
+    "range": {
+      "end": {
+        "character": 23,
+        "line": 2,
+      },
+      "start": {
+        "character": 20,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
 exports[`formml validator > annotation > should error given too many arguments 1`] = `
 [
   {
