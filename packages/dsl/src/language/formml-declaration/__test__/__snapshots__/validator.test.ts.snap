@@ -1,0 +1,26 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`formml-declaration validator > annotation > invalidate required parameters after optional parameters 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "A required parameter cannot follow an optional parameter",
+    "range": {
+      "end": {
+        "character": 39,
+        "line": 0,
+      },
+      "start": {
+        "character": 32,
+        "line": 0,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml-declaration",
+    "tags": undefined,
+  },
+]
+`;

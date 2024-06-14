@@ -12,6 +12,7 @@ import {
   FormMLDeclarationModule,
   FormMLDeclarationServices,
 } from './formml-declaration/formml-declaration-module.js'
+import { registerFormMLDeclarationValidationChecks } from './formml-declaration/formml-declaration-validator.js'
 import {
   FormMLDeclarationGeneratedModule,
   FormMLGeneratedModule,
@@ -64,7 +65,7 @@ export function createAggregateServices(context: DefaultSharedModuleContext): {
   shared.ServiceRegistry.register(FormMLDeclaration)
 
   registerFormMLValidationChecks(FormML)
-  // registerFormMLDeclarationValidationChecks(FormMLDeclaration)
+  registerFormMLDeclarationValidationChecks(FormMLDeclaration)
 
   if (!context.connection) {
     // We don't run inside a language server

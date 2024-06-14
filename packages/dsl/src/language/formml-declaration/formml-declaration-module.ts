@@ -1,6 +1,8 @@
 import { type Module } from 'langium'
 import { type LangiumServices, type PartialLangiumServices } from 'langium/lsp'
 
+import { FormMLDeclarationValidator } from './formml-declaration-validator.js'
+
 // import {
 //   FormMLDeclarationValidator,
 //   registerValidationChecks,
@@ -11,7 +13,7 @@ import { type LangiumServices, type PartialLangiumServices } from 'langium/lsp'
  */
 export type FormMLDeclarationAddedServices = {
   validation: {
-    // FormMLDeclarationValidator: FormMLDeclarationValidator
+    FormMLDeclarationValidator: FormMLDeclarationValidator
   }
 }
 
@@ -32,6 +34,6 @@ export const FormMLDeclarationModule: Module<
   PartialLangiumServices & FormMLDeclarationAddedServices
 > = {
   validation: {
-    // FormMLDeclarationValidator: () => new FormMLDeclarationValidator(),
+    FormMLDeclarationValidator: () => new FormMLDeclarationValidator(),
   },
 }
