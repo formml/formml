@@ -1,13 +1,13 @@
-import { Primitive } from '@formml/dsl'
+import { PRIMITIVE } from '@formml/dsl'
 import { BigNumber } from 'bignumber.js'
 
 import { parse as originalParse, stringify } from '../JsTypes.js'
 
-function parseWithFullArgs<T extends Primitive>(input: string, type: T) {
+function parseWithFullArgs<T extends PRIMITIVE>(input: string, type: T) {
   return originalParse(input, type)
 }
 
-function parseWithPartialArgs<T extends Primitive>(input: string, type: T) {
+function parseWithPartialArgs<T extends PRIMITIVE>(input: string, type: T) {
   return originalParse(type)(input)
 }
 
@@ -19,7 +19,7 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
       const input = 'unknown'
 
       // Act & Assert
-      expect(() => parse(input, 'unknown type' as Primitive)).toThrow()
+      expect(() => parse(input, 'unknown type' as PRIMITIVE)).toThrow()
     })
 
     test('should throw error when stringifying unknown type', () => {

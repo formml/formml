@@ -1,6 +1,7 @@
 grammar FormMLDeclaration
 
 import '../common/common'
+import '../type-system/type-system'
 
 entry FormMLDeclaration:
   (declarations+=Declaration)+;
@@ -13,15 +14,3 @@ FunctionDeclaration:
 
 Parameter:
   name=ID (optional?='?'? ':' type=Type)?;
-
-
-// Type system
-
-Type:
-  AnyType | PrimitiveType;
-
-AnyType:
-  name='any';
-
-PrimitiveType:
-  name=Primitive;

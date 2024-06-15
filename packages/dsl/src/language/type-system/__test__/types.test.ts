@@ -88,7 +88,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'PrimitiveType',
+          $type: 'TextType',
           name: 'text',
         } as const,
         Text,
@@ -96,7 +96,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'PrimitiveType',
+          $type: 'BoolType',
           name: 'bool',
         } as const,
         Bool,
@@ -104,7 +104,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'PrimitiveType',
+          $type: 'NumType',
           name: 'num',
         } as const,
         Num,
@@ -112,7 +112,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'PrimitiveType',
+          $type: 'DatetimeType',
           name: 'datetime',
         } as const,
         Datetime,
@@ -120,7 +120,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'PrimitiveType',
+          $type: 'DecimalType',
           name: 'decimal',
         } as const,
         Decimal,

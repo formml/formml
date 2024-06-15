@@ -1,6 +1,7 @@
 grammar FormML
 
 import '../common/common'
+import '../type-system/type-system'
 import '../formml-declaration/formml-declaration'
 
 entry FormMLSchema:
@@ -12,7 +13,7 @@ Form:
   '}';
 
 Field:
-  (annotations+=Annotation)* type=Primitive name=ID;
+  (annotations+=Annotation)* type=PRIMITIVE name=ID;
 
 Argument:
   {infer PositionalArgument} value=Literal | {infer NamedArgument} name=ID ':' value=Literal;
