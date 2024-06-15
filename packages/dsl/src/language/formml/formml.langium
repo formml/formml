@@ -28,24 +28,27 @@ Annotation:
 // Literals
 
 Literal:
-  Number_ | SQString | DQString | Boolean | Null;
+  NumLiteral | TextLiteral | BoolLiteral | NullLiteral;
 
-terminal NUMBER returns number: /-?(?:0|[1-9]\d*)(?:\.[0-9]+)?/;
-Number_:
-  value=NUMBER;
+TextLiteral:
+  SQTextLiteral | DQTextLiteral;
 
-terminal SQ_STRING: /'[^']*'/;
-SQString:
-  value=SQ_STRING;
+terminal NUM_LITERAL returns number: /-?(?:0|[1-9]\d*)(?:\.[0-9]+)?/;
+NumLiteral:
+  value=NUM_LITERAL;
 
-terminal DQ_STRING: /"[^"]*"/;
-DQString:
-  value=DQ_STRING;
+terminal SQ_TEXT_LITERAL: /'[^']*'/;
+SQTextLiteral:
+  value=SQ_TEXT_LITERAL;
 
-BOOLEAN returns boolean:
+terminal DQ_TEXT_LITERAL: /"[^"]*"/;
+DQTextLiteral:
+  value=DQ_TEXT_LITERAL;
+
+BOOL_LITERAL returns boolean:
   'true' | 'false';
-Boolean:
-  value=BOOLEAN;
+BoolLiteral:
+  value=BOOL_LITERAL;
 
-Null:
-  {infer Null} 'null';
+NullLiteral:
+  {infer NullLiteral} 'null';

@@ -125,16 +125,16 @@ export function isBoolLiteralType(type: Type): type is BoolLiteralType {
 }
 
 export function inferType(value: ast.Literal): Type {
-  if (ast.isDQString(value) || ast.isSQString(value)) {
+  if (ast.isTextLiteral(value)) {
     return createTextLiteral(resolveLiteralValue(value))
   }
-  if (ast.isNumber_(value)) {
+  if (ast.isNumLiteral(value)) {
     return createNumLiteral(resolveLiteralValue(value))
   }
-  if (ast.isBoolean(value)) {
+  if (ast.isBoolLiteral(value)) {
     return createBoolLiteral(resolveLiteralValue(value))
   }
-  if (ast.isNull(value)) {
+  if (ast.isNullLiteral(value)) {
     return Unknown
   }
   return Never

@@ -5,12 +5,12 @@ describe('ast utils', () => {
     test.each([
       {
         $container: {} as never,
-        $type: 'DQString' as const,
+        $type: 'DQTextLiteral' as const,
         value: '"hello"',
       },
       {
         $container: {} as never,
-        $type: 'SQString' as const,
+        $type: 'SQTextLiteral' as const,
         value: "'hello'",
       },
     ])('should remove quotes from string literal', (literal) => {
@@ -20,7 +20,7 @@ describe('ast utils', () => {
     test('should return number value given number literal', () => {
       const literal = {
         $container: {} as never,
-        $type: 'Number_' as const,
+        $type: 'NumLiteral' as const,
         value: 123,
       }
       expect(resolveLiteralValue(literal)).toBe(123)
@@ -29,7 +29,7 @@ describe('ast utils', () => {
     test('should return boolean value given boolean literal', () => {
       const literal = {
         $container: {} as never,
-        $type: 'Boolean' as const,
+        $type: 'BoolLiteral' as const,
         value: true,
       }
       expect(resolveLiteralValue(literal)).toBe(true)
@@ -38,7 +38,7 @@ describe('ast utils', () => {
     test('should return null given null literal', () => {
       const literal = {
         $container: {} as never,
-        $type: 'Null' as const,
+        $type: 'NullLiteral' as const,
       }
       expect(resolveLiteralValue(literal)).toBe(null)
     })

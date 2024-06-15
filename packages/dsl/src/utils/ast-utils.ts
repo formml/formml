@@ -1,14 +1,14 @@
 import {
   Literal,
-  Null,
-  isDQString,
-  isNull,
-  isSQString,
+  NullLiteral,
+  isDQTextLiteral,
+  isNullLiteral,
+  isSQTextLiteral,
 } from '../language/index.js'
 
 type LiteralValue<T extends Literal> = T extends { value: unknown }
   ? T['value']
-  : T extends Null
+  : T extends NullLiteral
     ? null
     : never
 
@@ -16,10 +16,10 @@ export function resolveLiteralValue<T extends Literal>(
   literal: T,
 ): LiteralValue<T>
 export function resolveLiteralValue(literal: Literal) {
-  if (isDQString(literal) || isSQString(literal)) {
+  if (isDQTextLiteral(literal) || isSQTextLiteral(literal)) {
     return literal.value.slice(1, -1)
   }
-  if (isNull(literal)) {
+  if (isNullLiteral(literal)) {
     return null
   }
   return literal.value

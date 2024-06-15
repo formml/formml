@@ -10,7 +10,7 @@ describe('function utils', () => {
           $type: 'PositionalArgument',
           value: {
             $container: {} as never,
-            $type: 'DQString',
+            $type: 'DQTextLiteral',
             value: '"value1"',
           },
         },
@@ -19,7 +19,7 @@ describe('function utils', () => {
           $type: 'PositionalArgument',
           value: {
             $container: {} as never,
-            $type: 'Boolean',
+            $type: 'BoolLiteral',
             value: true,
           },
         },
@@ -28,7 +28,7 @@ describe('function utils', () => {
           $type: 'PositionalArgument',
           value: {
             $container: {} as never,
-            $type: 'Number_',
+            $type: 'NumLiteral',
             value: 3,
           },
         },
@@ -72,7 +72,7 @@ describe('function utils', () => {
           name: 'arg1',
           value: {
             $container: {} as never,
-            $type: 'DQString',
+            $type: 'DQTextLiteral',
             value: '"value1"',
           },
         },
@@ -82,7 +82,7 @@ describe('function utils', () => {
           name: 'arg2',
           value: {
             $container: {} as never,
-            $type: 'Boolean',
+            $type: 'BoolLiteral',
             value: true,
           },
         },
@@ -92,7 +92,7 @@ describe('function utils', () => {
           name: 'arg3',
           value: {
             $container: {} as never,
-            $type: 'Number_',
+            $type: 'NumLiteral',
             value: 3,
           },
         },

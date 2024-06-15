@@ -12,7 +12,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'DQString' as const,
+          $type: 'DQTextLiteral' as const,
           value: '"hello"',
         },
         createTextLiteral('hello'),
@@ -20,7 +20,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'SQString' as const,
+          $type: 'SQTextLiteral' as const,
           value: "'hello'",
         },
         createTextLiteral('hello'),
@@ -28,7 +28,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'Number_' as const,
+          $type: 'NumLiteral' as const,
           value: 123,
         },
         createNumLiteral(123),
@@ -36,7 +36,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'Boolean' as const,
+          $type: 'BoolLiteral' as const,
           value: false,
         },
         createBoolLiteral(false),
@@ -44,7 +44,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'Boolean' as const,
+          $type: 'BoolLiteral' as const,
           value: true,
         },
         createBoolLiteral(true),
@@ -53,7 +53,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'Null' as const,
+          $type: 'NullLiteral' as const,
         },
         Unknown,
       ],

@@ -76,8 +76,8 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "Boolean",
-                  "value": false
+                  "$type": "BoolLiteral",
+                  "value": "false"
                 }
               }
             ],
@@ -110,8 +110,8 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "Boolean",
-                  "value": true
+                  "$type": "BoolLiteral",
+                  "value": "true"
                 }
               }
             ],
@@ -144,7 +144,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "Null"
+                  "$type": "NullLiteral"
                 }
               }
             ],
@@ -177,7 +177,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": -123
                 }
               }
@@ -211,7 +211,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": -123.456
                 }
               }
@@ -245,7 +245,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 0
                 }
               }
@@ -279,7 +279,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 123
                 }
               }
@@ -313,7 +313,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 123.456
                 }
               }
@@ -347,7 +347,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "SQString",
+                  "$type": "SQTextLiteral",
                   "value": "'single quotes'"
                 }
               }
@@ -381,7 +381,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "DQString",
+                  "$type": "DQTextLiteral",
                   "value": "\\"double quotes\\""
                 }
               }
@@ -415,7 +415,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > m
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 10
                 }
               },
@@ -423,7 +423,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > m
                 "$type": "NamedArgument",
                 "name": "max",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 20
                 }
               }
@@ -458,7 +458,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > n
                 "$type": "NamedArgument",
                 "name": "min",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 10
                 }
               },
@@ -466,7 +466,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > n
                 "$type": "NamedArgument",
                 "name": "max",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 20
                 }
               }
@@ -501,7 +501,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > n
                 "$type": "NamedArgument",
                 "name": "min",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 10
                 }
               },
@@ -509,7 +509,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > n
                 "$type": "NamedArgument",
                 "name": "max",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 20
                 }
               }
@@ -544,7 +544,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > n
                 "$type": "NamedArgument",
                 "name": "max",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 20
                 }
               },
@@ -552,7 +552,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > n
                 "$type": "NamedArgument",
                 "name": "min",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 10
                 }
               }
@@ -587,7 +587,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > n
                 "$type": "NamedArgument",
                 "name": "value",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 10
                 }
               }
@@ -621,14 +621,14 @@ exports[`formml grammar > validation annotations > annotation with arguments > p
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 10
                 }
               },
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 20
                 }
               }
@@ -662,14 +662,14 @@ exports[`formml grammar > validation annotations > annotation with arguments > p
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 10
                 }
               },
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 20
                 }
               }
@@ -703,7 +703,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > p
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "Number_",
+                  "$type": "NumLiteral",
                   "value": 10
                 }
               }
