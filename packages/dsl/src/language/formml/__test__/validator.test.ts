@@ -281,6 +281,24 @@ describe('formml validator', () => {
           expect(diagnostics).toMatchSnapshot()
         },
       )
+
+      test('can omit optional parameter', async () => {
+        // Arrange
+        const declaration = 'annot fun test(name: text, optional?: text)'
+        await loadDeclaration(declaration, 'file:///test-annotation.d.formml')
+        const input = `
+          form ExampleForm {
+            @test(${arg({ name: '"value"' })})
+            num numberField
+          }
+        `
+
+        // Act
+        const { diagnostics } = await parser(input)
+
+        // Assert
+        expect(diagnostics).toHaveLength(0)
+      })
     })
   })
 })
