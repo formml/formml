@@ -1,1 +1,1 @@
-annot fun required(message)
+annot fun required(message?: text)

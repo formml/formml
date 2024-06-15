@@ -125,6 +125,31 @@ exports[`formml validator > annotation > assignment type check - 'named argument
 ]
 `;
 
+exports[`formml validator > annotation > assignment type check - 'named argument' > cannot omit required parameter 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Missing required parameter: "required".",
+    "range": {
+      "end": {
+        "character": 31,
+        "line": 2,
+      },
+      "start": {
+        "character": 18,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
 exports[`formml validator > annotation > assignment type check - 'positional argument' > cannot assign incorrect typed value to a parameter with type hint - bool 1`] = `
 [
   {
@@ -250,6 +275,56 @@ exports[`formml validator > annotation > assignment type check - 'positional arg
 ]
 `;
 
+exports[`formml validator > annotation > assignment type check - 'positional argument' > cannot omit required parameter 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Missing required parameter: "required".",
+    "range": {
+      "end": {
+        "character": 25,
+        "line": 2,
+      },
+      "start": {
+        "character": 18,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
+exports[`formml validator > annotation > should error given too many arguments - with optional parameters 1`] = `
+[
+  {
+    "code": undefined,
+    "codeDescription": undefined,
+    "data": undefined,
+    "message": "Expected 1 - 2 arguments, but got 3.",
+    "range": {
+      "end": {
+        "character": 27,
+        "line": 2,
+      },
+      "start": {
+        "character": 24,
+        "line": 2,
+      },
+    },
+    "relatedInformation": undefined,
+    "severity": 1,
+    "source": "formml",
+    "tags": undefined,
+  },
+]
+`;
+
 exports[`formml validator > annotation > should error given too many arguments 1`] = `
 [
   {
@@ -284,11 +359,11 @@ exports[`formml validator > annotation > should error given unknown named argume
     "message": "Unknown parameter "unknown", expected one of "min" | "max".",
     "range": {
       "end": {
-        "character": 32,
+        "character": 33,
         "line": 2,
       },
       "start": {
-        "character": 20,
+        "character": 21,
         "line": 2,
       },
     },
@@ -454,11 +529,11 @@ exports[`formml validator > annotation > should error when re-assigning to same 
     "message": "Duplicate assignment to parameter "min".",
     "range": {
       "end": {
-        "character": 29,
+        "character": 30,
         "line": 2,
       },
       "start": {
-        "character": 21,
+        "character": 22,
         "line": 2,
       },
     },
@@ -479,11 +554,11 @@ exports[`formml validator > annotation > should error when re-assigning to same 
     "message": "Duplicate assignment to parameter "min".",
     "range": {
       "end": {
-        "character": 34,
+        "character": 35,
         "line": 2,
       },
       "start": {
-        "character": 26,
+        "character": 27,
         "line": 2,
       },
     },

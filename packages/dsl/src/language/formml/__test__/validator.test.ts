@@ -35,7 +35,8 @@ describe('formml validator', () => {
       const annotations = `
         annot fun required()
         annot fun range(min, max)
-        annot fun anything(name1, name2, name3, name4, name5, name6, name7, name8, name9, name10)
+        annot fun range2(min, max?: any)
+        annot fun anything(name1, name2, name3, name4, name5, name6, name7)
       `
       await loadDeclaration(annotations, 'file:///builtin-annotations.d.formml')
     })
@@ -99,17 +100,6 @@ describe('formml validator', () => {
       expect(diagnostics).toMatchSnapshot()
     })
 
-    test('should no error given insufficient arguments', async () => {
-      const input = `
-        form ExampleForm {
-          @range(0)
-          num numberField
-        }
-      `
-      const { diagnostics } = await parser(input)
-      expect(diagnostics).toHaveLength(0)
-    })
-
     test('should error given too many arguments', async () => {
       const input = `
         form ExampleForm {
@@ -122,10 +112,24 @@ describe('formml validator', () => {
       expect(diagnostics).toMatchSnapshot()
     })
 
+    test('should error given too many arguments - with optional parameters', async () => {
+      const declaration = 'annot fun test(param1, param2?: any)'
+      await loadDeclaration(declaration, 'file:///test-annotation.d.formml')
+      const input = `
+        form ExampleForm {
+          @test(0, 100, 200)
+          num numberField
+        }
+      `
+      const { diagnostics } = await parser(input)
+      expect(diagnostics).toHaveLength(1)
+      expect(diagnostics).toMatchSnapshot()
+    })
+
     test('should error given unknown named argument', async () => {
       const input = `
         form ExampleForm {
-          @range(0, unknown: 100)
+          @range2(0, unknown: 100)
           num numberField
         }
       `
@@ -137,7 +141,7 @@ describe('formml validator', () => {
     test('should error when re-assigning to same parameter', async () => {
       const input = `
         form ExampleForm {
-          @range(min: 10, min: 100)
+          @range2(min: 10, min: 100)
           num numberField
         }
       `
@@ -149,7 +153,7 @@ describe('formml validator', () => {
     test('should error when re-assigning to same parameter - mix of named and positional arguments', async () => {
       const input = `
         form ExampleForm {
-          @range(10, min: 100)
+          @range2(10, min: 100)
           num numberField
         }
       `
@@ -298,6 +302,25 @@ describe('formml validator', () => {
 
         // Assert
         expect(diagnostics).toHaveLength(0)
+      })
+
+      test('cannot omit required parameter', async () => {
+        // Arrange
+        const declaration = 'annot fun test(name: text, required: text)'
+        await loadDeclaration(declaration, 'file:///test-annotation.d.formml')
+        const input = `
+          form ExampleForm {
+            @test(${arg({ name: '"value"' })})
+            num numberField
+          }
+        `
+
+        // Act
+        const { diagnostics } = await parser(input)
+
+        // Assert
+        expect(diagnostics).toHaveLength(1)
+        expect(diagnostics).toMatchSnapshot()
       })
     })
   })

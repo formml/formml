@@ -52,3 +52,5 @@ BoolLiteral:
 
 NullLiteral:
   {infer NullLiteral} 'null';
+
+// TODO: Keyword as identifier

@@ -26,6 +26,7 @@ export function registerFormMLValidationChecks(services: FormMLServices) {
 /**
  * Implementation of custom validations.
  */
+// TODO: Unique identifier
 export class FormMLValidator {
   checkAnnotationCallArgumentsAssignment = (
     annotation: ast.Annotation,
@@ -34,15 +35,21 @@ export class FormMLValidator {
     const declaration = annotation.call.ref
     if (!declaration) return
 
-    const paramDeclaration = Object.fromEntries(
+    const allParamDeclaration = Object.fromEntries(
       declaration.parameters.map((p) => [p.name, p]),
     )
-    const paramNames = Object.keys(paramDeclaration)
+    const allParamNames = Object.keys(allParamDeclaration)
+    const requiredParamNames = allParamNames.filter(
+      (name) => allParamDeclaration[name].optional === false,
+    )
 
-    const expectedLength = paramNames.length
+    const minLength = requiredParamNames.length
+    const maxLength = allParamNames.length
+    const expectedLength =
+      minLength === maxLength ? minLength : `${minLength} - ${maxLength}`
     const actualLength = annotation.args.length
-    if (actualLength > expectedLength) {
-      const firstExtra = annotation.args[expectedLength].$cstNode
+    if (actualLength > maxLength) {
+      const firstExtra = annotation.args[maxLength].$cstNode
       const lastExtra = annotation.args[actualLength - 1].$cstNode
       const range = firstExtra &&
         lastExtra && {
@@ -64,10 +71,10 @@ export class FormMLValidator {
 
     annotation.args.forEach((arg, index) => {
       if (ast.isNamedArgument(arg)) {
-        if (!(arg.name in paramDeclaration)) {
+        if (!(arg.name in allParamDeclaration)) {
           accept(
             'error',
-            `Unknown parameter "${arg.name}", expected one of ${paramNames
+            `Unknown parameter "${arg.name}", expected one of ${allParamNames
               .map((k) => `"${k}"`)
               .join(' | ')}.`,
             { node: arg },
@@ -81,7 +88,7 @@ export class FormMLValidator {
         assignedParams.add(arg.name)
 
         const argType = t.inferType(arg.value)
-        const declaredType = paramDeclaration[arg.name]?.type ?? t.Any
+        const declaredType = allParamDeclaration[arg.name]?.type ?? t.Any
         if (!t.isAssignable(argType, declaredType)) {
           accept(
             'error',
@@ -113,6 +120,19 @@ export class FormMLValidator {
         }
       }
     })
+
+    const differences = requiredParamNames.filter(
+      (name) => !assignedParams.has(name),
+    )
+    if (differences.length > 0) {
+      accept(
+        'error',
+        `Missing required parameter${
+          differences.length > 1 ? 's' : ''
+        }: ${differences.map((k) => `"${k}"`).join(', ')}.`,
+        { node: annotation, property: 'args' },
+      )
+    }
   }
 
   checkAnnotationCallArgumentsOrder = (
