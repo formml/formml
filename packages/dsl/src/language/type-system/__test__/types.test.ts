@@ -1,15 +1,8 @@
 import {
-  Any,
-  Bool,
-  Datetime,
-  Decimal,
-  Num,
-  Text,
   Unknown,
   createBoolLiteral,
   createNumLiteral,
   createTextLiteral,
-  fromDeclaration,
   inferType,
 } from '../types.js'
 
@@ -67,70 +60,8 @@ describe('types', () => {
     ])(
       'should infer literal types given a literal value',
       (input, expected) => {
-        expect(inferType(input)).toEqual({
-          ...expected,
-          toString: expect.any(Function),
-        })
+        expect(inferType(input)).toEqual(expected)
       },
     )
-  })
-
-  describe('fromDeclaration', () => {
-    test.each([
-      [
-        {
-          $container: {} as never,
-          $type: 'AnyType',
-          name: 'any',
-        } as const,
-        Any,
-      ],
-      [
-        {
-          $container: {} as never,
-          $type: 'TextType',
-          name: 'text',
-        } as const,
-        Text,
-      ],
-      [
-        {
-          $container: {} as never,
-          $type: 'BoolType',
-          name: 'bool',
-        } as const,
-        Bool,
-      ],
-      [
-        {
-          $container: {} as never,
-          $type: 'NumType',
-          name: 'num',
-        } as const,
-        Num,
-      ],
-      [
-        {
-          $container: {} as never,
-          $type: 'DatetimeType',
-          name: 'datetime',
-        } as const,
-        Datetime,
-      ],
-      [
-        {
-          $container: {} as never,
-          $type: 'DecimalType',
-          name: 'decimal',
-        } as const,
-        Decimal,
-      ],
-    ])('should convert declaration type to unknown type', (input, expected) => {
-      expect(fromDeclaration(input)).toBe(expected)
-    })
-
-    test('should return any if given no declaration', () => {
-      expect(fromDeclaration()).toBe(Any)
-    })
   })
 })

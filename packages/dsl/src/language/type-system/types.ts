@@ -1,7 +1,11 @@
 import { resolveLiteralValue } from '../../utils/ast-utils.js'
 import * as ast from '../generated/ast.js'
 
-export type Type =
+export type Type = ConstantType | LiteralType
+
+// Constant types
+
+export type ConstantType =
   | AnyType
   | BoolType
   | DatetimeType
@@ -11,33 +15,65 @@ export type Type =
   | TextType
   | UnknownType
 
-function createConstantType<const T extends { type: string }>(
-  definition: T,
-): T & { toString: () => string } {
-  return { ...definition, toString: () => definition.type }
+export const Any = {
+  name: 'any' as const,
 }
-
-export const Any = createConstantType({
-  type: 'any',
-})
 
 export type AnyType = typeof Any
 
 export function isAnyType(type: Type): type is AnyType {
-  return type.type === 'any'
+  return type.name === 'any'
 }
 
-export const Never = createConstantType({
-  type: 'never',
-})
+export const Never = {
+  name: 'never' as const,
+}
 
 export type NeverType = typeof Never
 
-export const Num = createConstantType({
-  type: 'num',
-})
+export const Num = {
+  name: 'num' as const,
+}
 
 export type NumType = typeof Num
+
+export const Text = {
+  name: 'text' as const,
+}
+
+export type TextType = typeof Text
+
+export const Bool = {
+  name: 'bool' as const,
+}
+
+export type BoolType = typeof Bool
+
+export const Datetime = {
+  name: 'datetime' as const,
+}
+
+export type DatetimeType = typeof Datetime
+
+export const Decimal = {
+  name: 'decimal' as const,
+}
+
+export type DecimalType = typeof Decimal
+
+export const Unknown = {
+  name: 'unknown' as const,
+}
+
+export type UnknownType = typeof Unknown
+
+// Literal types
+
+export type LiteralType = BoolLiteralType | NumLiteralType | TextLiteralType
+
+export function isLiteralType(type: Type): type is LiteralType {
+  return 'literal' in type
+}
 
 export type NumLiteralType<T extends number = number> = NumType & { literal: T }
 
@@ -46,16 +82,13 @@ export function createNumLiteral<T extends number>(
 ): NumLiteralType<T> {
   return {
     literal: value,
-    toString: () => value.toString(),
-    type: 'num',
+    name: 'num',
   }
 }
 
-export const Text = createConstantType({
-  type: 'text',
-})
-
-export type TextType = typeof Text
+export function isNumLiteralType(type: Type): type is NumLiteralType {
+  return type.name === 'num' && 'literal' in type
+}
 
 export type TextLiteralType<T extends string = string> = TextType & {
   literal: T
@@ -66,16 +99,13 @@ export function createTextLiteral<T extends string>(
 ): TextLiteralType<T> {
   return {
     literal: value,
-    toString: () => `"${value}"`,
-    type: 'text',
+    name: 'text',
   }
 }
 
-export const Bool = createConstantType({
-  type: 'bool',
-})
-
-export type BoolType = typeof Bool
+export function isTextLiteralType(type: Type): type is TextLiteralType {
+  return type.name === 'text' && 'literal' in type
+}
 
 export type BoolLiteralType<T extends boolean = boolean> = BoolType & {
   literal: T
@@ -86,28 +116,13 @@ export function createBoolLiteral<T extends boolean>(
 ): BoolLiteralType<T> {
   return {
     literal: value,
-    toString: () => value.toString(),
-    type: 'bool',
+    name: 'bool',
   }
 }
 
-export const Datetime = createConstantType({
-  type: 'datetime',
-})
-
-export type DatetimeType = typeof Datetime
-
-export const Decimal = createConstantType({
-  type: 'decimal',
-})
-
-export type DecimalType = typeof Decimal
-
-export const Unknown = createConstantType({
-  type: 'unknown',
-})
-
-export type UnknownType = typeof Unknown
+export function isBoolLiteralType(type: Type): type is BoolLiteralType {
+  return type.name === 'bool' && 'literal' in type
+}
 
 export function inferType(value: ast.Literal): Type {
   if (ast.isDQString(value) || ast.isSQString(value)) {
@@ -121,31 +136,6 @@ export function inferType(value: ast.Literal): Type {
   }
   if (ast.isNull(value)) {
     return Unknown
-  }
-  return Never
-}
-
-export function fromDeclaration(declaration?: ast.Type): Type {
-  if (!declaration) {
-    return Any
-  }
-  if (ast.isAnyType(declaration)) {
-    return Any
-  }
-  if (declaration.name === 'text') {
-    return Text
-  }
-  if (declaration.name === 'num') {
-    return Num
-  }
-  if (declaration.name === 'bool') {
-    return Bool
-  }
-  if (declaration.name === 'datetime') {
-    return Datetime
-  }
-  if (declaration.name === 'decimal') {
-    return Decimal
   }
   return Never
 }

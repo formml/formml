@@ -1,5 +1,5 @@
 import * as t from '../types.js'
-import { isAssignable } from '../utils.js'
+import { isAssignable, stringify } from '../utils.js'
 
 describe('utils', () => {
   describe('isAssignable', () => {
@@ -44,6 +44,27 @@ describe('utils', () => {
       'should return true if source is a literal of target type',
       (source, target) => {
         expect(isAssignable(source, target)).toBe(true)
+      },
+    )
+  })
+
+  describe('stringify', () => {
+    test.each([t.Text, t.Num, t.Bool, t.Datetime, t.Decimal])(
+      'should return the name if given a constant type',
+      (type) => {
+        expect(stringify(type)).toBe(type.name)
+      },
+    )
+
+    test.each([
+      [t.createTextLiteral('hello'), '"hello"'],
+      [t.createNumLiteral(123), '123'],
+      [t.createBoolLiteral(true), 'true'],
+      [t.createBoolLiteral(false), 'false'],
+    ])(
+      'should return the literal value if given a literal type',
+      (type, expected) => {
+        expect(stringify(type)).toBe(expected)
       },
     )
   })

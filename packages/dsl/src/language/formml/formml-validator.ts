@@ -81,11 +81,15 @@ export class FormMLValidator {
         assignedParams.add(arg.name)
 
         const argType = t.inferType(arg.value)
-        const declaredType = t.fromDeclaration(paramDeclaration[arg.name]?.type)
+        const declaredType = paramDeclaration[arg.name]?.type ?? t.Any
         if (!t.isAssignable(argType, declaredType)) {
           accept(
             'error',
-            `Argument of type '${argType.toString()}' is not assignable to parameter of type '${declaredType.toString()}'.`,
+            `Argument of type '${t.stringify(
+              argType,
+            )}' is not assignable to parameter of type '${t.stringify(
+              declaredType,
+            )}'.`,
             { node: arg },
           )
         }
@@ -95,11 +99,15 @@ export class FormMLValidator {
         param && assignedParams.add(param.name)
 
         const argType = t.inferType(arg.value)
-        const declaredType = t.fromDeclaration(param?.type)
+        const declaredType = param?.type ?? t.Any
         if (!t.isAssignable(argType, declaredType)) {
           accept(
             'error',
-            `Argument of type '${argType.toString()}' is not assignable to parameter of type '${declaredType.toString()}'.`,
+            `Argument of type '${t.stringify(
+              argType,
+            )}' is not assignable to parameter of type '${t.stringify(
+              declaredType,
+            )}'.`,
             { node: arg },
           )
         }
