@@ -347,8 +347,8 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "SQTextLiteral",
-                  "value": "'single quotes'"
+                  "$type": "TextLiteral",
+                  "value": "single quotes"
                 }
               }
             ],
@@ -381,8 +381,8 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
               {
                 "$type": "PositionalArgument",
                 "value": {
-                  "$type": "DQTextLiteral",
-                  "value": "\\"double quotes\\""
+                  "$type": "TextLiteral",
+                  "value": "double quotes"
                 }
               }
             ],

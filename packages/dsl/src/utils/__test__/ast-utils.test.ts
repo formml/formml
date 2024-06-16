@@ -2,18 +2,12 @@ import { resolveLiteralValue } from '../ast-utils.js'
 
 describe('ast utils', () => {
   describe('resolveLiteralValue', () => {
-    test.each([
-      {
+    test('should return string value given string literal', () => {
+      const literal = {
         $container: {} as never,
-        $type: 'DQTextLiteral' as const,
-        value: '"hello"',
-      },
-      {
-        $container: {} as never,
-        $type: 'SQTextLiteral' as const,
-        value: "'hello'",
-      },
-    ])('should remove quotes from string literal', (literal) => {
+        $type: 'TextLiteral' as const,
+        value: 'hello',
+      }
       expect(resolveLiteralValue(literal)).toBe('hello')
     })
 

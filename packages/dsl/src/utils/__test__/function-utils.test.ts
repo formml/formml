@@ -10,8 +10,8 @@ describe('function utils', () => {
           $type: 'PositionalArgument',
           value: {
             $container: {} as never,
-            $type: 'DQTextLiteral',
-            value: '"value1"',
+            $type: 'TextLiteral',
+            value: 'value1',
           },
         },
         {
@@ -72,8 +72,8 @@ describe('function utils', () => {
           name: 'arg1',
           value: {
             $container: {} as never,
-            $type: 'DQTextLiteral',
-            value: '"value1"',
+            $type: 'TextLiteral',
+            value: 'value1',
           },
         },
         {

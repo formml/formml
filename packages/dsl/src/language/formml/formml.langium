@@ -30,20 +30,13 @@ Annotation:
 Literal:
   NumLiteral | TextLiteral | BoolLiteral | NullLiteral;
 
-TextLiteral:
-  SQTextLiteral | DQTextLiteral;
-
 terminal NUM_LITERAL returns number: /-?(?:0|[1-9]\d*)(?:\.[0-9]+)?/;
 NumLiteral:
   value=NUM_LITERAL;
 
-terminal SQ_TEXT_LITERAL: /'[^']*'/;
-SQTextLiteral:
-  value=SQ_TEXT_LITERAL;
-
-terminal DQ_TEXT_LITERAL: /"[^"]*"/;
-DQTextLiteral:
-  value=DQ_TEXT_LITERAL;
+terminal STRING: /'[^']*'|"[^"]*"/;
+TextLiteral:
+  value=STRING;
 
 BOOL_LITERAL returns boolean:
   'true' | 'false';

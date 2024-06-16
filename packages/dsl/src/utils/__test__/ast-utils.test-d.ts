@@ -2,18 +2,12 @@ import { resolveLiteralValue } from '../ast-utils.js'
 
 describe('ast utils', () => {
   describe('resolveLiteralValue', () => {
-    test.each([
-      {
+    test('should return string type given string literal', () => {
+      const literal = {
         $container: {} as never,
-        $type: 'DQTextLiteral' as const,
-        value: '"hello"',
-      },
-      {
-        $container: {} as never,
-        $type: 'SQTextLiteral' as const,
-        value: "'hello'",
-      },
-    ])('should return string type given string literal', (literal) => {
+        $type: 'TextLiteral' as const,
+        value: 'hello',
+      }
       expectTypeOf(resolveLiteralValue(literal)).toBeString()
     })
 

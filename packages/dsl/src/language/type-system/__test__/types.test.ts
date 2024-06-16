@@ -12,16 +12,8 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'DQTextLiteral' as const,
-          value: '"hello"',
-        },
-        createTextLiteral('hello'),
-      ],
-      [
-        {
-          $container: {} as never,
-          $type: 'SQTextLiteral' as const,
-          value: "'hello'",
+          $type: 'TextLiteral' as const,
+          value: 'hello',
         },
         createTextLiteral('hello'),
       ],
