@@ -15,10 +15,17 @@ const parse = parseHelper<FormMLDeclaration>(services.FormMLDeclaration)
 
 const fileNames = await fs.readdir('./builtins')
 
+const pick =
+  <K extends string, T extends { [key in K]?: unknown }>(keys: K[]) =>
+  (obj: T): Pick<T, K> =>
+    keys.reduce((acc, key) => ({ ...acc, [key]: obj[key] }), {} as Pick<T, K>)
+
 function generateInterface(ast: FormMLDeclaration) {
   const entries = ast.declarations.map((declaration) => {
     const { name, parameters } = declaration
-    const parameterSummaries = parameters.map((p) => ({ name: p.name }))
+    const parameterSummaries = parameters
+      .map(pick(['name', 'type', 'optional']))
+      .map((p) => ({ ...p, type: p.type && pick(['name'])(p.type) }))
     return [name, parameterSummaries] as const
   })
   return Object.fromEntries(entries)

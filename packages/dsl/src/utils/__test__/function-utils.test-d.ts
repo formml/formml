@@ -1,4 +1,5 @@
 import { Parameter } from '../../language/index.js'
+import * as t from '../../language/type-system/index.js'
 import { resolveArguments } from '../function-utils.js'
 
 describe('function utils', () => {
@@ -15,22 +16,55 @@ describe('function utils', () => {
     test('should return named date object given literal interface', () => {
       const declarations = [
         {
-          name: 'param1',
+          name: 'omitType',
+          optional: false,
         },
         {
-          name: 'param2',
+          name: 'optional',
+          optional: true,
         },
         {
-          name: 'param3',
+          name: 'text',
+          optional: false,
+          type: t.Text,
+        },
+        {
+          name: 'num',
+          optional: false,
+          type: t.Num,
+        },
+        {
+          name: 'bool',
+          optional: false,
+          type: t.Bool,
+        },
+        // Not supported yet
+        // {
+        //   name: 'datetime',
+        //   optional: false,
+        //   type: t.Datetime,
+        // },
+        // {
+        //   name: 'decimal',
+        //   optional: false,
+        //   type: t.Decimal,
+        // },
+        {
+          name: 'anyShouldBeUnknown',
+          optional: false,
+          type: t.Any,
         },
       ] as const
 
       const result = resolveArguments([], declarations)
 
       expectTypeOf(result).toEqualTypeOf<{
-        param1: unknown
-        param2: unknown
-        param3: unknown
+        anyShouldBeUnknown: unknown
+        bool: boolean
+        num: number
+        omitType: unknown
+        optional?: unknown
+        text: string
       }>()
     })
   })
