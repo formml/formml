@@ -88,7 +88,7 @@ export class FormMLValidator {
         assignedParams.add(arg.name)
 
         const argType = t.inferType(arg.value)
-        const declaredType = allParamDeclaration[arg.name]?.type ?? t.Any
+        const declaredType = t.evaluate(allParamDeclaration[arg.name]?.type) // may not exist
         if (!t.isAssignable(argType, declaredType)) {
           accept(
             'error',
@@ -102,11 +102,11 @@ export class FormMLValidator {
         }
       }
       if (ast.isPositionalArgument(arg)) {
-        const param: ast.Parameter | undefined = declaration.parameters[index] // may out of range
+        const param = declaration.parameters[index] as ast.Parameter | undefined // may out of range
         param && assignedParams.add(param.name)
 
         const argType = t.inferType(arg.value)
-        const declaredType = param?.type ?? t.Any
+        const declaredType = t.evaluate(param?.type)
         if (!t.isAssignable(argType, declaredType)) {
           accept(
             'error',

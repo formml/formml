@@ -1,8 +1,15 @@
 import {
+  Any,
+  Bool,
+  Datetime,
+  Decimal,
+  Num,
+  Text,
   Unknown,
   createBoolLiteral,
   createNumLiteral,
   createTextLiteral,
+  evaluate,
   inferType,
 } from '../types.js'
 
@@ -53,6 +60,68 @@ describe('types', () => {
       'should infer literal types given a literal value',
       (input, expected) => {
         expect(inferType(input)).toEqual(expected)
+      },
+    )
+  })
+
+  describe('evaluate', () => {
+    test('should return any if expression is undefined', () => {
+      expect(evaluate(undefined)).toBe(Any)
+    })
+
+    test.each([
+      [
+        {
+          $container: {} as never,
+          $type: 'AnyType',
+          name: 'any',
+        } as const,
+        Any,
+      ],
+      [
+        {
+          $container: {} as never,
+          $type: 'TextType',
+          name: 'text',
+        } as const,
+        Text,
+      ],
+      [
+        {
+          $container: {} as never,
+          $type: 'NumType',
+          name: 'num',
+        } as const,
+        Num,
+      ],
+      [
+        {
+          $container: {} as never,
+          $type: 'BoolType',
+          name: 'bool',
+        } as const,
+        Bool,
+      ],
+      [
+        {
+          $container: {} as never,
+          $type: 'DatetimeType',
+          name: 'datetime',
+        } as const,
+        Datetime,
+      ],
+      [
+        {
+          $container: {} as never,
+          $type: 'DecimalType',
+          name: 'decimal',
+        } as const,
+        Decimal,
+      ],
+    ])(
+      'should return type constants for language built-in types',
+      (input, expected) => {
+        expect(evaluate(input)).toBe(expected)
       },
     )
   })

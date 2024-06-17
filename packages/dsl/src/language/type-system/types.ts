@@ -139,3 +139,28 @@ export function inferType(value: ast.Literal): Type {
   }
   return Never
 }
+
+export function evaluate(expression?: ast.Type): Type {
+  if (!expression) {
+    return Any
+  }
+  if (ast.isAnyType(expression)) {
+    return Any
+  }
+  if (ast.isNumType(expression)) {
+    return Num
+  }
+  if (ast.isTextType(expression)) {
+    return Text
+  }
+  if (ast.isBoolType(expression)) {
+    return Bool
+  }
+  if (ast.isDatetimeType(expression)) {
+    return Datetime
+  }
+  if (ast.isDecimalType(expression)) {
+    return Decimal
+  }
+  return Never
+}
