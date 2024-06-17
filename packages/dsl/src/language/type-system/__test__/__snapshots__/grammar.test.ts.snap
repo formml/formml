@@ -16,3 +16,44 @@ exports[`type system grammar > type alias > declare simple type alias 1`] = `
   "declarations": []
 }"
 `;
+
+exports[`type system grammar > type alias > type alias can be used as a type 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "typeDeclarations": [
+    {
+      "$type": "TypeAliasDeclaration",
+      "name": "MyType",
+      "type": {
+        "$type": "TextType",
+        "name": "text"
+      }
+    }
+  ],
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "myAnnotation",
+      "parameters": [
+        {
+          "$type": "Parameter",
+          "name": "param",
+          "type": {
+            "$type": "TypeRef",
+            "ref": {
+              "$ref": "#/typeDeclarations@0"
+            }
+          },
+          "optional": false
+        }
+      ],
+      "returnType": {
+        "$type": "TypeRef",
+        "ref": {
+          "$ref": "#/typeDeclarations@0"
+        }
+      }
+    }
+  ]
+}"
+`;

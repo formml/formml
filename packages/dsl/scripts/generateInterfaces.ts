@@ -7,6 +7,7 @@ import {
   createInMemoryAggregateServices,
   isAnnotationDeclaration,
 } from '../src/index.js'
+import { evaluate } from '../src/language/type-system/types.js'
 
 await fs.rm('./interfaces', { force: true, recursive: true })
 await fs.mkdir('./interfaces')
@@ -28,7 +29,7 @@ function generateInterface(ast: FormMLDeclaration) {
       const { name, parameters } = declaration
       const parameterSummaries = parameters
         .map(pick(['name', 'type', 'optional']))
-        .map((p) => ({ ...p, type: p.type && pick(['name'])(p.type) }))
+        .map((p) => ({ ...p, type: evaluate(p.type) }))
       return [name, parameterSummaries] as const
     })
   return Object.fromEntries(entries)

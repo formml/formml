@@ -36,5 +36,14 @@ describe('type system grammar', () => {
       const ast = await parser(input)
       expect(serialize(ast)).toMatchSnapshot()
     })
+
+    test('type alias can be used as a type', async () => {
+      const input = `
+        type MyType = text
+        annot fun myAnnotation(param: MyType): MyType
+      `
+      const ast = await parser(input)
+      expect(serialize(ast)).toMatchSnapshot()
+    })
   })
 })

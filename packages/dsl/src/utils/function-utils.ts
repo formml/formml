@@ -1,3 +1,4 @@
+import * as ast from '../language/generated/ast.js'
 import { Argument, isPositionalArgument } from '../language/index.js'
 import * as t from '../language/type-system/index.js'
 import { resolveLiteralValue } from './ast-utils.js'
@@ -7,10 +8,10 @@ type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never
 type ParameterDeclaration = {
   name: string
   optional: boolean
-  type?: t.Type
+  type?: ast.Type | t.Type
 }
 
-type RuntimeType<T extends t.Type | undefined> = T extends t.TextType
+type RuntimeType<T> = T extends t.TextType
   ? string
   : T extends t.NumType
     ? number

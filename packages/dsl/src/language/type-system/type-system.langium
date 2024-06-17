@@ -1,6 +1,11 @@
 import '../common/common'
 
 Type:
+  BuiltInType | TypeRef;
+
+// Built-in types
+
+BuiltInType:
   AnyType | PrimitiveType;
 
 AnyType:
@@ -23,6 +28,11 @@ BoolType:
 
 DatetimeType:
   name=DATETIME;
+
+// User-defined types
+
+TypeRef:
+  ref=[TypeDeclaration];
 
 TypeDeclaration:
   TypeAliasDeclaration;

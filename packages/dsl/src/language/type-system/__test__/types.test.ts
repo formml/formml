@@ -124,5 +124,26 @@ describe('types', () => {
         expect(evaluate(input)).toBe(expected)
       },
     )
+
+    test('should evaluate reference to a type alias', () => {
+      const typeRef = {
+        $container: {} as never,
+        $type: 'TypeRef',
+        ref: {
+          $refText: 'MyType',
+          ref: {
+            $container: {} as never,
+            $type: 'TypeAliasDeclaration',
+            name: 'MyType',
+            type: {
+              $container: {} as never,
+              $type: 'NumType',
+              name: 'num',
+            },
+          },
+        },
+      } as const
+      expect(evaluate(typeRef)).toBe(Num)
+    })
   })
 })
