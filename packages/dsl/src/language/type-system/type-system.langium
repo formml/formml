@@ -1,3 +1,5 @@
+import '../common/common'
+
 Type:
   AnyType | PrimitiveType;
 
@@ -21,6 +23,12 @@ BoolType:
 
 DatetimeType:
   name=DATETIME;
+
+TypeDeclaration:
+  TypeAliasDeclaration;
+
+TypeAliasDeclaration:
+  'type' name=ID '=' type=Type;
 
 // terminals
 

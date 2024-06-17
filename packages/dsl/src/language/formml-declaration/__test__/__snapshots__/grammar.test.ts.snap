@@ -9,7 +9,8 @@ exports[`formml declaration grammar > annotation > declare annotation 1`] = `
       "name": "newAnnotation",
       "parameters": []
     }
-  ]
+  ],
+  "typeDeclarations": []
 }"
 `;
 
@@ -33,7 +34,8 @@ exports[`formml declaration grammar > annotation > declare annotation with multi
         }
       ]
     }
-  ]
+  ],
+  "typeDeclarations": []
 }"
 `;
 
@@ -52,7 +54,8 @@ exports[`formml declaration grammar > annotation > declare annotation with one p
         }
       ]
     }
-  ]
+  ],
+  "typeDeclarations": []
 }"
 `;
 
@@ -71,7 +74,8 @@ exports[`formml declaration grammar > annotation > parameters allow trailing com
         }
       ]
     }
-  ]
+  ],
+  "typeDeclarations": []
 }"
 `;
 
@@ -103,7 +107,8 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
         }
       ]
     }
-  ]
+  ],
+  "typeDeclarations": []
 }"
 `;
 
@@ -135,7 +140,8 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
         }
       ]
     }
-  ]
+  ],
+  "typeDeclarations": []
 }"
 `;
 
@@ -167,7 +173,8 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
         }
       ]
     }
-  ]
+  ],
+  "typeDeclarations": []
 }"
 `;
 
@@ -199,7 +206,8 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
         }
       ]
     }
-  ]
+  ],
+  "typeDeclarations": []
 }"
 `;
 
@@ -231,7 +239,8 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
         }
       ]
     }
-  ]
+  ],
+  "typeDeclarations": []
 }"
 `;
 
@@ -263,7 +272,8 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
         }
       ]
     }
-  ]
+  ],
+  "typeDeclarations": []
 }"
 `;
 
@@ -295,7 +305,8 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
         }
       ]
     }
-  ]
+  ],
+  "typeDeclarations": []
 }"
 `;
 
@@ -319,6 +330,7 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
         }
       ]
     }
-  ]
+  ],
+  "typeDeclarations": []
 }"
 `;

@@ -5,6 +5,7 @@ import * as prettier from 'prettier'
 import {
   FormMLDeclaration,
   createInMemoryAggregateServices,
+  isAnnotationDeclaration,
 } from '../src/index.js'
 
 await fs.rm('./interfaces', { force: true, recursive: true })
@@ -21,13 +22,15 @@ const pick =
     keys.reduce((acc, key) => ({ ...acc, [key]: obj[key] }), {} as Pick<T, K>)
 
 function generateInterface(ast: FormMLDeclaration) {
-  const entries = ast.declarations.map((declaration) => {
-    const { name, parameters } = declaration
-    const parameterSummaries = parameters
-      .map(pick(['name', 'type', 'optional']))
-      .map((p) => ({ ...p, type: p.type && pick(['name'])(p.type) }))
-    return [name, parameterSummaries] as const
-  })
+  const entries = ast.declarations
+    .filter(isAnnotationDeclaration)
+    .map((declaration) => {
+      const { name, parameters } = declaration
+      const parameterSummaries = parameters
+        .map(pick(['name', 'type', 'optional']))
+        .map((p) => ({ ...p, type: p.type && pick(['name'])(p.type) }))
+      return [name, parameterSummaries] as const
+    })
   return Object.fromEntries(entries)
 }
 

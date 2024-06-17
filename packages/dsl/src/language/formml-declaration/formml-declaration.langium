@@ -4,7 +4,7 @@ import '../common/common'
 import '../type-system/type-system'
 
 entry FormMLDeclaration:
-  (declarations+=Declaration)+;
+  (declarations+=Declaration | typeDeclarations+=TypeDeclaration /* from type-system */)+;
 
 Declaration:
   FunctionDeclaration;
