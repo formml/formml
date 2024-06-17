@@ -331,41 +331,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
 }"
 `;
 
-exports[`formml grammar > validation annotations > annotation with arguments > argument type > JS-like literals > string - "'single quotes'" 1`] = `
-"{
-  "$type": "FormMLSchema",
-  "form": {
-    "$type": "Form",
-    "name": "ExampleForm",
-    "fields": [
-      {
-        "$type": "Field",
-        "annotations": [
-          {
-            "$type": "Annotation",
-            "args": [
-              {
-                "$type": "PositionalArgument",
-                "value": {
-                  "$type": "TextLiteral",
-                  "value": "single quotes"
-                }
-              }
-            ],
-            "call": {
-              "$ref": "file:///builtin-annotations.d.formml#/declarations@5"
-            }
-          }
-        ],
-        "type": "num",
-        "name": "numberField"
-      }
-    ]
-  }
-}"
-`;
-
-exports[`formml grammar > validation annotations > annotation with arguments > argument type > JS-like literals > string - "\\"double quotes\\"" 1`] = `
+exports[`formml grammar > validation annotations > annotation with arguments > argument type > JS-like literals > string - "double quotes" 1`] = `
 "{
   "$type": "FormMLSchema",
   "form": {
@@ -383,6 +349,108 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
                 "value": {
                   "$type": "TextLiteral",
                   "value": "double quotes"
+                }
+              }
+            ],
+            "call": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@5"
+            }
+          }
+        ],
+        "type": "num",
+        "name": "numberField"
+      }
+    ]
+  }
+}"
+`;
+
+exports[`formml grammar > validation annotations > annotation with arguments > argument type > JS-like literals > string - "escape \\' \\" \\\\ \\n \\t" 1`] = `
+"{
+  "$type": "FormMLSchema",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "annotations": [
+          {
+            "$type": "Annotation",
+            "args": [
+              {
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "TextLiteral",
+                  "value": "escape ' \\" \\\\ \\n \\t"
+                }
+              }
+            ],
+            "call": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@5"
+            }
+          }
+        ],
+        "type": "num",
+        "name": "numberField"
+      }
+    ]
+  }
+}"
+`;
+
+exports[`formml grammar > validation annotations > annotation with arguments > argument type > JS-like literals > string - 'escape \\' \\" \\\\ \\n \\t' 1`] = `
+"{
+  "$type": "FormMLSchema",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "annotations": [
+          {
+            "$type": "Annotation",
+            "args": [
+              {
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "TextLiteral",
+                  "value": "escape ' \\" \\\\ \\n \\t"
+                }
+              }
+            ],
+            "call": {
+              "$ref": "file:///builtin-annotations.d.formml#/declarations@5"
+            }
+          }
+        ],
+        "type": "num",
+        "name": "numberField"
+      }
+    ]
+  }
+}"
+`;
+
+exports[`formml grammar > validation annotations > annotation with arguments > argument type > JS-like literals > string - 'single quotes' 1`] = `
+"{
+  "$type": "FormMLSchema",
+  "form": {
+    "$type": "Form",
+    "name": "ExampleForm",
+    "fields": [
+      {
+        "$type": "Field",
+        "annotations": [
+          {
+            "$type": "Annotation",
+            "args": [
+              {
+                "$type": "PositionalArgument",
+                "value": {
+                  "$type": "TextLiteral",
+                  "value": "single quotes"
                 }
               }
             ],

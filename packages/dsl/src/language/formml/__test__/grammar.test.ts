@@ -273,19 +273,21 @@ describe('formml grammar', () => {
 
       describe('argument type', () => {
         describe('JS-like literals', () => {
-          test.each([`'single quotes'`, `"double quotes"`])(
-            'string - %j',
-            async (input) => {
-              const content = `
+          test.each([
+            `'single quotes'`,
+            `"double quotes"`,
+            String.raw`'escape \' \" \\ \n \t'`,
+            String.raw`"escape \' \" \\ \n \t"`,
+          ])('string - %s', async (input) => {
+            const content = `
                 form ExampleForm {
                   @anything(${input})
                   num numberField
                 }
               `
-              const ast = await parser(content)
-              expect(serialize(ast)).toMatchSnapshot()
-            },
-          )
+            const ast = await parser(content)
+            expect(serialize(ast)).toMatchSnapshot()
+          })
 
           test.each(['0', '123', '-123', '123.456', '-123.456'])(
             'number - %j',

@@ -34,7 +34,7 @@ terminal NUM_LITERAL returns number: /-?(?:0|[1-9]\d*)(?:\.[0-9]+)?/;
 NumLiteral:
   value=NUM_LITERAL;
 
-terminal STRING: /'[^']*'|"[^"]*"/;
+terminal STRING: /'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"/;
 TextLiteral:
   value=STRING;
 
