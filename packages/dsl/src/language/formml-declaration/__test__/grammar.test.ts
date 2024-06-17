@@ -93,6 +93,15 @@ describe('formml declaration grammar', () => {
         const ast = await parser(input)
         expect(serialize(ast)).toMatchSnapshot()
       })
+
+      test.each(['text', 'num', 'bool', 'datetime', 'decimal'])(
+        'return type can be primitive type "%s"',
+        async (type) => {
+          const input = `annot fun newAnnotation(): ${type}`
+          const ast = await parser(input)
+          expect(serialize(ast)).toMatchSnapshot()
+        },
+      )
     })
   })
 })

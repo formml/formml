@@ -352,3 +352,93 @@ exports[`formml declaration grammar > annotation > type hints > return type can 
   "typeDeclarations": []
 }"
 `;
+
+exports[`formml declaration grammar > annotation > type hints > return type can be primitive type "bool" 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "newAnnotation",
+      "returnType": {
+        "$type": "BoolType",
+        "name": "bool"
+      },
+      "parameters": []
+    }
+  ],
+  "typeDeclarations": []
+}"
+`;
+
+exports[`formml declaration grammar > annotation > type hints > return type can be primitive type "datetime" 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "newAnnotation",
+      "returnType": {
+        "$type": "DatetimeType",
+        "name": "datetime"
+      },
+      "parameters": []
+    }
+  ],
+  "typeDeclarations": []
+}"
+`;
+
+exports[`formml declaration grammar > annotation > type hints > return type can be primitive type "decimal" 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "newAnnotation",
+      "returnType": {
+        "$type": "DecimalType",
+        "name": "decimal"
+      },
+      "parameters": []
+    }
+  ],
+  "typeDeclarations": []
+}"
+`;
+
+exports[`formml declaration grammar > annotation > type hints > return type can be primitive type "num" 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "newAnnotation",
+      "returnType": {
+        "$type": "NumType",
+        "name": "num"
+      },
+      "parameters": []
+    }
+  ],
+  "typeDeclarations": []
+}"
+`;
+
+exports[`formml declaration grammar > annotation > type hints > return type can be primitive type "text" 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "newAnnotation",
+      "returnType": {
+        "$type": "TextType",
+        "name": "text"
+      },
+      "parameters": []
+    }
+  ],
+  "typeDeclarations": []
+}"
+`;
