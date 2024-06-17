@@ -30,7 +30,7 @@ describe('type system grammar', () => {
           : r.value,
       )
 
-  describe('type alias in declaration file', () => {
+  describe('type alias', () => {
     test('declare simple type alias', async () => {
       const input = `type MyType = text`
       const ast = await parser(input)

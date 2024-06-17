@@ -79,7 +79,32 @@ exports[`formml declaration grammar > annotation > parameters allow trailing com
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type system > parameters can be any 1`] = `
+exports[`formml declaration grammar > annotation > type hints > can omit type hint 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "newAnnotation",
+      "parameters": [
+        {
+          "$type": "Parameter",
+          "name": "param1",
+          "optional": false
+        },
+        {
+          "$type": "Parameter",
+          "name": "param2",
+          "optional": false
+        }
+      ]
+    }
+  ],
+  "typeDeclarations": []
+}"
+`;
+
+exports[`formml declaration grammar > annotation > type hints > parameters can be any 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
@@ -112,7 +137,7 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type system > parameters can be optional 1`] = `
+exports[`formml declaration grammar > annotation > type hints > parameters can be optional 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
@@ -145,7 +170,7 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type system > parameters can be primitive type "bool" 1`] = `
+exports[`formml declaration grammar > annotation > type hints > parameters can be primitive type "bool" 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
@@ -178,7 +203,7 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type system > parameters can be primitive type "datetime" 1`] = `
+exports[`formml declaration grammar > annotation > type hints > parameters can be primitive type "datetime" 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
@@ -211,7 +236,7 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type system > parameters can be primitive type "decimal" 1`] = `
+exports[`formml declaration grammar > annotation > type hints > parameters can be primitive type "decimal" 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
@@ -244,7 +269,7 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type system > parameters can be primitive type "num" 1`] = `
+exports[`formml declaration grammar > annotation > type hints > parameters can be primitive type "num" 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
@@ -277,7 +302,7 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type system > parameters can be primitive type "text" 1`] = `
+exports[`formml declaration grammar > annotation > type hints > parameters can be primitive type "text" 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
@@ -310,25 +335,18 @@ exports[`formml declaration grammar > annotation > type system > parameters can 
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type system > parameters can omit type hint 1`] = `
+exports[`formml declaration grammar > annotation > type hints > return type can be any 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
       "$type": "AnnotationDeclaration",
       "name": "newAnnotation",
-      "parameters": [
-        {
-          "$type": "Parameter",
-          "name": "param1",
-          "optional": false
-        },
-        {
-          "$type": "Parameter",
-          "name": "param2",
-          "optional": false
-        }
-      ]
+      "returnType": {
+        "$type": "AnyType",
+        "name": "any"
+      },
+      "parameters": []
     }
   ],
   "typeDeclarations": []
