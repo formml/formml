@@ -8,7 +8,7 @@ type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never
 type ParameterDeclaration = {
   name: string
   optional: boolean
-  type?: ast.Type | t.Type
+  type?: ast.TypeExpr | t.Type
 }
 
 type RuntimeType<T> = T extends t.TextType

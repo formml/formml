@@ -116,7 +116,7 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
           "$type": "Parameter",
           "name": "param1",
           "type": {
-            "$type": "AnyType",
+            "$type": "AnyTypeExpr",
             "name": "any"
           },
           "optional": false
@@ -125,7 +125,7 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
           "$type": "Parameter",
           "name": "param2",
           "type": {
-            "$type": "AnyType",
+            "$type": "AnyTypeExpr",
             "name": "any"
           },
           "optional": false
@@ -149,7 +149,7 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
           "$type": "Parameter",
           "name": "param1",
           "type": {
-            "$type": "NumType",
+            "$type": "NumTypeExpr",
             "name": "num"
           },
           "optional": false
@@ -159,7 +159,7 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
           "name": "param2",
           "optional": true,
           "type": {
-            "$type": "AnyType",
+            "$type": "AnyTypeExpr",
             "name": "any"
           }
         }
@@ -182,7 +182,7 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
           "$type": "Parameter",
           "name": "param1",
           "type": {
-            "$type": "BoolType",
+            "$type": "BoolTypeExpr",
             "name": "bool"
           },
           "optional": false
@@ -191,7 +191,7 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
           "$type": "Parameter",
           "name": "param2",
           "type": {
-            "$type": "BoolType",
+            "$type": "BoolTypeExpr",
             "name": "bool"
           },
           "optional": false
@@ -215,7 +215,7 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
           "$type": "Parameter",
           "name": "param1",
           "type": {
-            "$type": "DatetimeType",
+            "$type": "DatetimeTypeExpr",
             "name": "datetime"
           },
           "optional": false
@@ -224,7 +224,7 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
           "$type": "Parameter",
           "name": "param2",
           "type": {
-            "$type": "DatetimeType",
+            "$type": "DatetimeTypeExpr",
             "name": "datetime"
           },
           "optional": false
@@ -248,7 +248,7 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
           "$type": "Parameter",
           "name": "param1",
           "type": {
-            "$type": "DecimalType",
+            "$type": "DecimalTypeExpr",
             "name": "decimal"
           },
           "optional": false
@@ -257,7 +257,7 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
           "$type": "Parameter",
           "name": "param2",
           "type": {
-            "$type": "DecimalType",
+            "$type": "DecimalTypeExpr",
             "name": "decimal"
           },
           "optional": false
@@ -281,7 +281,7 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
           "$type": "Parameter",
           "name": "param1",
           "type": {
-            "$type": "NumType",
+            "$type": "NumTypeExpr",
             "name": "num"
           },
           "optional": false
@@ -290,7 +290,7 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
           "$type": "Parameter",
           "name": "param2",
           "type": {
-            "$type": "NumType",
+            "$type": "NumTypeExpr",
             "name": "num"
           },
           "optional": false
@@ -314,7 +314,7 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
           "$type": "Parameter",
           "name": "param1",
           "type": {
-            "$type": "TextType",
+            "$type": "TextTypeExpr",
             "name": "text"
           },
           "optional": false
@@ -323,7 +323,7 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
           "$type": "Parameter",
           "name": "param2",
           "type": {
-            "$type": "TextType",
+            "$type": "TextTypeExpr",
             "name": "text"
           },
           "optional": false
@@ -343,7 +343,7 @@ exports[`formml declaration grammar > annotation > type hints > return type can 
       "$type": "AnnotationDeclaration",
       "name": "newAnnotation",
       "returnType": {
-        "$type": "AnyType",
+        "$type": "AnyTypeExpr",
         "name": "any"
       },
       "parameters": []
@@ -361,7 +361,7 @@ exports[`formml declaration grammar > annotation > type hints > return type can 
       "$type": "AnnotationDeclaration",
       "name": "newAnnotation",
       "returnType": {
-        "$type": "BoolType",
+        "$type": "BoolTypeExpr",
         "name": "bool"
       },
       "parameters": []
@@ -379,7 +379,7 @@ exports[`formml declaration grammar > annotation > type hints > return type can 
       "$type": "AnnotationDeclaration",
       "name": "newAnnotation",
       "returnType": {
-        "$type": "DatetimeType",
+        "$type": "DatetimeTypeExpr",
         "name": "datetime"
       },
       "parameters": []
@@ -397,7 +397,7 @@ exports[`formml declaration grammar > annotation > type hints > return type can 
       "$type": "AnnotationDeclaration",
       "name": "newAnnotation",
       "returnType": {
-        "$type": "DecimalType",
+        "$type": "DecimalTypeExpr",
         "name": "decimal"
       },
       "parameters": []
@@ -415,7 +415,7 @@ exports[`formml declaration grammar > annotation > type hints > return type can 
       "$type": "AnnotationDeclaration",
       "name": "newAnnotation",
       "returnType": {
-        "$type": "NumType",
+        "$type": "NumTypeExpr",
         "name": "num"
       },
       "parameters": []
@@ -433,7 +433,7 @@ exports[`formml declaration grammar > annotation > type hints > return type can 
       "$type": "AnnotationDeclaration",
       "name": "newAnnotation",
       "returnType": {
-        "$type": "TextType",
+        "$type": "TextTypeExpr",
         "name": "text"
       },
       "parameters": []

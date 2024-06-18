@@ -1,55 +1,55 @@
 import '../common/common'
 
-Type:
-  PrimitiveType | CompositeType | TypeRef;
+TypeExpr:
+  PrimitiveTypeExpr | CompositeTypeExpr | TypeRefExpr;
 
 // Primitive types
 
-PrimitiveType:
-  AnyType | RuntimePrimitiveType;
+PrimitiveTypeExpr:
+  AnyTypeExpr | RuntimePrimitiveTypeExpr;
 
-AnyType:
+AnyTypeExpr:
   name=ANY;
 
-RuntimePrimitiveType:
-  TextType | NumType | DecimalType | BoolType | DatetimeType;
+RuntimePrimitiveTypeExpr:
+  TextTypeExpr | NumTypeExpr | DecimalTypeExpr | BoolTypeExpr | DatetimeTypeExpr;
 
-TextType:
+TextTypeExpr:
   name=TEXT;
 
-NumType:
+NumTypeExpr:
   name=NUM;
 
-DecimalType:
+DecimalTypeExpr:
   name=DECIMAL;
 
-BoolType:
+BoolTypeExpr:
   name=BOOL;
 
-DatetimeType:
+DatetimeTypeExpr:
   name=DATETIME;
 
 // Composite types
 
-CompositeType:
-  ObjectType;
+CompositeTypeExpr:
+  ObjectTypeExpr;
 
-ObjectType:
+ObjectTypeExpr:
   '{' (properties+=Property ';')* properties+=Property? '}';
 
 Property:
-  name=ID ':' type=Type;
+  name=ID ':' type=TypeExpr;
 
-// Named types
+TypeRefExpr:
+  ref=[TypeDeclaration] ('<' (typeArguments+=TypeExpr ',')* typeArguments+=TypeExpr? '>')?;
 
-TypeRef:
-  ref=[TypeDeclaration] ('<' (typeArguments+=Type ',')* typeArguments+=Type? '>')?;
+// Type declarations
 
 TypeDeclaration:
   TypeAliasDeclaration | TypeParameterDeclaration;
 
 TypeAliasDeclaration:
-  'type' name=ID ('<' (typeParameters+=TypeParameterDeclaration ',')* typeParameters+=TypeParameterDeclaration? '>')? '=' type=Type;
+  'type' name=ID ('<' (typeParameters+=TypeParameterDeclaration ',')* typeParameters+=TypeParameterDeclaration? '>')? '=' type=TypeExpr;
 
 TypeParameterDeclaration:
   name=ID;

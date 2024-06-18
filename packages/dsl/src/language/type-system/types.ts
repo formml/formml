@@ -140,29 +140,29 @@ export function inferType(value: ast.Literal): Type {
   return Never
 }
 
-export function evaluate(expression?: ast.Type): Type {
+export function evaluate(expression?: ast.TypeExpr): Type {
   if (!expression) {
     return Any
   }
-  if (ast.isAnyType(expression)) {
+  if (ast.isAnyTypeExpr(expression)) {
     return Any
   }
-  if (ast.isNumType(expression)) {
+  if (ast.isNumTypeExpr(expression)) {
     return Num
   }
-  if (ast.isTextType(expression)) {
+  if (ast.isTextTypeExpr(expression)) {
     return Text
   }
-  if (ast.isBoolType(expression)) {
+  if (ast.isBoolTypeExpr(expression)) {
     return Bool
   }
-  if (ast.isDatetimeType(expression)) {
+  if (ast.isDatetimeTypeExpr(expression)) {
     return Datetime
   }
-  if (ast.isDecimalType(expression)) {
+  if (ast.isDecimalTypeExpr(expression)) {
     return Decimal
   }
-  if (ast.isTypeRef(expression)) {
+  if (ast.isTypeRefExpr(expression)) {
     const declaration = expression.ref.ref
     if (ast.isTypeAliasDeclaration(declaration)) {
       return evaluate(declaration.type)

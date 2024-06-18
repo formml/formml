@@ -10,7 +10,7 @@ Declaration:
   FunctionDeclaration;
 
 FunctionDeclaration:
-  {infer AnnotationDeclaration} 'annot' 'fun' name=ID '(' (parameters+=Parameter ',')* (parameters+=Parameter)? ')' (':' returnType=Type)?;
+  {infer AnnotationDeclaration} 'annot' 'fun' name=ID '(' (parameters+=Parameter ',')* (parameters+=Parameter)? ')' (':' returnType=TypeExpr)?;
 
 Parameter:
-  name=ID (optional?='?'? ':' type=Type)?;
+  name=ID (optional?='?'? ':' type=TypeExpr)?;

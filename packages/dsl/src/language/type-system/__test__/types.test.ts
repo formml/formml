@@ -1,4 +1,4 @@
-import { TypeRef } from '../../generated/ast.js'
+import { TypeRefExpr } from '../../generated/ast.js'
 import {
   Any,
   Bool,
@@ -74,7 +74,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'AnyType',
+          $type: 'AnyTypeExpr',
           name: 'any',
         } as const,
         Any,
@@ -82,7 +82,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'TextType',
+          $type: 'TextTypeExpr',
           name: 'text',
         } as const,
         Text,
@@ -90,7 +90,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'NumType',
+          $type: 'NumTypeExpr',
           name: 'num',
         } as const,
         Num,
@@ -98,7 +98,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'BoolType',
+          $type: 'BoolTypeExpr',
           name: 'bool',
         } as const,
         Bool,
@@ -106,7 +106,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'DatetimeType',
+          $type: 'DatetimeTypeExpr',
           name: 'datetime',
         } as const,
         Datetime,
@@ -114,7 +114,7 @@ describe('types', () => {
       [
         {
           $container: {} as never,
-          $type: 'DecimalType',
+          $type: 'DecimalTypeExpr',
           name: 'decimal',
         } as const,
         Decimal,
@@ -129,7 +129,7 @@ describe('types', () => {
     test('should evaluate type ref to actual type - simple case', () => {
       const typeRef = {
         $container: {} as never,
-        $type: 'TypeRef',
+        $type: 'TypeRefExpr',
         ref: {
           $refText: 'MyType',
           ref: {
@@ -138,14 +138,14 @@ describe('types', () => {
             name: 'MyType',
             type: {
               $container: {} as never,
-              $type: 'NumType',
+              $type: 'NumTypeExpr',
               name: 'num',
             },
             typeParameters: [],
           },
         },
         typeArguments: [],
-      } as TypeRef
+      } as TypeRefExpr
       expect(evaluate(typeRef)).toBe(Num)
     })
   })

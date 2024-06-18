@@ -18,13 +18,13 @@ exports[`type system grammar > type alias > call type alias with type parameters
         }
       ],
       "type": {
-        "$type": "ObjectType",
+        "$type": "ObjectTypeExpr",
         "properties": [
           {
             "$type": "Property",
             "name": "name",
             "type": {
-              "$type": "TypeRef",
+              "$type": "TypeRefExpr",
               "ref": {
                 "$ref": "#/typeDeclarations@0/typeParameters@0"
               },
@@ -35,7 +35,7 @@ exports[`type system grammar > type alias > call type alias with type parameters
             "$type": "Property",
             "name": "age",
             "type": {
-              "$type": "TypeRef",
+              "$type": "TypeRefExpr",
               "ref": {
                 "$ref": "#/typeDeclarations@0/typeParameters@1"
               },
@@ -55,17 +55,17 @@ exports[`type system grammar > type alias > call type alias with type parameters
           "$type": "Parameter",
           "name": "param",
           "type": {
-            "$type": "TypeRef",
+            "$type": "TypeRefExpr",
             "ref": {
               "$ref": "#/typeDeclarations@0"
             },
             "typeArguments": [
               {
-                "$type": "TextType",
+                "$type": "TextTypeExpr",
                 "name": "text"
               },
               {
-                "$type": "NumType",
+                "$type": "NumTypeExpr",
                 "name": "num"
               }
             ]
@@ -74,17 +74,17 @@ exports[`type system grammar > type alias > call type alias with type parameters
         }
       ],
       "returnType": {
-        "$type": "TypeRef",
+        "$type": "TypeRefExpr",
         "ref": {
           "$ref": "#/typeDeclarations@0"
         },
         "typeArguments": [
           {
-            "$type": "BoolType",
+            "$type": "BoolTypeExpr",
             "name": "bool"
           },
           {
-            "$type": "DecimalType",
+            "$type": "DecimalTypeExpr",
             "name": "decimal"
           }
         ]
@@ -102,13 +102,13 @@ exports[`type system grammar > type alias > declare object type alias 1`] = `
       "$type": "TypeAliasDeclaration",
       "name": "MyType",
       "type": {
-        "$type": "ObjectType",
+        "$type": "ObjectTypeExpr",
         "properties": [
           {
             "$type": "Property",
             "name": "name",
             "type": {
-              "$type": "TextType",
+              "$type": "TextTypeExpr",
               "name": "text"
             }
           },
@@ -116,7 +116,7 @@ exports[`type system grammar > type alias > declare object type alias 1`] = `
             "$type": "Property",
             "name": "age",
             "type": {
-              "$type": "NumType",
+              "$type": "NumTypeExpr",
               "name": "num"
             }
           }
@@ -137,7 +137,7 @@ exports[`type system grammar > type alias > declare simple type alias 1`] = `
       "$type": "TypeAliasDeclaration",
       "name": "MyType",
       "type": {
-        "$type": "TextType",
+        "$type": "TextTypeExpr",
         "name": "text"
       },
       "typeParameters": []
@@ -165,13 +165,13 @@ exports[`type system grammar > type alias > declare type alias with type paramet
         }
       ],
       "type": {
-        "$type": "ObjectType",
+        "$type": "ObjectTypeExpr",
         "properties": [
           {
             "$type": "Property",
             "name": "name",
             "type": {
-              "$type": "TypeRef",
+              "$type": "TypeRefExpr",
               "ref": {
                 "$ref": "#/typeDeclarations@0/typeParameters@0"
               },
@@ -182,7 +182,7 @@ exports[`type system grammar > type alias > declare type alias with type paramet
             "$type": "Property",
             "name": "age",
             "type": {
-              "$type": "TypeRef",
+              "$type": "TypeRefExpr",
               "ref": {
                 "$ref": "#/typeDeclarations@0/typeParameters@1"
               },
@@ -205,7 +205,7 @@ exports[`type system grammar > type alias > type alias can be used as a type 1`]
       "$type": "TypeAliasDeclaration",
       "name": "MyType",
       "type": {
-        "$type": "TextType",
+        "$type": "TextTypeExpr",
         "name": "text"
       },
       "typeParameters": []
@@ -220,7 +220,7 @@ exports[`type system grammar > type alias > type alias can be used as a type 1`]
           "$type": "Parameter",
           "name": "param",
           "type": {
-            "$type": "TypeRef",
+            "$type": "TypeRefExpr",
             "ref": {
               "$ref": "#/typeDeclarations@0"
             },
@@ -230,7 +230,7 @@ exports[`type system grammar > type alias > type alias can be used as a type 1`]
         }
       ],
       "returnType": {
-        "$type": "TypeRef",
+        "$type": "TypeRefExpr",
         "ref": {
           "$ref": "#/typeDeclarations@0"
         },
