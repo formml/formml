@@ -1,7 +1,7 @@
 import { resolveLiteralValue } from '../../utils/ast-utils.js'
 import * as ast from '../generated/ast.js'
 
-export type Type = ConstantType | LiteralType
+export type Type = CompositeType | ConstantType | LiteralType
 
 // Constant types
 
@@ -124,6 +124,30 @@ export function isBoolLiteralType(type: Type): type is BoolLiteralType {
   return type.name === 'bool' && 'literal' in type
 }
 
+// Composite types
+
+export type CompositeType = ObjectType
+
+interface CommonObjectProps {
+  [key: string]: Type
+}
+
+export type ObjectType<T extends Record<string, Type> = CommonObjectProps> = {
+  name: 'object'
+  properties: T
+}
+
+export function createObjectType<const T extends Record<string, Type>>(
+  properties: T,
+): ObjectType<T> {
+  return {
+    name: 'object',
+    properties,
+  }
+}
+
+// Functions
+
 export function inferType(value: ast.Literal): Type {
   if (ast.isTextLiteral(value)) {
     return createTextLiteral(resolveLiteralValue(value))
@@ -140,7 +164,10 @@ export function inferType(value: ast.Literal): Type {
   return Never
 }
 
-export function evaluate(expression?: ast.TypeExpr): Type {
+export function evaluate(
+  expression?: ast.TypeExpr,
+  context: Record<string, Type> = {},
+): Type {
   if (!expression) {
     return Any
   }
@@ -162,10 +189,30 @@ export function evaluate(expression?: ast.TypeExpr): Type {
   if (ast.isDecimalTypeExpr(expression)) {
     return Decimal
   }
+  if (ast.isObjectTypeExpr(expression)) {
+    const properties = expression.properties.reduce<Record<string, Type>>(
+      (properties, curr) => ({
+        ...properties,
+        [curr.name]: evaluate(curr.type, context),
+      }),
+      {},
+    )
+    return createObjectType(properties)
+  }
   if (ast.isTypeRefExpr(expression)) {
     const declaration = expression.ref.ref
     if (ast.isTypeAliasDeclaration(declaration)) {
-      return evaluate(declaration.type)
+      const args = expression.typeArguments.reduce<Record<string, Type>>(
+        (args, curr, i) => ({
+          ...args,
+          [declaration.typeParameters[i].name]: evaluate(curr, context),
+        }),
+        {},
+      )
+      return evaluate(declaration.type, { ...context, ...args })
+    }
+    if (ast.isTypeParameterDeclaration(declaration)) {
+      return context[declaration.name]
     }
   }
   return Never

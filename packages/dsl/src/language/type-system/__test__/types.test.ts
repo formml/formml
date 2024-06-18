@@ -1,4 +1,11 @@
-import { TypeRefExpr } from '../../generated/ast.js'
+import { parseHelper } from 'langium/test'
+
+import { createInMemoryAggregateServices } from '../../aggregate-module.js'
+import {
+  FormMLDeclaration,
+  ObjectTypeExpr,
+  TypeRefExpr,
+} from '../../generated/ast.js'
 import {
   Any,
   Bool,
@@ -9,12 +16,30 @@ import {
   Unknown,
   createBoolLiteral,
   createNumLiteral,
+  createObjectType,
   createTextLiteral,
   evaluate,
   inferType,
 } from '../types.js'
 
 describe('types', () => {
+  const services = createInMemoryAggregateServices()
+  const parser = (input: string) =>
+    parseHelper<FormMLDeclaration>(services.FormMLDeclaration)(input)
+      .then((x) => x.parseResult)
+      .then((r) =>
+        r.lexerErrors.length > 0 || r.parserErrors.length > 0
+          ? Promise.reject(
+              new Error(
+                'Parsing failed with errors:\n' +
+                  [...r.lexerErrors, ...r.parserErrors]
+                    .map((e) => e.message)
+                    .join('\n'),
+              ),
+            )
+          : r.value,
+      )
+
   describe('inferType', () => {
     test.each([
       [
@@ -120,11 +145,47 @@ describe('types', () => {
         Decimal,
       ],
     ])(
-      'should return type constants for language built-in types',
+      'should return type constants for language primitive types',
       (input, expected) => {
         expect(evaluate(input)).toBe(expected)
       },
     )
+
+    test('should return object type for inline object type expression', () => {
+      const expression = {
+        $container: {} as never,
+        $type: 'ObjectTypeExpr',
+        properties: [
+          {
+            $container: {} as never,
+            $type: 'Property',
+            name: 'value',
+            type: {
+              $container: {} as never,
+              $type: 'NumTypeExpr',
+              name: 'num',
+            },
+          },
+          {
+            $container: {} as never,
+            $type: 'Property',
+            name: 'label',
+            type: {
+              $container: {} as never,
+              $type: 'TextTypeExpr',
+              name: 'text',
+            },
+          },
+        ],
+      } as ObjectTypeExpr
+
+      expect(evaluate(expression)).toEqual(
+        createObjectType({
+          label: Text,
+          value: Num,
+        }),
+      )
+    })
 
     test('should evaluate type ref to actual type - simple case', () => {
       const typeRef = {
@@ -147,6 +208,40 @@ describe('types', () => {
         typeArguments: [],
       } as TypeRefExpr
       expect(evaluate(typeRef)).toBe(Num)
+    })
+
+    test('should evaluate type ref to actual type - with type arguments', async () => {
+      const typeAlias = (
+        await parser(`type MyType<T, U> = { value: T; label: U }`)
+      ).typeDeclarations[0]
+
+      const typeRef = {
+        $container: {} as never,
+        $type: 'TypeRefExpr',
+        ref: {
+          $refText: 'MyType',
+          ref: typeAlias,
+        },
+        typeArguments: [
+          {
+            $container: {} as never,
+            $type: 'NumTypeExpr',
+            name: 'num',
+          },
+          {
+            $container: {} as never,
+            $type: 'TextTypeExpr',
+            name: 'text',
+          },
+        ],
+      } as TypeRefExpr
+
+      expect(evaluate(typeRef)).toEqual(
+        createObjectType({
+          label: Text,
+          value: Num,
+        }),
+      )
     })
   })
 })
