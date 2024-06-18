@@ -51,5 +51,11 @@ describe('type system grammar', () => {
       const ast = await parser(input)
       expect(serialize(ast)).toMatchSnapshot()
     })
+
+    test('declare type alias with type parameters', async () => {
+      const input = `type MyType<T, U> = { name: T; age: U }`
+      const ast = await parser(input)
+      expect(serialize(ast)).toMatchSnapshot()
+    })
   })
 })

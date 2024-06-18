@@ -27,7 +27,8 @@ exports[`type system grammar > type alias > declare object type alias 1`] = `
             }
           }
         ]
-      }
+      },
+      "typeParameters": []
     }
   ],
   "declarations": []
@@ -44,6 +45,55 @@ exports[`type system grammar > type alias > declare simple type alias 1`] = `
       "type": {
         "$type": "TextType",
         "name": "text"
+      },
+      "typeParameters": []
+    }
+  ],
+  "declarations": []
+}"
+`;
+
+exports[`type system grammar > type alias > declare type alias with type parameters 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "typeDeclarations": [
+    {
+      "$type": "TypeAliasDeclaration",
+      "name": "MyType",
+      "typeParameters": [
+        {
+          "$type": "TypeParameterDeclaration",
+          "name": "T"
+        },
+        {
+          "$type": "TypeParameterDeclaration",
+          "name": "U"
+        }
+      ],
+      "type": {
+        "$type": "ObjectType",
+        "properties": [
+          {
+            "$type": "Property",
+            "name": "name",
+            "type": {
+              "$type": "TypeRef",
+              "ref": {
+                "$ref": "#/typeDeclarations@0/typeParameters@0"
+              }
+            }
+          },
+          {
+            "$type": "Property",
+            "name": "age",
+            "type": {
+              "$type": "TypeRef",
+              "ref": {
+                "$ref": "#/typeDeclarations@0/typeParameters@1"
+              }
+            }
+          }
+        ]
       }
     }
   ],
@@ -61,7 +111,8 @@ exports[`type system grammar > type alias > type alias can be used as a type 1`]
       "type": {
         "$type": "TextType",
         "name": "text"
-      }
+      },
+      "typeParameters": []
     }
   ],
   "declarations": [

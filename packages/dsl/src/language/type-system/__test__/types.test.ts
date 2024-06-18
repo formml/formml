@@ -1,3 +1,4 @@
+import { TypeRef } from '../../generated/ast.js'
 import {
   Any,
   Bool,
@@ -125,7 +126,7 @@ describe('types', () => {
       },
     )
 
-    test('should evaluate reference to a type alias', () => {
+    test('should evaluate type ref to actual type - simple case', () => {
       const typeRef = {
         $container: {} as never,
         $type: 'TypeRef',
@@ -140,9 +141,10 @@ describe('types', () => {
               $type: 'NumType',
               name: 'num',
             },
+            typeParameters: [],
           },
         },
-      } as const
+      } as TypeRef
       expect(evaluate(typeRef)).toBe(Num)
     })
   })

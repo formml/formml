@@ -46,10 +46,13 @@ TypeRef:
   ref=[TypeDeclaration];
 
 TypeDeclaration:
-  TypeAliasDeclaration;
+  TypeAliasDeclaration | TypeParameterDeclaration;
 
 TypeAliasDeclaration:
-  'type' name=ID '=' type=Type;
+  'type' name=ID ('<' (typeParameters+=TypeParameterDeclaration ',')* typeParameters+=TypeParameterDeclaration? '>')? '=' type=Type;
+
+TypeParameterDeclaration:
+  name=ID;
 
 // terminals
 

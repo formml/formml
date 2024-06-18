@@ -163,7 +163,10 @@ export function evaluate(expression?: ast.Type): Type {
     return Decimal
   }
   if (ast.isTypeRef(expression)) {
-    return evaluate(expression.ref.ref?.type)
+    const declaration = expression.ref.ref
+    if (ast.isTypeAliasDeclaration(declaration)) {
+      return evaluate(declaration.type)
+    }
   }
   return Never
 }
