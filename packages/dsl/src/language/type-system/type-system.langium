@@ -1,17 +1,17 @@
 import '../common/common'
 
 Type:
-  BuiltInType | TypeRef;
+  PrimitiveType | CompositeType | TypeRef;
 
-// Built-in types
+// Primitive types
 
-BuiltInType:
-  AnyType | PrimitiveType;
+PrimitiveType:
+  AnyType | RuntimePrimitiveType;
 
 AnyType:
   name=ANY;
 
-PrimitiveType:
+RuntimePrimitiveType:
   TextType | NumType | DecimalType | BoolType | DatetimeType;
 
 TextType:
@@ -29,7 +29,18 @@ BoolType:
 DatetimeType:
   name=DATETIME;
 
-// User-defined types
+// Composite types
+
+CompositeType:
+  ObjectType;
+
+ObjectType:
+  '{' (properties+=Property ';')* properties+=Property? '}';
+
+Property:
+  name=ID ':' type=Type;
+
+// Named types
 
 TypeRef:
   ref=[TypeDeclaration];

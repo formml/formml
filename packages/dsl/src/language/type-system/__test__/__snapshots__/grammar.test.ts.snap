@@ -1,5 +1,39 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`type system grammar > type alias > declare object type alias 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "typeDeclarations": [
+    {
+      "$type": "TypeAliasDeclaration",
+      "name": "MyType",
+      "type": {
+        "$type": "ObjectType",
+        "properties": [
+          {
+            "$type": "Property",
+            "name": "name",
+            "type": {
+              "$type": "TextType",
+              "name": "text"
+            }
+          },
+          {
+            "$type": "Property",
+            "name": "age",
+            "type": {
+              "$type": "NumType",
+              "name": "num"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "declarations": []
+}"
+`;
+
 exports[`type system grammar > type alias > declare simple type alias 1`] = `
 "{
   "$type": "FormMLDeclaration",
