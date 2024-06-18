@@ -144,6 +144,7 @@ describe('types', () => {
             typeParameters: [],
           },
         },
+        typeArguments: [],
       } as TypeRef
       expect(evaluate(typeRef)).toBe(Num)
     })

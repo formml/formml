@@ -1,5 +1,99 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`type system grammar > type alias > call type alias with type parameters 1`] = `
+"{
+  "$type": "FormMLDeclaration",
+  "typeDeclarations": [
+    {
+      "$type": "TypeAliasDeclaration",
+      "name": "MyType",
+      "typeParameters": [
+        {
+          "$type": "TypeParameterDeclaration",
+          "name": "T"
+        },
+        {
+          "$type": "TypeParameterDeclaration",
+          "name": "U"
+        }
+      ],
+      "type": {
+        "$type": "ObjectType",
+        "properties": [
+          {
+            "$type": "Property",
+            "name": "name",
+            "type": {
+              "$type": "TypeRef",
+              "ref": {
+                "$ref": "#/typeDeclarations@0/typeParameters@0"
+              },
+              "typeArguments": []
+            }
+          },
+          {
+            "$type": "Property",
+            "name": "age",
+            "type": {
+              "$type": "TypeRef",
+              "ref": {
+                "$ref": "#/typeDeclarations@0/typeParameters@1"
+              },
+              "typeArguments": []
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "declarations": [
+    {
+      "$type": "AnnotationDeclaration",
+      "name": "myAnnotation",
+      "parameters": [
+        {
+          "$type": "Parameter",
+          "name": "param",
+          "type": {
+            "$type": "TypeRef",
+            "ref": {
+              "$ref": "#/typeDeclarations@0"
+            },
+            "typeArguments": [
+              {
+                "$type": "TextType",
+                "name": "text"
+              },
+              {
+                "$type": "NumType",
+                "name": "num"
+              }
+            ]
+          },
+          "optional": false
+        }
+      ],
+      "returnType": {
+        "$type": "TypeRef",
+        "ref": {
+          "$ref": "#/typeDeclarations@0"
+        },
+        "typeArguments": [
+          {
+            "$type": "BoolType",
+            "name": "bool"
+          },
+          {
+            "$type": "DecimalType",
+            "name": "decimal"
+          }
+        ]
+      }
+    }
+  ]
+}"
+`;
+
 exports[`type system grammar > type alias > declare object type alias 1`] = `
 "{
   "$type": "FormMLDeclaration",
@@ -80,7 +174,8 @@ exports[`type system grammar > type alias > declare type alias with type paramet
               "$type": "TypeRef",
               "ref": {
                 "$ref": "#/typeDeclarations@0/typeParameters@0"
-              }
+              },
+              "typeArguments": []
             }
           },
           {
@@ -90,7 +185,8 @@ exports[`type system grammar > type alias > declare type alias with type paramet
               "$type": "TypeRef",
               "ref": {
                 "$ref": "#/typeDeclarations@0/typeParameters@1"
-              }
+              },
+              "typeArguments": []
             }
           }
         ]
@@ -127,7 +223,8 @@ exports[`type system grammar > type alias > type alias can be used as a type 1`]
             "$type": "TypeRef",
             "ref": {
               "$ref": "#/typeDeclarations@0"
-            }
+            },
+            "typeArguments": []
           },
           "optional": false
         }
@@ -136,7 +233,8 @@ exports[`type system grammar > type alias > type alias can be used as a type 1`]
         "$type": "TypeRef",
         "ref": {
           "$ref": "#/typeDeclarations@0"
-        }
+        },
+        "typeArguments": []
       }
     }
   ]

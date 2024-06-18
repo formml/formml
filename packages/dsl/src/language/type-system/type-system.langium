@@ -43,7 +43,7 @@ Property:
 // Named types
 
 TypeRef:
-  ref=[TypeDeclaration];
+  ref=[TypeDeclaration] ('<' (typeArguments+=Type ',')* typeArguments+=Type? '>')?;
 
 TypeDeclaration:
   TypeAliasDeclaration | TypeParameterDeclaration;
