@@ -174,7 +174,7 @@ describe('formml validator', () => {
             .map(([k, v]) => `${k}: ${v}`)
             .shift(),
       },
-    ])('assignment type check - $argType', ({ builder: arg }) => {
+    ])('parameters assignment type check - $argType', ({ builder: arg }) => {
       test.each([
         '"double quoted string"',
         "'single quoted string'",
@@ -323,5 +323,7 @@ describe('formml validator', () => {
         expect(diagnostics).toMatchSnapshot()
       })
     })
+
+    describe.todo('annotation assignment type check')
   })
 })
