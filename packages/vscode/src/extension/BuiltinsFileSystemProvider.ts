@@ -1,5 +1,11 @@
 import builtinAnnotations from '@formml/dsl/builtins/annotations.d.formml'
+import builtinTypes from '@formml/dsl/builtins/types.d.formml'
 import * as vscode from 'vscode'
+
+const builtinFiles: Record<string, Uint8Array> = {
+  '/annotations.d.formml': builtinAnnotations,
+  '/types.d.formml': builtinTypes,
+}
 
 export class BuiltinsFileSystemProvider implements vscode.FileSystemProvider {
   private readonly didChangeFile = new vscode.EventEmitter<
@@ -33,22 +39,20 @@ export class BuiltinsFileSystemProvider implements vscode.FileSystemProvider {
     throw vscode.FileSystemError.NoPermissions()
   }
 
-  readFile(_uri: vscode.Uri): Uint8Array {
-    // We could return different libraries based on the URI
-    // We have only one, so we always return the same
-    return builtinAnnotations
+  readFile(uri: vscode.Uri): Uint8Array {
+    return builtinFiles[uri.path]
   }
 
   rename() {
     throw vscode.FileSystemError.NoPermissions()
   }
 
-  stat(_uri: vscode.Uri): vscode.FileStat {
+  stat(uri: vscode.Uri): vscode.FileStat {
     const date = Date.now()
     return {
       ctime: date,
       mtime: date,
-      size: builtinAnnotations.length,
+      size: builtinFiles[uri.path].length,
       type: vscode.FileType.File,
     }
   }
