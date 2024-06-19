@@ -4,7 +4,7 @@ export function isAssignable(source: t.Type, target: t.Type): boolean {
   if (t.isAnyType(source) || t.isAnyType(target)) return true
   if (source.name !== target.name) return false
   if (t.isLiteralType(source)) {
-    return !t.isLiteralType(target)
+    return !t.isLiteralType(target) || source.literal === target.literal
   }
   if (t.isLiteralType(target)) return false
   return true

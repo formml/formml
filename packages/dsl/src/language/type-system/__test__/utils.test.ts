@@ -78,6 +78,25 @@ describe('utils', () => {
         expect(isAssignable(source, target)).toBe(false)
       },
     )
+
+    test.each([
+      t.createTextLiteral('hello'),
+      t.createNumLiteral(123),
+      t.createBoolLiteral(true),
+    ])('should return true if both have the same literal value', (type) => {
+      expect(isAssignable(type, type)).toBe(true)
+    })
+
+    test.each([
+      [t.createTextLiteral('hello'), t.createTextLiteral('world')],
+      [t.createNumLiteral(123), t.createNumLiteral(456)],
+      [t.createBoolLiteral(true), t.createBoolLiteral(false)],
+    ])(
+      'should return false if source and target have different literal values',
+      (source, target) => {
+        expect(isAssignable(source, target)).toBe(false)
+      },
+    )
   })
 
   describe('stringify', () => {
