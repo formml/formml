@@ -97,6 +97,44 @@ describe('utils', () => {
         expect(isAssignable(source, target)).toBe(false)
       },
     )
+
+    test.each([
+      [
+        t.createObjectType({ a: t.Text, b: t.Num }),
+        t.createObjectType({ a: t.Text }),
+      ],
+      [
+        t.createObjectType({ a: t.createTextLiteral('hello') }),
+        t.createObjectType({ a: t.Text }),
+      ],
+    ])(
+      'should return true if source object is a subtype of target object',
+      (source, target) => {
+        expect(isAssignable(source, target)).toBe(true)
+      },
+    )
+
+    test.each([
+      [
+        t.createObjectType({ a: t.Text }),
+        t.createObjectType({ a: t.Text, b: t.Num }),
+      ],
+      [
+        t.createObjectType({ a: t.Text }),
+        t.createObjectType({ a: t.createTextLiteral('hello') }),
+      ],
+    ])(
+      'should return false if source object is a superset of target object',
+      (source, target) => {
+        expect(isAssignable(source, target)).toBe(false)
+      },
+    )
+
+    test('should return false if source and target object have symmetric differences', () => {
+      const source = t.createObjectType({ a: t.Text, b: t.Num })
+      const target = t.createObjectType({ a: t.Text, c: t.Bool })
+      expect(isAssignable(source, target)).toBe(false)
+    })
   })
 
   describe('stringify', () => {
