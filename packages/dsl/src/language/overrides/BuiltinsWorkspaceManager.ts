@@ -9,6 +9,7 @@ import {
 import { LangiumSharedServices } from 'langium/lsp'
 
 import builtinAnnotations from '../../../builtins/annotations.d.formml?raw'
+import builtinTypes from '../../../builtins/types.d.formml?raw'
 
 export default class BuiltinsWorkspaceManager extends DefaultWorkspaceManager {
   private documentFactory: LangiumDocumentFactory
@@ -28,6 +29,12 @@ export default class BuiltinsWorkspaceManager extends DefaultWorkspaceManager {
       this.documentFactory.fromString(
         builtinAnnotations,
         URI.parse('builtin:///annotations.d.formml'),
+      ),
+    )
+    collector(
+      this.documentFactory.fromString(
+        builtinTypes,
+        URI.parse('builtin:///types.d.formml'),
       ),
     )
   }

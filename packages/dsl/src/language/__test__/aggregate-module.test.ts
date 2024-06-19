@@ -35,4 +35,19 @@ describe('aggregate module', () => {
       expect(result.diagnostics).toEqual([])
     },
   )
+
+  test.each(['Annotation<text>'])(
+    'should support built-in type "%s"',
+    async (type) => {
+      const services = createInMemoryAggregateServices()
+      await services.shared.workspace.WorkspaceManager.initialized({})
+      const input = `
+        type MyType = ${type}
+      `
+      const result = await parseHelper(services.FormMLDeclaration)(input, {
+        validation: true,
+      })
+      expect(result.diagnostics).toEqual([])
+    },
+  )
 })
