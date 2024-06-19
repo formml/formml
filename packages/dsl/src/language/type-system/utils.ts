@@ -2,7 +2,12 @@ import * as t from './types.js'
 
 export function isAssignable(source: t.Type, target: t.Type): boolean {
   if (t.isAnyType(source) || t.isAnyType(target)) return true
-  return source.name === target.name
+  if (source.name !== target.name) return false
+  if (t.isLiteralType(source)) {
+    return !t.isLiteralType(target)
+  }
+  if (t.isLiteralType(target)) return false
+  return true
 }
 
 export function stringify(type: t.Type): string {

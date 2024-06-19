@@ -67,6 +67,17 @@ describe('utils', () => {
         expect(isAssignable(source, target)).toBe(true)
       },
     )
+
+    test.each([
+      [t.Text, t.createTextLiteral('hello')],
+      [t.Num, t.createNumLiteral(123)],
+      [t.Bool, t.createBoolLiteral(true)],
+    ])(
+      'should return false if target is a literal of source type',
+      (source, target) => {
+        expect(isAssignable(source, target)).toBe(false)
+      },
+    )
   })
 
   describe('stringify', () => {
