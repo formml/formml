@@ -55,7 +55,10 @@ function startLanguageClient(context: vscode.ExtensionContext): LanguageClient {
 
   // Options to control the language client
   const clientOptions: LanguageClientOptions = {
-    documentSelector: [{ language: 'formml', scheme: 'file' }],
+    documentSelector: [
+      { language: 'formml', scheme: 'file' },
+      { language: 'formml-declaration', scheme: 'file' },
+    ],
   }
 
   // Create the language client and start the client.
