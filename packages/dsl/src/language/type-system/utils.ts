@@ -26,5 +26,11 @@ export function isAssignable(source: t.Type, target: t.Type): boolean {
 export function stringify(type: t.Type): string {
   if (t.isTextLiteralType(type)) return `"${type.literal}"`
   if (t.isLiteralType(type)) return type.literal.toString()
+  if (type.name === 'object') {
+    const properties = Object.entries(type.properties)
+      .map(([name, prop]) => `${name}: ${stringify(prop)}`)
+      .join('; ')
+    return `{ ${properties} }`
+  }
   return type.name
 }

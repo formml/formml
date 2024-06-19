@@ -156,5 +156,16 @@ describe('utils', () => {
         expect(stringify(type)).toBe(expected)
       },
     )
+
+    test('should return textual representation of nested object type', () => {
+      const type = t.createObjectType({
+        a: t.createTextLiteral('hello'),
+        b: t.createObjectType({
+          c: t.Num,
+          d: t.Bool,
+        }),
+      })
+      expect(stringify(type)).toBe('{ a: "hello"; b: { c: num; d: bool } }')
+    })
   })
 })
