@@ -1,3 +1,5 @@
+import { AstNode } from 'langium'
+
 import { Literal, NullLiteral, isNullLiteral } from '../language/index.js'
 
 type LiteralValue<T extends Literal> = T extends { value: unknown }
@@ -14,4 +16,8 @@ export function resolveLiteralValue(literal: Literal) {
     return null
   }
   return literal.value
+}
+
+export function stringify(node: AstNode): string {
+  return JSON.stringify({ node })
 }

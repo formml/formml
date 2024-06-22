@@ -1,4 +1,4 @@
-import { resolveLiteralValue } from '../ast-utils.js'
+import { resolveLiteralValue, stringify } from '../ast-utils.js'
 
 describe('ast utils', () => {
   describe('resolveLiteralValue', () => {
@@ -35,6 +35,21 @@ describe('ast utils', () => {
         $type: 'NullLiteral' as const,
       }
       expect(resolveLiteralValue(literal)).toBe(null)
+    })
+  })
+
+  describe('stringify', () => {
+    test('should return json string given a simple ast node', () => {
+      const node = {
+        $type: 'SimpleNode',
+        propA: 'valueA',
+        propB: 123,
+        propC: true,
+      }
+
+      expect(stringify(node)).toMatchInlineSnapshot(
+        `"{"node":{"$type":"SimpleNode","propA":"valueA","propB":123,"propC":true}}"`,
+      )
     })
   })
 })
