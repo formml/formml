@@ -18,6 +18,6 @@ export function resolveLiteralValue(literal: Literal) {
   return literal.value
 }
 
-export function stringify(node: AstNode): string {
-  return JSON.stringify({ node })
+export function stringify(node: AstNode, space?: number | string): string {
+  return JSON.stringify({ node }, null, space)
 }

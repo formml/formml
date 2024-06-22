@@ -1,0 +1,23 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ast utils > stringify > should accept space parameter 1`] = `
+"{
+  "node": {
+    "$type": "SimpleNode",
+    "propA": "valueA",
+    "propB": 123,
+    "propC": true
+  }
+}"
+`;
+
+exports[`ast utils > stringify > should accept space parameter 2`] = `
+"{
+[tab]"node": {
+[tab][tab]"$type": "SimpleNode",
+[tab][tab]"propA": "valueA",
+[tab][tab]"propB": 123,
+[tab][tab]"propC": true
+[tab]}
+}"
+`;

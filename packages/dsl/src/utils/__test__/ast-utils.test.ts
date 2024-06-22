@@ -51,5 +51,16 @@ describe('ast utils', () => {
         `"{"node":{"$type":"SimpleNode","propA":"valueA","propB":123,"propC":true}}"`,
       )
     })
+
+    test.each([2, '[tab]'])('should accept space parameter', (space) => {
+      const node = {
+        $type: 'SimpleNode',
+        propA: 'valueA',
+        propB: 123,
+        propC: true,
+      }
+
+      expect(stringify(node, space)).toMatchSnapshot()
+    })
   })
 })
