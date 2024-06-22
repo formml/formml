@@ -1,3 +1,5 @@
+import { AstNode } from 'langium'
+
 import { resolveLiteralValue, stringify } from '../ast-utils.js'
 
 describe('ast utils', () => {
@@ -45,7 +47,7 @@ describe('ast utils', () => {
         propA: 'valueA',
         propB: 123,
         propC: true,
-      }
+      } as AstNode
 
       expect(stringify(node)).toMatchInlineSnapshot(
         `"{"node":{"$type":"SimpleNode","propA":"valueA","propB":123,"propC":true}}"`,
@@ -58,9 +60,24 @@ describe('ast utils', () => {
         propA: 'valueA',
         propB: 123,
         propC: true,
-      }
+      } as AstNode
 
       expect(stringify(node, space)).toMatchSnapshot()
+    })
+
+    test('should ignore special properties', () => {
+      const node = {
+        $container: {} as never,
+        $containerIndex: 0,
+        $containerProperty: 'propA',
+        $cstNode: {} as never,
+        $document: {} as never,
+        $type: 'SimpleNode',
+      } as AstNode
+
+      expect(stringify(node)).toMatchInlineSnapshot(
+        `"{"node":{"$type":"SimpleNode"}}"`,
+      )
     })
   })
 })

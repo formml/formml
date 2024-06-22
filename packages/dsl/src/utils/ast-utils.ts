@@ -18,6 +18,21 @@ export function resolveLiteralValue(literal: Literal) {
   return literal.value
 }
 
+function replacer(key: string, value: unknown) {
+  const ignoredProperties = new Set([
+    '$container',
+    '$containerProperty',
+    '$containerIndex',
+    '$document',
+    '$cstNode',
+  ])
+
+  if (ignoredProperties.has(key)) {
+    return undefined
+  }
+  return value
+}
+
 export function stringify(node: AstNode, space?: number | string): string {
-  return JSON.stringify({ node }, null, space)
+  return JSON.stringify({ node }, replacer, space)
 }
