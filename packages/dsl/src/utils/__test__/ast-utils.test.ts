@@ -80,6 +80,64 @@ describe('ast utils', () => {
       )
     })
 
+    test('should ignore special properties in nested nodes', () => {
+      const node = {
+        $type: 'ParentNode',
+        child: {
+          $container: {} as never,
+          $containerProperty: 'child',
+          $cstNode: {} as never,
+          $document: {} as never,
+          $type: 'ChildNode',
+          array: [
+            {
+              $container: {} as never,
+              $containerIndex: 0,
+              $containerProperty: 'array',
+              $cstNode: {} as never,
+              $document: {} as never,
+              $type: 'ArrayItem',
+              value: 'item1',
+            },
+            {
+              $container: {} as never,
+              $containerIndex: 1,
+              $containerProperty: 'array',
+              $cstNode: {} as never,
+              $document: {} as never,
+              $type: 'ArrayItem',
+              value: 'item2',
+            },
+          ],
+          childProp: 'valueC',
+        },
+        parentProp: 'valueP',
+      } as AstNode
+
+      expect(stringify(node, 2)).toMatchInlineSnapshot(`
+        "{
+          "node": {
+            "$type": "ParentNode",
+            "child": {
+              "$type": "ChildNode",
+              "array": [
+                {
+                  "$type": "ArrayItem",
+                  "value": "item1"
+                },
+                {
+                  "$type": "ArrayItem",
+                  "value": "item2"
+                }
+              ],
+              "childProp": "valueC"
+            },
+            "parentProp": "valueP"
+          }
+        }"
+      `)
+    })
+
     test('should stringify nested nodes', () => {
       const node = {
         $type: 'ParentNode',
