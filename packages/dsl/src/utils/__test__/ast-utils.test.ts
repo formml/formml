@@ -315,5 +315,67 @@ describe('ast utils', () => {
         }"
       `)
     })
+
+    test('should resolve cross references in different trees - different documents', () => {
+      const refNode = {
+        $type: 'Node',
+        name: 'hello',
+      }
+
+      const docA = {
+        $document: { uri: URI.parse('file:///testA.formml') } as never,
+        $type: 'RootNode',
+        childA: {
+          $type: 'ChildNode',
+          children: [
+            { $type: 'ArrayItem', item: { $type: 'Node', name: 'world' } },
+            { $type: 'ArrayItem', item: refNode },
+          ],
+        },
+      }
+      linkNodes(docA)
+
+      const docB = {
+        $document: { uri: URI.parse('file:///testB.formml') } as never,
+        $type: 'RootNode',
+        childB: {
+          $type: 'ChildNode',
+          ref: {
+            $refText: 'hello',
+            ref: refNode,
+          },
+        },
+      }
+
+      expect(stringify(docB, 2)).toMatchInlineSnapshot(`
+        "{
+          "node": {
+            "$type": "RootNode",
+            "childB": {
+              "$type": "ChildNode",
+              "ref": {
+                "$refText": "hello",
+                "$ref": "file:///testA.formml#$.childA.children[1].item"
+              }
+            }
+          },
+          "references": {
+            "file:///testA.formml": {
+              "childA": {
+                "children": [
+                  null,
+                  {
+                    "item": {
+                      "$type": "Node",
+                      "name": "hello"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }"
+      `)
+    })
   })
 })

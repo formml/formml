@@ -93,19 +93,21 @@ type RefInfo = {
 }
 
 function collectReferenceInfos(node: AstNode): Map<Reference, RefInfo> {
-  return AstUtils.streamReferences(node).toMap(
-    ({ reference }) => reference,
-    ({ reference }) => {
-      const { $refText, ref } = reference
-      if (ref === undefined) {
-        return { $refText }
-      }
-      const [jsonPath, pathRoot] = buildAstNodePath(ref, node)
-      const documentUri =
-        pathRoot === node ? '' : AstUtils.getDocument(pathRoot).uri.toString()
-      return { $ref: `${documentUri}#${jsonPath}`, $refText, ref }
-    },
-  )
+  return AstUtils.streamAst(node)
+    .flatMap((node) => AstUtils.streamReferences(node))
+    .toMap(
+      ({ reference }) => reference,
+      ({ reference }) => {
+        const { $refText, ref } = reference
+        if (ref === undefined) {
+          return { $refText }
+        }
+        const [jsonPath, pathRoot] = buildAstNodePath(ref, node)
+        const documentUri =
+          pathRoot === node ? '' : AstUtils.getDocument(pathRoot).uri.toString()
+        return { $ref: `${documentUri}#${jsonPath}`, $refText, ref }
+      },
+    )
 }
 
 function buildReferences(refInfos: RefInfo[]) {
