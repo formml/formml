@@ -1,6 +1,37 @@
-import { AstNode } from 'langium'
+import { AstNode, isReference } from 'langium'
 
 import { resolveLiteralValue, stringify } from '../ast-utils.js'
+
+function linkNodes(
+  node: unknown,
+  container?: object,
+  property?: string,
+  index?: number,
+) {
+  if (
+    typeof node !== 'object' ||
+    node === null ||
+    Array.isArray(node) ||
+    isReference(node)
+  ) {
+    return
+  }
+  container && Object.assign(node, { $container: container })
+  property && Object.assign(node, { $containerProperty: property })
+  index !== undefined && Object.assign(node, { $containerIndex: index })
+
+  Object.entries(node)
+    .filter(([key]) => !key.startsWith('$'))
+    .forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((item, i) => {
+          linkNodes(item, node, key, i)
+        })
+        return
+      }
+      linkNodes(value, node, key)
+    })
+}
 
 describe('ast utils', () => {
   describe('resolveLiteralValue', () => {
@@ -176,6 +207,59 @@ describe('ast utils', () => {
         }"
       `,
       )
+    })
+
+    test('should resolve cross references in same tree', () => {
+      const refNode = {
+        $type: 'Node',
+        name: 'hello',
+      }
+      const node = {
+        $type: 'ParentNode',
+        child: {
+          $type: 'ChildNode',
+          children: [
+            { $type: 'ArrayItem', item: { $type: 'Node', name: 'world' } },
+            { $type: 'ArrayItem', item: refNode },
+          ],
+        },
+        ref: {
+          $refText: 'hello',
+          ref: refNode,
+        },
+      } as AstNode
+      linkNodes(node)
+
+      expect(stringify(node, 2)).toMatchInlineSnapshot(`
+        "{
+          "node": {
+            "$type": "ParentNode",
+            "child": {
+              "$type": "ChildNode",
+              "children": [
+                {
+                  "$type": "ArrayItem",
+                  "item": {
+                    "$type": "Node",
+                    "name": "world"
+                  }
+                },
+                {
+                  "$type": "ArrayItem",
+                  "item": {
+                    "$type": "Node",
+                    "name": "hello"
+                  }
+                }
+              ]
+            },
+            "ref": {
+              "$ref": "#$.child.children[1].item",
+              "$refText": "hello"
+            }
+          }
+        }"
+      `)
     })
   })
 })
