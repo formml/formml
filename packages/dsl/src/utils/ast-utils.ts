@@ -26,48 +26,48 @@ const ignoredProperties = new Set([
   '$cstNode',
 ])
 
+const SEGMENT_SEPARATOR = '/'
+const INDEX_SEPARATOR = '@'
+
 function buildAstNodePath(
   node: AstNode,
   stop: AstNode,
-): [jsonPath: string, root: AstNode] {
+): [path: string, root: AstNode] {
   if (node === stop) {
-    return ['$', node]
+    return ['', node]
   }
   if (!node.$container) {
-    return ['$', node]
+    return ['', node]
   }
   const container = node.$container
   const property = node.$containerProperty
   if (!property) {
     throw new Error("Missing '$containerProperty' in AST node.")
   }
-  const index = node.$containerIndex
-  const indexSegment = index !== undefined ? `[${index}]` : ''
+  const [containerPath, root] = buildAstNodePath(container, stop)
+  let path = containerPath + SEGMENT_SEPARATOR + property
 
-  const [jsonPath, root] = buildAstNodePath(container, stop)
-  return [`${jsonPath}.${property}${indexSegment}`, root]
+  const index = node.$containerIndex
+  if (index !== undefined) path += INDEX_SEPARATOR + index
+
+  return [path, root]
 }
 
-function setByJsonPath(
+function setByPath(
   obj: Record<string, unknown>,
   value: unknown,
-  jsonPath: string,
+  path: string,
 ): void {
-  if (!jsonPath.startsWith('$.')) {
-    throw new Error("JSON path must start with '$.'")
-  }
-
-  const segments = jsonPath
-    .slice(2)
-    .split('.')
+  const segments = path
+    .split(SEGMENT_SEPARATOR)
+    .filter((part) => part !== '')
     .flatMap((part) => {
-      const match = part.match(/^([^[\]]+)\[(\d+)\]$/)
-      if (!match) return part
-      const [, key, index] = match
-      return [key, parseInt(index)]
+      if (!part.includes(INDEX_SEPARATOR)) return part
+      const [segment, index] = part.split(INDEX_SEPARATOR)
+      return [segment, parseInt(index)]
     })
-  let parent: Record<string, unknown> = obj
 
+  let parent = obj
   segments.forEach((part, index) => {
     if (index === segments.length - 1) {
       parent[part] = value
@@ -102,10 +102,10 @@ function collectReferenceInfos(node: AstNode): Map<Reference, RefInfo> {
         if (ref === undefined) {
           return { $refText }
         }
-        const [jsonPath, pathRoot] = buildAstNodePath(ref, node)
+        const [path, root] = buildAstNodePath(ref, node)
         const documentUri =
-          pathRoot === node ? '' : AstUtils.getDocument(pathRoot).uri.toString()
-        return { $ref: `${documentUri}#${jsonPath}`, $refText, ref }
+          root === node ? '' : AstUtils.getDocument(root).uri.toString()
+        return { $ref: `${documentUri}#${path}`, $refText, ref }
       },
     )
 }
@@ -118,11 +118,11 @@ function buildReferences(refInfos: RefInfo[]) {
     )
     .filter((info) => !info.$ref.startsWith('#'))
     .forEach((refInfo) => {
-      const [document, jsonPath] = refInfo.$ref.split('#')
+      const [document, path] = refInfo.$ref.split('#')
       if (!(document in references)) {
         references[document] = {}
       }
-      setByJsonPath(references[document], refInfo.ref, jsonPath)
+      setByPath(references[document], refInfo.ref, path)
     })
 
   return references

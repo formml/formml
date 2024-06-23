@@ -255,7 +255,7 @@ describe('ast utils', () => {
             },
             "ref": {
               "$refText": "hello",
-              "$ref": "#$.child.children[1].item"
+              "$ref": "#/child/children@1/item"
             }
           }
         }"
@@ -294,7 +294,7 @@ describe('ast utils', () => {
             "$type": "ChildNode",
             "ref": {
               "$refText": "hello",
-              "$ref": "file:///test.formml#$.childA.children[1].item"
+              "$ref": "file:///test.formml#/childA/children@1/item"
             }
           },
           "references": {
@@ -355,7 +355,7 @@ describe('ast utils', () => {
               "$type": "ChildNode",
               "ref": {
                 "$refText": "hello",
-                "$ref": "file:///testA.formml#$.childA.children[1].item"
+                "$ref": "file:///testA.formml#/childA/children@1/item"
               }
             }
           },
