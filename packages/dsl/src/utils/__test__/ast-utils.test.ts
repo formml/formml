@@ -532,5 +532,118 @@ describe('ast utils', () => {
         }"
       `)
     })
+
+    test('should resolve circular references - same tree', () => {
+      const nodeA = {
+        $type: 'Node',
+        name: 'nodeA',
+        ref: {
+          $refText: 'nodeB',
+          ref: {},
+        },
+      }
+      const nodeB = {
+        $type: 'Node',
+        name: 'nodeB',
+        ref: {
+          $refText: 'nodeA',
+          ref: nodeA,
+        },
+      }
+      nodeA.ref.ref = nodeB
+
+      const root = {
+        $type: 'RootNode',
+        nodeA,
+        nodeB,
+      }
+      linkNodes(root)
+
+      expect(stringify(root, 2)).toMatchInlineSnapshot(`
+        "{
+          "node": {
+            "$type": "RootNode",
+            "nodeA": {
+              "$type": "Node",
+              "name": "nodeA",
+              "ref": {
+                "$refText": "nodeB",
+                "$ref": "#/nodeB"
+              }
+            },
+            "nodeB": {
+              "$type": "Node",
+              "name": "nodeB",
+              "ref": {
+                "$refText": "nodeA",
+                "$ref": "#/nodeA"
+              }
+            }
+          }
+        }"
+      `)
+    })
+
+    test('should resolve circular references - different documents', () => {
+      const nodeA = {
+        $type: 'Node',
+        name: 'nodeA',
+        ref: {
+          $refText: 'nodeB',
+          ref: {},
+        },
+      }
+      const nodeB = {
+        $type: 'Node',
+        name: 'nodeB',
+        ref: {
+          $refText: 'nodeA',
+          ref: nodeA,
+        },
+      }
+      nodeA.ref.ref = nodeB
+
+      const docA = {
+        $document: { uri: URI.parse('file:///testA.formml') } as never,
+        $type: 'RootNode',
+        nodeA,
+      }
+      linkNodes(docA)
+
+      const docB = {
+        $document: { uri: URI.parse('file:///testB.formml') } as never,
+        $type: 'RootNode',
+        nodeB,
+      }
+      linkNodes(docB)
+
+      expect(stringify(docB, 2)).toMatchInlineSnapshot(`
+        "{
+          "node": {
+            "$type": "RootNode",
+            "nodeB": {
+              "$type": "Node",
+              "name": "nodeB",
+              "ref": {
+                "$refText": "nodeA",
+                "$ref": "file:///testA.formml#/nodeA"
+              }
+            }
+          },
+          "references": {
+            "file:///testA.formml": {
+              "nodeA": {
+                "$type": "Node",
+                "name": "nodeA",
+                "ref": {
+                  "$refText": "nodeB",
+                  "$ref": "#/nodeB"
+                }
+              }
+            }
+          }
+        }"
+      `)
+    })
   })
 })
