@@ -408,11 +408,11 @@ describe('ast utils', () => {
         child: {
           $type: 'ChildNode',
           refA: {
-            $refText: 'hello',
+            $refText: 'refNodeA',
             ref: refNodeA,
           },
           refB: {
-            $refText: 'world',
+            $refText: 'refNodeB',
             ref: refNodeB,
           },
         },
@@ -425,11 +425,11 @@ describe('ast utils', () => {
             "child": {
               "$type": "ChildNode",
               "refA": {
-                "$refText": "hello",
+                "$refText": "refNodeA",
                 "$ref": "file:///testA.formml#/childA/children@1/item"
               },
               "refB": {
-                "$refText": "world",
+                "$refText": "refNodeB",
                 "$ref": "file:///testA.formml#/childA/children@2/item/name"
               }
             }
@@ -454,6 +454,78 @@ describe('ast utils', () => {
                     }
                   }
                 ]
+              }
+            }
+          }
+        }"
+      `)
+    })
+
+    test('should resolve cross references in different trees - nested references', () => {
+      const childRef = {
+        $type: 'Node',
+        name: 'child',
+      }
+      const parentRef = {
+        $type: 'ParentNode',
+        child: {
+          $type: 'ChildNode',
+          childDefinition: childRef,
+          ref: {
+            $refText: 'child',
+            ref: childRef,
+          },
+        },
+        name: 'parent',
+      }
+
+      const docA = {
+        $document: { uri: URI.parse('file:///testA.formml') } as never,
+        $type: 'RootNode',
+        node: parentRef,
+      }
+      linkNodes(docA)
+
+      const docB = {
+        $document: { uri: URI.parse('file:///testB.formml') } as never,
+        $type: 'RootNode',
+        child: {
+          $type: 'ChildNode',
+          ref: {
+            $refText: 'parent',
+            ref: parentRef,
+          },
+        },
+      }
+
+      expect(stringify(docB, 2)).toMatchInlineSnapshot(`
+        "{
+          "node": {
+            "$type": "RootNode",
+            "child": {
+              "$type": "ChildNode",
+              "ref": {
+                "$refText": "parent",
+                "$ref": "file:///testA.formml#/node"
+              }
+            }
+          },
+          "references": {
+            "file:///testA.formml": {
+              "node": {
+                "$type": "ParentNode",
+                "child": {
+                  "$type": "ChildNode",
+                  "childDefinition": {
+                    "$type": "Node",
+                    "name": "child"
+                  },
+                  "ref": {
+                    "$refText": "child",
+                    "$ref": "file:///testA.formml#/node/child/childDefinition"
+                  }
+                },
+                "name": "parent"
               }
             }
           }

@@ -93,21 +93,34 @@ type RefInfo = {
 }
 
 function collectReferenceInfos(node: AstNode): Map<Reference, RefInfo> {
-  return AstUtils.streamAst(node)
-    .flatMap((node) => AstUtils.streamReferences(node))
-    .toMap(
-      ({ reference }) => reference,
-      ({ reference }) => {
-        const { $refText, ref } = reference
-        if (ref === undefined) {
-          return { $refText }
-        }
-        const [path, root] = buildAstNodePath(ref, node)
-        const documentUri =
-          root === node ? '' : AstUtils.getDocument(root).uri.toString()
-        return { $ref: `${documentUri}#${path}`, $refText, ref }
-      },
-    )
+  // BFS all nodes and referred nodes
+  const refInfos = new Map<Reference, RefInfo>()
+  const visitedTrees = new Set<AstNode>()
+  const queue = [node]
+  while (queue.length > 0) {
+    const subtreeRoot = queue.shift()!
+    for (const currentNode of AstUtils.streamAst(subtreeRoot)) {
+      if (visitedTrees.has(currentNode)) {
+        break // skip visited subtree
+      }
+      AstUtils.streamReferences(currentNode)
+        .map((ref) => ref.reference)
+        .forEach((reference) => {
+          const { $refText, ref } = reference
+          let refInfo: RefInfo = { $refText }
+          if (ref) {
+            const [path, root] = buildAstNodePath(ref, node)
+            const documentUri =
+              root === node ? '' : AstUtils.getDocument(root).uri.toString()
+            refInfo = { ...refInfo, $ref: `${documentUri}#${path}`, ref }
+            queue.push(ref)
+          }
+          refInfos.set(reference, refInfo)
+        })
+      visitedTrees.add(currentNode)
+    }
+  }
+  return refInfos
 }
 
 function buildReferences(refInfos: RefInfo[]) {
