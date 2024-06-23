@@ -1,4 +1,4 @@
-import { AstNode, isReference } from 'langium'
+import { AstNode, URI, isReference } from 'langium'
 
 import { resolveLiteralValue, stringify } from '../ast-utils.js'
 
@@ -254,8 +254,62 @@ describe('ast utils', () => {
               ]
             },
             "ref": {
-              "$ref": "#$.child.children[1].item",
-              "$refText": "hello"
+              "$refText": "hello",
+              "$ref": "#$.child.children[1].item"
+            }
+          }
+        }"
+      `)
+    })
+
+    test('should resolve cross references in different trees - same document', () => {
+      const refNode = {
+        $type: 'Node',
+        name: 'hello',
+      }
+
+      const doc = {
+        $document: { uri: URI.parse('file:///test.formml') } as never,
+        $type: 'RootNode',
+        childA: {
+          $type: 'ChildNode',
+          children: [
+            { $type: 'ArrayItem', item: { $type: 'Node', name: 'world' } },
+            { $type: 'ArrayItem', item: refNode },
+          ],
+        },
+        childB: {
+          $type: 'ChildNode',
+          ref: {
+            $refText: 'hello',
+            ref: refNode,
+          },
+        },
+      }
+      linkNodes(doc)
+
+      expect(stringify(doc.childB, 2)).toMatchInlineSnapshot(`
+        "{
+          "node": {
+            "$type": "ChildNode",
+            "ref": {
+              "$refText": "hello",
+              "$ref": "file:///test.formml#$.childA.children[1].item"
+            }
+          },
+          "references": {
+            "file:///test.formml": {
+              "childA": {
+                "children": [
+                  null,
+                  {
+                    "item": {
+                      "$type": "Node",
+                      "name": "hello"
+                    }
+                  }
+                ]
+              }
             }
           }
         }"
