@@ -201,7 +201,7 @@ describe('ast utils', () => {
           $refText: 'hello',
           ref: refNode,
         },
-      } as AstNode
+      }
       linkNodes(node)
 
       expect(stringify(node, 2)).toMatchInlineSnapshot(`
@@ -680,6 +680,38 @@ describe('ast utils', () => {
       })
       expect(node.child.array[0].$container).toBe(node.child)
       expect(node.child.$container).toBe(node)
+    })
+
+    test('should revive cross references in current tree', () => {
+      const json = `{
+        "node": {
+          "$type": "ParentNode",
+          "child": {
+            "$type": "ChildNode",
+            "name": "child"
+          },
+          "ref": {
+            "$refText": "child",
+            "$ref": "#/child"
+          }
+        }
+      }`
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const node = parse(json) as any
+      expect(node).toEqual({
+        $type: 'ParentNode',
+        child: {
+          $container: expect.any(Object),
+          $containerProperty: 'child',
+          $type: 'ChildNode',
+          name: 'child',
+        },
+        ref: {
+          $refText: 'child',
+          ref: expect.any(Object),
+        },
+      })
+      expect(node.ref.ref).toBe(node.child)
     })
   })
 })

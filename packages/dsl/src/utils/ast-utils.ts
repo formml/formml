@@ -1,4 +1,11 @@
-import { AstNode, AstUtils, Reference, isReference } from 'langium'
+import {
+  AstNode,
+  AstUtils,
+  GenericAstNode,
+  Reference,
+  isAstNode,
+  isReference,
+} from 'langium'
 
 import { Literal, NullLiteral, isNullLiteral } from '../language/index.js'
 
@@ -51,6 +58,35 @@ function buildAstNodePath(
   if (index !== undefined) path += INDEX_SEPARATOR + index
 
   return [path, root]
+}
+
+function getByPath<TOutput>(obj: unknown, path: string): TOutput | undefined {
+  const segments = path
+    .split(SEGMENT_SEPARATOR)
+    .filter((part) => part !== '')
+    .flatMap((part) => {
+      if (!part.includes(INDEX_SEPARATOR)) return part
+      const [segment, index] = part.split(INDEX_SEPARATOR)
+      return [segment, parseInt(index)]
+    })
+
+  let current = obj
+  for (const part of segments) {
+    if (typeof part === 'number' && Array.isArray(current)) {
+      current = current[part]
+      continue
+    }
+    if (
+      typeof part === 'string' &&
+      typeof current === 'object' &&
+      current !== null
+    ) {
+      current = (current as Record<string, unknown>)[part]
+      continue
+    }
+    return undefined
+  }
+  return current as TOutput
 }
 
 function setByPath(
@@ -172,42 +208,89 @@ export function stringify(node: AstNode, space?: number | string): string {
   )
 }
 
+/**
+ * A cross-reference in the serialized JSON representation of an AstNode.
+ */
+type IntermediateReference =
+  | {
+      /** If any problem occurred while resolving the reference, it is described by this property. */
+      $error: string
+    }
+  | {
+      /** URI pointing to the target element. This is either `#${path}` if the target is in the same tree, or `${documentURI}#${path}` otherwise. */
+      $ref?: string
+      /** The actual text used to look up the reference target in the surrounding scope. */
+      $refText: string
+    }
+
+function isIntermediateReference(obj: unknown): obj is IntermediateReference {
+  return (
+    typeof obj === 'object' && !!obj && ('$refText' in obj || '$error' in obj)
+  )
+}
+
 export function linkNodes(
-  node: unknown,
+  node: GenericAstNode,
+  reviveReference?: (ref: IntermediateReference) => Reference,
   container?: object,
   property?: string,
   index?: number,
 ) {
-  if (
-    typeof node !== 'object' ||
-    node === null ||
-    Array.isArray(node) ||
-    isReference(node)
-  ) {
-    return
-  }
+  Object.entries(node).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((item, i) => {
+        if (isIntermediateReference(item) && reviveReference) {
+          value[i] = reviveReference(item)
+          return
+        }
+        if (isAstNode(item)) {
+          linkNodes(item as GenericAstNode, reviveReference, node, key, i)
+          return
+        }
+      })
+      return
+    }
+    if (isIntermediateReference(value) && reviveReference) {
+      node[key] = reviveReference(value)
+      return
+    }
+    if (isAstNode(value)) {
+      linkNodes(value as GenericAstNode, reviveReference, node, key)
+      return
+    }
+  })
   container && Object.assign(node, { $container: container })
   property && Object.assign(node, { $containerProperty: property })
   index !== undefined && Object.assign(node, { $containerIndex: index })
+}
 
-  Object.entries(node)
-    .filter(([key]) => !key.startsWith('$'))
-    .forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        value.forEach((item, i) => {
-          linkNodes(item, node, key, i)
-        })
-        return
+function referenceReviver(
+  node: GenericAstNode,
+  references?: Record<string, Record<string, unknown>>,
+): (ref: IntermediateReference) => Reference {
+  return (ref) => {
+    if ('$error' in ref) {
+      throw new Error('Has reference error: ' + ref.$error)
+    }
+    if (ref.$ref) {
+      const [document, path] = ref.$ref.split('#')
+      if (document === '') {
+        return { $refText: ref.$refText, ref: getByPath(node, path) }
       }
-      linkNodes(value, node, key)
-    })
+      return {
+        $refText: ref.$refText,
+        ref: getByPath(references?.[document], path),
+      }
+    }
+    return ref
+  }
 }
 
 export function parse(json: string): AstNode {
-  const { node } = JSON.parse(json) as {
-    node: AstNode
-    references?: Record<string, unknown>
+  const { node, references } = JSON.parse(json) as {
+    node: GenericAstNode
+    references?: Record<string, Record<string, unknown>>
   }
-  linkNodes(node)
+  linkNodes(node, referenceReviver(node, references))
   return node
 }
