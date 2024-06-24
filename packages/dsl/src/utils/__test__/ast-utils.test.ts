@@ -1,6 +1,6 @@
 import { AstNode, URI, isReference } from 'langium'
 
-import { resolveLiteralValue, stringify } from '../ast-utils.js'
+import { parse, resolveLiteralValue, stringify } from '../ast-utils.js'
 
 function linkNodes(
   node: unknown,
@@ -644,6 +644,26 @@ describe('ast utils', () => {
           }
         }"
       `)
+    })
+  })
+
+  describe('parse', () => {
+    test('should parse json string into ast node', () => {
+      const json = `{
+        "node": {
+          "$type": "SimpleNode",
+          "propA": "valueA",
+          "propB": 123,
+          "propC": true
+        }
+      }`
+      const node = parse(json)
+      expect(node).toEqual({
+        $type: 'SimpleNode',
+        propA: 'valueA',
+        propB: 123,
+        propC: true,
+      })
     })
   })
 })

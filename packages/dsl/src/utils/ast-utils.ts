@@ -171,3 +171,11 @@ export function stringify(node: AstNode, space?: number | string): string {
     space,
   )
 }
+
+export function parse(json: string): AstNode {
+  const { node } = JSON.parse(json) as {
+    node: AstNode
+    references?: Record<string, unknown>
+  }
+  return node
+}
