@@ -236,11 +236,21 @@ export function linkNodes(
   property?: string,
   index?: number,
 ) {
+  container && Object.assign(node, { $container: container })
+  property && Object.assign(node, { $containerProperty: property })
+  index !== undefined && Object.assign(node, { $containerIndex: index })
+
   Object.entries(node).forEach(([key, value]) => {
+    if (key.startsWith('$')) {
+      return
+    }
     if (Array.isArray(value)) {
       value.forEach((item, i) => {
         if (isIntermediateReference(item) && reviveReference) {
-          value[i] = reviveReference(item)
+          const reference = reviveReference(item)
+          if (reference.ref)
+            linkNodes(reference.ref as GenericAstNode, reviveReference) // link as a new tree root
+          value[i] = reference
           return
         }
         if (isAstNode(item)) {
@@ -251,7 +261,10 @@ export function linkNodes(
       return
     }
     if (isIntermediateReference(value) && reviveReference) {
-      node[key] = reviveReference(value)
+      const reference = reviveReference(value)
+      if (reference.ref)
+        linkNodes(reference.ref as GenericAstNode, reviveReference) // link as a new tree root
+      node[key] = reference
       return
     }
     if (isAstNode(value)) {
@@ -259,9 +272,6 @@ export function linkNodes(
       return
     }
   })
-  container && Object.assign(node, { $container: container })
-  property && Object.assign(node, { $containerProperty: property })
-  index !== undefined && Object.assign(node, { $containerIndex: index })
 }
 
 function referenceReviver(

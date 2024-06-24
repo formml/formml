@@ -713,5 +713,55 @@ describe('ast utils', () => {
       })
       expect(node.ref.ref).toBe(node.child)
     })
+
+    test('should revive cross references in different trees', () => {
+      const json = `{
+        "node": {
+          "$type": "RootNode",
+          "ref": {
+            "$refText": "hello",
+            "$ref": "file:///testA.formml#/child/array@1/item"
+          }
+        },
+        "references": {
+          "file:///testA.formml": {
+            "child": {
+              "array": [
+                null,
+                {
+                  "item": {
+                    "$type": "Node",
+                    "name": "hello",
+                    "child": {
+                      "$type": "ChildNode",
+                      "name": "child"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }`
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const node = parse(json) as any
+      expect(node).toEqual({
+        $type: 'RootNode',
+        ref: {
+          $refText: 'hello',
+          ref: {
+            $type: 'Node',
+            child: {
+              $container: expect.any(Object),
+              $containerProperty: 'child',
+              $type: 'ChildNode',
+              name: 'child',
+            },
+            name: 'hello',
+          },
+        },
+      })
+      expect(node.ref.ref.child.$container).toBe(node.ref.ref)
+    })
   })
 })
