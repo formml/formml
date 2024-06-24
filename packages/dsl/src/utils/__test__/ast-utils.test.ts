@@ -763,5 +763,133 @@ describe('ast utils', () => {
       })
       expect(node.ref.ref.child.$container).toBe(node.ref.ref)
     })
+
+    test('should also link referred nodes', () => {
+      const json = `{
+        "node": {
+          "$type": "RootNode",
+          "refA": {
+            "$refText": "world",
+            "$ref": "file:///testA.formml#/parent/child/children@1/item"
+          },
+          "refB": {
+            "$refText": "hello",
+            "$ref": "file:///testA.formml#/parent/child"
+          }
+        },
+        "references": {
+          "file:///testA.formml": {
+            "parent": {
+              "child": {
+                "$type": "ChildNode",
+                "name": "hello",
+                "children": [
+                  null,
+                  {
+                    "$type": "ArrayItem",
+                    "item": {
+                      "$type": "Node",
+                      "name": "world"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }`
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const node = parse(json) as any
+      expect(node).toEqual({
+        $type: 'RootNode',
+        refA: {
+          $refText: 'world',
+          ref: {
+            $container: expect.any(Object),
+            $containerProperty: 'item',
+            $type: 'Node',
+            name: 'world',
+          },
+        },
+        refB: {
+          $refText: 'hello',
+          ref: {
+            $type: 'ChildNode',
+            children: [
+              null,
+              {
+                $container: expect.any(Object),
+                $containerIndex: 1,
+                $containerProperty: 'children',
+                $type: 'ArrayItem',
+                item: {
+                  $container: expect.any(Object),
+                  $containerProperty: 'item',
+                  $type: 'Node',
+                  name: 'world',
+                },
+              },
+            ],
+            name: 'hello',
+          },
+        },
+      })
+      expect(node.refA.ref).toBe(node.refB.ref.children[1].item)
+      expect(node.refB.ref.children[1].$container).toBe(node.refB.ref)
+      expect(node.refB.ref.children[1].item.$container).toBe(
+        node.refB.ref.children[1],
+      )
+    })
+
+    test('should revive circular references - same tree', () => {
+      const json = `{
+        "node": {
+          "$type": "RootNode",
+          "nodeA": {
+            "$type": "Node",
+            "name": "nodeA",
+            "ref": {
+              "$refText": "nodeB",
+              "$ref": "#/nodeB"
+            }
+          },
+          "nodeB": {
+            "$type": "Node",
+            "name": "nodeB",
+            "ref": {
+              "$refText": "nodeA",
+              "$ref": "#/nodeA"
+            }
+          }
+        }
+      }`
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const node = parse(json) as any
+      expect(node).toEqual({
+        $type: 'RootNode',
+        nodeA: {
+          $container: expect.any(Object),
+          $containerProperty: 'nodeA',
+          $type: 'Node',
+          name: 'nodeA',
+          ref: {
+            $refText: 'nodeB',
+            ref: expect.any(Object),
+          },
+        },
+        nodeB: {
+          $container: expect.any(Object),
+          $containerProperty: 'nodeB',
+          $type: 'Node',
+          name: 'nodeB',
+          ref: {
+            $refText: 'nodeA',
+            ref: expect.any(Object),
+          },
+        },
+      })
+      expect(node.nodeA.ref.ref).toBe(node.nodeB)
+      expect(node.nodeB.ref.ref).toBe(node.nodeA)
+    })
   })
 })

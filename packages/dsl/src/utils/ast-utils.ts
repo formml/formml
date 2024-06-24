@@ -232,6 +232,7 @@ function isIntermediateReference(obj: unknown): obj is IntermediateReference {
 export function linkNodes(
   node: GenericAstNode,
   reviveReference?: (ref: IntermediateReference) => Reference,
+  visitedNodes?: Set<GenericAstNode>,
   container?: object,
   property?: string,
   index?: number,
@@ -239,6 +240,11 @@ export function linkNodes(
   container && Object.assign(node, { $container: container })
   property && Object.assign(node, { $containerProperty: property })
   index !== undefined && Object.assign(node, { $containerIndex: index })
+
+  if (visitedNodes) {
+    if (visitedNodes.has(node)) return // skip dive into visited node
+    visitedNodes.add(node)
+  }
 
   Object.entries(node).forEach(([key, value]) => {
     if (key.startsWith('$')) {
@@ -249,12 +255,23 @@ export function linkNodes(
         if (isIntermediateReference(item) && reviveReference) {
           const reference = reviveReference(item)
           if (reference.ref)
-            linkNodes(reference.ref as GenericAstNode, reviveReference) // link as a new tree root
+            linkNodes(
+              reference.ref as GenericAstNode,
+              reviveReference,
+              visitedNodes,
+            ) // link as a new tree root
           value[i] = reference
           return
         }
         if (isAstNode(item)) {
-          linkNodes(item as GenericAstNode, reviveReference, node, key, i)
+          linkNodes(
+            item as GenericAstNode,
+            reviveReference,
+            visitedNodes,
+            node,
+            key,
+            i,
+          )
           return
         }
       })
@@ -263,12 +280,22 @@ export function linkNodes(
     if (isIntermediateReference(value) && reviveReference) {
       const reference = reviveReference(value)
       if (reference.ref)
-        linkNodes(reference.ref as GenericAstNode, reviveReference) // link as a new tree root
+        linkNodes(
+          reference.ref as GenericAstNode,
+          reviveReference,
+          visitedNodes,
+        ) // link as a new tree root
       node[key] = reference
       return
     }
     if (isAstNode(value)) {
-      linkNodes(value as GenericAstNode, reviveReference, node, key)
+      linkNodes(
+        value as GenericAstNode,
+        reviveReference,
+        visitedNodes,
+        node,
+        key,
+      )
       return
     }
   })
@@ -301,6 +328,7 @@ export function parse(json: string): AstNode {
     node: GenericAstNode
     references?: Record<string, Record<string, unknown>>
   }
-  linkNodes(node, referenceReviver(node, references))
+  const visitedNodes = new Set<GenericAstNode>()
+  linkNodes(node, referenceReviver(node, references), visitedNodes)
   return node
 }
