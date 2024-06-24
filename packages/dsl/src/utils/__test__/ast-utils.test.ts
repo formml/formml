@@ -1,37 +1,11 @@
-import { AstNode, URI, isReference } from 'langium'
+import { AstNode, URI } from 'langium'
 
-import { parse, resolveLiteralValue, stringify } from '../ast-utils.js'
-
-function linkNodes(
-  node: unknown,
-  container?: object,
-  property?: string,
-  index?: number,
-) {
-  if (
-    typeof node !== 'object' ||
-    node === null ||
-    Array.isArray(node) ||
-    isReference(node)
-  ) {
-    return
-  }
-  container && Object.assign(node, { $container: container })
-  property && Object.assign(node, { $containerProperty: property })
-  index !== undefined && Object.assign(node, { $containerIndex: index })
-
-  Object.entries(node)
-    .filter(([key]) => !key.startsWith('$'))
-    .forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        value.forEach((item, i) => {
-          linkNodes(item, node, key, i)
-        })
-        return
-      }
-      linkNodes(value, node, key)
-    })
-}
+import {
+  linkNodes,
+  parse,
+  resolveLiteralValue,
+  stringify,
+} from '../ast-utils.js'
 
 describe('ast utils', () => {
   describe('resolveLiteralValue', () => {
@@ -664,6 +638,48 @@ describe('ast utils', () => {
         propB: 123,
         propC: true,
       })
+    })
+
+    test('should link nested nodes', () => {
+      const json = `{
+        "node": {
+          "$type": "ParentNode",
+          "child": {
+            "$type": "ChildNode",
+            "array": [
+              {
+                "$type": "ArrayItem",
+                "value": "item1"
+              }
+            ],
+            "childProp": "valueC"
+          },
+          "parentProp": "valueP"
+        }
+      }`
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const node = parse(json) as any
+      expect(node).toEqual({
+        $type: 'ParentNode',
+        child: {
+          $container: expect.any(Object),
+          $containerProperty: 'child',
+          $type: 'ChildNode',
+          array: [
+            {
+              $container: expect.any(Object),
+              $containerIndex: 0,
+              $containerProperty: 'array',
+              $type: 'ArrayItem',
+              value: 'item1',
+            },
+          ],
+          childProp: 'valueC',
+        },
+        parentProp: 'valueP',
+      })
+      expect(node.child.array[0].$container).toBe(node.child)
+      expect(node.child.$container).toBe(node)
     })
   })
 })

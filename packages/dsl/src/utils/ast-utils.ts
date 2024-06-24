@@ -172,10 +172,42 @@ export function stringify(node: AstNode, space?: number | string): string {
   )
 }
 
+export function linkNodes(
+  node: unknown,
+  container?: object,
+  property?: string,
+  index?: number,
+) {
+  if (
+    typeof node !== 'object' ||
+    node === null ||
+    Array.isArray(node) ||
+    isReference(node)
+  ) {
+    return
+  }
+  container && Object.assign(node, { $container: container })
+  property && Object.assign(node, { $containerProperty: property })
+  index !== undefined && Object.assign(node, { $containerIndex: index })
+
+  Object.entries(node)
+    .filter(([key]) => !key.startsWith('$'))
+    .forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((item, i) => {
+          linkNodes(item, node, key, i)
+        })
+        return
+      }
+      linkNodes(value, node, key)
+    })
+}
+
 export function parse(json: string): AstNode {
   const { node } = JSON.parse(json) as {
     node: AstNode
     references?: Record<string, unknown>
   }
+  linkNodes(node)
   return node
 }
