@@ -1,0 +1,8 @@
+{
+  "name": "ts-plugin-example",
+  "version": "0.0.1",
+  "license": "private",
+  "devDependencies": {
+    "@formml/ts-plugin": "workspace:*"
+  }
+}

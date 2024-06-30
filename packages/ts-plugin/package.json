@@ -1,0 +1,36 @@
+{
+  "name": "@formml/ts-plugin",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "module": "commonjs",
+  "description": "A TypeScript plugin for importing FormML files",
+  "homepage": "https://github.com/formml/formml/tree/main/packages/ts-plugin",
+  "repository": "https://github.com/formml/formml/tree/main/packages/ts-plugin",
+  "bugs": "https://github.com/formml/formml/issues",
+  "author": "Jindong Zhang <jindong.zhannng@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "formml",
+    "form",
+    "plugin",
+    "typescript"
+  ],
+  "files": [
+    "dist",
+    "src",
+    "!src/**/__test__"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "lint": "eslint .",
+    "lint:fix": "pnpm run lint --fix",
+    "lint:type": "tsc"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.0.0"
+  },
+  "devDependencies": {
+    "@formml/typescript-config": "workspace:*",
+    "eslint-config-formml": "workspace:*"
+  }
+}
