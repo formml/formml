@@ -21,10 +21,12 @@
     "!src/**/__test__"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.lib.json",
+    "build": "rimraf dist/ && tsc -p tsconfig.lib.json",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "lint:type": "tsc"
+    "lint:type": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
   },
   "peerDependencies": {
     "typescript": ">=5.0.0"

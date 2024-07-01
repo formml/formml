@@ -7,5 +7,5 @@
     "esModuleInterop": true,
     "types": ["vitest/globals", "vitest/importMeta", "vite/client", "node"]
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "**/*.mts"]
 }

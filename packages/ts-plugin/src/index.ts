@@ -1,6 +1,7 @@
 import type tsModule from 'typescript/lib/tsserverlibrary'
 
-import createLogger from './helpers/createLogger'
+import createLogger from './createLogger'
+import createProxy from './createProxy'
 
 const init: tsModule.server.PluginModuleFactory = ({ typescript: ts }) => {
   function create(info: tsModule.server.PluginCreateInfo) {
@@ -8,11 +9,7 @@ const init: tsModule.server.PluginModuleFactory = ({ typescript: ts }) => {
     logger.info('Initializing plugin')
 
     logger.info('Proxying language service host')
-    const languageServiceHostProxy = new Proxy(info.languageServiceHost, {
-      get(target, key: keyof tsModule.LanguageServiceHost) {
-        return Reflect.get(target, key)
-      },
-    })
+    const languageServiceHostProxy = createProxy(info.languageServiceHost, {})
 
     const service = ts.createLanguageService(languageServiceHostProxy)
     logger.info('Replaced language service with new instance')

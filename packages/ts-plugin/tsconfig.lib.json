@@ -7,5 +7,6 @@
     "outDir": "./dist",
     "rootDir": "./src"
   },
-  "exclude": ["dist", "**/__test__/**"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["**/__test__/**"]
 }
