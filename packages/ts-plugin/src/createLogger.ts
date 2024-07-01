@@ -1,8 +1,8 @@
 import type tsModule from 'typescript/lib/tsserverlibrary'
 
-interface Logger {
-  error(message: string): void
-  info(message: string): void
+export interface Logger {
+  error(...messages: string[]): void
+  info(...messages: string[]): void
 }
 
 const PLUGIN_NAME = '@formml/ts-plugin'
@@ -11,13 +11,15 @@ export default function createLogger(
   info: tsModule.server.PluginCreateInfo,
 ): Logger {
   return {
-    error: (message: string) => {
+    error: (...messages: string[]) => {
       info.project.projectService.logger.info(
-        `[${PLUGIN_NAME}] - ERROR: ${message}`,
+        `[${PLUGIN_NAME}] - ERROR: ${messages.join(' ')}`,
       )
     },
-    info: (message: string) => {
-      info.project.projectService.logger.info(`[${PLUGIN_NAME}] ${message}`)
+    info: (...messages: string[]) => {
+      info.project.projectService.logger.info(
+        `[${PLUGIN_NAME}] ${messages.join(' ')}`,
+      )
     },
   }
 }
