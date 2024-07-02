@@ -9,6 +9,21 @@ export default function createHostOverrides(
   ts: typeof tsModule,
   logger: Logger,
 ): Partial<tsModule.LanguageServiceHost> {
+  const resolveAttributes = (attributes?: tsModule.ImportAttributes) =>
+    attributes?.elements.reduce(
+      (acc, element) => {
+        if (!ts.isStringLiteralLike(element.value)) {
+          logger.info(
+            'Invalid attribute value kind:',
+            ts.SyntaxKind[element.value.kind],
+          )
+          return acc
+        }
+        return { ...acc, [element.name.text]: element.value.text }
+      },
+      {} as Record<string, string>,
+    )
+
   return {
     getScriptKind: (fileName: string) => {
       const result = origin.getScriptKind!(fileName)
@@ -41,9 +56,30 @@ export default function createHostOverrides(
       REGEX.test(containingFile) &&
         logger.info(
           '"resolveModuleNameLiterals" called:',
-          '[',
-          moduleLiterals.map((x) => x.text).join(', '),
-          ']',
+          JSON.stringify(
+            moduleLiterals.map((x) => {
+              const importStatement = ts.findAncestor(
+                x,
+                (x) => ts.isImportDeclaration(x) || ts.isImportTypeNode(x),
+              ) as
+                | tsModule.ImportDeclaration
+                | tsModule.ImportTypeNode
+                | undefined
+              if (importStatement) {
+                return {
+                  attributes: resolveAttributes(importStatement.attributes),
+                  module: x.text,
+                  statementKind: ts.SyntaxKind[importStatement.kind],
+                }
+              }
+              return {
+                module: x.text,
+                parentKind: ts.SyntaxKind[x.parent.kind],
+              }
+            }),
+            null,
+            2,
+          ),
           containingFile,
           '=>',
           JSON.stringify(result, null, 2),
