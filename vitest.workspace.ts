@@ -1,1 +1,1 @@
-export default ['packages/**/vite.config.ts']
+export default ['packages/**/vite.config.{ts,mts,cts}']
