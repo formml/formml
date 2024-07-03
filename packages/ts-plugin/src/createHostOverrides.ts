@@ -1,6 +1,6 @@
 import type tsModule from 'typescript/lib/tsserverlibrary'
 
-import path from 'node:path'
+import * as fs from 'node:fs'
 
 import { Logger } from './createLogger'
 
@@ -47,6 +47,7 @@ export default function createHostOverrides(
           (acc, element) => {
             if (!ts.isStringLiteralLike(element.value)) {
               logger.info(
+                '["resolveModuleNameLiterals"]',
                 'Invalid attribute value kind:',
                 ts.SyntaxKind[element.value.kind],
               )
@@ -64,17 +65,36 @@ export default function createHostOverrides(
           ts.isImportDeclaration, // only support import statements for now
         )
         const attributes = resolveAttributes(importDeclaration?.attributes)
+
         if (attributes['type'] !== 'formml') {
           return resolvedModule
         }
+
+        const { failedLookupLocations } = resolvedModule as unknown as {
+          failedLookupLocations: readonly string[]
+        }
+        const lookupLocations = failedLookupLocations.map((location) =>
+          location.replace(/\.formml[./\\].+/, '.formml'),
+        )
+        const formmlFilePath = lookupLocations.find(fs.existsSync)
+
+        if (!formmlFilePath) {
+          return resolvedModule
+        }
+
+        logger.info(
+          '["resolveModuleNameLiterals"]',
+          'Intercepted formml file import, resolved',
+          `"${moduleLiteral.text}"`,
+          'to',
+          formmlFilePath,
+        )
+
         return {
           resolvedModule: {
             extension: ts.Extension.Dts,
             isExternalLibraryImport: false,
-            resolvedFileName: path.resolve(
-              path.dirname(containingFile),
-              moduleLiteral.text,
-            ),
+            resolvedFileName: formmlFilePath,
           },
         }
       })

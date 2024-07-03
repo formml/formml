@@ -1,14 +1,15 @@
+import * as fs from 'node:fs'
 import ts from 'typescript/lib/tsserverlibrary'
 
 import createHostOverrides from '../createHostOverrides'
-import createLogger from '../createLogger'
+
+vi.mock('node:fs')
 
 describe('createHostOverrides', () => {
-  const logger = createLogger({
-    project: {
-      projectService: { logger: { info: vi.fn() } },
-    },
-  } as unknown as ts.server.PluginCreateInfo)
+  const logger = {
+    error: vi.fn(),
+    info: vi.fn(),
+  }
 
   describe('resolveModuleNameLiterals', () => {
     const mockedOriginalResolver = vi.fn()
@@ -102,9 +103,24 @@ describe('createHostOverrides', () => {
       expect(origin.resolveModuleNameLiterals).toHaveBeenCalledWith(...args)
     })
 
-    test('should resolve to full file path if import has "formml" type attribute - relative import path', () => {
+    test('should resolve to full file path if import has "formml" type attribute - relative path import', () => {
       // Arrange
-      mockedOriginalResolver.mockReturnValue([{}])
+      mockedOriginalResolver.mockReturnValue([
+        {
+          failedLookupLocations: [
+            '/root/project/src/foo/formml-file.d.formml.ts',
+            '/root/project/src/foo/formml-file.formml.ts',
+            '/root/project/src/foo/formml-file.formml.tsx',
+            '/root/project/src/foo/formml-file.formml.d.ts',
+            '/root/project/src/foo/formml-file.formml.js',
+            '/root/project/src/foo/formml-file.formml.jsx',
+          ],
+        },
+      ])
+      const expectedFilePath = '/root/project/src/foo/formml-file.formml'
+      vi.mocked(fs.existsSync).mockImplementation(
+        (path) => path === expectedFilePath,
+      )
 
       const moduleLiteral = ts.factory.createStringLiteral(
         './foo/formml-file.formml',
@@ -148,7 +164,75 @@ describe('createHostOverrides', () => {
           resolvedModule: {
             extension: '.d.ts',
             isExternalLibraryImport: false,
-            resolvedFileName: '/root/project/src/foo/formml-file.formml',
+            resolvedFileName: expectedFilePath,
+          },
+        },
+      ])
+    })
+
+    test('should resolve to full file path if import has "formml" type attribute - external module import', () => {
+      // Arrange
+      mockedOriginalResolver.mockReturnValue([
+        {
+          failedLookupLocations: [
+            '/somewhere/node_modules/external/dist/formml-file.d.formml.ts',
+            '/somewhere/node_modules/external/dist/formml-file.formml.ts',
+            '/somewhere/node_modules/external/dist/formml-file.formml.tsx',
+            '/somewhere/node_modules/external/dist/formml-file.formml.d.ts',
+            '/somewhere/node_modules/external/dist/formml-file.formml.js',
+            '/somewhere/node_modules/external/dist/formml-file.formml.jsx',
+          ],
+        },
+      ])
+      const expectedFilePath =
+        '/somewhere/node_modules/external/dist/formml-file.formml'
+      vi.mocked(fs.existsSync).mockImplementation(
+        (path) => path === expectedFilePath,
+      )
+
+      const moduleLiteral = ts.factory.createStringLiteral(
+        'external/formml-file.formml',
+      )
+      const importDeclaration = ts.factory.createImportDeclaration(
+        undefined,
+        undefined,
+        moduleLiteral,
+        ts.factory.createImportAttributes(
+          ts.factory.createNodeArray([
+            ts.factory.createImportAttribute(
+              ts.factory.createIdentifier('type'),
+              ts.factory.createStringLiteral('formml'),
+            ),
+          ]),
+        ),
+      )
+      Object.assign(moduleLiteral, { parent: importDeclaration })
+
+      // Act
+      const result = createHostOverrides(
+        origin,
+        ts,
+        logger,
+      ).resolveModuleNameLiterals?.(
+        [moduleLiteral],
+        '/root/project/src/index.ts',
+        undefined,
+        {},
+        ts.createSourceFile(
+          '/root/project/src/index.ts',
+          '',
+          ts.ScriptTarget.Latest,
+        ),
+        undefined,
+      )
+
+      // Assert
+      expect(result).toEqual([
+        {
+          resolvedModule: {
+            extension: '.d.ts',
+            isExternalLibraryImport: false,
+            resolvedFileName: expectedFilePath,
           },
         },
       ])
