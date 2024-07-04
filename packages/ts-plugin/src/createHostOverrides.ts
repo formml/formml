@@ -13,15 +13,15 @@ export default function createHostOverrides(
 ): Partial<tsModule.LanguageServiceHost> {
   return {
     getScriptKind: (fileName: string) => {
-      const result = origin.getScriptKind!(fileName)
-      REGEX.test(fileName) &&
+      if (isFormmlFile(fileName)) {
         logger.info(
-          '"getScriptKind" called:',
+          '["getScriptKind"]',
+          'Intercepted formml file script kind query:',
           fileName,
-          '=>',
-          ts.ScriptKind[result],
         )
-      return result
+        return ts.ScriptKind.TS
+      }
+      return origin.getScriptKind?.(fileName) ?? ts.ScriptKind.Unknown
     },
     getScriptSnapshot: (fileName) => {
       const result = origin.getScriptSnapshot(fileName)
@@ -84,7 +84,7 @@ export default function createHostOverrides(
 
         logger.info(
           '["resolveModuleNameLiterals"]',
-          'Intercepted formml file import, resolved',
+          'Intercepted formml file import resolving, resolved',
           `"${moduleLiteral.text}"`,
           'to',
           formmlFilePath,
@@ -100,4 +100,8 @@ export default function createHostOverrides(
       })
     },
   }
+}
+
+function isFormmlFile(fileName: string) {
+  return fileName.endsWith('.formml')
 }

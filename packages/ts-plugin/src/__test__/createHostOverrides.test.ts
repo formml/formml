@@ -261,5 +261,16 @@ describe('createHostOverrides', () => {
         '/root/project/src/index.js',
       )
     })
+
+    test('should always return "TS" if file extension is .formml', () => {
+      // Act
+      const result = createHostOverrides(origin, ts, logger).getScriptKind!(
+        '/root/project/src/index.formml',
+      )
+
+      // Assert
+      expect(result).toBe(ts.ScriptKind.TS)
+      expect(origin.getScriptKind).not.toHaveBeenCalled()
+    })
   })
 })
