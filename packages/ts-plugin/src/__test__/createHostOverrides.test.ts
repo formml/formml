@@ -238,4 +238,28 @@ describe('createHostOverrides', () => {
       ])
     })
   })
+
+  describe('getScriptKind', () => {
+    const mockedOriginalMethod = vi.fn()
+    const origin = {
+      getScriptKind: mockedOriginalMethod,
+    } as unknown as ts.LanguageServiceHost
+
+    test('should return original result if file extension is not .formml', () => {
+      // Arrange
+      const dummyResult = {}
+      mockedOriginalMethod.mockReturnValue(dummyResult)
+
+      // Act
+      const result = createHostOverrides(origin, ts, logger).getScriptKind!(
+        '/root/project/src/index.js',
+      )
+
+      // Assert
+      expect(result).toBe(dummyResult)
+      expect(origin.getScriptKind).toHaveBeenCalledWith(
+        '/root/project/src/index.js',
+      )
+    })
+  })
 })
