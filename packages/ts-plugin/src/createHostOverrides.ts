@@ -42,31 +42,9 @@ export default function createHostOverrides(
           ...rest,
         ) ?? []
 
-      const resolveAttributes = (attributes?: tsModule.ImportAttributes) =>
-        attributes?.elements.reduce(
-          (acc, element) => {
-            if (!ts.isStringLiteralLike(element.value)) {
-              logger.info(
-                '["resolveModuleNameLiterals"]',
-                'Invalid attribute value kind:',
-                ts.SyntaxKind[element.value.kind],
-              )
-              return acc
-            }
-            return { ...acc, [element.name.text]: element.value.text }
-          },
-          {} as Record<string, string>,
-        ) ?? {}
-
       return resolvedModules.map((resolvedModule, index) => {
         const moduleLiteral = moduleLiterals[index]
-        const importDeclaration = ts.findAncestor(
-          moduleLiteral,
-          ts.isImportDeclaration, // only support import statements for now
-        )
-        const attributes = resolveAttributes(importDeclaration?.attributes)
-
-        if (attributes['type'] !== 'formml') {
+        if (!isFormmlFile(moduleLiteral.text)) {
           return resolvedModule
         }
 
