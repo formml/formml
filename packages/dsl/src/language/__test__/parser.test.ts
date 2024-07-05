@@ -1,10 +1,16 @@
 import { FormMLSchema } from '../generated/ast.js'
-import { FormMLLexerError, FormMLParserError, createParser } from '../parser.js'
+import {
+  FormMLParserLexingError,
+  FormMLParserParsingError,
+  FormMLParserValidationError,
+  createFormMLParser,
+} from '../parser.js'
 
 describe('parser', () => {
-  const parser = createParser()
-  test('should return AST given valid schema', () => {
-    const content = `
+  describe('createFormMLParser', () => {
+    const parser = createFormMLParser()
+    test('should return AST given valid schema', async () => {
+      const content = `
         form ExampleForm {
           num      numberField
           decimal  decimalField
@@ -13,27 +19,38 @@ describe('parser', () => {
           datetime datetimeField
         }
       `
-    const ast = parser(content)
-    expect(ast).toBeDefined()
-    assertType<FormMLSchema>(ast)
-  })
+      const ast = await parser(content)
+      expect(ast).toBeDefined()
+      assertType<FormMLSchema>(ast)
+    })
 
-  test('should throw error if schema has lexer error', () => {
-    const content = `
+    test('should throw error if schema has lexer error', async () => {
+      const content = `
         form ExampleForm {
           num numberField
           /* unclosed comment
         }
       `
-    expect(() => parser(content)).toThrow(FormMLLexerError)
-  })
+      await expect(parser(content)).rejects.toThrow(FormMLParserLexingError)
+    })
 
-  test('should throw error if schema has parser error', () => {
-    const content = `
+    test('should throw error if schema has parser error', async () => {
+      const content = `
         form {
           num numberField
         }
       `
-    expect(() => parser(content)).toThrow(FormMLParserError)
+      await expect(parser(content)).rejects.toThrow(FormMLParserParsingError)
+    })
+
+    test('should throw error if schema has validation error', async () => {
+      const content = `
+        form ExampleForm {
+          @unknown
+          num numberField
+        }
+      `
+      await expect(parser(content)).rejects.toThrow(FormMLParserValidationError)
+    })
   })
 })

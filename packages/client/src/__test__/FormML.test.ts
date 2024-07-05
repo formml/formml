@@ -1,4 +1,4 @@
-import { FormMLParseError } from '@formml/dsl'
+import { FormMLParserError } from '@formml/dsl'
 import { BigNumber } from 'bignumber.js'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc.js'
@@ -14,7 +14,7 @@ describe('FormML', () => {
       const invalidSchema = `form {}`
 
       // Act & Assert
-      expect(() => new FormML(invalidSchema)).toThrow(FormMLParseError)
+      expect(() => new FormML(invalidSchema)).toThrow(FormMLParserError)
     })
 
     test('should apply default options if not provided', () => {
