@@ -1,4 +1,4 @@
-import { Annotation, Field, PRIMITIVE, resolveArguments } from '@formml/dsl'
+import { Annotation, Field, PRIMITIVE, utils } from '@formml/dsl'
 import annotationsInterface from '@formml/dsl/interfaces/annotations.js'
 import { BigNumber } from 'bignumber.js'
 import * as v from 'valibot'
@@ -31,7 +31,7 @@ function buildAction(annotation: Annotation): IAnnotationAction {
   const annotationName = annotation.call.$refText as IAnnotationAction['name']
   return {
     name: annotationName,
-    options: resolveArguments(
+    options: utils.resolveArguments(
       annotation.args,
       annotationsInterface[annotationName],
     ),
