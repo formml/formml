@@ -3,6 +3,7 @@ import type tsModule from 'typescript/lib/tsserverlibrary'
 import * as fs from 'node:fs'
 
 import { Logger } from './createLogger'
+import generateTsSync from './external/generateTsSync'
 
 export default function createHostOverrides(
   origin: tsModule.LanguageServiceHost,
@@ -28,7 +29,15 @@ export default function createHostOverrides(
           'Intercepted formml file script snapshot query:',
           fileName,
         )
-        return undefined
+        if (!fs.existsSync(fileName)) {
+          logger.error(
+            '["getScriptSnapshot"]',
+            'Requested formml file does not exist:',
+            fileName,
+          )
+          return undefined
+        }
+        return ts.ScriptSnapshot.fromString(generateTsSync(fileName))
       }
       return origin.getScriptSnapshot(fileName)
     },

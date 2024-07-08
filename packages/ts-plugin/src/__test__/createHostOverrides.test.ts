@@ -2,8 +2,10 @@ import * as fs from 'node:fs'
 import ts from 'typescript/lib/tsserverlibrary'
 
 import createHostOverrides from '../createHostOverrides'
+import generateTsSync from '../external/generateTsSync'
 
 vi.mock('node:fs')
+vi.mock('../external/generateTsSync')
 
 describe('createHostOverrides', () => {
   const logger = {
@@ -227,6 +229,23 @@ describe('createHostOverrides', () => {
 
       // Assert
       expect(result).toBeUndefined()
+      expect(origin.getScriptSnapshot).not.toHaveBeenCalled()
+    })
+
+    test('should return ts code if file extension is .formml and file exists', () => {
+      // Arrange
+      vi.mocked(fs.existsSync).mockReturnValue(true)
+      const expectedCode = 'const foo = "bar"'
+      vi.mocked(generateTsSync).mockReturnValue(expectedCode)
+
+      // Act
+      const result = createHostOverrides(origin, ts, logger).getScriptSnapshot!(
+        '/root/project/src/index.formml',
+      )
+
+      // Assert
+      expect(generateTsSync).toBeCalledWith('/root/project/src/index.formml')
+      expect(result?.getText(0, result.getLength())).toBe(expectedCode)
       expect(origin.getScriptSnapshot).not.toHaveBeenCalled()
     })
   })
