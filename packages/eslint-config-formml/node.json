@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json.schemastore.org/eslintrc",
+  "extends": ["./base.json"],
+  "env": {
+    "node": true
+  }
+}

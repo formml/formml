@@ -28,6 +28,10 @@
     "test": "vitest run",
     "test:watch": "vitest watch"
   },
+  "dependencies": {
+    "@formml/cli": "workspace:*",
+    "synckit": "^0.9.0"
+  },
   "peerDependencies": {
     "typescript": ">=5.0.0"
   },

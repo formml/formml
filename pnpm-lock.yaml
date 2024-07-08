@@ -222,6 +222,12 @@ importers:
 
   packages/ts-plugin:
     dependencies:
+      '@formml/cli':
+        specifier: workspace:*
+        version: link:../cli
+      synckit:
+        specifier: ^0.9.0
+        version: 0.9.0
       typescript:
         specifier: '>=5.0.0'
         version: 5.3.3
@@ -6651,6 +6657,13 @@ packages:
       }
     engines: { node: ^14.18.0 || >=16.0.0 }
 
+  synckit@0.9.0:
+    resolution:
+      {
+        integrity: sha512-7RnqIMq572L8PeEzKeBINYEJDDxpcH8JEgLwUqBd3TkofhFRbkq4QLR0u+36avGAhCRbk2nnmjcW9SE531hPDg==,
+      }
+    engines: { node: ^14.18.0 || >=16.0.0 }
+
   tar-fs@2.1.1:
     resolution:
       {
@@ -11788,6 +11801,11 @@ snapshots:
   symbol-tree@3.2.4: {}
 
   synckit@0.8.8:
+    dependencies:
+      '@pkgr/core': 0.1.0
+      tslib: 2.6.2
+
+  synckit@0.9.0:
     dependencies:
       '@pkgr/core': 0.1.0
       tslib: 2.6.2

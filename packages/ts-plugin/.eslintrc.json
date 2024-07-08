@@ -1,4 +1,4 @@
 {
   "root": true,
-  "extends": ["formml/base"]
+  "extends": ["formml/node"]
 }
