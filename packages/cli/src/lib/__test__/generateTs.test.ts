@@ -1,6 +1,8 @@
-import { createFormMLParser } from '@formml/dsl'
+import { readFile } from 'node:fs/promises'
 
 import generateTs from '../generateTs.js'
+
+vi.mock('node:fs/promises')
 
 describe('generateTs', () => {
   test('should generate typescript code', async () => {
@@ -13,8 +15,9 @@ describe('generateTs', () => {
         decimal  decimalField
       }
     `
-    const ast = await createFormMLParser()(input)
-    expect(generateTs(ast)).toMatchInlineSnapshot(`
+    vi.mocked(readFile).mockResolvedValue(input)
+
+    expect(await generateTs('form.formml')).toMatchInlineSnapshot(`
       "import * as dsl from '@formml/dsl'
 
       export type _FormExampleForm = dsl.generics.Form<'ExampleForm', [dsl.generics.Field<'numField', 'num'>, dsl.generics.Field<'textField', 'text'>, dsl.generics.Field<'boolField', 'bool'>, dsl.generics.Field<'datetimeField', 'datetime'>, dsl.generics.Field<'decimalField', 'decimal'>]>

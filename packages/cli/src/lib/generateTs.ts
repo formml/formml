@@ -1,4 +1,5 @@
 import * as dsl from '@formml/dsl'
+import { readFile } from 'node:fs/promises'
 
 function generateTypeRecursively(node: unknown, types: string[]): string {
   if (dsl.isFormMLSchema(node)) {
@@ -29,7 +30,10 @@ function generateTypes(schema: dsl.FormMLSchema): string {
   return types.join('\n\n')
 }
 
-export default function generateTs(schema: dsl.FormMLSchema): string {
+export default async function generateTs(entry: string) {
+  const file = await readFile(entry, { encoding: 'utf8' })
+  const schema = await dsl.createFormMLParser()(file)
+
   return `import * as dsl from '@formml/dsl'
 
 ${generateTypes(schema)}
