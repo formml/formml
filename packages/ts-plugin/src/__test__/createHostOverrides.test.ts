@@ -192,4 +192,42 @@ describe('createHostOverrides', () => {
       expect(origin.getScriptKind).not.toHaveBeenCalled()
     })
   })
+
+  describe('getScriptSnapshot', () => {
+    const mockedOriginalMethod = vi.fn()
+    const origin = {
+      getScriptSnapshot: mockedOriginalMethod,
+    } as unknown as ts.LanguageServiceHost
+
+    test('should return original result if file extension is not .formml', () => {
+      // Arrange
+      const dummyResult = {}
+      mockedOriginalMethod.mockReturnValue(dummyResult)
+
+      // Act
+      const result = createHostOverrides(origin, ts, logger).getScriptSnapshot!(
+        '/root/project/src/index.js',
+      )
+
+      // Assert
+      expect(result).toBe(dummyResult)
+      expect(origin.getScriptSnapshot).toHaveBeenCalledWith(
+        '/root/project/src/index.js',
+      )
+    })
+
+    test('should return undefined if file extension is .formml but file does not exist', () => {
+      // Arrange
+      vi.mocked(fs.existsSync).mockReturnValue(false)
+
+      // Act
+      const result = createHostOverrides(origin, ts, logger).getScriptSnapshot!(
+        '/root/project/src/index.formml',
+      )
+
+      // Assert
+      expect(result).toBeUndefined()
+      expect(origin.getScriptSnapshot).not.toHaveBeenCalled()
+    })
+  })
 })

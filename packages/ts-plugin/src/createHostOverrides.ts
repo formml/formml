@@ -4,8 +4,6 @@ import * as fs from 'node:fs'
 
 import { Logger } from './createLogger'
 
-const REGEX = /^((?!node_modules).)*$/
-
 export default function createHostOverrides(
   origin: tsModule.LanguageServiceHost,
   ts: typeof tsModule,
@@ -24,15 +22,15 @@ export default function createHostOverrides(
       return origin.getScriptKind?.(fileName) ?? ts.ScriptKind.Unknown
     },
     getScriptSnapshot: (fileName) => {
-      const result = origin.getScriptSnapshot(fileName)
-      REGEX.test(fileName) &&
+      if (isFormmlFile(fileName)) {
         logger.info(
-          '"getScriptSnapshot" called:',
+          '["getScriptSnapshot"]',
+          'Intercepted formml file script snapshot query:',
           fileName,
-          '=>',
-          result ? result.getText(0, result.getLength()) : 'undefined',
         )
-      return result
+        return undefined
+      }
+      return origin.getScriptSnapshot(fileName)
     },
     resolveModuleNameLiterals: (moduleLiterals, containingFile, ...rest) => {
       const resolvedModules =
