@@ -248,5 +248,22 @@ describe('createHostOverrides', () => {
       expect(result?.getText(0, result.getLength())).toBe(expectedCode)
       expect(origin.getScriptSnapshot).not.toHaveBeenCalled()
     })
+
+    test('should catch error if ts code generation fails', () => {
+      // Arrange
+      vi.mocked(fs.existsSync).mockReturnValue(true)
+      vi.mocked(generateTsSync).mockImplementation(() => {
+        throw new Error('Failed to generate ts code')
+      })
+
+      // Act
+      const result = createHostOverrides(origin, ts, logger).getScriptSnapshot!(
+        '/root/project/src/index.formml',
+      )
+
+      // Assert
+      expect(result).toBeUndefined()
+      expect(origin.getScriptSnapshot).not.toHaveBeenCalled()
+    })
   })
 })

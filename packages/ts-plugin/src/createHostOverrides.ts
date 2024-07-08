@@ -37,7 +37,20 @@ export default function createHostOverrides(
           )
           return undefined
         }
-        return ts.ScriptSnapshot.fromString(generateTsSync(fileName))
+        try {
+          return ts.ScriptSnapshot.fromString(generateTsSync(fileName))
+        } catch (error) {
+          logger.error(
+            '["getScriptSnapshot"]',
+            'Failed to generate TS code for formml file:',
+            fileName,
+            'error:\n',
+            error instanceof Error
+              ? error.message
+              : JSON.stringify(error, null, 2),
+          )
+          return undefined
+        }
       }
       return origin.getScriptSnapshot(fileName)
     },
