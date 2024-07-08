@@ -2,7 +2,7 @@
   "name": "@formml/ts-plugin",
   "version": "0.0.1",
   "main": "dist/index.js",
-  "module": "commonjs",
+  "type": "commonjs",
   "description": "A TypeScript plugin for importing FormML files",
   "homepage": "https://github.com/formml/formml/tree/main/packages/ts-plugin",
   "repository": "https://github.com/formml/formml/tree/main/packages/ts-plugin",

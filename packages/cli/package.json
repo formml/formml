@@ -1,0 +1,47 @@
+{
+  "name": "@formml/cli",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "FormML CLI tool",
+  "homepage": "https://github.com/formml/formml/tree/main/packages/cli",
+  "repository": "https://github.com/formml/formml/tree/main/packages/cli",
+  "bugs": "https://github.com/formml/formml/issues",
+  "author": "Jindong Zhang <jindong.zhannng@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "formml",
+    "form",
+    "cli"
+  ],
+  "files": [
+    "dist",
+    "src",
+    "!src/**/__test__"
+  ],
+  "scripts": {
+    "build": "rimraf dist/ && mkdir dist/ && concurrently \"pnpm:build:cjs\" \"pnpm:build:esm\"",
+    "build:cjs": "tsup",
+    "build:esm": "tsc -p ./tsconfig.lib.json",
+    "lint": "eslint .",
+    "lint:fix": "pnpm run lint --fix",
+    "lint:type": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "dependencies": {
+    "@formml/dsl": "workspace:*"
+  },
+  "devDependencies": {
+    "@formml/typescript-config": "workspace:*",
+    "eslint-config-formml": "workspace:*"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/esm/lib/index.js",
+      "require": "./dist/cjs/lib.cjs"
+    }
+  },
+  "main": "./dist/cjs/lib.cjs",
+  "module": "./dist/esm/lib/index.js",
+  "types": "./dist/esm/lib/index.d.ts"
+}

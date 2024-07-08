@@ -152,6 +152,19 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ts-plugin
 
+  packages/cli:
+    dependencies:
+      '@formml/dsl':
+        specifier: workspace:*
+        version: link:../dsl
+    devDependencies:
+      '@formml/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      eslint-config-formml:
+        specifier: workspace:*
+        version: link:../eslint-config-formml
+
   packages/client:
     dependencies:
       '@formml/dsl':
