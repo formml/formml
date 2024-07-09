@@ -1,6 +1,7 @@
 import type tsModule from 'typescript/lib/tsserverlibrary'
 
 import * as fs from 'node:fs'
+import path from 'node:path'
 
 import { Logger } from './createLogger'
 import generateTsSync from './external/generateTsSync'
@@ -71,8 +72,16 @@ export default function createHostOverrides(
         const { failedLookupLocations } = resolvedModule as unknown as {
           failedLookupLocations: readonly string[]
         }
+        logger.info(
+          '["resolveModuleNameLiterals"]',
+          'failedLookupLocations:',
+          JSON.stringify(failedLookupLocations, null, 2),
+        )
         const lookupLocations = failedLookupLocations.map((location) =>
-          location.replace(/\.formml[./\\].+/, '.formml'),
+          path.resolve(
+            path.dirname(location),
+            path.basename(moduleLiteral.text),
+          ),
         )
         const formmlFilePath = lookupLocations.find(fs.existsSync)
 
