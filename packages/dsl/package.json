@@ -44,7 +44,8 @@
   "exports": {
     ".": "./dist/index.js",
     "./builtins/*.formml": "./builtins/*.formml",
-    "./interfaces/*.js": "./interfaces/*.js"
+    "./interfaces/*.js": "./interfaces/*.js",
+    "./generators/*.js": "./dist/generators/*.js"
   },
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts"

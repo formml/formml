@@ -7,16 +7,16 @@ import { stringify } from '../utils/ast-utils.js'
 function generateTypeRecursively(node: unknown, types: string[]): string {
   if (ast.isFormMLSchema(node)) {
     const formTypeId = generateTypeRecursively(node.form, types)
-    types.push(`export type _FormMLSchema = utils.FormMLSchema<${formTypeId}>`)
+    types.push(`export type _FormMLSchema = deps.FormMLSchema<${formTypeId}>`)
     return '_FormMLSchema'
   }
   if (ast.isForm(node)) {
     const inlineFieldTypes = node.fields.map(
-      (field) => `utils.Field<'${field.name}', '${field.type}'>`,
+      (field) => `deps.Field<'${field.name}', '${field.type}'>`,
     )
     const formTypeId = '_Form' + node.name
     types.push(
-      `export type ${formTypeId} = utils.Form<'${
+      `export type ${formTypeId} = deps.Form<'${
         node.name
       }', [${inlineFieldTypes.join(', ')}]>`,
     )
@@ -35,13 +35,16 @@ export default async function generateTs(entry: string, packageName: string) {
   const file = await readFile(entry, { encoding: 'utf8' })
   const schema = await createFormMLParser()(file)
 
-  return `import * as utils from '${packageName}'
+  return `import deps from '${packageName}'
 
 ${generateTypes(schema)}
 
 const json = ${stringify(schema)}
-const ast: _FormMLSchema = utils.parse(json)
+const ast: _FormMLSchema = deps.parse(json)
 
 export default ast
 `
 }
+
+export { parse } from '../utils/index.js'
+export type * from '../language/overrides/genericTypes.js'
