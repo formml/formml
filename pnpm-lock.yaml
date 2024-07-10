@@ -222,9 +222,9 @@ importers:
 
   packages/ts-plugin:
     dependencies:
-      '@formml/cli':
+      '@formml/dsl':
         specifier: workspace:*
-        version: link:../cli
+        version: link:../dsl
       synckit:
         specifier: ^0.9.0
         version: 0.9.0

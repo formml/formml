@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { generateTs } = require('@formml/cli')
+const {
+  generators: { generateTs },
+} = require('@formml/dsl')
 const { runAsWorker } = require('synckit')
 
 runAsWorker(generateTs)

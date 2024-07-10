@@ -1,15 +1,18 @@
-import * as dsl from '@formml/dsl'
 import { readFile } from 'node:fs/promises'
 
+import * as ast from '../language/generated/ast.js'
+import { createFormMLParser } from '../language/parser.js'
+import { stringify } from '../utils/ast-utils.js'
+
 function generateTypeRecursively(node: unknown, types: string[]): string {
-  if (dsl.isFormMLSchema(node)) {
+  if (ast.isFormMLSchema(node)) {
     const formTypeId = generateTypeRecursively(node.form, types)
     types.push(
       `export type _FormMLSchema = dsl.generics.FormMLSchema<${formTypeId}>`,
     )
     return '_FormMLSchema'
   }
-  if (dsl.isForm(node)) {
+  if (ast.isForm(node)) {
     const inlineFieldTypes = node.fields.map(
       (field) => `dsl.generics.Field<'${field.name}', '${field.type}'>`,
     )
@@ -24,7 +27,7 @@ function generateTypeRecursively(node: unknown, types: string[]): string {
   throw new Error('Unsupported node type')
 }
 
-function generateTypes(schema: dsl.FormMLSchema): string {
+function generateTypes(schema: ast.FormMLSchema): string {
   const types: string[] = []
   generateTypeRecursively(schema, types)
   return types.join('\n\n')
@@ -32,13 +35,13 @@ function generateTypes(schema: dsl.FormMLSchema): string {
 
 export default async function generateTs(entry: string) {
   const file = await readFile(entry, { encoding: 'utf8' })
-  const schema = await dsl.createFormMLParser()(file)
+  const schema = await createFormMLParser()(file)
 
   return `import * as dsl from '@formml/dsl'
 
 ${generateTypes(schema)}
 
-const json = ${dsl.utils.stringify(schema)}
+const json = ${stringify(schema)}
 const ast: _FormMLSchema = dsl.utils.parse(json)
 
 export default ast

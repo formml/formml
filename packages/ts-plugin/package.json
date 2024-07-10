@@ -29,7 +29,7 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
-    "@formml/cli": "workspace:*",
+    "@formml/dsl": "workspace:*",
     "synckit": "^0.9.0"
   },
   "peerDependencies": {
