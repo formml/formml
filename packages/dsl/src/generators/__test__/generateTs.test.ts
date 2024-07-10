@@ -17,18 +17,19 @@ describe('generateTs', () => {
     `
     vi.mocked(readFile).mockResolvedValue(input)
 
-    expect(await generateTs('form.formml')).toMatchInlineSnapshot(`
-      "import * as dsl from '@formml/dsl'
+    expect(await generateTs('form.formml', '@formml/any-package'))
+      .toMatchInlineSnapshot(`
+        "import * as utils from '@formml/any-package'
 
-      export type _FormExampleForm = dsl.generics.Form<'ExampleForm', [dsl.generics.Field<'numField', 'num'>, dsl.generics.Field<'textField', 'text'>, dsl.generics.Field<'boolField', 'bool'>, dsl.generics.Field<'datetimeField', 'datetime'>, dsl.generics.Field<'decimalField', 'decimal'>]>
+        export type _FormExampleForm = utils.Form<'ExampleForm', [utils.Field<'numField', 'num'>, utils.Field<'textField', 'text'>, utils.Field<'boolField', 'bool'>, utils.Field<'datetimeField', 'datetime'>, utils.Field<'decimalField', 'decimal'>]>
 
-      export type _FormMLSchema = dsl.generics.FormMLSchema<_FormExampleForm>
+        export type _FormMLSchema = utils.FormMLSchema<_FormExampleForm>
 
-      const json = {"node":{"$type":"FormMLSchema","form":{"$type":"Form","name":"ExampleForm","fields":[{"$type":"Field","type":"num","name":"numField","annotations":[]},{"$type":"Field","type":"text","name":"textField","annotations":[]},{"$type":"Field","type":"bool","name":"boolField","annotations":[]},{"$type":"Field","type":"datetime","name":"datetimeField","annotations":[]},{"$type":"Field","type":"decimal","name":"decimalField","annotations":[]}]}}}
-      const ast: _FormMLSchema = dsl.utils.parse(json)
+        const json = {"node":{"$type":"FormMLSchema","form":{"$type":"Form","name":"ExampleForm","fields":[{"$type":"Field","type":"num","name":"numField","annotations":[]},{"$type":"Field","type":"text","name":"textField","annotations":[]},{"$type":"Field","type":"bool","name":"boolField","annotations":[]},{"$type":"Field","type":"datetime","name":"datetimeField","annotations":[]},{"$type":"Field","type":"decimal","name":"decimalField","annotations":[]}]}}}
+        const ast: _FormMLSchema = utils.parse(json)
 
-      export default ast
-      "
-    `)
+        export default ast
+        "
+      `)
   })
 })
