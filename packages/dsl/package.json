@@ -42,10 +42,19 @@
     "vscode-languageserver-types": "^3.17.5"
   },
   "exports": {
-    ".": "./dist/index.js",
+    ".": {
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
     "./builtins/*.formml": "./builtins/*.formml",
-    "./interfaces/*.js": "./interfaces/*.js",
-    "./generators/*.js": "./dist/generators/*.js"
+    "./interfaces/*.js": {
+      "default": "./interfaces/*.js",
+      "types": "./interfaces/*.d.ts"
+    },
+    "./generators/*.js": {
+      "default": "./dist/generators/*.js",
+      "types": "./dist/generators/*.d.ts"
+    }
   },
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts"

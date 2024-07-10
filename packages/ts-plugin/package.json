@@ -1,7 +1,6 @@
 {
   "name": "@formml/ts-plugin",
   "version": "0.0.1",
-  "main": "dist/index.js",
   "type": "commonjs",
   "description": "A TypeScript plugin for importing FormML files",
   "homepage": "https://github.com/formml/formml/tree/main/packages/ts-plugin",
@@ -21,7 +20,7 @@
     "!src/**/__test__"
   ],
   "scripts": {
-    "build": "rimraf dist/ && tsc -p tsconfig.lib.json",
+    "build": "tsup",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "lint:type": "tsc",
@@ -38,5 +37,18 @@
   "devDependencies": {
     "@formml/typescript-config": "workspace:*",
     "eslint-config-formml": "workspace:*"
-  }
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./deps": {
+      "require": "./dist/deps.js",
+      "import": "./dist/deps.js",
+      "types": "./dist/deps.d.ts"
+    }
+  },
+  "main": "./dist/index.js"
 }

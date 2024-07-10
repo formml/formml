@@ -1,4 +1,0 @@
-form testForm {
-  num  numField
-  text textField
-}

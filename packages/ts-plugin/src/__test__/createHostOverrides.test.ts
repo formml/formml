@@ -272,7 +272,10 @@ describe('createHostOverrides', () => {
       )
 
       // Assert
-      expect(generateTsSync).toBeCalledWith('/root/project/src/index.formml')
+      expect(generateTsSync).toBeCalledWith(
+        '/root/project/src/index.formml',
+        '@formml/ts-plugin/deps',
+      )
       expect(result?.getText(0, result.getLength())).toBe(expectedCode)
       expect(origin.getScriptSnapshot).not.toHaveBeenCalled()
     })

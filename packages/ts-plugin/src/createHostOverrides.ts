@@ -40,7 +40,7 @@ export default function createHostOverrides(
         }
         try {
           return ts.ScriptSnapshot.fromString(
-            generateTsSync(fileName, '@formml/ts-plugin'),
+            generateTsSync(fileName, '@formml/ts-plugin/deps'),
           )
         } catch (error) {
           logger.error(

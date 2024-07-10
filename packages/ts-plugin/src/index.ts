@@ -23,4 +23,4 @@ const init: tsModule.server.PluginModuleFactory = ({ typescript: ts }) => {
   return { create }
 }
 
-export = init
+module.exports = init
