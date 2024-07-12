@@ -5,7 +5,7 @@ import createHostOverrides from '../createHostOverrides'
 import generateTsSync from '../external/generateTsSync'
 
 vi.mock('node:fs')
-vi.mock('../external/generateTsSync')
+vi.mock('../external/generateTsSync', () => ({ default: vi.fn() }))
 
 describe('createHostOverrides', () => {
   const logger = {
@@ -280,7 +280,7 @@ describe('createHostOverrides', () => {
       expect(origin.getScriptSnapshot).not.toHaveBeenCalled()
     })
 
-    test('should catch error if ts code generation fails', () => {
+    test('should catch error and return fallback code if ts code generation fails', () => {
       // Arrange
       vi.mocked(fs.existsSync).mockReturnValue(true)
       vi.mocked(generateTsSync).mockImplementation(() => {
@@ -293,7 +293,12 @@ describe('createHostOverrides', () => {
       )
 
       // Assert
-      expect(result).toBeUndefined()
+      expect(result?.getText(0, result.getLength())).toMatchInlineSnapshot(`
+        "import deps from '@formml/ts-plugin/deps'
+        declare const ast: deps.FormMLSchema
+        export default ast
+        "
+      `)
       expect(origin.getScriptSnapshot).not.toHaveBeenCalled()
     })
   })

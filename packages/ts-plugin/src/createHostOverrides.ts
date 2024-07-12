@@ -12,6 +12,13 @@ export default function createHostOverrides(
   ts: typeof tsModule,
   logger: Logger,
 ): Partial<tsModule.LanguageServiceHost> {
+  const FALLBACK_SNAPSHOT = ts.ScriptSnapshot.fromString(
+    `import deps from '@formml/ts-plugin/deps'
+declare const ast: deps.FormMLSchema
+export default ast
+`,
+  )
+
   return {
     getScriptKind: (fileName: string) => {
       if (isFormmlFile(fileName)) {
@@ -53,7 +60,7 @@ export default function createHostOverrides(
               ? error.message
               : JSON.stringify(error, null, 2),
           )
-          return undefined
+          return FALLBACK_SNAPSHOT
         }
       }
       return origin.getScriptSnapshot(fileName)
