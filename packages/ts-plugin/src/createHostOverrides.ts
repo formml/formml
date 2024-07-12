@@ -5,6 +5,7 @@ import path from 'node:path'
 
 import { Logger } from './createLogger'
 import generateTsSync from './external/generateTsSync'
+import isFormmlFile from './isFormmlFile'
 
 export default function createHostOverrides(
   origin: tsModule.LanguageServiceHost,
@@ -109,8 +110,4 @@ export default function createHostOverrides(
       })
     },
   }
-}
-
-function isFormmlFile(fileName: string) {
-  return fileName.endsWith('.formml')
 }

@@ -3,6 +3,7 @@ import type tsModule from 'typescript/lib/tsserverlibrary'
 import createHostOverrides from './createHostOverrides'
 import createLogger from './createLogger'
 import createProxy from './createProxy'
+import isFormmlFile from './isFormmlFile'
 
 const init: tsModule.server.PluginModuleFactory = ({ typescript: ts }) => {
   function create(info: tsModule.server.PluginCreateInfo) {
@@ -20,7 +21,13 @@ const init: tsModule.server.PluginModuleFactory = ({ typescript: ts }) => {
     return service
   }
 
-  return { create }
+  function getExternalFiles(
+    project: tsModule.server.ConfiguredProject,
+  ): string[] {
+    return project.getFileNames().filter(isFormmlFile)
+  }
+
+  return { create, getExternalFiles }
 }
 
 module.exports = init
