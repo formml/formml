@@ -24,6 +24,17 @@ describe('parser', () => {
       assertType<FormMLSchema>(ast)
     })
 
+    test('should load built-in declarations', async () => {
+      const content = `
+        form ExampleForm {
+          @required
+          num numberField
+        }
+      `
+      const ast = await parser(content)
+      expect(ast).toBeDefined()
+    })
+
     test('should throw error if schema has lexer error', async () => {
       const content = `
         form ExampleForm {

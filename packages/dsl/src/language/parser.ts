@@ -66,7 +66,12 @@ export function createFormMLParser(
   let count = 0
   const generateUri = () => `file:///generated/${count++}.formml`
 
+  const initialization =
+    services.shared.workspace.WorkspaceManager.initializeWorkspace([])
+
   return async function parse(text: string, uri: string = generateUri()) {
+    await initialization
+
     const document = services.shared.workspace.LangiumDocuments.createDocument(
       URI.parse(uri),
       text,
