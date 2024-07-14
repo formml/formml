@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises'
 
-import generateDts from '../generateDts.js'
+import generateDts, { generateFallbackDts } from '../generateDts.js'
 
 vi.mock('node:fs/promises')
 
@@ -29,5 +29,14 @@ describe('generateDts', () => {
         export default ast
         "
       `)
+  })
+
+  test('should generate fallback typescript declaration', () => {
+    expect(generateFallbackDts('@formml/any-package')).toMatchInlineSnapshot(`
+      "import deps from '@formml/any-package'
+      declare const ast: deps.FormMLSchema
+      export default ast
+      "
+    `)
   })
 })

@@ -43,4 +43,11 @@ export default ast
 `
 }
 
+export function generateFallbackDts(packageName: string) {
+  return `import deps from '${packageName}'
+declare const ast: deps.FormMLSchema
+export default ast
+`
+}
+
 export type * from '../language/overrides/genericTypes.js'

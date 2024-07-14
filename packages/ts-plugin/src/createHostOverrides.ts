@@ -1,5 +1,6 @@
 import type tsModule from 'typescript/lib/tsserverlibrary'
 
+import { generateFallbackDts } from '@formml/dsl/generators/generateDts.js'
 import * as fs from 'node:fs'
 import path from 'node:path'
 
@@ -13,10 +14,7 @@ export default function createHostOverrides(
   logger: Logger,
 ): Partial<tsModule.LanguageServiceHost> {
   const FALLBACK_SNAPSHOT = ts.ScriptSnapshot.fromString(
-    `import deps from '@formml/ts-plugin/deps'
-declare const ast: deps.FormMLSchema
-export default ast
-`,
+    generateFallbackDts('@formml/ts-plugin/deps'),
   )
 
   return {
