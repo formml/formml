@@ -2,7 +2,6 @@ import { readFile } from 'node:fs/promises'
 
 import * as ast from '../language/generated/ast.js'
 import { createFormMLParser } from '../language/parser.js'
-import { stringify } from '../utils/ast-utils.js'
 
 function generateTypeRecursively(node: unknown, types: string[]): string {
   if (ast.isFormMLSchema(node)) {
@@ -31,7 +30,7 @@ function generateTypes(schema: ast.FormMLSchema): string {
   return types.join('\n\n')
 }
 
-export default async function generateTs(entry: string, packageName: string) {
+export default async function generateDts(entry: string, packageName: string) {
   const file = await readFile(entry, { encoding: 'utf8' })
   const schema = await createFormMLParser()(file)
 
@@ -39,12 +38,9 @@ export default async function generateTs(entry: string, packageName: string) {
 
 ${generateTypes(schema)}
 
-const json = ${stringify(schema)}
-const ast: _FormMLSchema = deps.parse(json)
-
+declare const ast: _FormMLSchema
 export default ast
 `
 }
 
-export { parse } from '../utils/index.js'
 export type * from '../language/overrides/genericTypes.js'

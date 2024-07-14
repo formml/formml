@@ -1,1 +1,1 @@
-export { default as generateTs } from './generateTs.js'
+export { default as generateDts } from './generateDts.js'

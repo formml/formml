@@ -2,10 +2,10 @@ import * as fs from 'node:fs'
 import ts from 'typescript/lib/tsserverlibrary'
 
 import createHostOverrides from '../createHostOverrides'
-import generateTsSync from '../external/generateTsSync'
+import generateDtsSync from '../external/generateDtsSync'
 
 vi.mock('node:fs')
-vi.mock('../external/generateTsSync', () => ({ default: vi.fn() }))
+vi.mock('../external/generateDtsSync', () => ({ default: vi.fn() }))
 
 describe('createHostOverrides', () => {
   const logger = {
@@ -264,7 +264,7 @@ describe('createHostOverrides', () => {
       // Arrange
       vi.mocked(fs.existsSync).mockReturnValue(true)
       const expectedCode = 'const foo = "bar"'
-      vi.mocked(generateTsSync).mockReturnValue(expectedCode)
+      vi.mocked(generateDtsSync).mockReturnValue(expectedCode)
 
       // Act
       const result = createHostOverrides(origin, ts, logger).getScriptSnapshot!(
@@ -272,7 +272,7 @@ describe('createHostOverrides', () => {
       )
 
       // Assert
-      expect(generateTsSync).toBeCalledWith(
+      expect(generateDtsSync).toBeCalledWith(
         '/root/project/src/index.formml',
         '@formml/ts-plugin/deps',
       )
@@ -283,7 +283,7 @@ describe('createHostOverrides', () => {
     test('should catch error and return fallback code if ts code generation fails', () => {
       // Arrange
       vi.mocked(fs.existsSync).mockReturnValue(true)
-      vi.mocked(generateTsSync).mockImplementation(() => {
+      vi.mocked(generateDtsSync).mockImplementation(() => {
         throw new Error('Failed to generate ts code')
       })
 

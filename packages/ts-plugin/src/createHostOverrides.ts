@@ -4,7 +4,7 @@ import * as fs from 'node:fs'
 import path from 'node:path'
 
 import { Logger } from './createLogger'
-import generateTsSync from './external/generateTsSync'
+import generateDtsSync from './external/generateDtsSync'
 import isFormmlFile from './isFormmlFile'
 
 export default function createHostOverrides(
@@ -48,7 +48,7 @@ export default ast
         }
         try {
           return ts.ScriptSnapshot.fromString(
-            generateTsSync(fileName, '@formml/ts-plugin/deps'),
+            generateDtsSync(fileName, '@formml/ts-plugin/deps'),
           )
         } catch (error) {
           logger.error(

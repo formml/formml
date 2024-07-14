@@ -1,11 +1,11 @@
 import { readFile } from 'node:fs/promises'
 
-import generateTs from '../generateTs.js'
+import generateDts from '../generateDts.js'
 
 vi.mock('node:fs/promises')
 
-describe('generateTs', () => {
-  test('should generate typescript code', async () => {
+describe('generateDts', () => {
+  test('should generate typescript declaration', async () => {
     const input = `
       form ExampleForm {
         num      numField
@@ -17,7 +17,7 @@ describe('generateTs', () => {
     `
     vi.mocked(readFile).mockResolvedValue(input)
 
-    expect(await generateTs('form.formml', '@formml/any-package'))
+    expect(await generateDts('form.formml', '@formml/any-package'))
       .toMatchInlineSnapshot(`
         "import deps from '@formml/any-package'
 
@@ -25,9 +25,7 @@ describe('generateTs', () => {
 
         export type _FormMLSchema = deps.FormMLSchema<_FormExampleForm>
 
-        const json = {"node":{"$type":"FormMLSchema","form":{"$type":"Form","name":"ExampleForm","fields":[{"$type":"Field","type":"num","name":"numField","annotations":[]},{"$type":"Field","type":"text","name":"textField","annotations":[]},{"$type":"Field","type":"bool","name":"boolField","annotations":[]},{"$type":"Field","type":"datetime","name":"datetimeField","annotations":[]},{"$type":"Field","type":"decimal","name":"decimalField","annotations":[]}]}}}
-        const ast: _FormMLSchema = deps.parse(json)
-
+        declare const ast: _FormMLSchema
         export default ast
         "
       `)

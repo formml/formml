@@ -6,7 +6,7 @@ export default defineConfig({
   entry: {
     deps: 'src/deps.ts',
     index: 'src/index.ts',
-    worker: 'src/external/generateTsSync/worker.js',
+    worker: 'src/external/generateDtsSync/worker.js',
   },
   external: ['./worker.js'],
   noExternal: ['@formml/dsl'],
