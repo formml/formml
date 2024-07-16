@@ -8,7 +8,14 @@ export default async function generateJs(
   packageName: string,
 ): Promise<string> {
   const file = await readFile(entry, { encoding: 'utf8' })
-  const schema = await createFormMLParser()(file)
+  return generateJsFromContent(file, packageName)
+}
+
+export async function generateJsFromContent(
+  content: string,
+  packageName: string,
+) {
+  const schema = await createFormMLParser()(content)
 
   return `import deps from '${packageName}'
 
