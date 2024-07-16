@@ -1,0 +1,10 @@
+{
+  "extends": "@formml/typescript-config/base.json",
+  "compilerOptions": {
+    "outDir": "./dist/esm",
+    "rootDir": "./src",
+    "types": ["node"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/__test__/*"]
+}

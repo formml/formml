@@ -1,0 +1,57 @@
+{
+  "name": "rollup-plugin-formml",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "A Rollup plugin for importing FormML files",
+  "homepage": "https://github.com/formml/formml/tree/main/packages/rollup-plugin",
+  "repository": "https://github.com/formml/formml/tree/main/packages/rollup-plugin",
+  "bugs": "https://github.com/formml/formml/issues",
+  "author": "Jindong Zhang <jindong.zhannng@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "formml",
+    "form",
+    "rollup",
+    "vite",
+    "plugin",
+    "rollup-plugin",
+    "vite-plugin"
+  ],
+  "files": [
+    "dist",
+    "src",
+    "!src/**/__test__"
+  ],
+  "scripts": {
+    "build": "rimraf dist/ && mkdir dist/ && concurrently \"pnpm:build:cjs\" \"pnpm:build:esm\"",
+    "build:cjs": "tsup",
+    "build:esm": "tsc -p ./tsconfig.lib.json",
+    "lint": "eslint .",
+    "lint:fix": "pnpm run lint --fix",
+    "lint:type": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "dependencies": {
+    "@formml/dsl": "workspace:*"
+  },
+  "devDependencies": {
+    "@formml/typescript-config": "workspace:*",
+    "eslint-config-formml": "workspace:*"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/esm/index.d.ts"
+    },
+    "./deps": {
+      "import": "./dist/esm/deps.js",
+      "require": "./dist/cjs/deps.js",
+      "types": "./dist/esm/deps.d.ts"
+    }
+  },
+  "module": "./dist/esm/index.js",
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/esm/index.d.ts"
+}
