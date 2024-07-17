@@ -204,6 +204,9 @@ importers:
 
   packages/dsl:
     dependencies:
+      change-case:
+        specifier: ^5.4.4
+        version: 5.4.4
       langium:
         specifier: ^3.0.0
         version: 3.0.0
@@ -2606,6 +2609,12 @@ packages:
         integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==,
       }
     engines: { node: ^12.17.0 || ^14.13 || >=16.0.0 }
+
+  change-case@5.4.4:
+    resolution:
+      {
+        integrity: sha512-HRQyTk2/YPEkt9TnUPbOpr64Uw3KOicFWPVBb+xiHvd6eBx/qPr9xqfBFDT8P2vWsvvz4jbEkfDe71W3VyNu2w==,
+      }
 
   chardet@0.7.0:
     resolution:
@@ -9365,6 +9374,8 @@ snapshots:
       supports-color: 7.2.0
 
   chalk@5.3.0: {}
+
+  change-case@5.4.4: {}
 
   chardet@0.7.0: {}
 

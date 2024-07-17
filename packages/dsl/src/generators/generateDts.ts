@@ -1,25 +1,33 @@
+import type { AstNode } from 'langium'
+
+import { pascalCase } from 'change-case'
 import { readFile } from 'node:fs/promises'
 
 import * as ast from '../language/generated/ast.js'
 import { createFormMLParser } from '../language/parser.js'
 
-function generateTypeRecursively(node: unknown, types: string[]): string {
+function getIdentifier(type: string, ...suffixes: string[]): string {
+  return [`_${type}`, ...suffixes.map((s) => pascalCase(s))].join('_')
+}
+
+function generateTypeRecursively(node: AstNode, types: string[]): string {
   if (ast.isFormMLSchema(node)) {
-    const formTypeId = generateTypeRecursively(node.form, types)
-    types.push(`export type _FormMLSchema = deps.FormMLSchema<${formTypeId}>`)
-    return '_FormMLSchema'
+    const childId = generateTypeRecursively(node.form, types)
+    const identifier = getIdentifier(node.$type)
+    types.push(`export type ${identifier} = deps.FormMLSchema<${childId}>`)
+    return identifier
   }
   if (ast.isForm(node)) {
     const inlineFieldTypes = node.fields.map(
       (field) => `deps.Field<'${field.name}', '${field.type}'>`,
     )
-    const formTypeId = '_Form' + node.name
+    const identifier = getIdentifier(node.$type, node.name)
     types.push(
-      `export type ${formTypeId} = deps.Form<'${
+      `export type ${identifier} = deps.Form<'${
         node.name
       }', [${inlineFieldTypes.join(', ')}]>`,
     )
-    return formTypeId
+    return identifier
   }
   throw new Error('Unsupported node type')
 }
