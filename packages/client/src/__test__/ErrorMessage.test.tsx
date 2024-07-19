@@ -1,3 +1,4 @@
+import { createFormMLParser } from '@formml/dsl'
 import { render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import React from 'react'
@@ -8,15 +9,17 @@ import { useField } from '../useField.js'
 import { useFormML } from '../useFormML.js'
 
 describe('ErrorMessage', () => {
+  const parse = createFormMLParser()
+
   describe('behavior', () => {
     test('should render error message if given field has error', async () => {
       // Arrange
-      const schema = `
+      const schema = await parse(`
         form ExampleForm {
           @required
           text textField
         }
-      `
+      `)
       const Form = () => {
         const { $form, FormML } = useFormML(schema)
         return (
@@ -43,12 +46,12 @@ describe('ErrorMessage', () => {
 
     test('should not render error message if given field has no error', async () => {
       // Arrange
-      const schema = `
+      const schema = await parse(`
         form ExampleForm {
           @required
           text textField
         }
-      `
+      `)
       const Form = () => {
         const { $form, FormML } = useFormML(schema)
         return (
@@ -74,12 +77,12 @@ describe('ErrorMessage', () => {
 
     test('should update error message when field error changes', async () => {
       // Arrange
-      const schema = `
+      const schema = await parse(`
         form ExampleForm {
           @required
           num numberField
         }
-      `
+      `)
       const SimpleInput = ({ $bind }: { $bind: object }) => {
         const { field } = useField($bind)
         return <input {...field} />
@@ -123,13 +126,13 @@ describe('ErrorMessage', () => {
   describe('appearance', () => {
     test.each([{}, { as: 'div' }])(
       'should render nothing if no error',
-      (props) => {
+      async (props) => {
         // Arrange
-        const schema = `
+        const schema = await parse(`
           form ExampleForm {
             text textField
           }
-        `
+        `)
         const Form = () => {
           const { $form, FormML } = useFormML(schema)
           return (
@@ -153,12 +156,12 @@ describe('ErrorMessage', () => {
 
     test('should render as string by default', async () => {
       // Arrange
-      const schema = `
+      const schema = await parse(`
         form ExampleForm {
           @required
           text textField
         }
-      `
+      `)
       const Form = () => {
         const { $form, FormML } = useFormML(schema)
         return (
@@ -188,12 +191,12 @@ describe('ErrorMessage', () => {
         'should render as HTML element (%s) if specified',
         async (tagName) => {
           // Arrange
-          const schema = `
+          const schema = await parse(`
             form ExampleForm {
               @required
               text textField
             }
-          `
+          `)
           const Form = () => {
             const { $form, FormML } = useFormML(schema)
             return (
@@ -223,12 +226,12 @@ describe('ErrorMessage', () => {
       describe('should accept html attributes', () => {
         test('label', async () => {
           // Arrange
-          const schema = `
+          const schema = await parse(`
             form ExampleForm {
               @required
               text textField
             }
-          `
+          `)
           const Form = () => {
             const { $form, FormML } = useFormML(schema)
             return (
@@ -258,12 +261,12 @@ describe('ErrorMessage', () => {
 
         test('li', async () => {
           // Arrange
-          const schema = `
+          const schema = await parse(`
             form ExampleForm {
               @required
               text textField
             }
-          `
+          `)
           const Form = () => {
             const { $form, FormML } = useFormML(schema)
             return (
@@ -294,12 +297,12 @@ describe('ErrorMessage', () => {
 
       test('should accept ref', async () => {
         // Arrange
-        const schema = `
+        const schema = await parse(`
           form ExampleForm {
             @required
             text textField
           }
-        `
+        `)
         const ref = React.createRef<HTMLDivElement>()
         const Form = () => {
           const { $form, FormML } = useFormML(schema)

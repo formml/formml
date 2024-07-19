@@ -33,7 +33,6 @@
     "build:cjs": "tsup",
     "build:esm": "tsc -p ./tsconfig.lib.json",
     "dev": "rimraf dist/ && pnpm run build:esm --watch",
-    "demo": "vite ./integration-test --open -c ./vite.config.ts",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "lint:type": "tsc",

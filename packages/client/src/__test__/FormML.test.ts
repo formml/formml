@@ -1,4 +1,4 @@
-import { FormMLParserError } from '@formml/dsl'
+import { createFormMLParser } from '@formml/dsl'
 import { BigNumber } from 'bignumber.js'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc.js'
@@ -8,16 +8,10 @@ import { FormML, FormMLOptions } from '../FormML.js'
 dayjs.extend(utc)
 
 describe('FormML', () => {
+  const parse = createFormMLParser()
+
   describe('constructor', () => {
-    test('should throw if schema is invalid', () => {
-      // Arrange
-      const invalidSchema = `form {}`
-
-      // Act & Assert
-      expect(() => new FormML(invalidSchema)).toThrow(FormMLParserError)
-    })
-
-    test('should apply default options if not provided', () => {
+    test('should apply default options if not provided', async () => {
       // Arrange
       const defaultOptions: FormMLOptions = {
         preValidateOn: {
@@ -25,20 +19,20 @@ describe('FormML', () => {
           subsequent: 'change',
         },
       }
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           num numberField
         }
-      `
+      `)
 
       // Act
-      const form = new FormML(dsl)
+      const form = new FormML(schema)
 
       // Assert
       expect(form.options).toEqual(defaultOptions)
     })
 
-    test('should use provided options', () => {
+    test('should use provided options', async () => {
       // Arrange
       const options: FormMLOptions = {
         preValidateOn: {
@@ -46,34 +40,34 @@ describe('FormML', () => {
           subsequent: 'blur',
         },
       }
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           num numberField
         }
-      `
+      `)
 
       // Act
-      const form = new FormML(dsl, options)
+      const form = new FormML(schema, options)
 
       // Assert
       expect(form.options).toEqual(options)
     })
 
-    test('should merge default and provided options', () => {
+    test('should merge default and provided options', async () => {
       // Arrange
       const options = {
         preValidateOn: {
           initial: 'change',
         },
       } as const
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           num numberField
         }
-      `
+      `)
 
       // Act
-      const form = new FormML(dsl, options)
+      const form = new FormML(schema, options)
 
       // Assert
       expect(form.options).toEqual({
@@ -84,7 +78,7 @@ describe('FormML', () => {
       })
     })
 
-    test('should initialize all fields', () => {
+    test('should initialize all fields', async () => {
       // Arrange
       const fixtures = [
         {
@@ -114,13 +108,14 @@ describe('FormML', () => {
         },
       ]
 
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           ${fixtures.map((f) => `${f.type} ${f.name}`).join('\n')}
         }
-      `
+      `)
+
       // Act
-      const formML = new FormML(dsl)
+      const formML = new FormML(schema)
 
       // Assert
       for (const fixture of fixtures) {
@@ -166,17 +161,17 @@ describe('FormML', () => {
       'validate',
     ] as const)(
       'should throw if index can not be recognized - "%s"',
-      (methodName) => {
+      async (methodName) => {
         // Arrange
-        const schema = `
+        const schema = await parse(`
           form ExampleForm {
-            num   numberField
-            decimal decimalField
+            num      numberField
+            decimal  decimalField
             text     textField
-            bool	 boolField
+            bool	   boolField
             datetime datetimeField
           }
-        `
+        `)
         const formML = new FormML(schema)
 
         // Act & Assert
@@ -188,18 +183,18 @@ describe('FormML', () => {
     )
 
     describe('getField', () => {
-      test('should return initial field pack by default', () => {
+      test('should return initial field pack by default', async () => {
         // Arrange
-        const dsl = `
+        const schema = await parse(`
           form ExampleForm {
-            num   numberField
-            decimal decimalField
+            num      numberField
+            decimal  decimalField
             text     textField
-            bool	 boolField
+            bool	   boolField
             datetime datetimeField
           }
-        `
-        const formML = new FormML(dsl)
+        `)
+        const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
 
         // Act
@@ -243,18 +238,18 @@ describe('FormML', () => {
           ${'datetime'} | ${'datetimeField'}
         `(
           'should return corresponding field schema - $fieldName',
-          ({ fieldName, type }) => {
+          async ({ fieldName, type }) => {
             // Arrange
-            const dsl = `
+            const schema = await parse(`
               form ExampleForm {
-                num   numberField
-                decimal decimalField
+                num      numberField
+                decimal  decimalField
                 text     textField
-                bool	 boolField
+                bool	   boolField
                 datetime datetimeField
               }
-            `
-            const formML = new FormML(dsl)
+            `)
+            const formML = new FormML(schema)
             const index = formML.indexRoot[fieldName]
 
             // Act
@@ -271,14 +266,14 @@ describe('FormML', () => {
           },
         )
 
-        test('should return latest raw value when field has been changed', () => {
+        test('should return latest raw value when field has been changed', async () => {
           // Arrange
-          const dsl = `
+          const schema = await parse(`
             form ExampleForm {
               num numberField
             }
-          `
-          const formML = new FormML(dsl)
+          `)
+          const formML = new FormML(schema)
           const index = formML.indexRoot['numberField']
 
           const pack = formML.getField(index)
@@ -291,14 +286,14 @@ describe('FormML', () => {
           expect(newPack.rawValue).toEqual('123')
         })
 
-        test('should always be touched after blurs field', () => {
+        test('should always be touched after blurs field', async () => {
           // Arrange
-          const dsl = `
+          const schema = await parse(`
             form ExampleForm {
               num numberField
             }
-          `
-          const formML = new FormML(dsl)
+          `)
+          const formML = new FormML(schema)
           const index = formML.indexRoot['numberField']
 
           const firstPack = formML.getField(index)
@@ -332,14 +327,14 @@ describe('FormML', () => {
           ${'datetime'} | ${'2024-01-01T00:00:00.000Z'}      | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
         `(
           'should return latest typed $fieldType value once raw value change is committed',
-          ({ expected, fieldType, rawInput }) => {
+          async ({ expected, fieldType, rawInput }) => {
             // Arrange
-            const dsl = `
+            const schema = await parse(`
               form ExampleForm {
                 ${fieldType} field
               }
-            `
-            const formML = new FormML(dsl)
+            `)
+            const formML = new FormML(schema)
             const index = formML.indexRoot['field']
 
             const firstPack = formML.getField(index)
@@ -367,14 +362,14 @@ describe('FormML', () => {
               ${'datetime'} | ${dayjs.utc('2024-01-01').utcOffset(8).toDate()} | ${'2024-01-01T00:00:00.000Z'}
             `(
               'should update both of value and raw value when set $fieldType value',
-              ({ expectedRawValue, fieldType, newValue }) => {
+              async ({ expectedRawValue, fieldType, newValue }) => {
                 // Arrange
-                const dsl = `
+                const schema = await parse(`
                   form ExampleForm {
                     ${fieldType} field
                   }
-                `
-                const formML = new FormML(dsl)
+                `)
+                const formML = new FormML(schema)
                 const index = formML.indexRoot['field']
 
                 const firstPack = formML.getField(index)
@@ -391,14 +386,14 @@ describe('FormML', () => {
 
             test.each(['text', 'num', 'decimal', 'bool', 'datetime'])(
               'should set raw value to empty when set "%s" value as `undefined`',
-              (fieldType) => {
+              async (fieldType) => {
                 // Arrange
-                const dsl = `
+                const schema = await parse(`
                   form ExampleForm {
                     ${fieldType} field
                   }
-                `
-                const formML = new FormML(dsl)
+                `)
+                const formML = new FormML(schema)
                 const index = formML.indexRoot['field']
 
                 const firstPack = formML.getField(index)
@@ -415,14 +410,14 @@ describe('FormML', () => {
           },
         )
 
-        test('should be initially validated after any validation', () => {
+        test('should be initially validated after any validation', async () => {
           // Arrange
-          const dsl = `
+          const schema = await parse(`
             form ExampleForm {
               num numberField
             }
-          `
-          const formML = new FormML(dsl, {
+          `)
+          const formML = new FormML(schema, {
             preValidateOn: { initial: 'change', subsequent: 'change' },
           })
           const index = formML.indexRoot['numberField']
@@ -444,39 +439,42 @@ describe('FormML', () => {
           'setRawValue',
           'setValue',
           'blur',
-        ] as const)('should always return same references for "%s"', (key) => {
-          // Arrange
-          const dsl = `
-            form ExampleForm {
-              num numberField
-            }
-          `
-          const formML = new FormML(dsl)
-          const index = formML.indexRoot['numberField']
+        ] as const)(
+          'should always return same references for "%s"',
+          async (key) => {
+            // Arrange
+            const schema = await parse(`
+              form ExampleForm {
+                num numberField
+              }
+            `)
+            const formML = new FormML(schema)
+            const index = formML.indexRoot['numberField']
 
-          const firstPack = formML.getField(index)
+            const firstPack = formML.getField(index)
 
-          // Act
-          firstPack.setRawValue('123')
-          firstPack.commitRawValue()
-          firstPack.setValue('456')
-          firstPack.blur()
+            // Act
+            firstPack.setRawValue('123')
+            firstPack.commitRawValue()
+            firstPack.setValue('456')
+            firstPack.blur()
 
-          // Assert
-          const secondPack = formML.getField(index)
-          expect(secondPack[key]).toBe(firstPack[key])
-        })
+            // Assert
+            const secondPack = formML.getField(index)
+            expect(secondPack[key]).toBe(firstPack[key])
+          },
+        )
       })
     })
 
     describe('subscribe', () => {
-      test('should react to field value change', () => {
+      test('should react to field value change', async () => {
         // Arrange
-        const schema = `
+        const schema = await parse(`
           form ExampleForm {
             num numberField
           }
-        `
+        `)
         const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
         const callback = vi.fn()
@@ -491,13 +489,13 @@ describe('FormML', () => {
         expect(callback).toBeCalledTimes(1)
       })
 
-      test('should react to field touched change', () => {
+      test('should react to field touched change', async () => {
         // Arrange
-        const schema = `
+        const schema = await parse(`
           form ExampleForm {
             num numberField
           }
-        `
+        `)
         const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
         const callback = vi.fn()
@@ -512,13 +510,13 @@ describe('FormML', () => {
         expect(callback).toBeCalledTimes(1)
       })
 
-      test('should react to field typed value change', () => {
+      test('should react to field typed value change', async () => {
         // Arrange
-        const schema = `
+        const schema = await parse(`
           form ExampleForm {
             text textField
           }
-        `
+        `)
         const formML = new FormML(schema)
         const index = formML.indexRoot['textField']
         const callback = vi.fn()
@@ -536,14 +534,14 @@ describe('FormML', () => {
         expect(callback).toBeCalledTimes(1)
       })
 
-      test('should react to field error change', () => {
+      test('should react to field error change', async () => {
         // Arrange
-        const schema = `
+        const schema = await parse(`
           form ExampleForm {
             @required
             num numberField
           }
-        `
+        `)
         const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
         const callback = vi.fn()
@@ -559,14 +557,14 @@ describe('FormML', () => {
     })
 
     describe('setRawValue', () => {
-      test('should set raw value of target field', () => {
+      test('should set raw value of target field', async () => {
         // Arrange
-        const dsl = `
-        form ExampleForm {
-          num numberField
-        }
-      `
-        const formML = new FormML(dsl)
+        const schema = await parse(`
+          form ExampleForm {
+            num numberField
+          }
+        `)
+        const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
 
         // Act
@@ -581,14 +579,14 @@ describe('FormML', () => {
     describe.each(['setValue', 'setTypedValue'] as const)(
       '%s',
       (methodName) => {
-        test('should set typed value and raw value of target field', () => {
+        test('should set typed value and raw value of target field', async () => {
           // Arrange
-          const dsl = `
+          const schema = await parse(`
             form ExampleForm {
               num numberField
             }
-          `
-          const formML = new FormML(dsl)
+          `)
+          const formML = new FormML(schema)
           const index = formML.indexRoot['numberField']
 
           // Act
@@ -602,14 +600,14 @@ describe('FormML', () => {
 
         test.each(['text', 'num', 'decimal', 'bool', 'datetime'])(
           'should set raw value to empty when set "%s" value as `undefined`',
-          (fieldType) => {
+          async (fieldType) => {
             // Arrange
-            const dsl = `
+            const schema = await parse(`
               form ExampleForm {
                 ${fieldType} field
               }
-            `
-            const formML = new FormML(dsl)
+            `)
+            const formML = new FormML(schema)
             const index = formML.indexRoot['field']
 
             // Act
@@ -638,14 +636,14 @@ describe('FormML', () => {
         ${'datetime'} | ${'2024-01-01T00:00:00.000Z'}      | ${new Date(Date.UTC(2024, 0, 1, 0, 0, 0, 0))}
       `(
         'should modify typed $fieldType value once raw value change is committed',
-        ({ expected, fieldType, rawInput }) => {
+        async ({ expected, fieldType, rawInput }) => {
           // Arrange
-          const dsl = `
+          const schema = await parse(`
             form ExampleForm {
               ${fieldType} field
             }
-          `
-          const formML = new FormML(dsl)
+          `)
+          const formML = new FormML(schema)
           const index = formML.indexRoot['field']
 
           // Act
@@ -660,14 +658,14 @@ describe('FormML', () => {
     })
 
     describe('blur', () => {
-      test('should always be touched after blurs field', () => {
+      test('should always be touched after blurs field', async () => {
         // Arrange
-        const dsl = `
+        const schema = await parse(`
           form ExampleForm {
             num numberField
           }
-        `
-        const formML = new FormML(dsl)
+        `)
+        const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
 
         const firstPack = formML.getField(index)
@@ -690,15 +688,15 @@ describe('FormML', () => {
     })
 
     describe('validateAll', () => {
-      test('should return valid when no error', () => {
+      test('should return valid when no error', async () => {
         // Arrange
-        const dsl = `
+        const schema = await parse(`
           form ExampleForm {
             @required
             num numberField
           }
-        `
-        const formML = new FormML(dsl)
+        `)
+        const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
 
         // Act
@@ -711,15 +709,15 @@ describe('FormML', () => {
         expect(result).toEqual({ errors: undefined, isValid: true })
       })
 
-      test('should return error details when validation fails', () => {
+      test('should return error details when validation fails', async () => {
         // Arrange
-        const dsl = `
+        const schema = await parse(`
           form ExampleForm {
             @required
             num numberField
           }
-        `
-        const formML = new FormML(dsl)
+        `)
+        const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
 
         // Act
@@ -733,17 +731,17 @@ describe('FormML', () => {
         expect(result.errors).toHaveLength(1)
       })
 
-      test('should validate all fields', () => {
+      test('should validate all fields', async () => {
         // Arrange
-        const dsl = `
+        const schema = await parse(`
           form ExampleForm {
             @required
             num numberField1
             @required
             num numberField2
           }
-        `
-        const formML = new FormML(dsl)
+        `)
+        const formML = new FormML(schema)
         const index1 = formML.indexRoot['numberField1']
         const index2 = formML.indexRoot['numberField2']
 
@@ -762,15 +760,15 @@ describe('FormML', () => {
         expect(result.errors).toHaveLength(2)
       })
 
-      test('should update field error when validation fails', () => {
+      test('should update field error when validation fails', async () => {
         // Arrange
-        const dsl = `
+        const schema = await parse(`
           form ExampleForm {
             @required
             num numberField
           }
-        `
-        const formML = new FormML(dsl)
+        `)
+        const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
 
         // Assert
@@ -788,15 +786,15 @@ describe('FormML', () => {
         )
       })
 
-      test('should update is field initially validated', () => {
+      test('should update is field initially validated', async () => {
         // Arrange
-        const dsl = `
+        const schema = await parse(`
           form ExampleForm {
             @required
             num numberField
           }
-        `
-        const formML = new FormML(dsl)
+        `)
+        const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
 
         // Act
@@ -809,15 +807,15 @@ describe('FormML', () => {
     })
 
     describe('validate', () => {
-      test('should return valid when no error', () => {
+      test('should return valid when no error', async () => {
         // Arrange
-        const dsl = `
+        const schema = await parse(`
           form ExampleForm {
             @required
             num numberField
           }
-        `
-        const formML = new FormML(dsl)
+        `)
+        const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
 
         const pack = formML.getField(index)
@@ -831,15 +829,15 @@ describe('FormML', () => {
         expect(result).toEqual({ error: undefined, isValid: true })
       })
 
-      test('should return error details when validation fails', () => {
+      test('should return error details when validation fails', async () => {
         // Arrange
-        const dsl = `
+        const schema = await parse(`
           form ExampleForm {
             @required
             num numberField
           }
-        `
-        const formML = new FormML(dsl)
+        `)
+        const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
 
         // Act
@@ -852,15 +850,15 @@ describe('FormML', () => {
         )
       })
 
-      test('should update field error after every validation', () => {
+      test('should update field error after every validation', async () => {
         // Arrange
-        const dsl = `
+        const schema = await parse(`
           form ExampleForm {
             @required
             num numberField
           }
-        `
-        const formML = new FormML(dsl, {
+        `)
+        const formML = new FormML(schema, {
           preValidateOn: { initial: 'none', subsequent: 'none' },
         })
         const index = formML.indexRoot['numberField']
@@ -888,15 +886,15 @@ describe('FormML', () => {
         expect(pack3.error).toBeUndefined()
       })
 
-      test('should update is field initially validated', () => {
+      test('should update is field initially validated', async () => {
         // Arrange
-        const dsl = `
+        const schema = await parse(`
           form ExampleForm {
             @required
             num numberField
           }
-        `
-        const formML = new FormML(dsl)
+        `)
+        const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
 
         // Act
@@ -911,15 +909,15 @@ describe('FormML', () => {
 
   describe('behaviors', () => {
     describe('field validation', () => {
-      test('should no error by default', () => {
+      test('should no error by default', async () => {
         // Arrange
-        const dsl = `
+        const schema = await parse(`
           form ExampleForm {
             @required
             num numberField
           }
-        `
-        const formML = new FormML(dsl)
+        `)
+        const formML = new FormML(schema)
         const index = formML.indexRoot['numberField']
 
         // Act
@@ -947,15 +945,15 @@ describe('FormML', () => {
 
           test(`should ${
             setRawValue ? 'do' : 'not do'
-          } validation when setting raw value`, () => {
+          } validation when setting raw value`, async () => {
             // Arrange
-            const dsl = `
+            const schema = await parse(`
               form ExampleForm {
                 @required
                 num numberField
               }
-            `
-            const formML = new FormML(dsl, options)
+            `)
+            const formML = new FormML(schema, options)
             const index = formML.indexRoot['numberField']
 
             // Act
@@ -975,15 +973,15 @@ describe('FormML', () => {
 
           test(`should ${
             setValue ? 'do' : 'not do'
-          } validation when setting value`, () => {
+          } validation when setting value`, async () => {
             // Arrange
-            const dsl = `
+            const schema = await parse(`
               form ExampleForm {
                 @required
                 num numberField
               }
-            `
-            const formML = new FormML(dsl, options)
+            `)
+            const formML = new FormML(schema, options)
             const index = formML.indexRoot['numberField']
 
             // Act
@@ -1003,15 +1001,15 @@ describe('FormML', () => {
 
           test(`should ${
             setTypedValue ? 'do' : 'not do'
-          } validation when setting typed value`, () => {
+          } validation when setting typed value`, async () => {
             // Arrange
-            const dsl = `
+            const schema = await parse(`
               form ExampleForm {
                 @required
                 num numberField
               }
-            `
-            const formML = new FormML(dsl, options)
+            `)
+            const formML = new FormML(schema, options)
             const index = formML.indexRoot['numberField']
 
             // Act
@@ -1031,15 +1029,15 @@ describe('FormML', () => {
 
           test(`should ${
             blur ? 'do' : 'not do'
-          } validation when blurring field`, () => {
+          } validation when blurring field`, async () => {
             // Arrange
-            const dsl = `
+            const schema = await parse(`
               form ExampleForm {
                 @required
                 num numberField
               }
-            `
-            const formML = new FormML(dsl, options)
+            `)
+            const formML = new FormML(schema, options)
             const index = formML.indexRoot['numberField']
 
             // Act
@@ -1077,15 +1075,15 @@ describe('FormML', () => {
 
           test(`should ${
             setRawValue ? 'do' : 'not do'
-          } validation when setting raw value`, () => {
+          } validation when setting raw value`, async () => {
             // Arrange
-            const dsl = `
+            const schema = await parse(`
               form ExampleForm {
                 @required
                 num numberField
               }
-            `
-            const formML = new FormML(dsl, options)
+            `)
+            const formML = new FormML(schema, options)
             const index = formML.indexRoot['numberField']
 
             // Act
@@ -1113,15 +1111,15 @@ describe('FormML', () => {
 
           test(`should ${
             setValue ? 'do' : 'not do'
-          } validation when setting value`, () => {
+          } validation when setting value`, async () => {
             // Arrange
-            const dsl = `
+            const schema = await parse(`
               form ExampleForm {
                 @required
                 num numberField
               }
-            `
-            const formML = new FormML(dsl, options)
+            `)
+            const formML = new FormML(schema, options)
             const index = formML.indexRoot['numberField']
 
             // Act
@@ -1149,15 +1147,15 @@ describe('FormML', () => {
 
           test(`should ${
             setTypedValue ? 'do' : 'not do'
-          } validation when setting typed value`, () => {
+          } validation when setting typed value`, async () => {
             // Arrange
-            const dsl = `
+            const schema = await parse(`
               form ExampleForm {
                 @required
                 num numberField
               }
-            `
-            const formML = new FormML(dsl, options)
+            `)
+            const formML = new FormML(schema, options)
             const index = formML.indexRoot['numberField']
 
             // Act
@@ -1185,15 +1183,15 @@ describe('FormML', () => {
 
           test(`should ${
             blur ? 'do' : 'not do'
-          } validation when blurring field`, () => {
+          } validation when blurring field`, async () => {
             // Arrange
-            const dsl = `
+            const schema = await parse(`
               form ExampleForm {
                 @required
                 num numberField
               }
-            `
-            const formML = new FormML(dsl, options)
+            `)
+            const formML = new FormML(schema, options)
             const index = formML.indexRoot['numberField']
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any

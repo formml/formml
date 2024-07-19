@@ -1,6 +1,6 @@
 import type { ObjectPathItem } from 'valibot'
 
-import { Field, FormMLSchema, createParser } from '@formml/dsl'
+import { Field, FormMLSchema } from '@formml/dsl'
 import { reactive, toRaw } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
 
@@ -75,7 +75,6 @@ export class FormML {
   > = new Map()
   private readonly _indexToInputValidator: Map<object, Validator<string>>
   private readonly _indexToSchema: Map<object, Field>
-  private static readonly _parse = createParser()
   private readonly _schema: FormMLSchema
   private readonly _typedValuesProxy: Record<string, JsTypes.PrimitiveType> =
     reactive({})
@@ -84,14 +83,14 @@ export class FormML {
   public readonly indexRoot: Record<string, object>
   public readonly options: FormMLOptions
 
-  constructor(schema: string, options?: DeepPartial<FormMLOptions>) {
+  constructor(schema: FormMLSchema, options?: DeepPartial<FormMLOptions>) {
+    this._schema = schema
     this.options = mergeOptions(options, {
       preValidateOn: {
         initial: 'blur',
         subsequent: 'change',
       },
     })
-    this._schema = FormML._parse(schema)
 
     // TODO: index manager
     ;[this.indexRoot, this._indexToSchema] = buildIndexes(this._schema)

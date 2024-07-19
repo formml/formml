@@ -1,3 +1,4 @@
+import { createFormMLParser } from '@formml/dsl'
 import { render, renderHook } from '@testing-library/react'
 import { Profiler } from 'react'
 
@@ -10,41 +11,43 @@ vi.mock('../FormML.js', async (importOriginal) => {
   const { FormML: realFormML } =
     await importOriginal<typeof import('../FormML.js')>()
   return {
-    FormML: vi.fn((dsl) => new realFormML(dsl)),
+    FormML: vi.fn((schema) => new realFormML(schema)),
   }
 })
 
 describe('useFormML', () => {
-  test('should new FormML with given arguments', () => {
+  const parse = createFormMLParser()
+
+  test('should new FormML with given arguments', async () => {
     // Arrange
-    const dsl = `
+    const schema = await parse(`
       form ExampleForm {
         text textField
       }
-    `
+    `)
     const options = {} as FormMLOptions
     // Act
-    renderHook(() => useFormML(dsl, options))
+    renderHook(() => useFormML(schema, options))
 
     // Assert
-    expect(FormML).toBeCalledWith(dsl, options)
+    expect(FormML).toBeCalledWith(schema, options)
   })
 
   describe('$form', () => {
-    test('should generate simple field indexes according to schema', () => {
+    test('should generate simple field indexes according to schema', async () => {
       // Arrange
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
-          num   numberField
-          decimal decimalField
+          num      numberField
+          decimal  decimalField
           text     textField
-          bool	 boolField
+          bool	   boolField
           datetime datetimeField
         }
-      `
+      `)
 
       // Act
-      const { result } = renderHook(() => useFormML(dsl))
+      const { result } = renderHook(() => useFormML(schema))
 
       // Assert
       expect(result.current.$form).toEqual({
@@ -66,46 +69,46 @@ describe('useFormML', () => {
       })
     })
 
-    test('should re-create indexes when dsl changes', () => {
+    test('should re-create indexes when schema changes', async () => {
       // Arrange
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
-          num   numberField
-          decimal decimalField
+          num      numberField
+          decimal  decimalField
           text     textField
-          bool	 boolField
+          bool	   boolField
           datetime datetimeField
         }
-      `
-      const { rerender, result } = renderHook((dsl) => useFormML(dsl), {
-        initialProps: dsl,
+      `)
+      const { rerender, result } = renderHook((schema) => useFormML(schema), {
+        initialProps: schema,
       })
       const firstIndexRoot = result.current.$form
 
       // Act
-      const anotherDsl = `
+      const anotherSchema = await parse(`
         form ExampleForm2 {
-          num   numberField
+          num numberField
         }
-      `
-      rerender(anotherDsl)
+      `)
+      rerender(anotherSchema)
 
       // Assert
       expect(result.current.$form).not.toBe(firstIndexRoot)
     })
 
-    test('should not re-create indexes when rerendering without dsl change', () => {
+    test('should not re-create indexes when rerendering without schema change', async () => {
       // Arrange
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
-          num   numberField
-          decimal decimalField
+          num      numberField
+          decimal  decimalField
           text     textField
-          bool	 boolField
+          bool	   boolField
           datetime datetimeField
         }
-      `
-      const { rerender, result } = renderHook(() => useFormML(dsl))
+      `)
+      const { rerender, result } = renderHook(() => useFormML(schema))
       const firstIndexRoot = result.current.$form
 
       // Act
@@ -116,19 +119,19 @@ describe('useFormML', () => {
     })
   })
 
-  describe('handleSubmit', () => {
-    const dummyDsl = `
+  describe('handleSubmit', async () => {
+    const dummySchema = await parse(`
       form ExampleForm {
         num numberField
       }
-    `
+    `)
     const dummyEvent = new SubmitEvent(
       'submit',
     ) as unknown as React.FormEvent<HTMLFormElement>
 
     test('should be a function', () => {
       // Act
-      const { result } = renderHook(() => useFormML(dummyDsl))
+      const { result } = renderHook(() => useFormML(dummySchema))
 
       // Assert
       expect(result.current.handleSubmit).toBeTypeOf('function')
@@ -140,7 +143,7 @@ describe('useFormML', () => {
       const mockedPreventDefault = vi.fn()
 
       // Act
-      const { result } = renderHook(() => useFormML(dummyDsl))
+      const { result } = renderHook(() => useFormML(dummySchema))
       const eventHandler = result.current.handleSubmit(onSubmit)
       eventHandler({
         preventDefault: mockedPreventDefault,
@@ -155,7 +158,7 @@ describe('useFormML', () => {
       const onSubmit = vi.fn()
 
       // Act
-      const { result } = renderHook(() => useFormML(dummyDsl))
+      const { result } = renderHook(() => useFormML(dummySchema))
       const eventHandler = result.current.handleSubmit(onSubmit)
       eventHandler(dummyEvent)
 
@@ -170,7 +173,7 @@ describe('useFormML', () => {
         numberField: 123.45,
       }
 
-      const stubFormML = new FormML(dummyDsl)
+      const stubFormML = new FormML(dummySchema)
       vi.spyOn(stubFormML, 'getTypedData').mockReturnValue(expectedData)
       vi.spyOn(stubFormML, 'validateAll').mockReturnValue({
         errors: undefined,
@@ -178,7 +181,7 @@ describe('useFormML', () => {
       })
 
       vi.mocked(FormML).mockReturnValue(stubFormML)
-      const { result } = renderHook(() => useFormML(dummyDsl))
+      const { result } = renderHook(() => useFormML(dummySchema))
       const onSubmit = vi.fn()
 
       // Act
@@ -193,7 +196,7 @@ describe('useFormML', () => {
       const onSubmit = vi.fn()
 
       // Act
-      const { result } = renderHook(() => useFormML(dummyDsl))
+      const { result } = renderHook(() => useFormML(dummySchema))
       const eventHandler = result.current.handleSubmit(onSubmit)
       eventHandler(dummyEvent)
 
@@ -204,11 +207,11 @@ describe('useFormML', () => {
     test('should not call submit handler if form is invalid', () => {
       // Arrange
       const onSubmit = vi.fn()
-      const stubFormML = new FormML(dummyDsl)
+      const stubFormML = new FormML(dummySchema)
       const spiedValidate = vi.spyOn(stubFormML, 'validateAll')
       spiedValidate.mockReturnValue({ errors: [], isValid: false })
       vi.mocked(FormML).mockReturnValue(stubFormML)
-      const { result } = renderHook(() => useFormML(dummyDsl))
+      const { result } = renderHook(() => useFormML(dummySchema))
       const eventHandler = result.current.handleSubmit(onSubmit)
 
       // Act
@@ -221,7 +224,7 @@ describe('useFormML', () => {
     test('should call error handler with errors if form is invalid', () => {
       // Arrange
       const onError = vi.fn()
-      const stubFormML = new FormML(dummyDsl)
+      const stubFormML = new FormML(dummySchema)
       const spiedValidate = vi.spyOn(stubFormML, 'validateAll')
       const errors = [
         { message: 'Error message' },
@@ -229,7 +232,7 @@ describe('useFormML', () => {
       ] as ValidationError[]
       spiedValidate.mockReturnValue({ errors, isValid: false })
       vi.mocked(FormML).mockReturnValue(stubFormML)
-      const { result } = renderHook(() => useFormML(dummyDsl))
+      const { result } = renderHook(() => useFormML(dummySchema))
       const eventHandler = result.current.handleSubmit(() => {}, onError)
 
       // Act
@@ -242,11 +245,12 @@ describe('useFormML', () => {
     // TODO: touch all fields before submit
   })
 
-  describe('FormML', () => {
-    const dummyDsl = `
+  describe('FormML', async () => {
+    const dummySchema = await parse(`
       form ExampleForm {
         num numberField
-      }`
+      }
+    `)
 
     test('should provide FormML instance via context', () => {
       // Arrange
@@ -256,10 +260,10 @@ describe('useFormML', () => {
         return null
       }
 
-      const stubFormML = new FormML(dummyDsl)
+      const stubFormML = new FormML(dummySchema)
       vi.mocked(FormML).mockReturnValue(stubFormML)
 
-      const { result } = renderHook(() => useFormML(dummyDsl))
+      const { result } = renderHook(() => useFormML(dummySchema))
       const { FormML: FormMLWrapper } = result.current
 
       // Act
@@ -284,7 +288,7 @@ describe('useFormML', () => {
       const renderPhases: string[] = []
 
       const Parent = ({ count }: { count: number }) => {
-        const { FormML } = useFormML(dummyDsl)
+        const { FormML } = useFormML(dummySchema)
         return (
           <>
             <FormML>
@@ -309,19 +313,20 @@ describe('useFormML', () => {
     })
   })
 
-  describe('instance', () => {
-    const dummyDsl = `
+  describe('instance', async () => {
+    const dummySchema = await parse(`
       form ExampleForm {
         num numberField
-      }`
+      }
+    `)
 
     test('should return FormML instance', () => {
       // Arrange
-      const stubFormML = new FormML(dummyDsl)
+      const stubFormML = new FormML(dummySchema)
       vi.mocked(FormML).mockReturnValue(stubFormML)
 
       // Act
-      const { result } = renderHook(() => useFormML(dummyDsl))
+      const { result } = renderHook(() => useFormML(dummySchema))
 
       // Assert
       expect(result.current.instance).toBe(stubFormML)

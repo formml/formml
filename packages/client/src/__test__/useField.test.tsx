@@ -1,3 +1,4 @@
+import { createFormMLParser } from '@formml/dsl'
 import { act, renderHook, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 
@@ -8,6 +9,8 @@ import { renderWithContext } from './helpers/renderWithContext.js'
 import suppressErrorOutput from './helpers/suppressErrorOutput.js'
 
 describe('useField', () => {
+  const parse = createFormMLParser()
+
   describe('hook only', () => {
     let restoreConsole: () => void
 
@@ -26,18 +29,18 @@ describe('useField', () => {
       )
     })
 
-    test('should throw if index can not be recognized', () => {
+    test('should throw if index can not be recognized', async () => {
       // Arrange
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
-          num   numberField
-          decimal decimalField
+          num      numberField
+          decimal  decimalField
           text     textField
-          bool	 boolField
+          bool	   boolField
           datetime datetimeField
         }
-      `
-      const formML = new FormML(dsl)
+      `)
+      const formML = new FormML(schema)
       const invalidIndex = {}
 
       // Act & Assert
@@ -46,18 +49,18 @@ describe('useField', () => {
       ).toThrow(/Given index is invalid, index provided:[\s\S]+/g)
     })
 
-    test('should return field pack given valid index', () => {
+    test('should return field pack given valid index', async () => {
       // Arrange
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
-          num   numberField
-          decimal decimalField
+          num      numberField
+          decimal  decimalField
           text     textField
-          bool	 boolField
+          bool	   boolField
           datetime datetimeField
         }
-      `
-      const formML = new FormML(dsl)
+      `)
+      const formML = new FormML(schema)
       const index = formML.indexRoot['numberField']
 
       // Act
@@ -90,14 +93,14 @@ describe('useField', () => {
       })
     })
 
-    test('should return new value if onChange triggered', () => {
+    test('should return new value if onChange triggered', async () => {
       // Arrange
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           num numberField
         }
-      `
-      const formML = new FormML(dsl)
+      `)
+      const formML = new FormML(schema)
       const index = formML.indexRoot['numberField']
       const { result } = renderHookWithContext(() => useField(index), formML)
 
@@ -112,14 +115,14 @@ describe('useField', () => {
       expect(result.current.field.value).toEqual('1')
     })
 
-    test('should return new touched if onBlur triggered', () => {
+    test('should return new touched if onBlur triggered', async () => {
       // Arrange
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           num numberField
         }
-      `
-      const formML = new FormML(dsl)
+      `)
+      const formML = new FormML(schema)
       const index = formML.indexRoot['numberField']
       const { result } = renderHookWithContext(() => useField(index), formML)
 
@@ -132,14 +135,14 @@ describe('useField', () => {
       expect(result.current.meta.touched).toBe(true)
     })
 
-    test('should return new typed value if onBlur triggered', () => {
+    test('should return new typed value if onBlur triggered', async () => {
       // Arrange
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           text textField
         }
-      `
-      const formML = new FormML(dsl)
+      `)
+      const formML = new FormML(schema)
       const index = formML.indexRoot['textField']
       const { result } = renderHookWithContext(() => useField(index), formML)
 
@@ -155,14 +158,14 @@ describe('useField', () => {
       expect(result.current.meta.typedValue).toEqual('123')
     })
 
-    test('should return new typed value if not-first-time onBlur triggered', () => {
+    test('should return new typed value if not-first-time onBlur triggered', async () => {
       // Arrange
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           text textField
         }
-      `
-      const formML = new FormML(dsl)
+      `)
+      const formML = new FormML(schema)
       const index = formML.indexRoot['textField']
       const { result } = renderHookWithContext(() => useField(index), formML)
 
@@ -197,15 +200,15 @@ describe('useField', () => {
       expect(result.current.meta.typedValue).toEqual('second time')
     })
 
-    test('should return new validation result if onBlur triggered', () => {
+    test('should return new validation result if onBlur triggered', async () => {
       // Arrange
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           @required
           num numberField
         }
-      `
-      const formML = new FormML(dsl)
+      `)
+      const formML = new FormML(schema)
       const index = formML.indexRoot['numberField']
       const { result } = renderHookWithContext(() => useField(index), formML)
 
@@ -222,15 +225,15 @@ describe('useField', () => {
       )
     })
 
-    test('should return new validation result if onChange triggered', () => {
+    test('should return new validation result if onChange triggered', async () => {
       // Arrange
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           @required
           num numberField
         }
-      `
-      const formML = new FormML(dsl)
+      `)
+      const formML = new FormML(schema)
       const index = formML.indexRoot['numberField']
       const { result } = renderHookWithContext(() => useField(index), formML)
 
@@ -256,12 +259,12 @@ describe('useField', () => {
         return <input {...field} />
       }
 
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           num numberField
         }
-      `
-      const formML = new FormML(dsl)
+      `)
+      const formML = new FormML(schema)
       const index = formML.indexRoot['numberField']
 
       renderWithContext(<TestInput index={index} />, formML)
@@ -289,12 +292,12 @@ describe('useField', () => {
         )
       }
 
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           num numberField
         }
-      `
-      const formML = new FormML(dsl)
+      `)
+      const formML = new FormML(schema)
       const index = formML.indexRoot['numberField']
 
       renderWithContext(<TestInput index={index} />, formML)
@@ -326,13 +329,13 @@ describe('useField', () => {
         )
       }
 
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           @required
           num numberField
         }
-      `
-      const formML = new FormML(dsl)
+      `)
+      const formML = new FormML(schema)
       const index = formML.indexRoot['numberField']
 
       renderWithContext(<TestInput index={index} />, formML)
@@ -364,13 +367,13 @@ describe('useField', () => {
         )
       }
 
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           @required
           num numberField
         }
-      `
-      const formML = new FormML(dsl)
+      `)
+      const formML = new FormML(schema)
       const index = formML.indexRoot['numberField']
 
       renderWithContext(<TestInput index={index} />, formML)
@@ -396,14 +399,14 @@ describe('useField', () => {
   })
 
   describe('performance', () => {
-    test('should subscribe only once', () => {
+    test('should subscribe only once', async () => {
       // Arrange
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           num numberField
         }
-      `
-      const formML = new FormML(dsl)
+      `)
+      const formML = new FormML(schema)
       const spiedSubscribe = vi.spyOn(formML, 'subscribe')
       const index = formML.indexRoot['numberField']
 
@@ -415,15 +418,15 @@ describe('useField', () => {
       expect(spiedSubscribe).toBeCalledTimes(1)
     })
 
-    test('should re-subscribe if index changes', () => {
+    test('should re-subscribe if index changes', async () => {
       // Arrange
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           num numberFieldA
           num numberFieldB
         }
-      `
-      const formML = new FormML(dsl)
+      `)
+      const formML = new FormML(schema)
       const spiedSubscribe = vi.spyOn(formML, 'subscribe')
       const indexA = formML.indexRoot['numberFieldA']
       const indexB = formML.indexRoot['numberFieldB']
@@ -438,14 +441,14 @@ describe('useField', () => {
       expect(spiedSubscribe).toBeCalledTimes(2)
     })
 
-    test('should return stable reference when re-rendering', () => {
+    test('should return stable reference when re-rendering', async () => {
       // Arrange
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           num numberField
         }
-      `
-      const formML = new FormML(dsl)
+      `)
+      const formML = new FormML(schema)
       const index = formML.indexRoot['numberField']
 
       const { rerender, result } = renderHookWithContext(
@@ -461,15 +464,15 @@ describe('useField', () => {
       expect(result.current).toBe(firstResult)
     })
 
-    test('should return stable references when re-rendering multiple hooks', () => {
+    test('should return stable references when re-rendering multiple hooks', async () => {
       // Arrange
-      const dsl = `
+      const schema = await parse(`
         form ExampleForm {
           num numberFieldA
           num numberFieldB
         }
-      `
-      const formML = new FormML(dsl)
+      `)
+      const formML = new FormML(schema)
       const indexA = formML.indexRoot['numberFieldA']
       const indexB = formML.indexRoot['numberFieldB']
 

@@ -1,3 +1,4 @@
+import { createFormMLParser } from '@formml/dsl'
 import { render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import dayjs from 'dayjs'
@@ -7,14 +8,16 @@ import { Field } from '../Field.js'
 import { useFormML } from '../useFormML.js'
 
 describe('Field', () => {
+  const parse = createFormMLParser()
+
   describe('as input', () => {
-    test('should render as an input element by default', () => {
+    test('should render as an input element by default', async () => {
       // Arrange
-      const schema = `
+      const schema = await parse(`
         form ExampleForm {
           text textField
         }
-      `
+      `)
       const Form = () => {
         const { $form, FormML } = useFormML(schema)
         return (
@@ -35,13 +38,13 @@ describe('Field', () => {
       expect(input).toHaveValue('')
     })
 
-    test('should render input element if given explicit target', () => {
+    test('should render input element if given explicit target', async () => {
       // Arrange
-      const schema = `
+      const schema = await parse(`
         form ExampleForm {
           text textField
         }
-      `
+      `)
       const Form = () => {
         const { $form, FormML } = useFormML(schema)
         return (
@@ -62,13 +65,13 @@ describe('Field', () => {
       expect(input).toHaveValue('')
     })
 
-    test('should accept all valid input attributes', () => {
+    test('should accept all valid input attributes', async () => {
       // Arrange
-      const schema = `
+      const schema = await parse(`
         form ExampleForm {
           text textField
         }
-      `
+      `)
       const extraAttrs = {
         'aria-label': 'abc',
         'data-testid': 'abc',
@@ -112,11 +115,11 @@ describe('Field', () => {
 
     test('should allow to override injected attributes', async () => {
       // Arrange
-      const schema = `
+      const schema = await parse(`
         form ExampleForm {
           text textField
         }
-      `
+      `)
       const mockOnChange = vi.fn()
       const mockOnBlur = vi.fn()
 
@@ -152,13 +155,13 @@ describe('Field', () => {
       expect(mockOnBlur).toBeCalled()
     })
 
-    test('should forward ref to underlying input', () => {
+    test('should forward ref to underlying input', async () => {
       // Arrange
-      const schema = `
+      const schema = await parse(`
         form ExampleForm {
           text textField
         }
-      `
+      `)
       let actualRef: HTMLInputElement | null = null
 
       const Form = () => {
@@ -185,11 +188,11 @@ describe('Field', () => {
 
     test('should show latest value when user inputs', async () => {
       // Arrange
-      const schema = `
+      const schema = await parse(`
         form ExampleForm {
           text textField
         }
-      `
+      `)
 
       const Form = () => {
         const { $form, FormML } = useFormML(schema)
@@ -213,13 +216,13 @@ describe('Field', () => {
 
     describe('heuristic default behaviors', () => {
       describe('num', () => {
-        test('should render a number input if field type is number', () => {
+        test('should render a number input if field type is number', async () => {
           // Arrange
-          const schema = `
+          const schema = await parse(`
             form ExampleForm {
               num numberField
             }
-          `
+          `)
           const Form = () => {
             const { $form, FormML } = useFormML(schema)
             return (
@@ -240,13 +243,13 @@ describe('Field', () => {
       })
 
       describe('decimal', () => {
-        test('should render a number input if field type is decimal', () => {
+        test('should render a number input if field type is decimal', async () => {
           // Arrange
-          const schema = `
+          const schema = await parse(`
             form ExampleForm {
               decimal decimalField
             }
-          `
+          `)
           const Form = () => {
             const { $form, FormML } = useFormML(schema)
             return (
@@ -267,13 +270,13 @@ describe('Field', () => {
       })
 
       describe('bool', () => {
-        test('should render a checkbox input if field type is bool', () => {
+        test('should render a checkbox input if field type is bool', async () => {
           // Arrange
-          const schema = `
+          const schema = await parse(`
             form ExampleForm {
               bool boolField
             }
-          `
+          `)
           const Form = () => {
             const { $form, FormML } = useFormML(schema)
             return (
@@ -295,11 +298,11 @@ describe('Field', () => {
 
         test('should update checked status and form by user action', async () => {
           // Arrange
-          const schema = `
+          const schema = await parse(`
             form ExampleForm {
               bool boolField
             }
-          `
+          `)
           const mockOnSubmit = vi.fn((_, event: FormEvent<HTMLFormElement>) => {
             event.preventDefault()
           })
@@ -336,11 +339,11 @@ describe('Field', () => {
 
         test('should have no value attribute by default', async () => {
           // Arrange
-          const schema = `
+          const schema = await parse(`
             form ExampleForm {
               bool boolField
             }
-          `
+          `)
           const Form = () => {
             const { $form, FormML } = useFormML(schema)
             return (
@@ -365,13 +368,13 @@ describe('Field', () => {
       })
 
       describe('datetime', () => {
-        test('should render a datetime-local input if field type is datetime', () => {
+        test('should render a datetime-local input if field type is datetime', async () => {
           // Arrange
-          const schema = `
+          const schema = await parse(`
             form ExampleForm {
               datetime datetimeField
             }
-          `
+          `)
           const Form = () => {
             const { $form, FormML } = useFormML(schema)
             return (
@@ -406,11 +409,11 @@ describe('Field', () => {
           'should format value given to input',
           async ({ expectedValue, time }) => {
             // Arrange
-            const schema = `
+            const schema = await parse(`
               form ExampleForm {
                 datetime datetimeField
               }
-            `
+            `)
             const Form = () => {
               const { $form, FormML, instance } = useFormML(schema)
               return (
@@ -449,13 +452,13 @@ describe('Field', () => {
   })
 
   describe('as textarea', () => {
-    test('should render as textarea', () => {
+    test('should render as textarea', async () => {
       // Arrange
-      const schema = `
+      const schema = await parse(`
         form ExampleForm {
           text textField
         }
-      `
+      `)
       const Form = () => {
         const { $form, FormML } = useFormML(schema)
         return (
