@@ -46,4 +46,24 @@ describe('IndexManager', () => {
       },
     })
   })
+
+  test('should get schema by index', async () => {
+    // Arrange
+    const schema = await parse(`
+      form ExampleForm {
+        num numField
+      }
+    `)
+
+    // Act
+    const indexManager = new IndexManager(schema)
+
+    // Assert
+    expect(indexManager.for(indexManager.root).get('schema')).toBe(schema.form)
+
+    const fieldIndex = indexManager.root['numField']
+    expect(indexManager.for(fieldIndex).get('schema')).toBe(
+      schema.form.fields[0],
+    )
+  })
 })
