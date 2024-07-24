@@ -94,6 +94,9 @@ importers:
       eslint-plugin-turbo:
         specifier: ^1.11.3
         version: 1.11.3(eslint@8.56.0)
+      hotscript:
+        specifier: ^1.0.13
+        version: 1.0.13
       husky:
         specifier: ^8.0.3
         version: 8.0.3
@@ -4208,6 +4211,12 @@ packages:
         integrity: sha512-kyCuEOWjJqZuDbRHzL8V93NzQhwIB71oFWSyzVo+KPZI+pnQPPxucdkrOZvkLRnrf5URsQM+IJ09Dw29cRALIA==,
       }
     engines: { node: '>=10' }
+
+  hotscript@1.0.13:
+    resolution:
+      {
+        integrity: sha512-C++tTF1GqkGYecL+2S1wJTfoH6APGAsbb7PAWQ3iVIwgG/EFseAfEVOKFgAFq4yK3+6j1EjUD4UQ9dRJHX/sSQ==,
+      }
 
   html-encoding-sniffer@4.0.0:
     resolution:
@@ -10420,6 +10429,8 @@ snapshots:
   hosted-git-info@4.1.0:
     dependencies:
       lru-cache: 6.0.0
+
+  hotscript@1.0.13: {}
 
   html-encoding-sniffer@4.0.0:
     dependencies:

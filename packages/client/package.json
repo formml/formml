@@ -36,8 +36,8 @@
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "lint:type": "tsc",
-    "test": "vitest run",
-    "test:watch": "vitest watch"
+    "test": "vitest run --typecheck",
+    "test:watch": "vitest watch --typecheck"
   },
   "dependencies": {
     "@formml/dsl": "workspace:^",
