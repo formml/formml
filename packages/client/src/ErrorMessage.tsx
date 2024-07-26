@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { AnyIndex } from './IndexManager.js'
 import { useField } from './useField.js'
 
 function ErrorMessageImpl(
@@ -8,7 +9,7 @@ function ErrorMessageImpl(
     as,
     ...props
   }: {
-    $bind: object
+    $bind: AnyIndex
     as?: keyof React.ReactHTML
   } & React.HTMLAttributes<HTMLElement>,
   ref: React.Ref<HTMLElement>,
@@ -20,10 +21,10 @@ function ErrorMessageImpl(
 }
 
 type ErrorMessageComponent = {
-  (props: { $bind: object }): React.ReactNode
+  (props: { $bind: AnyIndex }): React.ReactNode
   <TElementName extends keyof React.ReactHTML>(
     props: {
-      $bind: object
+      $bind: AnyIndex
       as: TElementName
     } & React.ComponentPropsWithRef<TElementName>,
   ): React.ReactNode

@@ -1,9 +1,10 @@
 import type { ObjectPathItem } from 'valibot'
 
-import { Field, FormMLSchema } from '@formml/dsl'
+import { Field, Form, FormMLSchema } from '@formml/dsl'
 import { reactive, toRaw } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
 
+import IndexManager, { AnyIndex, IndexRoot } from './IndexManager.js'
 import * as JsTypes from './JsTypes.js'
 import validate from './decorators/validate.js'
 import { DeepPartial, mergeOptions } from './utils/options.js'
@@ -32,28 +33,24 @@ export type FieldResult = {
   value: JsTypes.PrimitiveType
 }
 
-function buildIndexes(schema: FormMLSchema) {
-  const indexRoot: Record<string, object> = {}
-  const indexToSchema = new Map<object, Field>()
-  for (const field of schema.form.fields) {
-    const fieldIndex = { $type: field.type }
-    indexRoot[field.name] = fieldIndex
-    indexToSchema.set(fieldIndex, field)
-  }
-  return [indexRoot, indexToSchema] as const
-}
-
 function buildInputValidators(
-  indexToSchema: Map<object, Field>,
+  im: IndexManager<FormMLSchema>,
 ): Map<object, Validator<string>> {
   const validators = new Map<object, Validator<string>>()
-  for (const [index, schema] of indexToSchema) {
-    validators.set(index, createInputValidator(schema))
+  validators.set(
+    im.root,
+    createInputValidator(im.for(im.root).get('schema') as Form),
+  )
+  for (const index of Object.values(im.root)) {
+    validators.set(
+      index,
+      createInputValidator(im.for(index).get('schema') as Field),
+    )
   }
   return validators
 }
 
-export class FormML {
+export class FormML<T extends FormMLSchema = FormMLSchema> {
   private readonly _fieldsInternalState: Record<
     string,
     { isInitiallyValidated: boolean }
@@ -63,6 +60,7 @@ export class FormML {
     { error: ValidationError | undefined; touched: boolean }
   > = reactive({})
   private readonly _formValidator: Validator<Record<string, string>>
+  private readonly _im: IndexManager<T>
   private readonly _indexToHelpers: Map<
     object,
     {
@@ -74,16 +72,14 @@ export class FormML {
     }
   > = new Map()
   private readonly _indexToInputValidator: Map<object, Validator<string>>
-  private readonly _indexToSchema: Map<object, Field>
   private readonly _schema: FormMLSchema
   private readonly _typedValuesProxy: Record<string, JsTypes.PrimitiveType> =
     reactive({})
   private readonly _valuesProxy: Record<string, string> = reactive({})
 
-  public readonly indexRoot: Record<string, object>
   public readonly options: FormMLOptions
 
-  constructor(schema: FormMLSchema, options?: DeepPartial<FormMLOptions>) {
+  constructor(schema: T, options?: DeepPartial<FormMLOptions>) {
     this._schema = schema
     this.options = mergeOptions(options, {
       preValidateOn: {
@@ -92,9 +88,8 @@ export class FormML {
       },
     })
 
-    // TODO: index manager
-    ;[this.indexRoot, this._indexToSchema] = buildIndexes(this._schema)
-    this._indexToInputValidator = buildInputValidators(this._indexToSchema)
+    this._im = new IndexManager(schema)
+    this._indexToInputValidator = buildInputValidators(this._im)
     this._formValidator = createInputValidator(this._schema.form)
 
     for (const fieldIndex of Object.values(this.indexRoot)) {
@@ -102,20 +97,8 @@ export class FormML {
     }
   }
 
-  private getSchemaByIndex(index: object) {
-    const schema = this._indexToSchema.get(index)
-
-    if (schema === undefined) {
-      throw new Error(
-        `Given index is invalid, index provided:
-        ${JSON.stringify(index, undefined, 2)}`,
-      )
-    }
-    return schema
-  }
-
-  private initField(index: object) {
-    const schema = this.getSchemaByIndex(index)
+  private initField(index: AnyIndex) {
+    const schema = this._im.for(index).get('schema') as Field
     const { name } = schema
 
     this._valuesProxy[name] = ''
@@ -143,23 +126,23 @@ export class FormML {
   }
 
   @validate({ eventName: 'blur' })
-  blur(index: object) {
-    const schema = this.getSchemaByIndex(index)
+  blur(index: AnyIndex) {
+    const schema = this._im.for(index).get('schema') as Field
     const name = schema.name
 
     this._fieldsMetaProxy[name].touched = true
   }
 
-  commitRawValue(index: object) {
-    const schema = this.getSchemaByIndex(index)
+  commitRawValue(index: AnyIndex) {
+    const schema = this._im.for(index).get('schema') as Field
     const { name, type } = schema
 
     const rawValue = this._valuesProxy[name]
     this._typedValuesProxy[name] = JsTypes.parse(rawValue, type)
   }
 
-  getField(index: object): FieldResult {
-    const schema = this.getSchemaByIndex(index)
+  getField(index: AnyIndex): FieldResult {
+    const schema = this._im.for(index).get('schema') as Field
     const { name } = schema
 
     return {
@@ -178,16 +161,16 @@ export class FormML {
   }
 
   @validate({ eventName: 'change' })
-  setRawValue(index: object, value: string) {
-    const schema = this.getSchemaByIndex(index)
+  setRawValue(index: AnyIndex, value: string) {
+    const schema = this._im.for(index).get('schema') as Field
     const { name } = schema
 
     this._valuesProxy[name] = value
   }
 
   @validate({ eventName: 'change' })
-  setTypedValue(index: object, value: JsTypes.PrimitiveType) {
-    const schema = this.getSchemaByIndex(index)
+  setTypedValue(index: AnyIndex, value: JsTypes.PrimitiveType) {
+    const schema = this._im.for(index).get('schema') as Field
     const name = schema.name
 
     this._typedValuesProxy[name] = value
@@ -195,16 +178,16 @@ export class FormML {
   }
 
   @validate({ eventName: 'change' })
-  setValue(index: object, value: JsTypes.PrimitiveType) {
-    const schema = this.getSchemaByIndex(index)
+  setValue(index: AnyIndex, value: JsTypes.PrimitiveType) {
+    const schema = this._im.for(index).get('schema') as Field
     const name = schema.name
 
     this._typedValuesProxy[name] = value
     this._valuesProxy[name] = JsTypes.stringify(value)
   }
 
-  subscribe(index: object, callback: () => void): () => void {
-    const schema = this.getSchemaByIndex(index)
+  subscribe(index: AnyIndex, callback: () => void): () => void {
+    const schema = this._im.for(index).get('schema') as Field
     const name = schema.name
 
     return watch(
@@ -219,11 +202,11 @@ export class FormML {
   }
 
   validate(
-    index: object,
+    index: AnyIndex,
   ):
     | { error: ValidationError; isValid: false }
     | { error: undefined; isValid: true } {
-    const schema = this.getSchemaByIndex(index)
+    const schema = this._im.for(index).get('schema') as Field
     const name = schema.name
 
     const result = this._indexToInputValidator.get(index)!(
@@ -258,5 +241,9 @@ export class FormML {
       }
     }
     return result
+  }
+
+  public get indexRoot(): IndexRoot<T> {
+    return this._im.root
   }
 }

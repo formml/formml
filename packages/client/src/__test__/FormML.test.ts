@@ -178,7 +178,7 @@ describe('FormML', () => {
         const invalidIndex = {}
         expect(() =>
           (formML[methodName] as (index: object) => void)(invalidIndex),
-        ).toThrow(/Given index is invalid, index provided:[\s\S]+/g)
+        ).toThrow(/Given index is invalid, provided index:[\s\S]+/g)
       },
     )
 

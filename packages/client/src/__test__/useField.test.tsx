@@ -3,6 +3,7 @@ import { act, renderHook, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 
 import { FormML } from '../FormML.js'
+import { AnyIndex } from '../IndexManager.js'
 import { useField } from '../useField.js'
 import { renderHookWithContext } from './helpers/renderHookWithContext.js'
 import { renderWithContext } from './helpers/renderWithContext.js'
@@ -23,7 +24,7 @@ describe('useField', () => {
     })
 
     test('should throw if has no context', () => {
-      const dummyIndex = {}
+      const dummyIndex = {} as AnyIndex
       expect(() => renderHook(() => useField(dummyIndex))).toThrow(
         '`useFormMLContext` must be used within a `FormMLProvider`',
       )
@@ -41,12 +42,12 @@ describe('useField', () => {
         }
       `)
       const formML = new FormML(schema)
-      const invalidIndex = {}
+      const invalidIndex = {} as AnyIndex
 
       // Act & Assert
       expect(() =>
         renderHookWithContext(() => useField(invalidIndex), formML),
-      ).toThrow(/Given index is invalid, index provided:[\s\S]+/g)
+      ).toThrow(/Given index is invalid, provided index:[\s\S]+/g)
     })
 
     test('should return field pack given valid index', async () => {
@@ -254,7 +255,7 @@ describe('useField', () => {
   describe('integration', () => {
     test('should update value properly when user inputs', async () => {
       // Arrange
-      const TestInput = ({ index }: { index: object }) => {
+      const TestInput = ({ index }: { index: AnyIndex }) => {
         const { field } = useField(index)
         return <input {...field} />
       }
@@ -282,7 +283,7 @@ describe('useField', () => {
 
     test('should update touched properly when user blurs', async () => {
       // Arrange
-      const TestInput = ({ index }: { index: object }) => {
+      const TestInput = ({ index }: { index: AnyIndex }) => {
         const { field, meta } = useField(index)
         return (
           <>
@@ -317,7 +318,7 @@ describe('useField', () => {
 
     test('should update error properly when user blurs', async () => {
       // Arrange
-      const TestInput = ({ index }: { index: object }) => {
+      const TestInput = ({ index }: { index: AnyIndex }) => {
         const { field, meta } = useField(index)
         return (
           <>
@@ -355,7 +356,7 @@ describe('useField', () => {
 
     test('should update error properly when user types after initial validation', async () => {
       // Arrange
-      const TestInput = ({ index }: { index: object }) => {
+      const TestInput = ({ index }: { index: AnyIndex }) => {
         const { field, meta } = useField(index)
         return (
           <>

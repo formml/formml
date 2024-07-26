@@ -6,6 +6,7 @@ import type { FieldResult } from './FormML.js'
 import type { PrimitiveType } from './JsTypes.js'
 import type { ValidationError } from './validator/index.js'
 
+import { AnyIndex } from './IndexManager.js'
 import { useFormMLContext } from './useFormMLContext.js'
 import { createMemoSelectorGrouper } from './utils/createMemoSelectorGrouper.js'
 
@@ -74,7 +75,7 @@ const selectFieldPackByIndex = createMemoSelectorGrouper(
   }),
 )
 
-export function useField(index: object): FieldPack {
+export function useField(index: AnyIndex): FieldPack {
   const formML = useFormMLContext()
 
   return useSyncExternalStore(

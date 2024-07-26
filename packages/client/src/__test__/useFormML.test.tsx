@@ -50,23 +50,32 @@ describe('useFormML', () => {
       const { result } = renderHook(() => useFormML(schema))
 
       // Assert
-      expect(result.current.$form).toEqual({
-        boolField: {
-          $type: 'bool',
-        },
-        datetimeField: {
-          $type: 'datetime',
-        },
-        decimalField: {
-          $type: 'decimal',
-        },
-        numberField: {
-          $type: 'num',
-        },
-        textField: {
-          $type: 'text',
-        },
-      })
+      expect(result.current.$form).toMatchInlineSnapshot(`
+        {
+          "boolField": {
+            Symbol(name): "boolField",
+            Symbol(type): "bool",
+          },
+          "datetimeField": {
+            Symbol(name): "datetimeField",
+            Symbol(type): "datetime",
+          },
+          "decimalField": {
+            Symbol(name): "decimalField",
+            Symbol(type): "decimal",
+          },
+          "numberField": {
+            Symbol(name): "numberField",
+            Symbol(type): "num",
+          },
+          "textField": {
+            Symbol(name): "textField",
+            Symbol(type): "text",
+          },
+          Symbol(name): "ExampleForm",
+          Symbol(type): "form",
+        }
+      `)
     })
 
     test('should re-create indexes when schema changes', async () => {
