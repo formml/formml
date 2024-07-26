@@ -1,4 +1,4 @@
-import { generics } from '@formml/dsl'
+import { FormMLAstType, generics } from '@formml/dsl'
 import * as H from 'hotscript'
 
 // private symbols
@@ -88,7 +88,10 @@ type InferIndex<T> = T extends generics.Form
 export type IndexRoot<T extends generics.FormMLSchema> = InferIndex<T['form']>
 
 export default class IndexManager<T extends generics.FormMLSchema> {
-  private readonly stores: Map<AnyIndex, Store> = new Map()
+  private readonly stores: Map<
+    AnyIndex,
+    Store<{ schema: H.Call<H.Objects.Values, FormMLAstType> }>
+  > = new Map()
 
   public readonly root: IndexRoot<T>
 
@@ -128,17 +131,17 @@ export default class IndexManager<T extends generics.FormMLSchema> {
   }
 }
 
-class Store {
-  private readonly store: Record<string, unknown> = {}
+class Store<T extends Record<string, unknown>> {
+  private readonly store: Partial<T> = {}
 
-  get(key: string): unknown {
+  get<K extends keyof T>(key: K): T[K] {
     if (!(key in this.store)) {
-      throw new Error(`Key ${key} does not exist in this store.`)
+      throw new Error(`Key ${String(key)} does not exist in this store.`)
     }
-    return this.store[key]
+    return this.store[key] as T[K]
   }
 
-  set(key: string, value: unknown) {
+  set<K extends keyof T>(key: K, value: T[K]) {
     this.store[key] = value
   }
 }

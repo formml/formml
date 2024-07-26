@@ -1,4 +1,4 @@
-import { FormMLSchema, generics } from '@formml/dsl'
+import { FormMLAstType, FormMLSchema, generics } from '@formml/dsl'
 
 import IndexManager, {
   AnyIndex,
@@ -48,6 +48,21 @@ describe('IndexManager', () => {
         numField: NumIndex
         textField: TextIndex
       }>()
+    })
+  })
+
+  describe('store', () => {
+    test('should get schema with union type', () => {
+      // Arrange
+      const schema: FormMLSchema = {} as FormMLSchema
+
+      // Act
+      const indexManager = new IndexManager(schema)
+
+      // Assert
+      expectTypeOf(
+        indexManager.for(indexManager.root).get('schema'),
+      ).toEqualTypeOf<FormMLAstType[keyof FormMLAstType]>()
     })
   })
 })
