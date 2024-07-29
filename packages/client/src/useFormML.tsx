@@ -1,6 +1,9 @@
+import { FormMLSchema } from '@formml/dsl'
+import * as H from 'hotscript'
 import React from 'react'
 
 import { FormML } from './FormML.js'
+import { IndexRoot } from './IndexManager.js'
 import { FormMLProvider } from './useFormMLContext.js'
 import { useConstant } from './utils/useConstant.js'
 import { ValidationError } from './validator/index.js'
@@ -11,7 +14,14 @@ export type SubmitHandler = (
 ) => void
 export type SubmitErrorHandler = (errors: ValidationError[]) => void
 
-export function useFormML(...props: ConstructorParameters<typeof FormML>) {
+type NonGenericParams = H.Call<
+  H.Tuples.Drop<1>,
+  ConstructorParameters<typeof FormML>
+>
+
+export function useFormML<T extends FormMLSchema>(
+  ...props: [T, ...NonGenericParams]
+) {
   const formML = useConstant(() => new FormML(...props), props)
 
   const handleSubmit =
@@ -38,7 +48,7 @@ export function useFormML(...props: ConstructorParameters<typeof FormML>) {
   )
 
   return {
-    $form: formML.indexRoot,
+    $form: formML.indexRoot as IndexRoot<T>,
     FormML: FormMLWrapper,
     handleSubmit,
     instance: formML,

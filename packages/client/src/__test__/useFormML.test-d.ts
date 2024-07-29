@@ -1,6 +1,6 @@
-import { FormMLAstType, FormMLSchema, generics } from '@formml/dsl'
+import { FormMLSchema, generics } from '@formml/dsl'
 
-import IndexManager, {
+import {
   AnyIndex,
   BoolIndex,
   DatetimeIndex,
@@ -8,18 +8,19 @@ import IndexManager, {
   NumIndex,
   TextIndex,
 } from '../IndexManager.js'
+import { useFormML } from '../useFormML.js'
 
-describe('IndexManager', () => {
+describe('useFormML', () => {
   describe('indexes', () => {
     test('should contain uncertain children given a generic schema', () => {
       // Arrange
       const schema = {} as FormMLSchema
 
       // Act
-      const indexManager = new IndexManager(schema)
+      const { $form } = useFormML(schema)
 
       // Assert
-      expectTypeOf(indexManager.root).toMatchTypeOf<Record<string, AnyIndex>>()
+      expectTypeOf($form).toMatchTypeOf<Record<string, AnyIndex>>()
     })
 
     test('should contain children indexes given a concrete schema', () => {
@@ -38,31 +39,16 @@ describe('IndexManager', () => {
       >
 
       // Act
-      const indexManager = new IndexManager(schema)
+      const { $form } = useFormML(schema)
 
       // Assert
-      expectTypeOf(indexManager.root).toMatchTypeOf<{
+      expectTypeOf($form).toMatchTypeOf<{
         boolField: BoolIndex
         datetimeField: DatetimeIndex
         decimalField: DecimalIndex
         numField: NumIndex
         textField: TextIndex
       }>()
-    })
-  })
-
-  describe('store', () => {
-    test('should get schema with union type', () => {
-      // Arrange
-      const schema: FormMLSchema = {} as FormMLSchema
-
-      // Act
-      const indexManager = new IndexManager(schema)
-
-      // Assert
-      expectTypeOf(
-        indexManager.for(indexManager.root).get('schema'),
-      ).toEqualTypeOf<FormMLAstType[keyof FormMLAstType]>()
     })
   })
 })
