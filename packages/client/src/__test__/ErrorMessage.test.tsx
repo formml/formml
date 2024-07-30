@@ -5,7 +5,7 @@ import React from 'react'
 
 import ErrorMessage from '../ErrorMessage.js'
 import { Field } from '../Field.js'
-import { AnyIndex } from '../IndexManager.js'
+import { BaseIndex } from '../IndexManager.js'
 import { useField } from '../useField.js'
 import { useFormML } from '../useFormML.js'
 
@@ -84,7 +84,7 @@ describe('ErrorMessage', () => {
           num numberField
         }
       `)
-      const SimpleInput = ({ $bind }: { $bind: AnyIndex }) => {
+      const SimpleInput = ({ $bind }: { $bind: BaseIndex }) => {
         const { field } = useField($bind)
         return <input {...field} />
       }

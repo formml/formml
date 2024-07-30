@@ -15,8 +15,8 @@ export interface BaseIndex {
   [IndexTypeSymbol]: string
 }
 
-export interface AnyIndex extends BaseIndex {
-  [child: string]: AnyIndex
+export interface GenericIndex extends BaseIndex {
+  [child: string]: GenericIndex
 }
 
 interface BaseFormIndex extends BaseIndex {
@@ -24,7 +24,7 @@ interface BaseFormIndex extends BaseIndex {
 }
 
 export type FormIndex<
-  TChildren extends Record<string, AnyIndex> = Record<string, AnyIndex>,
+  TChildren extends Record<string, BaseIndex> = Record<string, GenericIndex>,
 > = BaseFormIndex & TChildren
 
 export interface TextIndex extends BaseIndex {
@@ -78,7 +78,7 @@ type InferIndex<T> = T extends generics.Form
               H.Match.With<'bool', BoolIndex>,
               H.Match.With<'datetime', DatetimeIndex>,
               H.Match.With<'decimal', DecimalIndex>,
-              H.Match.With<string, AnyIndex>, // fallback
+              H.Match.With<string, GenericIndex>, // fallback
             ]
           >,
         ]
@@ -89,7 +89,7 @@ export type IndexRoot<T extends generics.FormMLSchema> = InferIndex<T['form']>
 
 export default class IndexManager<T extends generics.FormMLSchema> {
   private readonly stores: Map<
-    AnyIndex,
+    BaseIndex,
     Store<{ schema: H.Call<H.Objects.Values, FormMLAstType> }>
   > = new Map()
 
@@ -120,7 +120,7 @@ export default class IndexManager<T extends generics.FormMLSchema> {
     this.root = root as IndexRoot<T>
   }
 
-  for(index: AnyIndex) {
+  for(index: BaseIndex) {
     const store = this.stores.get(index)
     if (!store) {
       throw new Error(

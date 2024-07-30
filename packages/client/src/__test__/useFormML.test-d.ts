@@ -1,10 +1,10 @@
 import { FormMLSchema, generics } from '@formml/dsl'
 
 import {
-  AnyIndex,
   BoolIndex,
   DatetimeIndex,
   DecimalIndex,
+  GenericIndex,
   NumIndex,
   TextIndex,
 } from '../IndexManager.js'
@@ -20,7 +20,7 @@ describe('useFormML', () => {
       const { $form } = useFormML(schema)
 
       // Assert
-      expectTypeOf($form).toMatchTypeOf<Record<string, AnyIndex>>()
+      expectTypeOf($form).toMatchTypeOf<Record<string, GenericIndex>>()
     })
 
     test('should contain children indexes given a concrete schema', () => {

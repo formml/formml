@@ -4,7 +4,7 @@ import { Field, Form, FormMLSchema } from '@formml/dsl'
 import { reactive, toRaw } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
 
-import IndexManager, { AnyIndex, IndexRoot } from './IndexManager.js'
+import IndexManager, { BaseIndex, IndexRoot } from './IndexManager.js'
 import * as JsTypes from './JsTypes.js'
 import validate from './decorators/validate.js'
 import { DeepPartial, mergeOptions } from './utils/options.js'
@@ -97,7 +97,7 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
     }
   }
 
-  private initField(index: AnyIndex) {
+  private initField(index: BaseIndex) {
     const schema = this._im.for(index).get('schema') as Field
     const { name } = schema
 
@@ -126,14 +126,14 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
   }
 
   @validate({ eventName: 'blur' })
-  blur(index: AnyIndex) {
+  blur(index: BaseIndex) {
     const schema = this._im.for(index).get('schema') as Field
     const name = schema.name
 
     this._fieldsMetaProxy[name].touched = true
   }
 
-  commitRawValue(index: AnyIndex) {
+  commitRawValue(index: BaseIndex) {
     const schema = this._im.for(index).get('schema') as Field
     const { name, type } = schema
 
@@ -141,7 +141,7 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
     this._typedValuesProxy[name] = JsTypes.parse(rawValue, type)
   }
 
-  getField(index: AnyIndex): FieldResult {
+  getField(index: BaseIndex): FieldResult {
     const schema = this._im.for(index).get('schema') as Field
     const { name } = schema
 
@@ -161,7 +161,7 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
   }
 
   @validate({ eventName: 'change' })
-  setRawValue(index: AnyIndex, value: string) {
+  setRawValue(index: BaseIndex, value: string) {
     const schema = this._im.for(index).get('schema') as Field
     const { name } = schema
 
@@ -169,7 +169,7 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
   }
 
   @validate({ eventName: 'change' })
-  setTypedValue(index: AnyIndex, value: JsTypes.PrimitiveType) {
+  setTypedValue(index: BaseIndex, value: JsTypes.PrimitiveType) {
     const schema = this._im.for(index).get('schema') as Field
     const name = schema.name
 
@@ -178,7 +178,7 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
   }
 
   @validate({ eventName: 'change' })
-  setValue(index: AnyIndex, value: JsTypes.PrimitiveType) {
+  setValue(index: BaseIndex, value: JsTypes.PrimitiveType) {
     const schema = this._im.for(index).get('schema') as Field
     const name = schema.name
 
@@ -186,7 +186,7 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
     this._valuesProxy[name] = JsTypes.stringify(value)
   }
 
-  subscribe(index: AnyIndex, callback: () => void): () => void {
+  subscribe(index: BaseIndex, callback: () => void): () => void {
     const schema = this._im.for(index).get('schema') as Field
     const name = schema.name
 
@@ -202,7 +202,7 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
   }
 
   validate(
-    index: AnyIndex,
+    index: BaseIndex,
   ):
     | { error: ValidationError; isValid: false }
     | { error: undefined; isValid: true } {

@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { ChangeEvent, ForwardedRef, forwardRef } from 'react'
 
-import { AnyIndex } from './IndexManager.js'
+import { BaseIndex } from './IndexManager.js'
 import { FieldPack, useField } from './useField.js'
 import { omit } from './utils/omit.js'
 
@@ -43,7 +43,7 @@ type TextAreaProps = {
 } & React.ComponentPropsWithoutRef<'textarea'>
 
 type Props = {
-  $bind: AnyIndex
+  $bind: BaseIndex
 } & (InputProps | TextAreaProps)
 
 export const Field = forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>(

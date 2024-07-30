@@ -1,5 +1,5 @@
 import { FormML } from '../../FormML.js'
-import { AnyIndex } from '../../IndexManager.js'
+import { BaseIndex } from '../../IndexManager.js'
 import validate from '../validate.js'
 
 describe('validate', () => {
@@ -12,7 +12,7 @@ describe('validate', () => {
         options: { preValidateOn: { initial: 'change' } },
         validate: mockedValidate,
       } as unknown as FormML
-      const dummyIndex = {} as AnyIndex
+      const dummyIndex = {} as BaseIndex
       const dummyContext = {} as ClassMethodDecoratorContext
 
       // Act
@@ -34,7 +34,7 @@ describe('validate', () => {
           options: { preValidateOn: { initial: 'all' } },
           validate: mockedValidate,
         } as unknown as FormML
-        const dummyIndex = {} as AnyIndex
+        const dummyIndex = {} as BaseIndex
         const dummyContext = {} as ClassMethodDecoratorContext
 
         // Act
@@ -57,7 +57,7 @@ describe('validate', () => {
         options: { preValidateOn: { initial: 'change' } },
         validate: mockedValidate,
       } as unknown as FormML
-      const dummyIndex = {} as AnyIndex
+      const dummyIndex = {} as BaseIndex
       const dummyContext = {} as ClassMethodDecoratorContext
 
       // Act
@@ -77,7 +77,7 @@ describe('validate', () => {
         options: { preValidateOn: { initial: 'change' } },
         validate: mockedValidate,
       } as unknown as FormML
-      const dummyIndex = {} as AnyIndex
+      const dummyIndex = {} as BaseIndex
       const dummyContext = {} as ClassMethodDecoratorContext
 
       // Act
@@ -97,7 +97,7 @@ describe('validate', () => {
         options: { preValidateOn: { initial: 'change', subsequent: 'blur' } },
         validate: mockedValidate,
       } as unknown as FormML
-      const dummyIndex = {} as AnyIndex
+      const dummyIndex = {} as BaseIndex
       const dummyContext = {} as ClassMethodDecoratorContext
 
       const decorator = validate({ eventName: 'change' })
@@ -120,7 +120,7 @@ describe('validate', () => {
         options: { preValidateOn: { initial: 'change', subsequent: 'blur' } },
         validate: mockedValidate,
       } as unknown as FormML
-      const dummyIndex = {} as AnyIndex
+      const dummyIndex = {} as BaseIndex
       const dummyContext = {} as ClassMethodDecoratorContext
 
       // Act
@@ -142,7 +142,7 @@ describe('validate', () => {
           options: { preValidateOn: { initial: 'change', subsequent: 'all' } },
           validate: mockedValidate,
         } as unknown as FormML
-        const dummyIndex = {} as AnyIndex
+        const dummyIndex = {} as BaseIndex
         const dummyContext = {} as ClassMethodDecoratorContext
 
         // Act
@@ -163,7 +163,7 @@ describe('validate', () => {
         options: { preValidateOn: { initial: 'change', subsequent: 'blur' } },
         validate: mockedValidate,
       } as unknown as FormML
-      const dummyIndex = {} as AnyIndex
+      const dummyIndex = {} as BaseIndex
       const dummyContext = {} as ClassMethodDecoratorContext
 
       // Act
@@ -183,7 +183,7 @@ describe('validate', () => {
         options: { preValidateOn: { initial: 'change', subsequent: 'blur' } },
         validate: mockedValidate,
       } as unknown as FormML
-      const dummyIndex = {} as AnyIndex
+      const dummyIndex = {} as BaseIndex
       const dummyContext = {} as ClassMethodDecoratorContext
 
       const decorator = validate({ eventName: 'blur' })

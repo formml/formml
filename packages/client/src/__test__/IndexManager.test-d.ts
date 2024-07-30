@@ -1,10 +1,11 @@
 import { FormMLAstType, FormMLSchema, generics } from '@formml/dsl'
 
 import IndexManager, {
-  AnyIndex,
+  BaseIndex,
   BoolIndex,
   DatetimeIndex,
   DecimalIndex,
+  GenericIndex,
   NumIndex,
   TextIndex,
 } from '../IndexManager.js'
@@ -19,7 +20,9 @@ describe('IndexManager', () => {
       const indexManager = new IndexManager(schema)
 
       // Assert
-      expectTypeOf(indexManager.root).toMatchTypeOf<Record<string, AnyIndex>>()
+      expectTypeOf(indexManager.root).toMatchTypeOf<
+        Record<string, GenericIndex>
+      >()
     })
 
     test('should contain children indexes given a concrete schema', () => {
@@ -48,6 +51,21 @@ describe('IndexManager', () => {
         numField: NumIndex
         textField: TextIndex
       }>()
+    })
+
+    test('should contain additional properties in GenericIndex', () => {
+      // Assert
+      expectTypeOf<GenericIndex>()
+        .toHaveProperty('additional')
+        .toEqualTypeOf<GenericIndex>()
+    })
+
+    test('should be able to assign any index to BaseIndex', () => {
+      // Arrange
+      const text = {} as TextIndex
+
+      // Act & Assert
+      expectTypeOf(text).toMatchTypeOf<BaseIndex>()
     })
   })
 
