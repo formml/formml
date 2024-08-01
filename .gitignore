@@ -39,3 +39,6 @@ Thumbs.db
 
 # Turbo
 .turbo
+
+# Vite
+vite.config.*.timestamp-*
