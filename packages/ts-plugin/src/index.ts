@@ -16,7 +16,15 @@ const init: tsModule.server.PluginModuleFactory = ({ typescript: ts }) => {
       createHostOverrides(info.languageServiceHost, ts, logger),
     )
 
-    const service = ts.createLanguageService(languageServiceHostProxy)
+    const service = ts.createLanguageService(
+      languageServiceHostProxy,
+      (
+        info.project as unknown as {
+          documentRegistry: tsModule.DocumentRegistry
+        }
+      ).documentRegistry, // private property, but is necessary to create language service as same as tsserver
+      info.project.projectService.serverMode,
+    )
     logger.info('Replaced language service with new instance')
     return service
   }
