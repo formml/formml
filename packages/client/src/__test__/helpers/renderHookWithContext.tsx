@@ -1,10 +1,11 @@
-import {
+import type {
   Queries,
   RenderHookOptions,
   RenderHookResult,
   queries,
-  renderHook,
 } from '@testing-library/react'
+
+import { renderHook } from '@testing-library/react'
 
 import { FormML } from '../../FormML.js'
 import { buildWrapper } from './buildWrapper.js'

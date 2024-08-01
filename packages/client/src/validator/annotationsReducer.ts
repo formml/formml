@@ -1,5 +1,6 @@
+import type annotationsInterface from '@formml/dsl/interfaces/annotations.js'
+
 import { utils } from '@formml/dsl'
-import annotationsInterface from '@formml/dsl/interfaces/annotations.js'
 import { GenericSchema } from 'valibot'
 
 import { assertNever } from '../utils/assertNever.js'

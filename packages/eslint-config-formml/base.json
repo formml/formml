@@ -14,7 +14,7 @@
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": true
+    "projectService": true
   },
   "rules": {
     "prettier/prettier": "warn",

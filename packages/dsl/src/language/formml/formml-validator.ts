@@ -103,7 +103,7 @@ export class FormMLValidator {
       }
       if (ast.isPositionalArgument(arg)) {
         const param = declaration.parameters[index] as ast.Parameter | undefined // may out of range
-        param && assignedParams.add(param.name)
+        if (param) assignedParams.add(param.name)
 
         const argType = t.inferType(arg.value)
         const declaredType = t.evaluate(param?.type)

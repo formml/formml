@@ -24,9 +24,7 @@
     "build:esm": "tsc -p ./tsconfig.lib.json",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "lint:type": "tsc",
-    "test": "vitest run",
-    "test:watch": "vitest watch"
+    "lint:type": "tsc"
   },
   "dependencies": {
     "@formml/dsl": "workspace:*"

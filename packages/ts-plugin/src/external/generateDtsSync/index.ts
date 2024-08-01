@@ -1,4 +1,5 @@
-import { generators } from '@formml/dsl'
+import type { generators } from '@formml/dsl'
+
 import { createSyncFn } from 'synckit'
 
 const generateDtsSync = createSyncFn<typeof generators.generateDts>(

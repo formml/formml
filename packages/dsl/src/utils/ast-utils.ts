@@ -237,9 +237,9 @@ export function linkNodes(
   property?: string,
   index?: number,
 ) {
-  container && Object.assign(node, { $container: container })
-  property && Object.assign(node, { $containerProperty: property })
-  index !== undefined && Object.assign(node, { $containerIndex: index })
+  if (container) Object.assign(node, { $container: container })
+  if (property) Object.assign(node, { $containerProperty: property })
+  if (index !== undefined) Object.assign(node, { $containerIndex: index })
 
   if (visitedNodes) {
     if (visitedNodes.has(node)) return // skip dive into visited node

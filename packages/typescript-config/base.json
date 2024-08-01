@@ -3,6 +3,7 @@
   "display": "Default",
   "compileOnSave": false,
   "compilerOptions": {
+    "allowJs": true,
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,

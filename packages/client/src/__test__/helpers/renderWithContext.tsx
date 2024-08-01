@@ -1,10 +1,11 @@
-import {
+import type {
   Queries,
   RenderOptions,
   RenderResult,
   queries,
-  render,
 } from '@testing-library/react'
+
+import { render } from '@testing-library/react'
 
 import { FormML } from '../../FormML.js'
 import { buildWrapper } from './buildWrapper.js'
