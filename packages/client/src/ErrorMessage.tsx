@@ -30,6 +30,5 @@ type ErrorMessageComponent = {
   ): React.ReactNode
 }
 
-const ErrorMessage: ErrorMessageComponent = React.forwardRef(ErrorMessageImpl)
-
-export default ErrorMessage
+export const ErrorMessage: ErrorMessageComponent =
+  React.forwardRef(ErrorMessageImpl)

@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import React from 'react'
 
-import ErrorMessage from '../ErrorMessage.js'
+import { ErrorMessage } from '../ErrorMessage.js'
 import { Field } from '../Field.js'
 import { BaseIndex } from '../IndexManager.js'
 import { useField } from '../useField.js'

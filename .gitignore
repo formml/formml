@@ -42,3 +42,6 @@ Thumbs.db
 
 # Vite
 vite.config.*.timestamp-*
+
+# Vitest
+tsconfig.vitest-temp.json
