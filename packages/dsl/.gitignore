@@ -1,4 +1,4 @@
 node_modules/
 out/
 src/language/generated/
-interfaces/
+builtins/generated/

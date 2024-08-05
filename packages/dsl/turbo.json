@@ -5,7 +5,7 @@
       "dependsOn": ["langium:generate"]
     },
     "build": {
-      "dependsOn": ["^build", "langium:generate", "gen:interfaces"],
+      "dependsOn": ["^build", "langium:generate", "gen:builtins"],
       "outputs": ["dist/**"]
     },
     "langium:generate": {
@@ -15,10 +15,10 @@
       "cache": false,
       "persistent": true
     },
-    "gen:interfaces": {
+    "gen:builtins": {
       "dependsOn": ["langium:generate"],
-      "inputs": ["builtins/**", "scripts/generateInterfaces.ts"],
-      "outputs": ["interfaces/**"]
+      "inputs": ["builtins/*.formml", "scripts/generateBuiltins.ts"],
+      "outputs": ["builtins/generated/**"]
     }
   }
 }

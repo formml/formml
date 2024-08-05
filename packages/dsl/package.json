@@ -17,13 +17,12 @@
     "dist",
     "src",
     "!src/**/__test__",
-    "builtins",
-    "interfaces"
+    "builtins"
   ],
   "scripts": {
-    "build": "rimraf dist/ && pnpm run build:vite",
-    "build:vite": "vite build",
-    "dev": "rimraf dist/ && pnpm run build:vite --watch",
+    "build": "rimraf dist/ && pnpm run build:tsc",
+    "build:tsc": "tsc -p ./tsconfig.lib.json",
+    "dev": "rimraf dist/ && pnpm run build:tsc --watch",
     "lint": "eslint . --ignore-path .gitignore",
     "lint:fix": "pnpm run lint --fix",
     "lint:type": "tsc",
@@ -31,7 +30,7 @@
     "test:watch": "vitest watch",
     "langium:generate": "langium generate",
     "langium:watch": "langium generate --watch",
-    "gen:interfaces": "vite-node ./scripts/generateInterfaces.ts && tsc -p tsconfig.interfaces.json"
+    "gen:builtins": "vite-node ./scripts/generateBuiltins.ts && tsc -p tsconfig.builtins.json"
   },
   "dependencies": {
     "change-case": "^5.4.4",
@@ -49,8 +48,8 @@
     },
     "./builtins/*.formml": "./builtins/*.formml",
     "./interfaces/*.js": {
-      "default": "./interfaces/*.js",
-      "types": "./interfaces/*.d.ts"
+      "default": "./builtins/generated/interfaces/*.js",
+      "types": "./builtins/generated/interfaces/*.d.ts"
     },
     "./generators/*.js": {
       "default": "./dist/generators/*.js",

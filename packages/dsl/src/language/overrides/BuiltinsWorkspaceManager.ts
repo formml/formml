@@ -8,8 +8,8 @@ import {
 } from 'langium'
 import { LangiumSharedServices } from 'langium/lsp'
 
-import builtinAnnotations from '../../../builtins/annotations.d.formml?raw'
-import builtinTypes from '../../../builtins/types.d.formml?raw'
+import builtinAnnotations from '../../../builtins/generated/modules/annotations.js'
+import builtinTypes from '../../../builtins/generated/modules/types.js'
 
 export default class BuiltinsWorkspaceManager extends DefaultWorkspaceManager {
   private documentFactory: LangiumDocumentFactory
