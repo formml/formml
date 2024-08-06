@@ -24,5 +24,3 @@ const ast = deps.parse(json)
 export default ast
 `
 }
-
-export { parse } from '../utils/ast-utils.js'

@@ -1,1 +1,1 @@
-export * from '@formml/dsl/generators/generateDts.js'
+export * from '@formml/dsl/generators/deps/generateDts.js'

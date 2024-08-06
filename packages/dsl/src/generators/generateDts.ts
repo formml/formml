@@ -57,5 +57,3 @@ declare const ast: deps.FormMLSchema
 export default ast
 `
 }
-
-export type * from '../language/overrides/genericTypes.js'

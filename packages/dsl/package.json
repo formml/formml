@@ -54,6 +54,10 @@
     "./generators/*.js": {
       "default": "./dist/generators/*.js",
       "types": "./dist/generators/*.d.ts"
+    },
+    "./generators/deps/*.js": {
+      "default": "./dist/generators/deps/*.js",
+      "types": "./dist/generators/deps/*.d.ts"
     }
   },
   "module": "./dist/index.js",
