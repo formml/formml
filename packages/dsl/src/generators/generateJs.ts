@@ -17,7 +17,7 @@ export async function generateJsFromContent(
 ) {
   const schema = await createFormMLParser()(content)
 
-  return `import deps from '${packageName}'
+  return `import * as deps from '${packageName}'
 
 const json = ${JSON.stringify(stringify(schema))}
 const ast = deps.parse(json)

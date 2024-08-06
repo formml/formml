@@ -42,7 +42,7 @@ export default async function generateDts(entry: string, packageName: string) {
   const file = await readFile(entry, { encoding: 'utf8' })
   const schema = await createFormMLParser()(file)
 
-  return `import deps from '${packageName}'
+  return `import * as deps from '${packageName}'
 
 ${generateTypes(schema)}
 
@@ -52,7 +52,7 @@ export default ast
 }
 
 export function generateFallbackDts(packageName: string) {
-  return `import deps from '${packageName}'
+  return `import * as deps from '${packageName}'
 declare const ast: deps.FormMLSchema
 export default ast
 `
