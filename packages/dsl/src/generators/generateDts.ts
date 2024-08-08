@@ -1,8 +1,7 @@
-import type { AstNode } from 'langium'
-
 import { pascalCase } from 'change-case'
-import { readFile } from 'node:fs/promises'
+import { type AstNode, URI } from 'langium'
 
+import { FormMLServices } from '../language/formml/formml-module.js'
 import * as ast from '../language/generated/ast.js'
 import { createFormMLParser } from '../language/parser.js'
 
@@ -38,9 +37,12 @@ function generateTypes(schema: ast.FormMLSchema): string {
   return types.join('\n\n')
 }
 
-export default async function generateDts(entry: string, packageName: string) {
-  const file = await readFile(entry, { encoding: 'utf8' })
-  const schema = await createFormMLParser()(file)
+export default async function generateDts(
+  entry: string,
+  packageName: string,
+  services: FormMLServices,
+) {
+  const schema = await createFormMLParser(services)(URI.file(entry))
 
   return `import * as deps from '${packageName}'
 
@@ -49,6 +51,11 @@ ${generateTypes(schema)}
 declare const ast: _FormMLSchema
 export default ast
 `
+}
+
+export function initGenerateDts(services: FormMLServices) {
+  return (entry: string, packageName: string) =>
+    generateDts(entry, packageName, services)
 }
 
 export function generateFallbackDts(packageName: string) {

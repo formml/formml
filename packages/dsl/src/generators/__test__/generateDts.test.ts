@@ -1,10 +1,19 @@
-import { readFile } from 'node:fs/promises'
+import { clearDocuments } from 'langium/test'
 
+import { createAggregateServices } from '../../index.js'
 import generateDts, { generateFallbackDts } from '../generateDts.js'
 
-vi.mock('node:fs/promises')
-
 describe('generateDts', () => {
+  const mockReadFile = vi.fn()
+  const services = createAggregateServices({
+    fileSystemProvider: () => ({
+      readDirectory: vi.fn(),
+      readFile: mockReadFile,
+    }),
+  }).FormML
+
+  afterEach(() => clearDocuments(services.shared))
+
   test('should generate typescript declaration', async () => {
     const input = `
       form ExampleForm {
@@ -15,9 +24,9 @@ describe('generateDts', () => {
         decimal  decimalField
       }
     `
-    vi.mocked(readFile).mockResolvedValue(input)
+    mockReadFile.mockResolvedValue(input)
 
-    expect(await generateDts('form.formml', '@formml/any-package'))
+    expect(await generateDts('form.formml', '@formml/any-package', services))
       .toMatchInlineSnapshot(`
         "import * as deps from '@formml/any-package'
 
@@ -37,9 +46,9 @@ describe('generateDts', () => {
         num numField
       }
     `
-    vi.mocked(readFile).mockResolvedValue(input)
+    mockReadFile.mockResolvedValue(input)
 
-    expect(await generateDts('form.formml', '@formml/any-package'))
+    expect(await generateDts('form.formml', '@formml/any-package', services))
       .toMatchInlineSnapshot(`
         "import * as deps from '@formml/any-package'
 

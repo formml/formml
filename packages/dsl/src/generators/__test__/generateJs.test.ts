@@ -1,10 +1,19 @@
-import { readFile } from 'node:fs/promises'
+import { clearDocuments } from 'langium/test'
 
+import { createAggregateServices } from '../../index.js'
 import generateJs from '../generateJs.js'
 
-vi.mock('node:fs/promises')
-
 describe('generateJs', () => {
+  const mockReadFile = vi.fn()
+  const services = createAggregateServices({
+    fileSystemProvider: () => ({
+      readDirectory: vi.fn(),
+      readFile: mockReadFile,
+    }),
+  }).FormML
+
+  afterEach(() => clearDocuments(services.shared))
+
   test('should generate js code', async () => {
     const input = `
       form ExampleForm {
@@ -15,9 +24,9 @@ describe('generateJs', () => {
         decimal  decimalField
       }
     `
-    vi.mocked(readFile).mockResolvedValue(input)
+    mockReadFile.mockResolvedValue(input)
 
-    expect(await generateJs('form.formml', '@formml/any-package'))
+    expect(await generateJs('form.formml', '@formml/any-package', services))
       .toMatchInlineSnapshot(`
         "import * as deps from '@formml/any-package'
 
@@ -35,9 +44,9 @@ describe('generateJs', () => {
         text textField
       }
     `
-    vi.mocked(readFile).mockResolvedValue(input)
+    mockReadFile.mockResolvedValue(input)
 
-    expect(await generateJs('form.formml', '@formml/any-package'))
+    expect(await generateJs('form.formml', '@formml/any-package', services))
       .toMatchInlineSnapshot(`
         "import * as deps from '@formml/any-package'
 
