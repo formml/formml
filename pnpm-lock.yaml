@@ -241,6 +241,9 @@ importers:
       '@formml/dsl':
         specifier: workspace:*
         version: link:../dsl
+      langium:
+        specifier: ^3.0.0
+        version: 3.0.0
       synckit:
         specifier: ^0.9.0
         version: 0.9.0

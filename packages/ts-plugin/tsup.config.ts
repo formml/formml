@@ -9,6 +9,6 @@ export default defineConfig({
     worker: 'src/external/generateDtsSync/worker.js',
   },
   external: ['./worker.js'],
-  noExternal: ['@formml/dsl'],
+  noExternal: ['@formml/dsl', 'langium'],
   sourcemap: true,
 })

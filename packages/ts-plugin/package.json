@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@formml/dsl": "workspace:*",
+    "langium": "^3.0.0",
     "synckit": "^0.9.0"
   },
   "peerDependencies": {
