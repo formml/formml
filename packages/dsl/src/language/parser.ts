@@ -1,4 +1,4 @@
-import { ParseResult, URI } from 'langium'
+import { LangiumDocument, ParseResult, URI } from 'langium'
 import { Diagnostic } from 'vscode-languageserver-types'
 
 import { createInMemoryAggregateServices } from './aggregate-module.js'
@@ -60,22 +60,41 @@ export const createParser = (services?: FormMLServices) => {
   }
 }
 
+interface FormMLParser {
+  (text: string, uri?: string): Promise<FormMLSchema>
+  (uri: URI): Promise<FormMLSchema>
+}
+
 export function createFormMLParser(
   services = createInMemoryAggregateServices().FormML,
-) {
+): FormMLParser {
   let count = 0
   const generateUri = () => `file:///generated/${count++}.formml`
 
   const initialization =
     services.shared.workspace.WorkspaceManager.initializeWorkspace([])
 
-  return async function parse(text: string, uri: string = generateUri()) {
+  return async function parse(
+    arg1: URI | string,
+    arg2: string = generateUri(),
+  ) {
     await initialization
 
-    const document = services.shared.workspace.LangiumDocuments.createDocument(
-      URI.parse(uri),
-      text,
-    )
+    let document: LangiumDocument
+    if (typeof arg1 === 'string') {
+      const [text, uri] = [arg1, arg2]
+      document = services.shared.workspace.LangiumDocuments.createDocument(
+        URI.parse(uri),
+        text,
+      )
+    } else {
+      const uri = arg1
+      document =
+        await services.shared.workspace.LangiumDocuments.getOrCreateDocument(
+          uri,
+        )
+    }
+
     await services.shared.workspace.DocumentBuilder.build([document], {
       validation: true,
     })

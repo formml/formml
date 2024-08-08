@@ -1,3 +1,6 @@
+import { URI } from 'langium'
+
+import { createAggregateServices } from '../aggregate-module.js'
 import { FormMLSchema } from '../generated/ast.js'
 import {
   FormMLParserLexingError,
@@ -9,6 +12,7 @@ import {
 describe('parser', () => {
   describe('createFormMLParser', () => {
     const parser = createFormMLParser()
+
     test('should return AST given valid schema', async () => {
       const content = `
         form ExampleForm {
@@ -62,6 +66,31 @@ describe('parser', () => {
         }
       `
       await expect(parser(content)).rejects.toThrow(FormMLParserValidationError)
+    })
+
+    test('should accept uri as parameter and load from file system', async () => {
+      // Arrange
+      const content = `
+        form ExampleForm {
+          num numberField
+        }
+      `
+      const mockReadFile = vi.fn().mockResolvedValue(content)
+      const services = createAggregateServices({
+        fileSystemProvider: () => ({
+          readDirectory: vi.fn(),
+          readFile: mockReadFile,
+        }),
+      })
+      const parser = createFormMLParser(services.FormML)
+      const uri = URI.file('/path/to/schema.formml')
+
+      // Act
+      const ast = await parser(uri)
+
+      // Assert
+      expect(ast).toBeDefined()
+      expect(mockReadFile).toBeCalledWith(uri)
     })
   })
 })
