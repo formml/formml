@@ -1,0 +1,43 @@
+form {
+  max-width: 50%;
+  margin: 2rem auto;
+}
+
+@media only screen and (max-width: 720px) {
+  form {
+    max-width: 100%;
+  }
+}
+
+form > label {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+form > label:has(input[type='checkbox']) {
+  flex-direction: row;
+  align-items: center;
+}
+form > label > input[type='checkbox'] {
+  order: -1;
+  margin: 0;
+  margin-right: 0.5rem;
+}
+
+form > button,
+form > input[type='submit'] {
+  margin-top: 2rem;
+  width: 100%;
+}
+
+form label + span {
+  color: red;
+}
+
+textarea,
+select,
+input,
+button,
+.button {
+  margin-bottom: 0;
+}

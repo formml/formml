@@ -3,7 +3,8 @@
     "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "plugins": [{ "name": "@formml/ts-plugin" }]
+    "plugins": [{ "name": "@formml/ts-plugin" }],
+    "jsx": "react-jsx"
   },
-  "includes": ["src/*.ts"]
+  "includes": ["./**/*.ts", "./**/*.tsx"]
 }

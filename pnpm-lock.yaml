@@ -144,10 +144,20 @@ importers:
         version: 2.0.0(@types/node@20.10.5)(@vitest/ui@2.0.0)(jsdom@24.1.0)
 
   examples/basic:
+    dependencies:
+      '@formml/client':
+        specifier: workspace:*
+        version: link:../../packages/client
     devDependencies:
       '@formml/ts-plugin':
         specifier: workspace:*
         version: link:../../packages/ts-plugin
+      eslint-config-formml:
+        specifier: workspace:*
+        version: link:../../packages/eslint-config-formml
+      rollup-plugin-formml:
+        specifier: workspace:*
+        version: link:../../packages/rollup-plugin
 
   packages/cli:
     dependencies:

@@ -2,7 +2,20 @@
   "name": "basic-example",
   "version": "0.0.1",
   "license": "private",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "pnpm run lint --fix"
+  },
+  "dependencies": {
+    "@formml/client": "workspace:*"
+  },
   "devDependencies": {
-    "@formml/ts-plugin": "workspace:*"
+    "@formml/ts-plugin": "workspace:*",
+    "rollup-plugin-formml": "workspace:*",
+    "eslint-config-formml": "workspace:*"
   }
 }

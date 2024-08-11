@@ -1,0 +1,9 @@
+form BasicForm {
+  @required
+  text     textField
+  @required("Please enter a number")
+  num      numField
+  bool     boolField
+  datetime datetimeField
+  decimal  decimalField
+}
