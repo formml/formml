@@ -7,7 +7,11 @@ import {
   isReference,
 } from 'langium'
 
-import { Literal, NullLiteral, isNullLiteral } from '../language/index.js'
+import {
+  type Literal,
+  type NullLiteral,
+  isNullLiteral,
+} from '../language/generated/ast.js'
 
 type LiteralValue<T extends Literal> = T extends { value: unknown }
   ? T['value']
