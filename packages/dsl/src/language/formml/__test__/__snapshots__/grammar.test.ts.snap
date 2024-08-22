@@ -77,7 +77,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
                 "$type": "PositionalArgument",
                 "value": {
                   "$type": "BoolLiteral",
-                  "value": "false"
+                  "value": false
                 }
               }
             ],
@@ -111,7 +111,7 @@ exports[`formml grammar > validation annotations > annotation with arguments > a
                 "$type": "PositionalArgument",
                 "value": {
                   "$type": "BoolLiteral",
-                  "value": "true"
+                  "value": true
                 }
               }
             ],

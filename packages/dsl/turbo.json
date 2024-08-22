@@ -2,7 +2,7 @@
   "extends": ["//"],
   "pipeline": {
     "test": {
-      "dependsOn": ["langium:generate"]
+      "dependsOn": ["langium:generate", "gen:builtins"]
     },
     "build": {
       "dependsOn": ["^build", "langium:generate", "gen:builtins"],

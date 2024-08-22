@@ -1,12 +1,19 @@
-import { URI } from 'langium'
+import { LangiumSharedCoreServices, URI } from 'langium'
 
 import LongestMatchServiceRegistry from '../LongestMatchServiceRegistry.js'
 
 describe('LongestMatchServiceRegistry', () => {
   describe('getServices', () => {
+    const mockTextDocumentProvider = vi.fn()
+    const stubServices = {
+      workspace: {
+        TextDocuments: { get: mockTextDocumentProvider },
+      },
+    } as unknown as LangiumSharedCoreServices
+
     test('should throw if no services is registered', () => {
       // Arrange
-      const registry = new LongestMatchServiceRegistry()
+      const registry = new LongestMatchServiceRegistry(stubServices)
 
       // Act & Assert
       expect(() =>
@@ -16,8 +23,13 @@ describe('LongestMatchServiceRegistry', () => {
 
     test('should return the singleton if it exists given anything', () => {
       // Arrange
-      const registry = new LongestMatchServiceRegistry()
-      const services = {} as never
+      const registry = new LongestMatchServiceRegistry(stubServices)
+      const services = {
+        LanguageMetaData: {
+          fileExtensions: ['.txt'],
+          languageId: 'text',
+        },
+      } as never
       registry.register(services)
 
       // Act
@@ -27,17 +39,41 @@ describe('LongestMatchServiceRegistry', () => {
       expect(result).toBe(services)
     })
 
+    test('should get by language id if text document exists', () => {
+      // Arrange
+      const registry = new LongestMatchServiceRegistry(stubServices)
+      const services = {
+        LanguageMetaData: {
+          fileExtensions: ['.txt'],
+          languageId: 'text',
+        },
+      } as never
+      registry.register(services)
+
+      mockTextDocumentProvider.mockReturnValueOnce({
+        languageId: 'text',
+      })
+
+      // Act
+      const result = registry.getServices(URI.parse('file:///test.not-txt')) // should ignore file extension
+
+      // Assert
+      expect(result).toBe(services)
+    })
+
     test('should get by extension if multiple services are registered', () => {
       // Arrange
-      const registry = new LongestMatchServiceRegistry()
+      const registry = new LongestMatchServiceRegistry(stubServices)
       const services1 = {
         LanguageMetaData: {
           fileExtensions: ['.txt'],
+          languageId: 'text',
         },
       } as never
       const services2 = {
         LanguageMetaData: {
           fileExtensions: ['.xml'],
+          languageId: 'xml',
         },
       } as never
       registry.register(services1)
@@ -54,15 +90,17 @@ describe('LongestMatchServiceRegistry', () => {
 
     test('should get the longest matched services if extension matches multiple services', () => {
       // Arrange
-      const registry = new LongestMatchServiceRegistry()
+      const registry = new LongestMatchServiceRegistry(stubServices)
       const services1 = {
         LanguageMetaData: {
           fileExtensions: ['.txt'],
+          languageId: 'text',
         },
       } as never
       const services2 = {
         LanguageMetaData: {
           fileExtensions: ['.abc.txt'],
+          languageId: 'abc-text',
         },
       } as never
       registry.register(services1)
@@ -79,15 +117,17 @@ describe('LongestMatchServiceRegistry', () => {
 
     test('should throw if no services is found for the given URI', () => {
       // Arrange
-      const registry = new LongestMatchServiceRegistry()
+      const registry = new LongestMatchServiceRegistry(stubServices)
       const services1 = {
         LanguageMetaData: {
           fileExtensions: ['.txt'],
+          languageId: 'text',
         },
       } as never
       const services2 = {
         LanguageMetaData: {
           fileExtensions: ['.xml'],
+          languageId: 'xml',
         },
       } as never
       registry.register(services1)
