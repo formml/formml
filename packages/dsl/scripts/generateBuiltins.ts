@@ -1,14 +1,15 @@
+import { EmptyFileSystem } from 'langium'
 import { parseHelper } from 'langium/test'
 import { existsSync } from 'node:fs'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import * as prettier from 'prettier'
 
+import { createFormMLDeclarationServices } from '../src/language/formml-declaration/formml-declaration-module.js'
 import {
-  FormMLDeclaration,
-  createInMemoryAggregateServices,
+  type FormMLDeclaration,
   isAnnotationDeclaration,
-} from '../src/index.js'
+} from '../src/language/generated/ast.js'
 import { evaluate } from '../src/language/type-system/types.js'
 
 // Constants
@@ -80,7 +81,7 @@ class Transpiler {
 
 // Transformers
 
-const services = createInMemoryAggregateServices()
+const services = createFormMLDeclarationServices(EmptyFileSystem)
 const parse = parseHelper<FormMLDeclaration>(services.FormMLDeclaration)
 
 const pick =
