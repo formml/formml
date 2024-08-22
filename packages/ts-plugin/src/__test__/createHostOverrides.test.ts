@@ -1,3 +1,4 @@
+import { generateFallbackDts } from '@formml/dsl/generators/generateDts.js'
 import * as fs from 'node:fs'
 import ts from 'typescript/lib/tsserverlibrary'
 
@@ -293,12 +294,9 @@ describe('createHostOverrides', () => {
       )
 
       // Assert
-      expect(result?.getText(0, result.getLength())).toMatchInlineSnapshot(`
-        "import deps from '@formml/ts-plugin/deps'
-        declare const ast: deps.FormMLSchema
-        export default ast
-        "
-      `)
+      expect(result?.getText(0, result.getLength())).toEqual(
+        generateFallbackDts('@formml/ts-plugin/deps'),
+      )
       expect(origin.getScriptSnapshot).not.toHaveBeenCalled()
     })
   })

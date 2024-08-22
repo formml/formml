@@ -15,7 +15,7 @@ describe('rollup-plugin', () => {
 
     expect(result.output).toHaveLength(1)
     expect(result.output[0].code).toMatchInlineSnapshot(`
-      "import deps from 'rollup-plugin-formml/deps';
+      "import * as deps from 'rollup-plugin-formml/deps';
 
       const json = "{\\"node\\":{\\"$type\\":\\"FormMLSchema\\",\\"form\\":{\\"$type\\":\\"Form\\",\\"name\\":\\"testForm\\",\\"fields\\":[{\\"$type\\":\\"Field\\",\\"type\\":\\"text\\",\\"name\\":\\"textField\\",\\"annotations\\":[]}]}}}";
       const ast = deps.parse(json);
@@ -43,10 +43,10 @@ describe('rollup-plugin', () => {
     expect(result).toHaveLength(1)
     expect(result[0].output).toHaveLength(1)
     expect(result[0].output[0].code).toMatchInlineSnapshot(`
-      "import e from "rollup-plugin-formml/deps";
-      const t = '{"node":{"$type":"FormMLSchema","form":{"$type":"Form","name":"testForm","fields":[{"$type":"Field","type":"text","name":"textField","annotations":[]}]}}}', s = e.parse(t);
+      "import * as e from "rollup-plugin-formml/deps";
+      const t = '{"node":{"$type":"FormMLSchema","form":{"$type":"Form","name":"testForm","fields":[{"$type":"Field","type":"text","name":"textField","annotations":[]}]}}}', o = e.parse(t);
       export {
-        s as default
+        o as default
       };
       "
     `)
