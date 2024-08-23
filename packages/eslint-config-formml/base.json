@@ -22,6 +22,11 @@
       "error",
       { "argsIgnorePattern": "^_" }
     ],
+    "@typescript-eslint/consistent-type-exports": "error",
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      { "disallowTypeAnnotations": false }
+    ],
     "perfectionist/sort-objects": [
       "error",
       {

@@ -2,10 +2,12 @@ import { createFormMLParser } from '@formml/dsl'
 import { render, renderHook } from '@testing-library/react'
 import { Profiler } from 'react'
 
-import { FormML, FormMLOptions } from '../FormML.js'
+import type { FormMLOptions } from '../FormML.js'
+import type { ValidationError } from '../validator/index.js'
+
+import { FormML } from '../FormML.js'
 import { useFormML } from '../useFormML.js'
 import { useFormMLContext } from '../useFormMLContext.js'
-import { ValidationError } from '../validator/index.js'
 
 vi.mock('../FormML.js', async (importOriginal) => {
   const { FormML: realFormML } =

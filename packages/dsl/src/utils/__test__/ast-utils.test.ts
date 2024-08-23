@@ -1,4 +1,6 @@
-import { AstNode, URI } from 'langium'
+import type { AstNode } from 'langium'
+
+import { URI } from 'langium'
 
 import {
   linkNodes,

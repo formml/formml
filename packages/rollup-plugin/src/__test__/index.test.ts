@@ -1,5 +1,7 @@
+import type { RollupOutput } from 'rollup'
+
 import path from 'path'
-import { RollupOutput, rollup } from 'rollup'
+import { rollup } from 'rollup'
 import { build } from 'vite'
 
 import formml from '../index.js'

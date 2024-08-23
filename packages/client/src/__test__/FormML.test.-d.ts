@@ -1,7 +1,6 @@
-import { FormMLSchema, generics } from '@formml/dsl'
+import type { FormMLSchema, generics } from '@formml/dsl'
 
-import { FormML } from '../FormML.js'
-import {
+import type {
   BoolIndex,
   DatetimeIndex,
   DecimalIndex,
@@ -9,6 +8,8 @@ import {
   NumIndex,
   TextIndex,
 } from '../IndexManager.js'
+
+import { FormML } from '../FormML.js'
 
 describe('FormML', () => {
   describe('indexes', () => {

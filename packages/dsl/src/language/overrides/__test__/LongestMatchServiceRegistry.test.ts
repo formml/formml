@@ -1,4 +1,6 @@
-import { LangiumSharedCoreServices, URI } from 'langium'
+import type { LangiumSharedCoreServices } from 'langium'
+
+import { URI } from 'langium'
 
 import LongestMatchServiceRegistry from '../LongestMatchServiceRegistry.js'
 

@@ -1,12 +1,14 @@
-import { FormMLSchema } from '@formml/dsl'
-import * as H from 'hotscript'
+import type { FormMLSchema } from '@formml/dsl'
+import type * as H from 'hotscript'
+
 import React from 'react'
 
+import type { IndexRoot } from './IndexManager.js'
+import type { ValidationError } from './validator/index.js'
+
 import { FormML } from './FormML.js'
-import { IndexRoot } from './IndexManager.js'
 import { FormMLProvider } from './useFormMLContext.js'
 import { useConstant } from './utils/useConstant.js'
-import { ValidationError } from './validator/index.js'
 
 export type SubmitHandler = (
   data: object,

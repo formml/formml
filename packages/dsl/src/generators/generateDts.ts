@@ -1,7 +1,8 @@
 import { pascalCase } from 'change-case'
 import { type AstNode, URI } from 'langium'
 
-import { FormMLServices } from '../language/formml/formml-module.js'
+import type { FormMLServices } from '../language/formml/formml-module.js'
+
 import * as ast from '../language/generated/ast.js'
 import { createFormMLParser } from '../language/parser.js'
 

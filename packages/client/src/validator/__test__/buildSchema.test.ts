@@ -1,4 +1,5 @@
-import { Field, Form } from '@formml/dsl'
+import type { Field, Form } from '@formml/dsl'
+
 import { BigNumber } from 'bignumber.js'
 import dayjs from 'dayjs'
 import * as v from 'valibot'

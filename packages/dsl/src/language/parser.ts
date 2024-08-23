@@ -1,9 +1,12 @@
-import { LangiumDocument, ParseResult, URI } from 'langium'
-import { Diagnostic } from 'vscode-languageserver-types'
+import type { LangiumDocument, ParseResult } from 'langium'
+import type { Diagnostic } from 'vscode-languageserver-types'
+
+import { URI } from 'langium'
+
+import type { FormMLServices } from './formml/formml-module.js'
+import type { FormMLSchema } from './generated/ast.js'
 
 import { createInMemoryAggregateServices } from './aggregate-module.js'
-import { FormMLServices } from './formml/formml-module.js'
-import { FormMLSchema } from './generated/ast.js'
 
 export class FormMLParserError extends Error {
   constructor(message: string) {

@@ -1,6 +1,8 @@
-import * as ast from '../language/generated/ast.js'
-import { Argument, isPositionalArgument } from '../language/index.js'
-import * as t from '../language/type-system/index.js'
+import type * as ast from '../language/generated/ast.js'
+import type { Argument } from '../language/index.js'
+import type * as t from '../language/type-system/index.js'
+
+import { isPositionalArgument } from '../language/index.js'
 import { resolveLiteralValue } from './ast-utils.js'
 
 type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never

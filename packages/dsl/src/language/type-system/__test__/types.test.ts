@@ -1,11 +1,12 @@
 import { parseHelper } from 'langium/test'
 
-import { createInMemoryAggregateServices } from '../../aggregate-module.js'
-import {
+import type {
   FormMLDeclaration,
   ObjectTypeExpr,
   TypeRefExpr,
 } from '../../generated/ast.js'
+
+import { createInMemoryAggregateServices } from '../../aggregate-module.js'
 import {
   Any,
   Bool,

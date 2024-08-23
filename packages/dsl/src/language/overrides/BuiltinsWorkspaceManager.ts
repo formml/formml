@@ -1,12 +1,12 @@
-import {
+import type {
   AstNode,
-  DefaultWorkspaceManager,
   LangiumDocument,
   LangiumDocumentFactory,
-  URI,
   WorkspaceFolder,
 } from 'langium'
-import { LangiumSharedServices } from 'langium/lsp'
+import type { LangiumSharedServices } from 'langium/lsp'
+
+import { DefaultWorkspaceManager, URI } from 'langium'
 
 import builtinAnnotations from '../../../builtins/generated/modules/annotations.js'
 import builtinTypes from '../../../builtins/generated/modules/types.js'

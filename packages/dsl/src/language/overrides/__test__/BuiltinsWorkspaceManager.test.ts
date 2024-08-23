@@ -1,5 +1,6 @@
+import type { LangiumSharedServices } from 'langium/lsp'
+
 import { URI } from 'langium'
-import { LangiumSharedServices } from 'langium/lsp'
 
 import builtinAnnotations from '../../../../builtins/annotations.d.formml?raw'
 import builtinTypes from '../../../../builtins/types.d.formml?raw'

@@ -1,4 +1,5 @@
-import { FormML } from '../../FormML.js'
+import type { FormML } from '../../FormML.js'
+
 import { FormMLProvider } from '../../useFormMLContext.js'
 
 export const buildWrapper = (formML: FormML) => {

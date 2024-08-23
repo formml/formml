@@ -1,5 +1,5 @@
-import { FormML, FormMLEvent } from '../FormML.js'
-import { BaseIndex } from '../IndexManager.js'
+import type { FormML, FormMLEvent } from '../FormML.js'
+import type { BaseIndex } from '../IndexManager.js'
 
 export default function validate({ eventName }: { eventName: FormMLEvent }) {
   return function decorator<TArgs extends unknown[], TReturn>(

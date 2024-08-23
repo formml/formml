@@ -1,5 +1,7 @@
-import { Field, Form, FormMLSchema } from '@formml/dsl'
-import { GenericSchema, SchemaWithPipe, transform } from 'valibot'
+import type { Field, Form, FormMLSchema } from '@formml/dsl'
+import type { GenericSchema, SchemaWithPipe } from 'valibot'
+
+import { transform } from 'valibot'
 
 import { parse } from '../../JsTypes.js'
 import buildInputSchema from '../buildInputSchema.js'

@@ -1,4 +1,5 @@
-import { Argument, Parameter } from '../../language/index.js'
+import type { Argument, Parameter } from '../../language/index.js'
+
 import { resolveArguments } from '../function-utils.js'
 
 describe('function utils', () => {

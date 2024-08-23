@@ -1,6 +1,7 @@
 import React from 'react'
 
-import { BaseIndex } from './IndexManager.js'
+import type { BaseIndex } from './IndexManager.js'
+
 import { useField } from './useField.js'
 
 function ErrorMessageImpl(

@@ -1,12 +1,13 @@
-import { Field } from '@formml/dsl'
+import type { Field } from '@formml/dsl'
+
 import { useCallback } from 'react'
 import { useSyncExternalStore } from 'use-sync-external-store/shim'
 
 import type { FieldResult } from './FormML.js'
+import type { BaseIndex } from './IndexManager.js'
 import type { PrimitiveType } from './JsTypes.js'
 import type { ValidationError } from './validator/index.js'
 
-import { BaseIndex } from './IndexManager.js'
 import { useFormMLContext } from './useFormMLContext.js'
 import { createMemoSelectorGrouper } from './utils/createMemoSelectorGrouper.js'
 

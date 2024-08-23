@@ -1,4 +1,5 @@
-import { PRIMITIVE } from '@formml/dsl'
+import type { PRIMITIVE } from '@formml/dsl'
+
 import { BigNumber } from 'bignumber.js'
 
 import { parse as originalParse, stringify } from '../JsTypes.js'

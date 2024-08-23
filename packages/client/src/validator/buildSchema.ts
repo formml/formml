@@ -1,11 +1,15 @@
-import { Annotation, Field, PRIMITIVE, utils } from '@formml/dsl'
+import type { Annotation, Field, PRIMITIVE } from '@formml/dsl'
+
+import { utils } from '@formml/dsl'
 import annotationsInterface from '@formml/dsl/interfaces/annotations.js'
 import { BigNumber } from 'bignumber.js'
 import * as v from 'valibot'
 
-import { PrimitiveTypeMapping } from '../JsTypes.js'
+import type { PrimitiveTypeMapping } from '../JsTypes.js'
+import type { IAnnotationAction } from './annotationsReducer.js'
+
 import { assertNever } from '../utils/assertNever.js'
-import annotationsReducer, { IAnnotationAction } from './annotationsReducer.js'
+import annotationsReducer from './annotationsReducer.js'
 
 const type = (formmlSchema: Field) => {
   if (formmlSchema.type === 'text') {

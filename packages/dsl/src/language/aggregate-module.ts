@@ -1,17 +1,17 @@
-import { EmptyFileSystem, inject } from 'langium'
-import {
+import type {
   DefaultSharedModuleContext,
   LangiumSharedServices,
-  createDefaultModule,
-  createDefaultSharedModule,
 } from 'langium/lsp'
 
-import { FormMLModule, FormMLServices } from './formml/formml-module.js'
+import { EmptyFileSystem, inject } from 'langium'
+import { createDefaultModule, createDefaultSharedModule } from 'langium/lsp'
+
+import type { FormMLServices } from './formml/formml-module.js'
+import type { FormMLDeclarationServices } from './formml-declaration/formml-declaration-module.js'
+
+import { FormMLModule } from './formml/formml-module.js'
 import { registerFormMLValidationChecks } from './formml/formml-validator.js'
-import {
-  FormMLDeclarationModule,
-  FormMLDeclarationServices,
-} from './formml-declaration/formml-declaration-module.js'
+import { FormMLDeclarationModule } from './formml-declaration/formml-declaration-module.js'
 import { registerFormMLDeclarationValidationChecks } from './formml-declaration/formml-declaration-validator.js'
 import {
   FormMLDeclarationGeneratedModule,

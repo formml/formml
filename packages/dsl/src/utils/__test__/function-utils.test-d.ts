@@ -1,4 +1,5 @@
-import { Parameter } from '../../language/index.js'
+import type { Parameter } from '../../language/index.js'
+
 import * as t from '../../language/type-system/index.js'
 import { resolveArguments } from '../function-utils.js'
 

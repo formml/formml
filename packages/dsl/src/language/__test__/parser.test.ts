@@ -1,7 +1,8 @@
 import { URI } from 'langium'
 
+import type { FormMLSchema } from '../generated/ast.js'
+
 import { createAggregateServices } from '../aggregate-module.js'
-import { FormMLSchema } from '../generated/ast.js'
 import {
   FormMLParserLexingError,
   FormMLParserParsingError,

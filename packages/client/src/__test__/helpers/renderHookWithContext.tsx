@@ -7,7 +7,8 @@ import type {
 
 import { renderHook } from '@testing-library/react'
 
-import { FormML } from '../../FormML.js'
+import type { FormML } from '../../FormML.js'
+
 import { buildWrapper } from './buildWrapper.js'
 
 export function renderHookWithContext<

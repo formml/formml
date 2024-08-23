@@ -1,4 +1,6 @@
-import { Field, Form, isForm } from '@formml/dsl'
+import type { Field, Form } from '@formml/dsl'
+
+import { isForm } from '@formml/dsl'
 import * as v from 'valibot'
 
 import { parse } from '../JsTypes.js'

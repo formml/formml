@@ -1,5 +1,6 @@
-import { FormML } from '../../FormML.js'
-import { BaseIndex } from '../../IndexManager.js'
+import type { FormML } from '../../FormML.js'
+import type { BaseIndex } from '../../IndexManager.js'
+
 import validate from '../validate.js'
 
 describe('validate', () => {

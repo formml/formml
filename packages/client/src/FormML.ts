@@ -1,15 +1,19 @@
+import type { Field, Form, FormMLSchema } from '@formml/dsl'
 import type { ObjectPathItem } from 'valibot'
 
-import { Field, Form, FormMLSchema } from '@formml/dsl'
 import { reactive, toRaw } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
 
-import IndexManager, { BaseIndex, IndexRoot } from './IndexManager.js'
+import type { BaseIndex, IndexRoot } from './IndexManager.js'
+import type { DeepPartial } from './utils/options.js'
+import type { ValidationError } from './validator/index.js'
+import type { Validator } from './validator/index.js'
+
+import IndexManager from './IndexManager.js'
 import * as JsTypes from './JsTypes.js'
 import validate from './decorators/validate.js'
-import { DeepPartial, mergeOptions } from './utils/options.js'
-import { ValidationError, createInputValidator } from './validator/index.js'
-import { Validator } from './validator/index.js'
+import { mergeOptions } from './utils/options.js'
+import { createInputValidator } from './validator/index.js'
 
 export type FormMLEvent = 'all' | 'blur' | 'change' | 'none'
 export type FormMLOptions = {

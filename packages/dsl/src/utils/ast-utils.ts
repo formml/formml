@@ -1,11 +1,6 @@
-import {
-  AstNode,
-  AstUtils,
-  GenericAstNode,
-  Reference,
-  isAstNode,
-  isReference,
-} from 'langium'
+import type { AstNode, GenericAstNode, Reference } from 'langium'
+
+import { AstUtils, isAstNode, isReference } from 'langium'
 
 import {
   type Literal,

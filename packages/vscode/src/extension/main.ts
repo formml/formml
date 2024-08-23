@@ -1,12 +1,11 @@
 import type * as vscode from 'vscode'
-
-import * as path from 'path'
-import {
-  LanguageClient,
+import type {
   LanguageClientOptions,
   ServerOptions,
-  TransportKind,
 } from 'vscode-languageclient/node.js'
+
+import * as path from 'path'
+import { LanguageClient, TransportKind } from 'vscode-languageclient/node.js'
 
 import { BuiltinsFileSystemProvider } from './BuiltinsFileSystemProvider.js'
 

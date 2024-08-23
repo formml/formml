@@ -1,5 +1,5 @@
-import { FormMLAstType, generics } from '@formml/dsl'
-import * as H from 'hotscript'
+import type { FormMLAstType, generics } from '@formml/dsl'
+import type * as H from 'hotscript'
 
 // private symbols
 const IndexNameSymbol = Symbol('name')

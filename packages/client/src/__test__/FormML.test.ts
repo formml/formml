@@ -3,7 +3,9 @@ import { BigNumber } from 'bignumber.js'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc.js'
 
-import { FormML, FormMLOptions } from '../FormML.js'
+import type { FormMLOptions } from '../FormML.js'
+
+import { FormML } from '../FormML.js'
 
 dayjs.extend(utc)
 

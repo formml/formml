@@ -1,8 +1,10 @@
+import type { FormEvent } from 'react'
+
 import { createFormMLParser } from '@formml/dsl'
 import { render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import dayjs from 'dayjs'
-import { FormEvent, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { Field } from '../Field.js'
 import { useFormML } from '../useFormML.js'

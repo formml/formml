@@ -1,5 +1,5 @@
-import * as ast from '../../generated/ast.js'
-import { Field, Form, FormMLSchema } from '../genericTypes.js'
+import type * as ast from '../../generated/ast.js'
+import type { Field, Form, FormMLSchema } from '../genericTypes.js'
 
 describe('genericTypes', () => {
   test('should match original types when given no arguments', () => {

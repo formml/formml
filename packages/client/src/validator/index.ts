@@ -1,4 +1,5 @@
-import { Field, Form } from '@formml/dsl'
+import type { Field, Form } from '@formml/dsl'
+
 import * as v from 'valibot'
 
 import buildInputSchema from './buildInputSchema.js'

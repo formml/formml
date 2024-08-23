@@ -1,7 +1,7 @@
-import { ValidationAcceptor, ValidationChecks } from 'langium'
+import type { ValidationAcceptor, ValidationChecks } from 'langium'
 
-import * as ast from '../generated/ast.js'
-import { FormMLDeclarationServices } from './formml-declaration-module.js'
+import type * as ast from '../generated/ast.js'
+import type { FormMLDeclarationServices } from './formml-declaration-module.js'
 
 /**
  * Register custom validation checks.

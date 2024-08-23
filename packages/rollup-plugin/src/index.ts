@@ -1,5 +1,6 @@
+import type { Plugin } from 'rollup'
+
 import { generateJsFromContent } from '@formml/dsl/generators/generateJs.js'
-import { Plugin } from 'rollup'
 
 export default function formml(): Plugin {
   return {

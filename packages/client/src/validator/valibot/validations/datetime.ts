@@ -1,10 +1,6 @@
-import {
-  _addIssue,
-  BaseIssue,
-  BaseValidation,
-  Dataset,
-  ErrorMessage,
-} from 'valibot'
+import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from 'valibot'
+
+import { _addIssue } from 'valibot'
 
 // source: https://rgxdb.com/r/526K7G5W
 const ISO8601_REGEX =

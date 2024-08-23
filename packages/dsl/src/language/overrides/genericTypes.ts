@@ -1,4 +1,4 @@
-import * as ast from '../generated/ast.js'
+import type * as ast from '../generated/ast.js'
 
 export interface FormMLSchema<TForm extends Form = Form>
   extends ast.FormMLSchema {

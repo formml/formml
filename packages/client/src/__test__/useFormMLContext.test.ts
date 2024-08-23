@@ -1,6 +1,9 @@
-import { RenderHookResult, renderHook } from '@testing-library/react'
+import type { RenderHookResult } from '@testing-library/react'
 
-import { FormML } from '../FormML.js'
+import { renderHook } from '@testing-library/react'
+
+import type { FormML } from '../FormML.js'
+
 import { useFormMLContext } from '../useFormMLContext.js'
 import { renderHookWithContext } from './helpers/renderHookWithContext.js'
 import suppressErrorOutput from './helpers/suppressErrorOutput.js'

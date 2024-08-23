@@ -1,8 +1,12 @@
-import dayjs from 'dayjs'
-import { ChangeEvent, ForwardedRef, forwardRef } from 'react'
+import type { ChangeEvent, ForwardedRef } from 'react'
 
-import { BaseIndex } from './IndexManager.js'
-import { FieldPack, useField } from './useField.js'
+import dayjs from 'dayjs'
+import { forwardRef } from 'react'
+
+import type { BaseIndex } from './IndexManager.js'
+import type { FieldPack } from './useField.js'
+
+import { useField } from './useField.js'
 import { omit } from './utils/omit.js'
 
 function selectInputProps({ field, helpers, meta }: FieldPack) {

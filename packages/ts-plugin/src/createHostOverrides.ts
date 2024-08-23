@@ -4,7 +4,8 @@ import { generateFallbackDts } from '@formml/dsl/generators/generateDts.js'
 import * as fs from 'node:fs'
 import path from 'node:path'
 
-import { Logger } from './createLogger'
+import type { Logger } from './createLogger'
+
 import generateDtsSync from './external/generateDtsSync'
 import isFormmlFile from './isFormmlFile'
 

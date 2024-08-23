@@ -1,5 +1,4 @@
-import {
-  _addIssue,
+import type {
   BaseIssue,
   BaseSchema,
   ErrorMessage,
@@ -7,6 +6,8 @@ import {
   InferNonOptionalIssue,
   InferNonOptionalOutput,
 } from 'valibot'
+
+import { _addIssue } from 'valibot'
 
 /**
  * Required issue type.

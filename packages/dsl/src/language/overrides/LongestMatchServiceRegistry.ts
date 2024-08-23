@@ -1,9 +1,6 @@
-import {
-  DefaultServiceRegistry,
-  LangiumCoreServices,
-  URI,
-  UriUtils,
-} from 'langium'
+import type { LangiumCoreServices, URI } from 'langium'
+
+import { DefaultServiceRegistry, UriUtils } from 'langium'
 
 export default class LongestMatchServiceRegistry extends DefaultServiceRegistry {
   override getServices(uri: URI): LangiumCoreServices {

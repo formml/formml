@@ -1,7 +1,8 @@
 import { clearDocuments, parseHelper } from 'langium/test'
 
+import type { FormMLDeclaration, FormMLSchema } from '../../index.js'
+
 import { createInMemoryAggregateServices } from '../../aggregate-module.js'
-import { FormMLDeclaration, FormMLSchema } from '../../index.js'
 
 describe('formml validator', () => {
   const services = createInMemoryAggregateServices()

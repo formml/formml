@@ -1,6 +1,7 @@
+import type { ValidationAcceptor, ValidationChecks } from 'langium'
 import type { Range } from 'vscode-languageserver-types'
 
-import { GrammarUtils, ValidationAcceptor, ValidationChecks } from 'langium'
+import { GrammarUtils } from 'langium'
 
 import type { FormMLServices } from './formml-module.js'
 

@@ -1,7 +1,9 @@
 import { URI } from 'langium'
 
-import { FormMLSchema, createFormMLParser } from '../index.js'
-import { FormMLServices } from '../language/formml/formml-module.js'
+import type { FormMLSchema } from '../index.js'
+import type { FormMLServices } from '../language/formml/formml-module.js'
+
+import { createFormMLParser } from '../index.js'
 import { stringify } from '../utils/ast-utils.js'
 
 export default async function generateJs(

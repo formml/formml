@@ -1,10 +1,6 @@
-import {
-  _addIssue,
-  BaseIssue,
-  BaseValidation,
-  Dataset,
-  ErrorMessage,
-} from 'valibot'
+import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from 'valibot'
+
+import { _addIssue } from 'valibot'
 
 export interface BoolIssue<TInput extends string> extends BaseIssue<TInput> {
   /**

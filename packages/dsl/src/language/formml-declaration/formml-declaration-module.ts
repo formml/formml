@@ -1,8 +1,11 @@
+import type {
+  DefaultSharedModuleContext,
+  LangiumSharedServices,
+} from 'langium/lsp'
+
 import { type Module, inject } from 'langium'
 import {
-  DefaultSharedModuleContext,
   type LangiumServices,
-  LangiumSharedServices,
   type PartialLangiumServices,
   createDefaultModule,
   createDefaultSharedModule,
