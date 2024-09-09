@@ -215,8 +215,8 @@ importers:
         specifier: ^5.4.4
         version: 5.4.4
       langium:
-        specifier: ^3.1.3
-        version: 3.1.3
+        specifier: ^3.2.0
+        version: 3.2.0
     devDependencies:
       '@formml/typescript-config':
         specifier: workspace:*
@@ -252,8 +252,8 @@ importers:
         specifier: workspace:*
         version: link:../dsl
       langium:
-        specifier: ^3.1.3
-        version: 3.1.3
+        specifier: ^3.2.0
+        version: 3.2.0
       synckit:
         specifier: ^0.9.0
         version: 0.9.0
@@ -276,8 +276,8 @@ importers:
         specifier: workspace:^
         version: link:../dsl
       langium:
-        specifier: ^3.1.3
-        version: 3.1.3
+        specifier: ^3.2.0
+        version: 3.2.0
       vscode-languageclient:
         specifier: ~9.0.1
         version: 9.0.1
@@ -5135,10 +5135,10 @@ packages:
       }
     engines: { node: '>=16.0.0' }
 
-  langium@3.1.3:
+  langium@3.2.0:
     resolution:
       {
-        integrity: sha512-VDmrpRooT2QkKHbEtE5Ld6pbD1HuCKfM1CrAEwEpHBkw3S7xzuIgSJ+BdvFfpEMedymV2ceS+mpUV7qoXDK4mQ==,
+        integrity: sha512-HxAPgCVC7X+dCN99QKlZMEoaLW4s/mt0IImYrP6ooEBOMh8lJYdFNNSpJ5NIOE+WFwQd3xa2phTJDmJhOWVR7A==,
       }
     engines: { node: '>=16.0.0' }
 
@@ -11050,7 +11050,7 @@ snapshots:
       vscode-languageserver-textdocument: 1.0.11
       vscode-uri: 3.0.8
 
-  langium@3.1.3:
+  langium@3.2.0:
     dependencies:
       chevrotain: 11.0.3
       chevrotain-allstar: 0.3.1(chevrotain@11.0.3)
