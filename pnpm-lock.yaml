@@ -21,7 +21,7 @@ importers:
         version: 18.4.4
       '@testing-library/jest-dom':
         specifier: ^6.4.6
-        version: 6.4.6(vitest@2.0.0(@types/node@20.10.5)(@vitest/ui@2.0.0)(jsdom@24.1.0))
+        version: 6.4.6(vitest@2.0.0)
       '@testing-library/react':
         specifier: ^16.0.0
         version: 16.0.0(@testing-library/dom@10.3.2)(@types/react-dom@18.2.18)(@types/react@18.2.45)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -54,7 +54,7 @@ importers:
         version: 4.2.1(vite@5.0.13(@types/node@20.10.5))
       '@vitest/coverage-v8':
         specifier: ~2.0.0
-        version: 2.0.0(vitest@2.0.0(@types/node@20.10.5)(@vitest/ui@2.0.0)(jsdom@24.1.0))
+        version: 2.0.0(vitest@2.0.0)
       '@vitest/ui':
         specifier: ~2.0.0
         version: 2.0.0(vitest@2.0.0)(vue@3.4.32(typescript@5.3.3))
@@ -177,6 +177,9 @@ importers:
       '@formml/dsl':
         specifier: workspace:^
         version: link:../dsl
+      '@formml/utils':
+        specifier: workspace:^
+        version: link:../utils
       '@vue-reactivity/watch':
         specifier: ^0.2.0
         version: 0.2.0(@vue/reactivity@3.4.3)(@vue/shared@3.4.32)
@@ -278,6 +281,15 @@ importers:
         version: link:../eslint-config-formml
 
   packages/typescript-config: {}
+
+  packages/utils:
+    devDependencies:
+      '@formml/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      eslint-config-formml:
+        specifier: workspace:*
+        version: link:../eslint-config-formml
 
   packages/vscode:
     dependencies:
@@ -8951,7 +8963,7 @@ snapshots:
       lz-string: 1.5.0
       pretty-format: 27.5.1
 
-  '@testing-library/jest-dom@6.4.6(vitest@2.0.0(@types/node@20.10.5)(@vitest/ui@2.0.0)(jsdom@24.1.0))':
+  '@testing-library/jest-dom@6.4.6(vitest@2.0.0)':
     dependencies:
       '@adobe/css-tools': 4.4.0
       '@babel/runtime': 7.24.8
@@ -9178,7 +9190,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/coverage-v8@2.0.0(vitest@2.0.0(@types/node@20.10.5)(@vitest/ui@2.0.0)(jsdom@24.1.0))':
+  '@vitest/coverage-v8@2.0.0(vitest@2.0.0)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3

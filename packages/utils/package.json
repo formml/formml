@@ -1,0 +1,37 @@
+{
+  "name": "@formml/utils",
+  "version": "0.0.1",
+  "description": "The utility package for formml.",
+  "keywords": [
+    "formml",
+    "form"
+  ],
+  "homepage": "https://github.com/formml/formml/tree/main/packages/utils",
+  "repository": "https://github.com/formml/formml/tree/main/packages/utils",
+  "bugs": "https://github.com/formml/formml/issues",
+  "author": "Jindong Zhang <jindong.zhannng@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "!src/**/__test__"
+  ],
+  "scripts": {
+    "build": "rimraf dist/ && mkdir dist/ && pnpm run build:esm",
+    "build:esm": "tsc -p ./tsconfig.lib.json",
+    "dev": "rimraf dist/ && pnpm run build:esm --watch",
+    "lint": "eslint .",
+    "lint:fix": "pnpm run lint --fix",
+    "lint:type": "tsc",
+    "test": "vitest run --typecheck",
+    "test:watch": "vitest watch --typecheck"
+  },
+  "devDependencies": {
+    "@formml/typescript-config": "workspace:*",
+    "eslint-config-formml": "workspace:*"
+  }
+}

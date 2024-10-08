@@ -1,9 +1,8 @@
 import type * as DslTypes from '@formml/dsl'
 
+import { assertNever } from '@formml/utils'
 import { BigNumber } from 'bignumber.js'
 import dayjs from 'dayjs'
-
-import { assertNever } from './utils/assertNever.js'
 
 export type PrimitiveTypeMapping = {
   bool: boolean

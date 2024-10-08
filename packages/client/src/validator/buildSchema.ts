@@ -2,13 +2,13 @@ import type { Annotation, Field, PRIMITIVE } from '@formml/dsl'
 
 import { utils } from '@formml/dsl'
 import annotationsInterface from '@formml/dsl/interfaces/annotations.js'
+import { assertNever } from '@formml/utils'
 import { BigNumber } from 'bignumber.js'
 import * as v from 'valibot'
 
 import type { PrimitiveTypeMapping } from '../JsTypes.js'
 import type { IAnnotationAction } from './annotationsReducer.js'
 
-import { assertNever } from '../utils/assertNever.js'
 import annotationsReducer from './annotationsReducer.js'
 
 const type = (formmlSchema: Field) => {

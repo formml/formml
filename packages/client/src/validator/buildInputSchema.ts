@@ -1,10 +1,10 @@
 import type { Field, Form } from '@formml/dsl'
 
 import { isForm } from '@formml/dsl'
+import { assertNever } from '@formml/utils'
 import * as v from 'valibot'
 
 import { parse } from '../JsTypes.js'
-import { assertNever } from '../utils/assertNever.js'
 import buildSchema from './buildSchema.js'
 import * as c from './valibot/validations/index.js'
 
