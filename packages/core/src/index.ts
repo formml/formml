@@ -1,4 +1,2 @@
-import buildSchema from './validator/buildSchema.js'
-
-export { buildSchema }
 export * as JsTypes from './JsTypes.js'
+export * from './validator/index.js'

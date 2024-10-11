@@ -1,9 +1,10 @@
+import type { ValidationError } from '@formml/core'
+
 import { createFormMLParser } from '@formml/dsl'
 import { render, renderHook } from '@testing-library/react'
 import { Profiler } from 'react'
 
 import type { FormMLOptions } from '../FormML.js'
-import type { ValidationError } from '../validator/index.js'
 
 import { FormML } from '../FormML.js'
 import { useFormML } from '../useFormML.js'

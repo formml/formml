@@ -1,3 +1,4 @@
+import type { ValidationError, Validator } from '@formml/core'
 import type { Field, Form, FormMLSchema } from '@formml/dsl'
 import type { ObjectPathItem } from 'valibot'
 
@@ -7,8 +8,6 @@ import { watch } from '@vue-reactivity/watch'
 
 import type { BaseIndex, IndexRoot } from './IndexManager.js'
 import type { DeepPartial } from './utils/options.js'
-import type { ValidationError } from './validator/index.js'
-import type { Validator } from './validator/index.js'
 
 import IndexManager from './IndexManager.js'
 import validate from './decorators/validate.js'
