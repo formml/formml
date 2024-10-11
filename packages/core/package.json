@@ -45,7 +45,7 @@
     "@formml/dsl": "workspace:*",
     "@formml/utils": "workspace:*",
     "bignumber.js": "^9.1.2",
-    "dayjs": "^1.11.10",
-    "valibot": "^0.31.0-rc.0"
+    "dayjs": "^1.11.13",
+    "valibot": "^0.42.1"
   }
 }

@@ -40,22 +40,22 @@
     "test:watch": "vitest watch --typecheck"
   },
   "dependencies": {
-    "@formml/dsl": "workspace:^",
-    "@formml/utils": "workspace:^",
     "@formml/core": "workspace:^",
+    "@formml/utils": "workspace:^",
     "@vue-reactivity/watch": "^0.2.0",
     "@vue/reactivity": "^3.4.3",
-    "bignumber.js": "^9.1.2",
-    "dayjs": "^1.11.10",
+    "dayjs": "^1.11.13",
     "use-sync-external-store": "^1.2.0",
-    "valibot": "^0.31.0-rc.0"
+    "valibot": "^0.42.1"
   },
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@formml/dsl": "workspace:^",
     "@formml/typescript-config": "workspace:*",
+    "bignumber.js": "^9.1.2",
     "eslint-config-formml": "workspace:*"
   }
 }

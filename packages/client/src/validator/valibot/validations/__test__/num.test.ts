@@ -62,7 +62,6 @@ describe('num', () => {
           "path": undefined,
           "received": ""abc"",
           "requirement": [Function],
-          "skipPipe": undefined,
           "type": "num",
         },
       ]
@@ -92,7 +91,6 @@ describe('num', () => {
           "path": undefined,
           "received": ""NaN"",
           "requirement": [Function],
-          "skipPipe": undefined,
           "type": "num",
         },
       ]
@@ -122,7 +120,6 @@ describe('num', () => {
           "path": undefined,
           "received": ""abc"",
           "requirement": [Function],
-          "skipPipe": undefined,
           "type": "num",
         },
       ]

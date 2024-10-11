@@ -14,7 +14,6 @@ exports[`required > should invalidate if input is string but blank - "   " 1`] =
     "path": undefined,
     "received": ""   "",
     "requirement": undefined,
-    "skipPipe": undefined,
     "type": "required",
   },
 ]
@@ -34,7 +33,6 @@ exports[`required > should invalidate if input is string but blank - "" 1`] = `
     "path": undefined,
     "received": """",
     "requirement": undefined,
-    "skipPipe": undefined,
     "type": "required",
   },
 ]
@@ -57,7 +55,6 @@ exports[`required > should invalidate if input is string but blank - "\\n" 1`] =
     "received": ""
 "",
     "requirement": undefined,
-    "skipPipe": undefined,
     "type": "required",
   },
 ]
@@ -80,7 +77,6 @@ exports[`required > should invalidate if input is string but blank - "\\r" 1`] =
     "received": ""
 "",
     "requirement": undefined,
-    "skipPipe": undefined,
     "type": "required",
   },
 ]
@@ -100,7 +96,6 @@ exports[`required > should invalidate if input is string but blank - "\\t" 1`] =
     "path": undefined,
     "received": ""	"",
     "requirement": undefined,
-    "skipPipe": undefined,
     "type": "required",
   },
 ]

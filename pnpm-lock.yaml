@@ -123,7 +123,7 @@ importers:
         version: 5.0.5
       tsup:
         specifier: ^8.2.3
-        version: 8.2.3(@microsoft/api-extractor@7.47.2(@types/node@20.10.5))(jiti@1.21.0)(postcss@8.4.40)(typescript@5.3.3)
+        version: 8.2.3(@microsoft/api-extractor@7.47.2(@types/node@20.10.5))(jiti@1.21.0)(postcss@8.4.47)(typescript@5.3.3)
       turbo:
         specifier: ^2.1.1
         version: 2.1.1
@@ -177,9 +177,6 @@ importers:
       '@formml/core':
         specifier: workspace:^
         version: link:../core
-      '@formml/dsl':
-        specifier: workspace:^
-        version: link:../dsl
       '@formml/utils':
         specifier: workspace:^
         version: link:../utils
@@ -189,12 +186,9 @@ importers:
       '@vue/reactivity':
         specifier: ^3.4.3
         version: 3.4.3
-      bignumber.js:
-        specifier: ^9.1.2
-        version: 9.1.2
       dayjs:
-        specifier: ^1.11.10
-        version: 1.11.10
+        specifier: ^1.11.13
+        version: 1.11.13
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -205,12 +199,18 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0(react@18.2.0)
       valibot:
-        specifier: ^0.31.0-rc.0
-        version: 0.31.0-rc.0
+        specifier: ^0.42.1
+        version: 0.42.1(typescript@5.4.2)
     devDependencies:
+      '@formml/dsl':
+        specifier: workspace:^
+        version: link:../dsl
       '@formml/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      bignumber.js:
+        specifier: ^9.1.2
+        version: 9.1.2
       eslint-config-formml:
         specifier: workspace:*
         version: link:../eslint-config-formml
@@ -227,11 +227,11 @@ importers:
         specifier: ^9.1.2
         version: 9.1.2
       dayjs:
-        specifier: ^1.11.10
-        version: 1.11.10
+        specifier: ^1.11.13
+        version: 1.11.13
       valibot:
-        specifier: ^0.31.0-rc.0
-        version: 0.31.0-rc.0
+        specifier: ^0.42.1
+        version: 0.42.1(typescript@5.4.2)
     devDependencies:
       '@formml/typescript-config':
         specifier: workspace:*
@@ -367,10 +367,10 @@ packages:
       }
     engines: { node: '>=6.9.0' }
 
-  '@babel/code-frame@7.24.7':
+  '@babel/code-frame@7.25.7':
     resolution:
       {
-        integrity: sha512-BcYH1CVJBO9tvyIZ2jVeXgSIMvGZ2FDRvDdOIVQyuklNKSsx+eppDEBq/g47Ayw+RqNFE+URvOShmf+f/qwAlA==,
+        integrity: sha512-0xZJFNE5XMpENsgfHYTw8FbX4kv53mFLn2i3XPoq69LyhYSCBJtitaHx9QnsVTrsogI4Z3+HtEfZ2/GFPOtf5g==,
       }
     engines: { node: '>=6.9.0' }
 
@@ -474,10 +474,10 @@ packages:
       }
     engines: { node: '>=6.9.0' }
 
-  '@babel/helper-string-parser@7.24.8':
+  '@babel/helper-string-parser@7.25.7':
     resolution:
       {
-        integrity: sha512-pO9KhhRcuUyGnJWwyEgnRJTSIZHiT+vMD0kPeD+so0l7mxkMT19g3pjY9GTnHySck/hDzq+dtW/4VgnMkippsQ==,
+        integrity: sha512-CbkjYdsJNHFk8uqpEkpCvRs3YRp9tY6FmFY7wLMSYuGYkrdUi7r2lc4/wqsvlHoMznX3WJ9IP8giGPq68T/Y6g==,
       }
     engines: { node: '>=6.9.0' }
 
@@ -492,6 +492,13 @@ packages:
     resolution:
       {
         integrity: sha512-rR+PBcQ1SMQDDyF6X0wxtG8QyLCgUB0eRAGguqRLfkCA87l7yAP7ehq8SNj96OOGTO8OBV70KhuFYcIkHXOg0w==,
+      }
+    engines: { node: '>=6.9.0' }
+
+  '@babel/helper-validator-identifier@7.25.7':
+    resolution:
+      {
+        integrity: sha512-AM6TzwYqGChO45oiuPqwL2t20/HdMC1rTPAesnBCgPCSF1x3oN9MVUwQV2iyz4xqWrctwK5RNC8LV22kaQCNYg==,
       }
     engines: { node: '>=6.9.0' }
 
@@ -516,10 +523,10 @@ packages:
       }
     engines: { node: '>=6.9.0' }
 
-  '@babel/highlight@7.24.7':
+  '@babel/highlight@7.25.7':
     resolution:
       {
-        integrity: sha512-EStJpq4OuY8xYfhGVXngigBJRWxftKX9ksiGDnmlY3o7B/V7KIAc9X4oiK87uPJSc/vs5L869bem5fhZa8caZw==,
+        integrity: sha512-iYyACpW3iW8Fw+ZybQK+drQre+ns/tKpXbNESfrhNnPLIklLbXr7MYJ6gPEd0iETGLOK+SxMjVvKb/ffmk+FEw==,
       }
     engines: { node: '>=6.9.0' }
 
@@ -539,10 +546,10 @@ packages:
     engines: { node: '>=6.0.0' }
     hasBin: true
 
-  '@babel/parser@7.25.0':
+  '@babel/parser@7.25.8':
     resolution:
       {
-        integrity: sha512-CzdIU9jdP0dg7HdyB+bHvDJGagUv+qtzZt5rYCWwW6tITNqV9odjp6Qu41gkG0ca5UfdDUWrKkiAnHHdGRnOrA==,
+        integrity: sha512-HcttkxzdPucv3nNFmfOOMfFf64KgdJVqm1KaCm25dPGMLElo9nsLvXeJECQg8UzPuBGLyTSA0ZzqCtDSzKTEoQ==,
       }
     engines: { node: '>=6.0.0' }
     hasBin: true
@@ -579,10 +586,10 @@ packages:
       }
     engines: { node: '>=6.9.0' }
 
-  '@babel/runtime@7.25.0':
+  '@babel/runtime@7.25.7':
     resolution:
       {
-        integrity: sha512-7dRy4DwXwtzBrPbZflqxnvfxLF8kdZXPkhymtDeFoFqE6ldzjQFgYTtYIFARcLEYDrqfBfYcZt1WqFxRoyC9Rw==,
+        integrity: sha512-FjoyLe754PMiYsFaN5C94ttGiOmBNYTf6pLr4xXHAT5uctHb092PBszndLDR5XA/jghQvn4n7JMHl7dmTgbm9w==,
       }
     engines: { node: '>=6.9.0' }
 
@@ -614,10 +621,10 @@ packages:
       }
     engines: { node: '>=6.9.0' }
 
-  '@babel/types@7.25.0':
+  '@babel/types@7.25.8':
     resolution:
       {
-        integrity: sha512-LcnxQSsd9aXOIgmmSpvZ/1yo46ra2ESYyqLcryaBZOghxy5qqOBjvCWP5JfkI8yl9rlxRgdLTTMCQQRcN2hdCg==,
+        integrity: sha512-JWtuCu8VQsMladxVz/P4HzHUGCAwpuqacmowgXFs5XjxIgKuNjnLokQzuVjlTvIzODaDmpjT3oxcC48vyk9EWg==,
       }
     engines: { node: '>=6.9.0' }
 
@@ -1443,6 +1450,12 @@ packages:
     resolution:
       {
         integrity: sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==,
+      }
+
+  '@jridgewell/sourcemap-codec@1.5.0':
+    resolution:
+      {
+        integrity: sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==,
       }
 
   '@jridgewell/trace-mapping@0.3.20':
@@ -3250,10 +3263,10 @@ packages:
       }
     engines: { node: '>=0.11' }
 
-  dayjs@1.11.10:
+  dayjs@1.11.13:
     resolution:
       {
-        integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==,
+        integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==,
       }
 
   debug@3.2.7:
@@ -5422,6 +5435,12 @@ packages:
         integrity: sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ==,
       }
 
+  magic-string@0.30.11:
+    resolution:
+      {
+        integrity: sha512-+Wri9p0QHMy+545hKww7YAu5NyzF8iomPL/RQazugQ9+Ez4Ic3mERMd8ZTX5rfK944j+560ZJi8iAwgak1Ac7A==,
+      }
+
   magicast@0.3.4:
     resolution:
       {
@@ -6027,6 +6046,12 @@ packages:
         integrity: sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==,
       }
 
+  picocolors@1.1.0:
+    resolution:
+      {
+        integrity: sha512-TQ92mBOW0l3LeMeyLV6mzy/kWr8lkd/hp3mTg7wYK7zJhuBStmGMBG0BdeDZS/dZx1IukaX6Bk11zcln25o1Aw==,
+      }
+
   picomatch@2.3.1:
     resolution:
       {
@@ -6091,10 +6116,10 @@ packages:
       }
     engines: { node: ^10 || ^12 || >=14 }
 
-  postcss@8.4.40:
+  postcss@8.4.47:
     resolution:
       {
-        integrity: sha512-YF2kKIUzAofPMpfH6hOi2cGnv/HrUlfucspc7pDyvv7kGdqXrfj8SCl/t8owkEgKEuu8ZcRjSOxFxVLqwChZ2Q==,
+        integrity: sha512-56rxCq7G/XfB4EkXq9Egn5GCqugWvDFjafDOThIdMBsI15iqPqR5r15TfSr1YPYeEI19YeaXMCbY6u88Y76GLQ==,
       }
     engines: { node: ^10 || ^12 || >=14 }
 
@@ -6721,6 +6746,13 @@ packages:
     resolution:
       {
         integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==,
+      }
+    engines: { node: '>=0.10.0' }
+
+  source-map-js@1.2.1:
+    resolution:
+      {
+        integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==,
       }
     engines: { node: '>=0.10.0' }
 
@@ -7479,11 +7511,16 @@ packages:
         integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==,
       }
 
-  valibot@0.31.0-rc.0:
+  valibot@0.42.1:
     resolution:
       {
-        integrity: sha512-c8HERUa1wthubHtWn0EXJIw4itUEMq2WMZEVaV8zv0a0654aGDX+Ln1Ba5smAjFdntIn/0tDCqdeYYRibfhwtQ==,
+        integrity: sha512-3keXV29Ar5b//Hqi4MbSdV7lfVp6zuYLZuA9V1PvQUsXqogr+u5lvLPLk3A4f74VUXDnf/JfWMN6sB+koJ/FFw==,
       }
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   validate-npm-package-license@3.0.4:
     resolution:
@@ -7979,10 +8016,10 @@ snapshots:
       '@babel/highlight': 7.23.4
       chalk: 2.4.2
 
-  '@babel/code-frame@7.24.7':
+  '@babel/code-frame@7.25.7':
     dependencies:
-      '@babel/highlight': 7.24.7
-      picocolors: 1.0.1
+      '@babel/highlight': 7.25.7
+      picocolors: 1.1.0
 
   '@babel/compat-data@7.23.5': {}
 
@@ -8059,11 +8096,13 @@ snapshots:
 
   '@babel/helper-string-parser@7.24.7': {}
 
-  '@babel/helper-string-parser@7.24.8': {}
+  '@babel/helper-string-parser@7.25.7': {}
 
   '@babel/helper-validator-identifier@7.22.20': {}
 
   '@babel/helper-validator-identifier@7.24.7': {}
+
+  '@babel/helper-validator-identifier@7.25.7': {}
 
   '@babel/helper-validator-option@7.23.5': {}
 
@@ -8081,12 +8120,12 @@ snapshots:
       chalk: 2.4.2
       js-tokens: 4.0.0
 
-  '@babel/highlight@7.24.7':
+  '@babel/highlight@7.25.7':
     dependencies:
-      '@babel/helper-validator-identifier': 7.24.7
+      '@babel/helper-validator-identifier': 7.25.7
       chalk: 2.4.2
       js-tokens: 4.0.0
-      picocolors: 1.0.1
+      picocolors: 1.1.0
 
   '@babel/parser@7.23.6':
     dependencies:
@@ -8096,9 +8135,9 @@ snapshots:
     dependencies:
       '@babel/types': 7.24.7
 
-  '@babel/parser@7.25.0':
+  '@babel/parser@7.25.8':
     dependencies:
-      '@babel/types': 7.25.0
+      '@babel/types': 7.25.8
 
   '@babel/plugin-transform-react-jsx-self@7.23.3(@babel/core@7.23.6)':
     dependencies:
@@ -8118,7 +8157,7 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.1
 
-  '@babel/runtime@7.25.0':
+  '@babel/runtime@7.25.7':
     dependencies:
       regenerator-runtime: 0.14.1
 
@@ -8155,10 +8194,10 @@ snapshots:
       '@babel/helper-validator-identifier': 7.24.7
       to-fast-properties: 2.0.0
 
-  '@babel/types@7.25.0':
+  '@babel/types@7.25.8':
     dependencies:
-      '@babel/helper-string-parser': 7.24.8
-      '@babel/helper-validator-identifier': 7.24.7
+      '@babel/helper-string-parser': 7.25.7
+      '@babel/helper-validator-identifier': 7.25.7
       to-fast-properties: 2.0.0
 
   '@bcoe/v8-coverage@0.2.3': {}
@@ -8663,6 +8702,8 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.4.15': {}
 
+  '@jridgewell/sourcemap-codec@1.5.0': {}
+
   '@jridgewell/trace-mapping@0.3.20':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.1
@@ -8973,8 +9014,8 @@ snapshots:
 
   '@testing-library/dom@10.3.2':
     dependencies:
-      '@babel/code-frame': 7.24.7
-      '@babel/runtime': 7.25.0
+      '@babel/code-frame': 7.25.7
+      '@babel/runtime': 7.25.7
       '@types/aria-query': 5.0.4
       aria-query: 5.3.0
       chalk: 4.1.2
@@ -9303,11 +9344,11 @@ snapshots:
 
   '@vue/compiler-core@3.4.32':
     dependencies:
-      '@babel/parser': 7.25.0
+      '@babel/parser': 7.25.8
       '@vue/shared': 3.4.32
       entities: 4.5.0
       estree-walker: 2.0.2
-      source-map-js: 1.2.0
+      source-map-js: 1.2.1
 
   '@vue/compiler-dom@3.4.32':
     dependencies:
@@ -9316,15 +9357,15 @@ snapshots:
 
   '@vue/compiler-sfc@3.4.32':
     dependencies:
-      '@babel/parser': 7.25.0
+      '@babel/parser': 7.25.8
       '@vue/compiler-core': 3.4.32
       '@vue/compiler-dom': 3.4.32
       '@vue/compiler-ssr': 3.4.32
       '@vue/shared': 3.4.32
       estree-walker: 2.0.2
-      magic-string: 0.30.10
-      postcss: 8.4.40
-      source-map-js: 1.2.0
+      magic-string: 0.30.11
+      postcss: 8.4.47
+      source-map-js: 1.2.1
 
   '@vue/compiler-ssr@3.4.32':
     dependencies:
@@ -9855,7 +9896,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.23.6
 
-  dayjs@1.11.10: {}
+  dayjs@1.11.13: {}
 
   debug@3.2.7:
     dependencies:
@@ -11227,6 +11268,10 @@ snapshots:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
 
+  magic-string@0.30.11:
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.5.0
+
   magicast@0.3.4:
     dependencies:
       '@babel/parser': 7.24.7
@@ -11560,6 +11605,8 @@ snapshots:
 
   picocolors@1.0.1: {}
 
+  picocolors@1.1.0: {}
+
   picomatch@2.3.1: {}
 
   pidtree@0.6.0: {}
@@ -11572,12 +11619,12 @@ snapshots:
     dependencies:
       find-up: 4.1.0
 
-  postcss-load-config@6.0.1(jiti@1.21.0)(postcss@8.4.40):
+  postcss-load-config@6.0.1(jiti@1.21.0)(postcss@8.4.47):
     dependencies:
       lilconfig: 3.1.2
     optionalDependencies:
       jiti: 1.21.0
-      postcss: 8.4.40
+      postcss: 8.4.47
 
   postcss@8.4.32:
     dependencies:
@@ -11585,11 +11632,11 @@ snapshots:
       picocolors: 1.0.0
       source-map-js: 1.0.2
 
-  postcss@8.4.40:
+  postcss@8.4.47:
     dependencies:
       nanoid: 3.3.7
-      picocolors: 1.0.1
-      source-map-js: 1.2.0
+      picocolors: 1.1.0
+      source-map-js: 1.2.1
 
   prebuild-install@7.1.2:
     dependencies:
@@ -12015,6 +12062,8 @@ snapshots:
 
   source-map-js@1.2.0: {}
 
+  source-map-js@1.2.1: {}
+
   source-map@0.6.1:
     optional: true
 
@@ -12281,7 +12330,7 @@ snapshots:
 
   tslib@2.6.2: {}
 
-  tsup@8.2.3(@microsoft/api-extractor@7.47.2(@types/node@20.10.5))(jiti@1.21.0)(postcss@8.4.40)(typescript@5.3.3):
+  tsup@8.2.3(@microsoft/api-extractor@7.47.2(@types/node@20.10.5))(jiti@1.21.0)(postcss@8.4.47)(typescript@5.3.3):
     dependencies:
       bundle-require: 5.0.0(esbuild@0.23.0)
       cac: 6.7.14
@@ -12293,7 +12342,7 @@ snapshots:
       globby: 11.1.0
       joycon: 3.1.1
       picocolors: 1.0.1
-      postcss-load-config: 6.0.1(jiti@1.21.0)(postcss@8.4.40)
+      postcss-load-config: 6.0.1(jiti@1.21.0)(postcss@8.4.47)
       resolve-from: 5.0.0
       rollup: 4.19.1
       source-map: 0.8.0-beta.0
@@ -12301,7 +12350,7 @@ snapshots:
       tree-kill: 1.2.2
     optionalDependencies:
       '@microsoft/api-extractor': 7.47.2(@types/node@20.10.5)
-      postcss: 8.4.40
+      postcss: 8.4.47
       typescript: 5.3.3
     transitivePeerDependencies:
       - jiti
@@ -12453,7 +12502,9 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  valibot@0.31.0-rc.0: {}
+  valibot@0.42.1(typescript@5.4.2):
+    optionalDependencies:
+      typescript: 5.4.2
 
   validate-npm-package-license@3.0.4:
     dependencies:

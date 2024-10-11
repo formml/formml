@@ -62,7 +62,6 @@ describe('decimal', () => {
           "path": undefined,
           "received": ""abc"",
           "requirement": [Function],
-          "skipPipe": undefined,
           "type": "decimal",
         },
       ]
@@ -92,7 +91,6 @@ describe('decimal', () => {
           "path": undefined,
           "received": ""NaN"",
           "requirement": [Function],
-          "skipPipe": undefined,
           "type": "decimal",
         },
       ]
@@ -122,7 +120,6 @@ describe('decimal', () => {
           "path": undefined,
           "received": ""abc"",
           "requirement": [Function],
-          "skipPipe": undefined,
           "type": "decimal",
         },
       ]

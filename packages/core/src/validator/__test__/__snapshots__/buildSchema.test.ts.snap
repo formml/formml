@@ -14,7 +14,6 @@ exports[`buildSchema > integration > types - bool > should invalidate non-boolea
     "path": undefined,
     "received": ""abc"",
     "requirement": undefined,
-    "skipPipe": undefined,
     "type": "boolean",
   },
 ]
@@ -34,7 +33,6 @@ exports[`buildSchema > integration > types - datetime > should invalidate non-Da
     "path": undefined,
     "received": "M",
     "requirement": undefined,
-    "skipPipe": undefined,
     "type": "date",
   },
 ]
@@ -54,7 +52,6 @@ exports[`buildSchema > integration > types - decimal > should invalidate non-Big
     "path": undefined,
     "received": "123.45",
     "requirement": undefined,
-    "skipPipe": undefined,
     "type": "instance",
   },
 ]
@@ -74,7 +71,6 @@ exports[`buildSchema > integration > types - num > should invalidate non-number 
     "path": undefined,
     "received": ""abc"",
     "requirement": undefined,
-    "skipPipe": undefined,
     "type": "number",
   },
 ]
@@ -94,7 +90,6 @@ exports[`buildSchema > integration > types - text > should invalidate non-string
     "path": undefined,
     "received": "123",
     "requirement": undefined,
-    "skipPipe": undefined,
     "type": "string",
   },
 ]

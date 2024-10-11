@@ -48,7 +48,6 @@ describe('required', () => {
           "path": undefined,
           "received": "123",
           "requirement": undefined,
-          "skipPipe": undefined,
           "type": "string",
         },
       ]
@@ -78,7 +77,6 @@ describe('required', () => {
           "path": undefined,
           "received": "undefined",
           "requirement": undefined,
-          "skipPipe": undefined,
           "type": "required",
         },
       ]
@@ -123,7 +121,6 @@ describe('required', () => {
           "path": undefined,
           "received": "undefined",
           "requirement": undefined,
-          "skipPipe": undefined,
           "type": "required",
         },
       ]
