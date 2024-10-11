@@ -1,6 +1,7 @@
 import type { Field, Form, FormMLSchema } from '@formml/dsl'
 import type { ObjectPathItem } from 'valibot'
 
+import { JsTypes } from '@formml/core'
 import { reactive, toRaw } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
 
@@ -10,7 +11,6 @@ import type { ValidationError } from './validator/index.js'
 import type { Validator } from './validator/index.js'
 
 import IndexManager from './IndexManager.js'
-import * as JsTypes from './JsTypes.js'
 import validate from './decorators/validate.js'
 import { mergeOptions } from './utils/options.js'
 import { createInputValidator } from './validator/index.js'

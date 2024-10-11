@@ -42,6 +42,7 @@
   "dependencies": {
     "@formml/dsl": "workspace:^",
     "@formml/utils": "workspace:^",
+    "@formml/core": "workspace:^",
     "@vue-reactivity/watch": "^0.2.0",
     "@vue/reactivity": "^3.4.3",
     "bignumber.js": "^9.1.2",

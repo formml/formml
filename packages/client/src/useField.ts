@@ -1,3 +1,4 @@
+import type { JsTypes } from '@formml/core'
 import type { Field } from '@formml/dsl'
 
 import { useCallback } from 'react'
@@ -5,7 +6,6 @@ import { useSyncExternalStore } from 'use-sync-external-store/shim'
 
 import type { FieldResult } from './FormML.js'
 import type { BaseIndex } from './IndexManager.js'
-import type { PrimitiveType } from './JsTypes.js'
 import type { ValidationError } from './validator/index.js'
 
 import { useFormMLContext } from './useFormMLContext.js'
@@ -22,14 +22,14 @@ export type FieldMetaData = {
   error: ValidationError | undefined
   schema: Field
   touched: boolean
-  typedValue: PrimitiveType
+  typedValue: JsTypes.PrimitiveType
 }
 
 export type FieldHelpers = {
   blur: () => void
   commitRawValue: () => void
   setRawValue: (value: string) => void
-  setTypedValue: (value: PrimitiveType) => void
+  setTypedValue: (value: JsTypes.PrimitiveType) => void
 }
 
 export type FieldPack = {
