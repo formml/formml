@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`buildSchema > integration > types - bool > should invalidate non-boolean input if field type is bool 1`] = `
+exports[`buildSchema > for field > integration > types - bool > should invalidate non-boolean input if field type is bool 1`] = `
 [
   {
     "abortEarly": undefined,
@@ -19,7 +19,7 @@ exports[`buildSchema > integration > types - bool > should invalidate non-boolea
 ]
 `;
 
-exports[`buildSchema > integration > types - datetime > should invalidate non-Date input if field type is datetime 1`] = `
+exports[`buildSchema > for field > integration > types - datetime > should invalidate non-Date input if field type is datetime 1`] = `
 [
   {
     "abortEarly": undefined,
@@ -38,7 +38,7 @@ exports[`buildSchema > integration > types - datetime > should invalidate non-Da
 ]
 `;
 
-exports[`buildSchema > integration > types - decimal > should invalidate non-BigNumber input if field type is decimal 1`] = `
+exports[`buildSchema > for field > integration > types - decimal > should invalidate non-BigNumber input if field type is decimal 1`] = `
 [
   {
     "abortEarly": undefined,
@@ -57,7 +57,7 @@ exports[`buildSchema > integration > types - decimal > should invalidate non-Big
 ]
 `;
 
-exports[`buildSchema > integration > types - num > should invalidate non-number input if field type is num 1`] = `
+exports[`buildSchema > for field > integration > types - num > should invalidate non-number input if field type is num 1`] = `
 [
   {
     "abortEarly": undefined,
@@ -76,7 +76,7 @@ exports[`buildSchema > integration > types - num > should invalidate non-number 
 ]
 `;
 
-exports[`buildSchema > integration > types - text > should invalidate non-string input if field type is text 1`] = `
+exports[`buildSchema > for field > integration > types - text > should invalidate non-string input if field type is text 1`] = `
 [
   {
     "abortEarly": undefined,

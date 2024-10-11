@@ -1,6 +1,6 @@
-import type { Annotation, Field, PRIMITIVE } from '@formml/dsl'
+import type { Annotation, Field, Form, PRIMITIVE } from '@formml/dsl'
 
-import { utils } from '@formml/dsl'
+import { isForm, utils } from '@formml/dsl'
 import annotationsInterface from '@formml/dsl/interfaces/annotations.js'
 import { assertNever } from '@formml/utils'
 import { BigNumber } from 'bignumber.js'
@@ -45,7 +45,18 @@ function buildAction(annotation: Annotation): IAnnotationAction {
 export default function buildSchema<T extends PRIMITIVE>(
   formmlSchema: Field<T>,
 ): v.GenericSchema<PrimitiveTypeMapping[T]>
-export default function buildSchema(formmlSchema: Field) {
+export default function buildSchema(
+  formmlSchema: Form,
+): v.StrictObjectSchema<Record<string, v.GenericSchema>, string>
+export default function buildSchema(formmlSchema: Field | Form) {
+  if (isForm(formmlSchema)) {
+    const entries = formmlSchema.fields.map((field) => [
+      field.name,
+      buildSchema(field),
+    ])
+    return v.strictObject(Object.fromEntries(entries))
+  }
+
   const baseSchema = v.optional(type(formmlSchema))
   const actions = formmlSchema.annotations.map(buildAction)
   return actions.reduce(annotationsReducer, baseSchema)
