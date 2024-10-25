@@ -124,6 +124,26 @@ export function fromString(
   return fromStringImpl(...args)
 }
 
+/**
+ * Converts a primitive type to string.
+ *
+ * @param {PrimitiveType} value - The primitive type to convert.
+ * @returns {string} The converted string.
+ *
+ * @example
+ * const result = toString(undefined) // ''
+ * // text
+ * const result = toString('hello') // 'hello'
+ * // num
+ * const result = toString(123.45) // '123.45'
+ * // bool
+ * const result = toString(true) // 'true'
+ * const result = toString(false) // ''
+ * // datetime
+ * const result = toString(new Date()) // ISO string
+ * // decimal
+ * const result = toString(new BigNumber(123.45)) // '123.45'
+ */
 export function toString(value: PrimitiveType): string {
   if (typeof value === 'boolean') {
     return value ? 'true' : ''
