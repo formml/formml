@@ -177,7 +177,7 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
     const name = schema.name
 
     this._typedValuesProxy[name] = value
-    this._valuesProxy[name] = JsTypes.stringify(value)
+    this._valuesProxy[name] = JsTypes.toString(value)
   }
 
   @validate({ eventName: 'change' })
@@ -186,7 +186,7 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
     const name = schema.name
 
     this._typedValuesProxy[name] = value
-    this._valuesProxy[name] = JsTypes.stringify(value)
+    this._valuesProxy[name] = JsTypes.toString(value)
   }
 
   subscribe(index: BaseIndex, callback: () => void): () => void {

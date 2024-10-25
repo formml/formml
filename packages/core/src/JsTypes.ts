@@ -62,7 +62,7 @@ export function fromString(
   return fromStringImpl(...args)
 }
 
-export function stringify(value: PrimitiveType): string {
+export function toString(value: PrimitiveType): string {
   if (typeof value === 'boolean') {
     return value ? 'true' : ''
   }

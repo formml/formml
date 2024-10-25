@@ -2,7 +2,7 @@ import type { PRIMITIVE } from '@formml/dsl'
 
 import { BigNumber } from 'bignumber.js'
 
-import { fromString as originalFromString, stringify } from '../JsTypes.js'
+import { fromString as originalFromString, toString } from '../JsTypes.js'
 
 function fromStringWithFullArgs<T extends PRIMITIVE>(input: string, type: T) {
   return originalFromString(input, type)
@@ -32,7 +32,7 @@ describe.each([fromStringWithFullArgs, fromStringWithPartialArgs])(
 
       // Act & Assert
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect(() => stringify(data as any)).toThrow()
+      expect(() => toString(data as any)).toThrow()
     })
 
     describe('text', () => {
@@ -49,13 +49,13 @@ describe.each([fromStringWithFullArgs, fromStringWithPartialArgs])(
         })
       })
 
-      describe('stringify', () => {
+      describe('toString', () => {
         test('should keep string as is', () => {
           // Arrange
           const data = 'hello'
 
           // Act
-          const result = stringify(data)
+          const result = toString(data)
 
           // Assert
           expect(result).toBe(data)
@@ -121,7 +121,7 @@ describe.each([fromStringWithFullArgs, fromStringWithPartialArgs])(
         )
       })
 
-      describe('stringify', () => {
+      describe('toString', () => {
         test.each([
           [123.45, '123.45'],
           [NaN, 'NaN'],
@@ -129,7 +129,7 @@ describe.each([fromStringWithFullArgs, fromStringWithPartialArgs])(
           [-Infinity, '-Infinity'],
         ])('should stringify number %s to string "%s"', (data, expected) => {
           // Act
-          const result = stringify(data)
+          const result = toString(data)
 
           // Assert
           expect(result).toBe(expected)
@@ -162,13 +162,13 @@ describe.each([fromStringWithFullArgs, fromStringWithPartialArgs])(
         })
       })
 
-      describe('stringify', () => {
+      describe('toString', () => {
         test('should stringify true to "true"', () => {
           // Arrange
           const data = true
 
           // Act
-          const result = stringify(data)
+          const result = toString(data)
 
           // Assert
           expect(result).toBe('true')
@@ -179,7 +179,7 @@ describe.each([fromStringWithFullArgs, fromStringWithPartialArgs])(
           const data = false
 
           // Act
-          const result = stringify(data)
+          const result = toString(data)
 
           // Assert
           expect(result).toBe('')
@@ -243,13 +243,13 @@ describe.each([fromStringWithFullArgs, fromStringWithPartialArgs])(
         )
       })
 
-      describe('stringify', () => {
+      describe('toString', () => {
         test('should stringify date object to UTC ISO string', () => {
           // Arrange
           const data = new Date(Date.UTC(2024, 0, 1))
 
           // Act
-          const result = stringify(data)
+          const result = toString(data)
 
           // Assert
           expect(result).toBe('2024-01-01T00:00:00.000Z')
@@ -309,7 +309,7 @@ describe.each([fromStringWithFullArgs, fromStringWithPartialArgs])(
         })
       })
 
-      describe('stringify', () => {
+      describe('toString', () => {
         test.each([
           [new BigNumber(123.45), '123.45'],
           [new BigNumber(Infinity), 'Infinity'],
@@ -319,7 +319,7 @@ describe.each([fromStringWithFullArgs, fromStringWithPartialArgs])(
           'should stringify BigNumber object to string - "%s"',
           (data, expected) => {
             // Act
-            const result = stringify(data)
+            const result = toString(data)
 
             // Assert
             expect(result).toBe(expected)
@@ -333,7 +333,7 @@ describe.each([fromStringWithFullArgs, fromStringWithPartialArgs])(
       const data = undefined
 
       // Act
-      const result = stringify(data)
+      const result = toString(data)
 
       // Assert
       expect(result).toBe('')
