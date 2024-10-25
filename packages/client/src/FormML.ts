@@ -105,7 +105,7 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
     const { name } = schema
 
     this._valuesProxy[name] = ''
-    this._typedValuesProxy[name] = JsTypes.parse('', schema.type)
+    this._typedValuesProxy[name] = JsTypes.fromString('', schema.type)
     this._fieldsMetaProxy[name] = { error: undefined, touched: false }
 
     this._fieldsInternalState[name] = { isInitiallyValidated: false }
@@ -141,7 +141,7 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
     const { name, type } = schema
 
     const rawValue = this._valuesProxy[name]
-    this._typedValuesProxy[name] = JsTypes.parse(rawValue, type)
+    this._typedValuesProxy[name] = JsTypes.fromString(rawValue, type)
   }
 
   getField(index: BaseIndex): FieldResult {

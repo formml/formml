@@ -9,7 +9,7 @@ import * as v from '../valibot/validations/index.js'
 
 vi.mock('@formml/core', () => ({
   JsTypes: {
-    parse: vi.fn(),
+    fromString: vi.fn(),
   },
   buildSchema: vi.fn(),
 }))
@@ -115,7 +115,7 @@ describe('buildInputSchema', () => {
           }
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const dummyParser = (() => undefined) as any
-          vi.mocked(JsTypes.parse).mockReturnValue(dummyParser)
+          vi.mocked(JsTypes.fromString).mockReturnValue(dummyParser)
 
           // Act
           const schema = buildInputSchema(field) as SchemaWithPipe<
@@ -124,7 +124,7 @@ describe('buildInputSchema', () => {
           >
 
           // Assert
-          expect(JsTypes.parse).toBeCalledWith(type)
+          expect(JsTypes.fromString).toBeCalledWith(type)
           expect(schema.pipe[2]).toEqual({
             ...transform(dummyParser),
             _run: expect.any(Function),

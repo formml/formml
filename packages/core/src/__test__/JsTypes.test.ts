@@ -2,25 +2,28 @@ import type { PRIMITIVE } from '@formml/dsl'
 
 import { BigNumber } from 'bignumber.js'
 
-import { parse as originalParse, stringify } from '../JsTypes.js'
+import { fromString as originalFromString, stringify } from '../JsTypes.js'
 
-function parseWithFullArgs<T extends PRIMITIVE>(input: string, type: T) {
-  return originalParse(input, type)
+function fromStringWithFullArgs<T extends PRIMITIVE>(input: string, type: T) {
+  return originalFromString(input, type)
 }
 
-function parseWithPartialArgs<T extends PRIMITIVE>(input: string, type: T) {
-  return originalParse(type)(input)
+function fromStringWithPartialArgs<T extends PRIMITIVE>(
+  input: string,
+  type: T,
+) {
+  return originalFromString(type)(input)
 }
 
-describe.each([parseWithFullArgs, parseWithPartialArgs])(
-  'JS types - parser type %#',
-  (parse) => {
+describe.each([fromStringWithFullArgs, fromStringWithPartialArgs])(
+  'JS types - fromString %#',
+  (fromString) => {
     test('should throw error when parsing unknown type', () => {
       // Arrange
       const input = 'unknown'
 
       // Act & Assert
-      expect(() => parse(input, 'unknown type' as PRIMITIVE)).toThrow()
+      expect(() => fromString(input, 'unknown type' as PRIMITIVE)).toThrow()
     })
 
     test('should throw error when stringifying unknown type', () => {
@@ -33,13 +36,13 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
     })
 
     describe('text', () => {
-      describe('parse', () => {
+      describe('fromString', () => {
         test('should keep string as is', () => {
           // Arrange
           const input = 'hello'
 
           // Act
-          const result = parse(input, 'text')
+          const result = fromString(input, 'text')
 
           // Assert
           expect(result).toBe(input)
@@ -61,13 +64,13 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
     })
 
     describe('num', () => {
-      describe('parse', () => {
+      describe('fromString', () => {
         test('should parse numeric string to number', () => {
           // Arrange
           const input = '123.45'
 
           // Act
-          const result = parse(input, 'num')
+          const result = fromString(input, 'num')
 
           // Assert
           expect(result).toBe(123.45)
@@ -78,7 +81,7 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
           ['-Infinity', -Infinity],
         ])('should parse "%s" to %s', (input, expected) => {
           // Act
-          const result = parse(input, 'num')
+          const result = fromString(input, 'num')
 
           // Assert
           expect(result).toBe(expected)
@@ -89,7 +92,7 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
           const input = 'hello'
 
           // Act
-          const result = parse(input, 'num')
+          const result = fromString(input, 'num')
 
           // Assert
           expect(result).toBeUndefined()
@@ -100,7 +103,7 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
           const input = 'NaN'
 
           // Act
-          const result = parse(input, 'num')
+          const result = fromString(input, 'num')
 
           // Assert
           expect(result).toBeUndefined()
@@ -110,7 +113,7 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
           'should parse empty string %j to undefined',
           (input) => {
             // Act
-            const result = parse(input, 'num')
+            const result = fromString(input, 'num')
 
             // Assert
             expect(result).toBeUndefined()
@@ -135,12 +138,12 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
     })
 
     describe('bool', () => {
-      describe('parse', () => {
+      describe('fromString', () => {
         test.each(['true', 'yes', '1', 'on', '   ', '\n', '\t'])(
           'should parse non-empty string to true - %j',
           (input) => {
             // Act
-            const result = parse(input, 'bool')
+            const result = fromString(input, 'bool')
 
             // Assert
             expect(result).toBe(true)
@@ -152,7 +155,7 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
           const input = ''
 
           // Act
-          const result = parse(input, 'bool')
+          const result = fromString(input, 'bool')
 
           // Assert
           expect(result).toBe(false)
@@ -185,12 +188,12 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
     })
 
     describe('datetime', () => {
-      describe('parse', () => {
+      describe('fromString', () => {
         test.each(['2024-01-01T00:00:00Z', '2024-01-01T00:00:00.000Z'])(
           'should parse UTC ISO string to date object',
           (input) => {
             // Act
-            const result = parse(input, 'datetime')
+            const result = fromString(input, 'datetime')
 
             // Assert
             const expected = new Date(Date.UTC(2024, 0, 1))
@@ -203,7 +206,7 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
           '2023-12-31T16:00:00.000-08:00',
         ])('should parse timezone properly', (input) => {
           // Act
-          const result = parse(input, 'datetime')
+          const result = fromString(input, 'datetime')
 
           // Assert
           const expected = new Date(Date.UTC(2024, 0, 1))
@@ -221,7 +224,7 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
             const expected = new Date(Date.UTC(2023, 11, 31, 16))
 
             // Act
-            const result = parse(input, 'datetime')
+            const result = fromString(input, 'datetime')
 
             // Assert
             expect(result?.getTime()).toBe(expected.getTime())
@@ -232,7 +235,7 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
           'should parse invalid string %j to undefined',
           (input) => {
             // Act
-            const result = parse(input, 'datetime')
+            const result = fromString(input, 'datetime')
 
             // Assert
             expect(result).toBeUndefined()
@@ -255,7 +258,7 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
     })
 
     describe('decimal', () => {
-      describe('parse', () => {
+      describe('fromString', () => {
         test.each([
           ['123.45', new BigNumber(123.45)],
           ['Infinity', new BigNumber(Infinity)],
@@ -264,7 +267,7 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
           'should parse numeric string "%s" to BigNumber object',
           (input, expected) => {
             // Act
-            const result = parse(input, 'decimal')
+            const result = fromString(input, 'decimal')
 
             // Assert
             expect(result).toBeInstanceOf(BigNumber)
@@ -277,7 +280,7 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
           const input = 'NaN'
 
           // Act
-          const result = parse(input, 'decimal')
+          const result = fromString(input, 'decimal')
 
           // Assert
           expect(result).toBeUndefined()
@@ -287,7 +290,7 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
           'should parse empty string %j to undefined',
           (input) => {
             // Act
-            const result = parse(input, 'decimal')
+            const result = fromString(input, 'decimal')
 
             // Assert
             expect(result).toBeUndefined()
@@ -299,7 +302,7 @@ describe.each([parseWithFullArgs, parseWithPartialArgs])(
           const input = 'hello'
 
           // Act
-          const result = parse(input, 'decimal')
+          const result = fromString(input, 'decimal')
 
           // Assert
           expect(result).toBeUndefined()

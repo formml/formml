@@ -18,7 +18,7 @@ function buildFieldSchema(formmlSchema: Field) {
     return v.pipe(
       v.string(),
       c.num(),
-      v.transform(JsTypes.parse('num')),
+      v.transform(JsTypes.fromString('num')),
       typedSchema,
     )
   }
@@ -28,7 +28,7 @@ function buildFieldSchema(formmlSchema: Field) {
     return v.pipe(
       v.string(),
       c.bool(),
-      v.transform(JsTypes.parse('bool')),
+      v.transform(JsTypes.fromString('bool')),
       typedSchema,
     )
   }
@@ -38,7 +38,7 @@ function buildFieldSchema(formmlSchema: Field) {
     return v.pipe(
       v.string(),
       c.datetime(),
-      v.transform(JsTypes.parse('datetime')),
+      v.transform(JsTypes.fromString('datetime')),
       typedSchema,
     )
   }
@@ -48,7 +48,7 @@ function buildFieldSchema(formmlSchema: Field) {
     return v.pipe(
       v.string(),
       c.decimal(),
-      v.transform(JsTypes.parse('decimal')),
+      v.transform(JsTypes.fromString('decimal')),
       typedSchema,
     )
   }
