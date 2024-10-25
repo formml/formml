@@ -44,14 +44,76 @@ function fromStringImpl(
   return assertNever`Unsupported type '${type}'`
 }
 
-// curried parse
+/**
+ * Creates a function that converts a string to a specific primitive type.
+ *
+ * @param {TType} type - The primitive type to convert to.
+ * @returns {(input: string) => PrimitiveTypeMapping[TType]} A function that takes a string input and returns the converted primitive type.
+ *
+ * @example
+ * // text
+ * const result = fromString('text')('hello') // 'hello'
+ * // num
+ * const result = fromString('num')('123.45') // 123.45
+ * const result = fromString('num')('Infinity') // Infinity
+ * const result = fromString('num')('NaN') // undefined
+ * const result = fromString('num')('abc') // undefined
+ * const result = fromString('num')('') // undefined
+ * // bool
+ * const result = fromString('bool')('true') // true
+ * const result = fromString('bool')('   ') // true
+ * const result = fromString('bool')('') // false
+ * // DateTime
+ * const result = fromString('datetime')('2024-01-01T00:00:00Z') // Date object (UTC)
+ * const result = fromString('datetime')('2024-01-01T00:00:00') // Date object (Local)
+ * const result = fromString('datetime')('invalid') // undefined
+ * // Decimal
+ * const result = fromString('decimal')('123.45') // BigNumber(123.45)
+ * const result = fromString('decimal')('Infinity') // BigNumber(Infinity)
+ * const result = fromString('decimal')('NaN') // undefined
+ * const result = fromString('decimal')('abc') // undefined
+ * const result = fromString('decimal')('') // undefined
+ */
 export function fromString<TType extends DslTypes.PRIMITIVE>(
   type: TType,
 ): (input: string) => PrimitiveTypeMapping[TType]
+
+/**
+ * Converts a string to a specific primitive type.
+ *
+ * @param {string} input - The string to convert.
+ * @param {TType} type - The primitive type to convert to.
+ * @returns {PrimitiveTypeMapping[TType]} The converted primitive value.
+ *
+ * @example
+ * // text
+ * const result = fromString('hello', 'text') // 'hello'
+ * // num
+ * const result = fromString('123.45', 'num') // 123.45
+ * const result = fromString('Infinity', 'num') // Infinity
+ * const result = fromString('NaN', 'num') // undefined
+ * const result = fromString('abc', 'num') // undefined
+ * const result = fromString('', 'num') // undefined
+ * // bool
+ * const result = fromString('true', 'bool') // true
+ * const result = fromString('   ', 'bool') // true
+ * const result = fromString('', 'bool') // false
+ * // DateTime
+ * const result = fromString('2024-01-01T00:00:00Z', 'datetime') // Date object (UTC)
+ * const result = fromString('2024-01-01T00:00:00', 'datetime') // Date object (Local)
+ * const result = fromString('invalid', 'datetime') // undefined
+ * // Decimal
+ * const result = fromString('123.45', 'decimal') // BigNumber(123.45)
+ * const result = fromString('Infinity', 'decimal') // BigNumber(Infinity)
+ * const result = fromString('NaN', 'decimal') // undefined
+ * const result = fromString('abc', 'decimal') // undefined
+ * const result = fromString('', 'decimal') // undefined
+ */
 export function fromString<TType extends DslTypes.PRIMITIVE>(
   input: string,
   type: TType,
 ): PrimitiveTypeMapping[TType]
+
 export function fromString(
   ...args: [DslTypes.PRIMITIVE] | [string, DslTypes.PRIMITIVE]
 ): ((input: string) => PrimitiveType) | PrimitiveType {
