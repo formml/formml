@@ -1,8 +1,8 @@
 import type { ValidationError, Validator } from '@formml/core'
+import type { JSType } from '@formml/core'
 import type { Field, Form, FormMLSchema } from '@formml/dsl'
 import type { ObjectPathItem } from 'valibot'
 
-import { JsTypes } from '@formml/core'
 import { reactive, toRaw } from '@vue/reactivity'
 import { watch } from '@vue-reactivity/watch'
 
@@ -11,6 +11,7 @@ import type { DeepPartial } from './utils/options.js'
 
 import IndexManager from './IndexManager.js'
 import validate from './decorators/validate.js'
+import { fromString, toString } from './js-type/string/conversion.js'
 import { mergeOptions } from './utils/options.js'
 import { createInputValidator } from './validator/index.js'
 
@@ -30,10 +31,10 @@ export type FieldResult = {
   rawValue: string
   schema: Field
   setRawValue: (value: string) => void
-  setTypedValue: (value: JsTypes.PrimitiveType) => void
-  setValue: (value: JsTypes.PrimitiveType) => void
+  setTypedValue: (value: JSType.PrimitiveType) => void
+  setValue: (value: JSType.PrimitiveType) => void
   touched: boolean
-  value: JsTypes.PrimitiveType
+  value: JSType.PrimitiveType
 }
 
 function buildInputValidators(
@@ -70,13 +71,13 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
       blur: () => void
       commitRawValue: () => void
       setRawValue: (value: string) => void
-      setTypedValue: (value: JsTypes.PrimitiveType) => void
-      setValue: (value: JsTypes.PrimitiveType) => void
+      setTypedValue: (value: JSType.PrimitiveType) => void
+      setValue: (value: JSType.PrimitiveType) => void
     }
   > = new Map()
   private readonly _indexToInputValidator: Map<object, Validator<string>>
   private readonly _schema: FormMLSchema
-  private readonly _typedValuesProxy: Record<string, JsTypes.PrimitiveType> =
+  private readonly _typedValuesProxy: Record<string, JSType.PrimitiveType> =
     reactive({})
   private readonly _valuesProxy: Record<string, string> = reactive({})
 
@@ -105,7 +106,7 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
     const { name } = schema
 
     this._valuesProxy[name] = ''
-    this._typedValuesProxy[name] = JsTypes.fromString('', schema.type)
+    this._typedValuesProxy[name] = fromString('', schema.type)
     this._fieldsMetaProxy[name] = { error: undefined, touched: false }
 
     this._fieldsInternalState[name] = { isInitiallyValidated: false }
@@ -119,10 +120,10 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
       setRawValue: (value: string) => {
         this.setRawValue(index, value)
       },
-      setTypedValue: (value: JsTypes.PrimitiveType) => {
+      setTypedValue: (value: JSType.PrimitiveType) => {
         this.setTypedValue(index, value)
       },
-      setValue: (value: JsTypes.PrimitiveType) => {
+      setValue: (value: JSType.PrimitiveType) => {
         this.setValue(index, value)
       },
     })
@@ -141,7 +142,7 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
     const { name, type } = schema
 
     const rawValue = this._valuesProxy[name]
-    this._typedValuesProxy[name] = JsTypes.fromString(rawValue, type)
+    this._typedValuesProxy[name] = fromString(rawValue, type)
   }
 
   getField(index: BaseIndex): FieldResult {
@@ -172,21 +173,21 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
   }
 
   @validate({ eventName: 'change' })
-  setTypedValue(index: BaseIndex, value: JsTypes.PrimitiveType) {
+  setTypedValue(index: BaseIndex, value: JSType.PrimitiveType) {
     const schema = this._im.for(index).get('schema') as Field
     const name = schema.name
 
     this._typedValuesProxy[name] = value
-    this._valuesProxy[name] = JsTypes.toString(value)
+    this._valuesProxy[name] = toString(value)
   }
 
   @validate({ eventName: 'change' })
-  setValue(index: BaseIndex, value: JsTypes.PrimitiveType) {
+  setValue(index: BaseIndex, value: JSType.PrimitiveType) {
     const schema = this._im.for(index).get('schema') as Field
     const name = schema.name
 
     this._typedValuesProxy[name] = value
-    this._valuesProxy[name] = JsTypes.toString(value)
+    this._valuesProxy[name] = toString(value)
   }
 
   subscribe(index: BaseIndex, callback: () => void): () => void {

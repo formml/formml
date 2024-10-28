@@ -44,6 +44,7 @@
     "@formml/utils": "workspace:^",
     "@vue-reactivity/watch": "^0.2.0",
     "@vue/reactivity": "^3.4.3",
+    "bignumber.js": "^9.1.2",
     "dayjs": "^1.11.13",
     "use-sync-external-store": "^1.2.0",
     "valibot": "^0.42.1"
@@ -55,7 +56,6 @@
   "devDependencies": {
     "@formml/dsl": "workspace:^",
     "@formml/typescript-config": "workspace:*",
-    "bignumber.js": "^9.1.2",
     "eslint-config-formml": "workspace:*"
   }
 }

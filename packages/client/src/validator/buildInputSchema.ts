@@ -1,10 +1,11 @@
 import type { Field, Form } from '@formml/dsl'
 
-import { JsTypes, buildSchema } from '@formml/core'
+import { buildSchema } from '@formml/core'
 import { isForm } from '@formml/dsl'
 import { assertNever } from '@formml/utils'
 import * as v from 'valibot'
 
+import { fromString } from '../js-type/string/conversion.js'
 import * as c from './valibot/validations/index.js'
 
 function buildFieldSchema(formmlSchema: Field) {
@@ -18,7 +19,7 @@ function buildFieldSchema(formmlSchema: Field) {
     return v.pipe(
       v.string(),
       c.num(),
-      v.transform(JsTypes.fromString('num')),
+      v.transform(fromString('num')),
       typedSchema,
     )
   }
@@ -28,7 +29,7 @@ function buildFieldSchema(formmlSchema: Field) {
     return v.pipe(
       v.string(),
       c.bool(),
-      v.transform(JsTypes.fromString('bool')),
+      v.transform(fromString('bool')),
       typedSchema,
     )
   }
@@ -38,7 +39,7 @@ function buildFieldSchema(formmlSchema: Field) {
     return v.pipe(
       v.string(),
       c.datetime(),
-      v.transform(JsTypes.fromString('datetime')),
+      v.transform(fromString('datetime')),
       typedSchema,
     )
   }
@@ -48,7 +49,7 @@ function buildFieldSchema(formmlSchema: Field) {
     return v.pipe(
       v.string(),
       c.decimal(),
-      v.transform(JsTypes.fromString('decimal')),
+      v.transform(fromString('decimal')),
       typedSchema,
     )
   }

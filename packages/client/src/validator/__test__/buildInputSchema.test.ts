@@ -1,18 +1,15 @@
 import type { Field, Form, FormMLSchema } from '@formml/dsl'
 import type { GenericSchema, SchemaWithPipe } from 'valibot'
 
-import { JsTypes, buildSchema } from '@formml/core'
+import { buildSchema } from '@formml/core'
 import { transform } from 'valibot'
 
+import { fromString } from '../../js-type/string/conversion.js'
 import buildInputSchema from '../buildInputSchema.js'
 import * as v from '../valibot/validations/index.js'
 
-vi.mock('@formml/core', () => ({
-  JsTypes: {
-    fromString: vi.fn(),
-  },
-  buildSchema: vi.fn(),
-}))
+vi.mock('@formml/core')
+vi.mock('../../js-type/string/conversion.js')
 
 describe('buildInputSchema', () => {
   describe('field', () => {
@@ -115,7 +112,7 @@ describe('buildInputSchema', () => {
           }
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const dummyParser = (() => undefined) as any
-          vi.mocked(JsTypes.fromString).mockReturnValue(dummyParser)
+          vi.mocked(fromString).mockReturnValue(dummyParser)
 
           // Act
           const schema = buildInputSchema(field) as SchemaWithPipe<
@@ -124,7 +121,7 @@ describe('buildInputSchema', () => {
           >
 
           // Assert
-          expect(JsTypes.fromString).toBeCalledWith(type)
+          expect(fromString).toBeCalledWith(type)
           expect(schema.pipe[2]).toEqual({
             ...transform(dummyParser),
             _run: expect.any(Function),

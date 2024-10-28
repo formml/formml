@@ -1,4 +1,4 @@
-import type { JsTypes, ValidationError } from '@formml/core'
+import type { JSType, ValidationError } from '@formml/core'
 import type { Field } from '@formml/dsl'
 
 import { useCallback } from 'react'
@@ -21,14 +21,14 @@ export type FieldMetaData = {
   error: ValidationError | undefined
   schema: Field
   touched: boolean
-  typedValue: JsTypes.PrimitiveType
+  typedValue: JSType.PrimitiveType
 }
 
 export type FieldHelpers = {
   blur: () => void
   commitRawValue: () => void
   setRawValue: (value: string) => void
-  setTypedValue: (value: JsTypes.PrimitiveType) => void
+  setTypedValue: (value: JSType.PrimitiveType) => void
 }
 
 export type FieldPack = {

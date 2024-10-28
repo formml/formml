@@ -6,7 +6,7 @@ import { assertNever } from '@formml/utils'
 import { BigNumber } from 'bignumber.js'
 import * as v from 'valibot'
 
-import type { PrimitiveTypeMapping } from '../JsTypes.js'
+import type { PrimitiveTypeMapping } from '../js-type/index.js'
 import type { IAnnotationAction } from './annotationsReducer.js'
 
 import annotationsReducer from './annotationsReducer.js'
