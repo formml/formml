@@ -44,20 +44,30 @@ function buildAction(annotation: Annotation): IAnnotationAction {
 
 export default function buildSchema<T extends PRIMITIVE>(
   formmlSchema: Field<T>,
+  preprocess?: Record<PRIMITIVE, v.GenericSchema>,
 ): v.GenericSchema<PrimitiveTypeMapping[T]>
 export default function buildSchema(
   formmlSchema: Form,
+  preprocess?: Record<PRIMITIVE, v.GenericSchema>,
 ): v.StrictObjectSchema<Record<string, v.GenericSchema>, string>
-export default function buildSchema(formmlSchema: Field | Form) {
+export default function buildSchema(
+  formmlSchema: Field | Form,
+  preprocess?: Record<PRIMITIVE, v.GenericSchema>,
+) {
   if (isForm(formmlSchema)) {
     const entries = formmlSchema.fields.map((field) => [
       field.name,
-      buildSchema(field),
+      buildSchema(field, preprocess),
     ])
     return v.strictObject(Object.fromEntries(entries))
   }
 
   const baseSchema = v.optional(type(formmlSchema))
-  const actions = formmlSchema.annotations.map(buildAction)
-  return actions.reduce(annotationsReducer, baseSchema)
+  const schemaWithAnnotations = formmlSchema.annotations
+    .map(buildAction)
+    .reduce(annotationsReducer, baseSchema)
+  const preprocessSchema = preprocess?.[formmlSchema.type]
+  return preprocessSchema
+    ? v.pipe(preprocessSchema, schemaWithAnnotations)
+    : schemaWithAnnotations
 }

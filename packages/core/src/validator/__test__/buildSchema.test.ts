@@ -84,6 +84,33 @@ describe('buildSchema', () => {
             expect(result.success).toBe(false)
             expect(result.issues).toMatchSnapshot()
           })
+
+          const failedPreprocess = {
+            bool: v.null('no bool'),
+            datetime: v.null('no datetime'),
+            decimal: v.null('no decimal'),
+            num: v.null('no num'),
+            text: v.null('no text'),
+          }
+
+          test(`should preprocess ${type} input if preprocessors are provided`, () => {
+            // Arrange
+            const field: Field = {
+              $container: {} as Form,
+              $type: 'Field',
+              annotations: [],
+              name: 'field',
+              type,
+            }
+
+            // Act
+            const schema = buildSchema(field, failedPreprocess)
+            const result = v.safeParse(schema, fixtures[type].invalidInput)
+
+            // Assert
+            expect(result.success).toBe(false)
+            expect(result.issues).toMatchSnapshot() // preprocessors should fail firstly
+          })
         },
       )
 
@@ -189,6 +216,63 @@ describe('buildSchema', () => {
           type: 'strict_object',
         }),
       )
+    })
+
+    test('should preprocess all fields if given preprocessors', () => {
+      // Arrange
+      const form: Form = {
+        $container: {} as FormMLSchema,
+        $type: 'Form',
+        fields: [
+          {
+            $container: {} as Form,
+            $type: 'Field',
+            annotations: [],
+            name: 'textField',
+            type: 'text',
+          },
+          {
+            $container: {} as Form,
+            $type: 'Field',
+            annotations: [],
+            name: 'numField',
+            type: 'num',
+          },
+        ],
+        name: 'ExampleForm',
+      }
+
+      const failedPreprocess = {
+        bool: v.null('no bool'),
+        datetime: v.null('no datetime'),
+        decimal: v.null('no decimal'),
+        num: v.null('no num'),
+        text: v.null('no text'),
+      }
+
+      // Act
+      const schema = buildSchema(form, failedPreprocess)
+
+      // Assert
+      expect(schema).toEqual(
+        expect.objectContaining({
+          async: false,
+          entries: {
+            numField: expect.any(Object),
+            textField: expect.any(Object),
+          },
+          kind: 'schema',
+          type: 'strict_object',
+        }),
+      )
+
+      const result = v.safeParse(schema, {
+        numField: 123,
+        textField: 'abc',
+      })
+
+      expect(result.success).toBe(false)
+      expect(result.issues).toMatchSnapshot()
     })
   })
 })
