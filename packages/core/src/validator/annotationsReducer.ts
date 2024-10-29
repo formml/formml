@@ -3,8 +3,7 @@ import type annotationsInterface from '@formml/dsl/interfaces/annotations.js'
 import type { GenericSchema } from 'valibot'
 
 import { assertNever } from '@formml/utils'
-
-import { required } from './valibot/schemas/required.js'
+import { required } from '@formml/utils/valibot-plus'
 
 type IAnnotations = typeof annotationsInterface
 

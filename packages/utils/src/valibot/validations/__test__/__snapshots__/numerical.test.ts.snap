@@ -1,0 +1,61 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`numerical > should invalidate a blank string 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "numerical",
+    "input": "",
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid input: Expected numerical but received """,
+    "path": undefined,
+    "received": """",
+    "requirement": [Function],
+    "type": "numerical",
+  },
+]
+`;
+
+exports[`numerical > should invalidate a blank string 2`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "numerical",
+    "input": "  ",
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid input: Expected numerical but received "  "",
+    "path": undefined,
+    "received": ""  "",
+    "requirement": [Function],
+    "type": "numerical",
+  },
+]
+`;
+
+exports[`numerical > should invalidate a blank string 3`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "numerical",
+    "input": " 
+	",
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid input: Expected numerical but received " 
+	"",
+    "path": undefined,
+    "received": "" 
+	"",
+    "requirement": [Function],
+    "type": "numerical",
+  },
+]
+`;

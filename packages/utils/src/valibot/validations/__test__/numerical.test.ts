@@ -1,11 +1,11 @@
 import * as v from 'valibot'
 
-import num from '../num.js'
+import { numerical } from '../numerical.js'
 
-describe('num', () => {
+describe('numerical', () => {
   test('should validate a numerical string', () => {
     // Arrange
-    const schema = v.pipe(v.string(), num())
+    const schema = v.pipe(v.string(), numerical())
 
     // Act
     const result = v.safeParse(schema, '123')
@@ -18,7 +18,7 @@ describe('num', () => {
     'should validate infinities - "%s"',
     (input) => {
       // Arrange
-      const schema = v.pipe(v.string(), num())
+      const schema = v.pipe(v.string(), numerical())
 
       // Act
       const result = v.safeParse(schema, input)
@@ -28,20 +28,24 @@ describe('num', () => {
     },
   )
 
-  test.each(['', '  ', ' \n\t'])('should validate a blank string', (input) => {
-    // Arrange
-    const schema = v.pipe(v.string(), num())
+  test.each(['', '  ', ' \n\t'])(
+    'should invalidate a blank string',
+    (input) => {
+      // Arrange
+      const schema = v.pipe(v.string(), numerical())
 
-    // Act
-    const result = v.safeParse(schema, input)
+      // Act
+      const result = v.safeParse(schema, input)
 
-    // Assert
-    expect(result.success).toBe(true)
-  })
+      // Assert
+      expect(result.success).toBe(false)
+      expect(result.issues).toMatchSnapshot()
+    },
+  )
 
   test('should invalidate a non-numerical string', () => {
     // Arrange
-    const schema = v.pipe(v.string(), num())
+    const schema = v.pipe(v.string(), numerical())
 
     // Act
     const result = v.safeParse(schema, 'abc')
@@ -62,7 +66,7 @@ describe('num', () => {
           "path": undefined,
           "received": ""abc"",
           "requirement": [Function],
-          "type": "num",
+          "type": "numerical",
         },
       ]
     `)
@@ -70,7 +74,7 @@ describe('num', () => {
 
   test('should invalidate NaN', () => {
     // Arrange
-    const schema = v.pipe(v.string(), num())
+    const schema = v.pipe(v.string(), numerical())
 
     // Act
     const result = v.safeParse(schema, 'NaN')
@@ -91,7 +95,7 @@ describe('num', () => {
           "path": undefined,
           "received": ""NaN"",
           "requirement": [Function],
-          "type": "num",
+          "type": "numerical",
         },
       ]
     `)
@@ -99,7 +103,7 @@ describe('num', () => {
 
   test('should accept custom message', () => {
     // Arrange
-    const schema = v.pipe(v.string(), num('Custom message'))
+    const schema = v.pipe(v.string(), numerical('Custom message'))
 
     // Act
     const result = v.safeParse(schema, 'abc')
@@ -120,7 +124,7 @@ describe('num', () => {
           "path": undefined,
           "received": ""abc"",
           "requirement": [Function],
-          "type": "num",
+          "type": "numerical",
         },
       ]
     `)

@@ -2,7 +2,8 @@ import type { BaseIssue, BaseValidation, Dataset, ErrorMessage } from 'valibot'
 
 import { _addIssue } from 'valibot'
 
-export interface DecimalIssue<TInput extends string> extends BaseIssue<TInput> {
+export interface NumericalIssue<TInput extends string>
+  extends BaseIssue<TInput> {
   /**
    * The expected property.
    */
@@ -22,13 +23,13 @@ export interface DecimalIssue<TInput extends string> extends BaseIssue<TInput> {
   /**
    * The issue type.
    */
-  readonly type: 'decimal'
+  readonly type: 'numerical'
 }
 
-export interface DecimalAction<
+export interface NumericalAction<
   TInput extends string,
-  TMessage extends ErrorMessage<DecimalIssue<TInput>> | undefined,
-> extends BaseValidation<TInput, TInput, DecimalIssue<TInput>> {
+  TMessage extends ErrorMessage<NumericalIssue<TInput>> | undefined,
+> extends BaseValidation<TInput, TInput, NumericalIssue<TInput>> {
   /**
    * The expected property.
    */
@@ -40,7 +41,7 @@ export interface DecimalAction<
   /**
    * The action reference.
    */
-  readonly reference: typeof decimal
+  readonly reference: typeof numerical
   /**
    * The validation function.
    */
@@ -48,46 +49,47 @@ export interface DecimalAction<
   /**
    * The action type.
    */
-  readonly type: 'decimal'
+  readonly type: 'numerical'
 }
+
 /**
- * Creates a decimal validation action.
+ * Creates a numerical validation action.
  *
- * @returns A decimal action.
+ * @returns A numerical action.
  */
-export default function decimal<TInput extends string>(): DecimalAction<
+export function numerical<TInput extends string>(): NumericalAction<
   TInput,
   undefined
 >
 
 /**
- * Creates a decimal validation action.
+ * Creates a numerical validation action.
  *
  * @param message The error message.
  *
- * @returns A decimal action.
+ * @returns A numerical action.
  */
-export default function decimal<
+export function numerical<
   TInput extends string,
-  const TMessage extends ErrorMessage<DecimalIssue<TInput>> | undefined,
->(message: TMessage): DecimalAction<TInput, TMessage>
+  const TMessage extends ErrorMessage<NumericalIssue<TInput>> | undefined,
+>(message: TMessage): NumericalAction<TInput, TMessage>
 
-export default function decimal(
-  message?: ErrorMessage<DecimalIssue<string>>,
-): DecimalAction<string, ErrorMessage<DecimalIssue<string>> | undefined> {
+export function numerical(
+  message?: ErrorMessage<NumericalIssue<string>>,
+): NumericalAction<string, ErrorMessage<NumericalIssue<string>> | undefined> {
   return {
     _run(dataset, config) {
       if (dataset.typed && !this.requirement(dataset.value)) {
         _addIssue(this, 'input', dataset, config)
       }
-      return dataset as Dataset<string, DecimalIssue<string>>
+      return dataset as Dataset<string, NumericalIssue<string>>
     },
     async: false,
     expects: 'numerical',
     kind: 'validation',
     message,
-    reference: decimal,
-    requirement: (value) => !isNaN(Number(value)),
-    type: 'decimal',
+    reference: numerical,
+    requirement: (value) => value.trim() !== '' && !isNaN(Number(value)),
+    type: 'numerical',
   }
 }

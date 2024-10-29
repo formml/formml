@@ -6,7 +6,7 @@ import { _addIssue } from 'valibot'
 const ISO8601_REGEX =
   /^(?:[+-]?\d{4}(?!\d{2}\b))(?:(-?)(?:(?:0[1-9]|1[0-2])(?:\1(?:[12]\d|0[1-9]|3[01]))?|W(?:[0-4]\d|5[0-2])(?:-?[1-7])?|(?:00[1-9]|0[1-9]\d|[12]\d{2}|3(?:[0-5]\d|6[1-6])))(?:[T\s](?:(?:(?:[01]\d|2[0-3])(?:(:?)[0-5]\d)?|24:?00)(?:[.,]\d+(?!:))?)?(?:\2[0-5]\d(?:[.,]\d+)?)?(?:[zZ]|(?:[+-])(?:[01]\d|2[0-3]):?(?:[0-5]\d)?)?)?)?$/
 
-export interface DatetimeIssue<TInput extends string>
+export interface IsoDateTimeIssue<TInput extends string>
   extends BaseIssue<TInput> {
   /**
    * The expected property.
@@ -27,13 +27,13 @@ export interface DatetimeIssue<TInput extends string>
   /**
    * The issue type.
    */
-  readonly type: 'datetime'
+  readonly type: 'iso_date_time'
 }
 
-export interface DatetimeAction<
+export interface IsoDateTimeAction<
   TInput extends string,
-  TMessage extends ErrorMessage<DatetimeIssue<TInput>> | undefined,
-> extends BaseValidation<TInput, TInput, DatetimeIssue<TInput>> {
+  TMessage extends ErrorMessage<IsoDateTimeIssue<TInput>> | undefined,
+> extends BaseValidation<TInput, TInput, IsoDateTimeIssue<TInput>> {
   /**
    * The expected property.
    */
@@ -45,7 +45,7 @@ export interface DatetimeAction<
   /**
    * The action reference.
    */
-  readonly reference: typeof datetime
+  readonly reference: typeof isoDateTime
   /**
    * The validation regex.
    */
@@ -53,51 +53,50 @@ export interface DatetimeAction<
   /**
    * The action type.
    */
-  readonly type: 'datetime'
+  readonly type: 'iso_date_time'
 }
 
 /**
- * Creates a datetime validation action.
+ * Creates a loose ISO-8601 date time validation action.
  *
- * @returns A datetime action.
+ * @returns A loose ISO-8601 date time action.
  */
-export default function datetime<TInput extends string>(): DatetimeAction<
+export function isoDateTime<TInput extends string>(): IsoDateTimeAction<
   TInput,
   undefined
 >
 
 /**
- * Creates a datetime validation action.
+ * Creates a loose ISO-8601 date time validation action.
  *
  * @param message The error message.
  *
- * @returns A datetime action.
+ * @returns A loose ISO-8601 date time action.
  */
-export default function datetime<
+export function isoDateTime<
   TInput extends string,
-  const TMessage extends ErrorMessage<DatetimeIssue<TInput>> | undefined,
->(message: TMessage): DatetimeAction<TInput, TMessage>
+  const TMessage extends ErrorMessage<IsoDateTimeIssue<TInput>> | undefined,
+>(message: TMessage): IsoDateTimeAction<TInput, TMessage>
 
-export default function datetime(
-  message?: ErrorMessage<DatetimeIssue<string>>,
-): DatetimeAction<string, ErrorMessage<DatetimeIssue<string>> | undefined> {
+export function isoDateTime(
+  message?: ErrorMessage<IsoDateTimeIssue<string>>,
+): IsoDateTimeAction<
+  string,
+  ErrorMessage<IsoDateTimeIssue<string>> | undefined
+> {
   return {
     _run(dataset, config) {
-      if (
-        dataset.typed &&
-        dataset.value.trim() &&
-        !this.requirement.test(dataset.value.trim())
-      ) {
+      if (dataset.typed && !this.requirement.test(dataset.value)) {
         _addIssue(this, 'input', dataset, config)
       }
-      return dataset as Dataset<string, DatetimeIssue<string>>
+      return dataset as Dataset<string, IsoDateTimeIssue<string>>
     },
     async: false,
     expects: 'ISO-8601 format',
     kind: 'validation',
     message,
-    reference: datetime,
+    reference: isoDateTime,
     requirement: ISO8601_REGEX,
-    type: 'datetime',
+    type: 'iso_date_time',
   }
 }

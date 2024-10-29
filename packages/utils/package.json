@@ -14,7 +14,10 @@
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./valibot-plus": "./dist/valibot/index.js"
+  },
   "files": [
     "dist",
     "src",
@@ -29,6 +32,9 @@
     "lint:type": "tsc",
     "test": "vitest run --typecheck",
     "test:watch": "vitest watch --typecheck"
+  },
+  "dependencies": {
+    "valibot": "^0.42.1"
   },
   "devDependencies": {
     "@formml/typescript-config": "workspace:*",

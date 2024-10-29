@@ -1,8 +1,8 @@
 import * as v from 'valibot'
 
-import datetime from '../datetime.js'
+import { isoDateTime } from '../isoDateTime.js'
 
-describe('datetime', () => {
+describe('isoDateTime', () => {
   test.each([
     // Valid Year
     '2024',
@@ -38,7 +38,7 @@ describe('datetime', () => {
     '2024-01-01 00:00:00.123456-05:00',
   ])('should validate any ISO 8601 format string - "%s"', (input) => {
     // Arrange
-    const schema = v.pipe(v.string(), datetime())
+    const schema = v.pipe(v.string(), isoDateTime())
 
     // Act
     const result = v.safeParse(schema, input)
@@ -48,16 +48,37 @@ describe('datetime', () => {
   })
 
   test.each(['', '  ', '\n', '\t'])(
-    'should validate a blank string',
+    'should not validate a blank string',
     (input) => {
       // Arrange
-      const schema = v.pipe(v.string(), datetime())
+      const schema = v.pipe(v.string(), isoDateTime())
 
       // Act
       const result = v.safeParse(schema, input)
 
       // Assert
-      expect(result.success).toBe(true)
+      expect(result.success).toBe(false)
+      expect(result.issues).toMatchSnapshot()
+    },
+  )
+
+  test.each([
+    ' 2024-01-01T00:00:00Z ',
+    '2024-01-01T00:00:00Z ',
+    ' 2024-01-01T00:00:00Z',
+    '\t\n2024-01-01T00:00:00Z',
+  ])(
+    'should not validate a datetime string with additional whitespaces - "%s"',
+    (input) => {
+      // Arrange
+      const schema = v.pipe(v.string(), isoDateTime())
+
+      // Act
+      const result = v.safeParse(schema, input)
+
+      // Assert
+      expect(result.success).toBe(false)
+      expect(result.issues).toMatchSnapshot()
     },
   )
 
@@ -93,7 +114,7 @@ describe('datetime', () => {
     '2024-01-01 00:00:0Z00',
   ])('should not validate invalid ISO 8601 format string - "%s"', (input) => {
     // Arrange
-    const schema = v.pipe(v.string(), datetime())
+    const schema = v.pipe(v.string(), isoDateTime())
 
     // Act
     const result = v.safeParse(schema, input)
@@ -105,7 +126,7 @@ describe('datetime', () => {
 
   test('should not validate non-datetime string', () => {
     // Arrange
-    const schema = v.pipe(v.string(), datetime())
+    const schema = v.pipe(v.string(), isoDateTime())
 
     // Act
     const result = v.safeParse(schema, 'hello')
@@ -117,7 +138,7 @@ describe('datetime', () => {
 
   test('should accept custom message', () => {
     // Arrange
-    const schema = v.pipe(v.string(), datetime('Custom message'))
+    const schema = v.pipe(v.string(), isoDateTime('Custom message'))
 
     // Act
     const result = v.safeParse(schema, 'abc')
@@ -138,7 +159,7 @@ describe('datetime', () => {
           "path": undefined,
           "received": ""abc"",
           "requirement": /\\^\\(\\?:\\[\\+-\\]\\?\\\\d\\{4\\}\\(\\?!\\\\d\\{2\\}\\\\b\\)\\)\\(\\?:\\(-\\?\\)\\(\\?:\\(\\?:0\\[1-9\\]\\|1\\[0-2\\]\\)\\(\\?:\\\\1\\(\\?:\\[12\\]\\\\d\\|0\\[1-9\\]\\|3\\[01\\]\\)\\)\\?\\|W\\(\\?:\\[0-4\\]\\\\d\\|5\\[0-2\\]\\)\\(\\?:-\\?\\[1-7\\]\\)\\?\\|\\(\\?:00\\[1-9\\]\\|0\\[1-9\\]\\\\d\\|\\[12\\]\\\\d\\{2\\}\\|3\\(\\?:\\[0-5\\]\\\\d\\|6\\[1-6\\]\\)\\)\\)\\(\\?:\\[T\\\\s\\]\\(\\?:\\(\\?:\\(\\?:\\[01\\]\\\\d\\|2\\[0-3\\]\\)\\(\\?:\\(:\\?\\)\\[0-5\\]\\\\d\\)\\?\\|24:\\?00\\)\\(\\?:\\[\\.,\\]\\\\d\\+\\(\\?!:\\)\\)\\?\\)\\?\\(\\?:\\\\2\\[0-5\\]\\\\d\\(\\?:\\[\\.,\\]\\\\d\\+\\)\\?\\)\\?\\(\\?:\\[zZ\\]\\|\\(\\?:\\[\\+-\\]\\)\\(\\?:\\[01\\]\\\\d\\|2\\[0-3\\]\\):\\?\\(\\?:\\[0-5\\]\\\\d\\)\\?\\)\\?\\)\\?\\)\\?\\$/,
-          "type": "datetime",
+          "type": "iso_date_time",
         },
       ]
     `)
