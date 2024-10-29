@@ -53,6 +53,10 @@ export default function buildSchema(
 export default function buildSchema(
   formmlSchema: Field | Form,
   preprocess?: Record<PRIMITIVE, v.GenericSchema>,
+): v.GenericSchema
+export default function buildSchema(
+  formmlSchema: Field | Form,
+  preprocess?: Record<PRIMITIVE, v.GenericSchema>,
 ) {
   if (isForm(formmlSchema)) {
     const entries = formmlSchema.fields.map((field) => [

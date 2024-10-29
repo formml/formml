@@ -13,7 +13,7 @@ import IndexManager from './IndexManager.js'
 import validate from './decorators/validate.js'
 import { fromString, toString } from './js-type/string/conversion.js'
 import { mergeOptions } from './utils/options.js'
-import { createInputValidator } from './validator/index.js'
+import { createInputValidator } from './validator.js'
 
 export type FormMLEvent = 'all' | 'blur' | 'change' | 'none'
 export type FormMLOptions = {
