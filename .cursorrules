@@ -35,7 +35,17 @@ Syntax and Formatting
 - Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements.
 - Use declarative JSX.
 
+Unit Testing
+
+- Every line of code should be covered by unit tests.
+- Use React Testing Library for React component testing.
+- Use Vitest for unit testing.
+- `describe`, `test`, `expect` and other Vitest APIs are global accessible, don't import them.
+- Prefer `test` over `it`.
+- Prefer Arrange-Act-Assert pattern.
+- Test name should be descriptive.
+
 Key Conventions
 
 - Optimize the final bundle size by always writing tree-shakable codes.
-- Keep the public API minimal and focused on the core functionalities.
+- Keep the public APIs minimal and focused on the core functionalities.
