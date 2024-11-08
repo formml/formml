@@ -42,19 +42,19 @@ function buildAction(annotation: Annotation): IAnnotationAction {
   }
 }
 
-export default function buildSchema<T extends PRIMITIVE>(
+export function buildSchema<T extends PRIMITIVE>(
   formmlSchema: Field<T>,
   preprocess?: Record<PRIMITIVE, v.GenericSchema>,
 ): v.GenericSchema<PrimitiveTypeMapping[T]>
-export default function buildSchema(
+export function buildSchema(
   formmlSchema: Form,
   preprocess?: Record<PRIMITIVE, v.GenericSchema>,
 ): v.StrictObjectSchema<Record<string, v.GenericSchema>, string>
-export default function buildSchema(
+export function buildSchema(
   formmlSchema: Field | Form,
   preprocess?: Record<PRIMITIVE, v.GenericSchema>,
 ): v.GenericSchema
-export default function buildSchema(
+export function buildSchema(
   formmlSchema: Field | Form,
   preprocess?: Record<PRIMITIVE, v.GenericSchema>,
 ) {

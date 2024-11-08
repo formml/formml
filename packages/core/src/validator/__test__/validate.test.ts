@@ -2,15 +2,14 @@ import type { Form, FormMLSchema } from '@formml/dsl'
 import type { BaseIssue } from 'valibot'
 
 import { safeParse } from 'valibot'
-import { describe, expect, test, vi } from 'vitest'
 
-import buildSchema from '../buildSchema.js'
-import { validate } from '../index.js'
+import { buildSchema } from '../buildSchema.js'
+import { validate } from '../validate.js'
 
 vi.mock('valibot')
 vi.mock('../buildSchema.js')
 
-describe('validate function', () => {
+describe('validate', () => {
   const mockSchema: FormMLSchema = {
     $type: 'FormMLSchema',
     form: {

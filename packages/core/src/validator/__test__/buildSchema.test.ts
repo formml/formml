@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import * as v from 'valibot'
 
 import annotationsReducer from '../annotationsReducer.js'
-import buildSchema from '../buildSchema.js'
+import { buildSchema } from '../buildSchema.js'
 
 vi.mock('../annotationsReducer.js', async (importActual) => {
   const actual = await importActual<typeof import('../annotationsReducer.js')>()
