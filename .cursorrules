@@ -23,9 +23,19 @@ Naming Conventions
 
 - Use lowercase with dashes for directories (e.g., components/auth-wizard).
 
+Unit Testing
+
+- Use React Testing Library for React component testing.
+- Use Vitest for unit testing.
+- `describe`, `test`, `expect` and other Vitest APIs are global accessible, don't import them.
+- Prefer `test` over `it`.
+- Prefer Arrange-Act-Assert pattern.
+- Test name should be descriptive.
+
 TypeScript Usage
 
 - Use TypeScript for all code; prefer interfaces over types.
+- Import TypeScript files with `.js` extension.
 - Avoid enums; use maps instead.
 - Use functional components with TypeScript interfaces.
 
@@ -34,16 +44,6 @@ Syntax and Formatting
 - Use the "function" keyword for pure functions.
 - Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements.
 - Use declarative JSX.
-
-Unit Testing
-
-- Every line of code should be covered by unit tests.
-- Use React Testing Library for React component testing.
-- Use Vitest for unit testing.
-- `describe`, `test`, `expect` and other Vitest APIs are global accessible, don't import them.
-- Prefer `test` over `it`.
-- Prefer Arrange-Act-Assert pattern.
-- Test name should be descriptive.
 
 Key Conventions
 
