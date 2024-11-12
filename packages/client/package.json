@@ -56,6 +56,7 @@
   "devDependencies": {
     "@formml/dsl": "workspace:^",
     "@formml/typescript-config": "workspace:*",
-    "eslint-config-formml": "workspace:*"
+    "eslint-config-formml": "workspace:*",
+    "hotscript": "^1.0.13"
   }
 }
