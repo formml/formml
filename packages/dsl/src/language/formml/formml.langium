@@ -22,7 +22,7 @@ fragment Arguments:
   (args+=Argument ',')* (args+=Argument)?;
 
 Annotation:
-  '@' call=[AnnotationDeclaration] ('(' Arguments ')')?;
+  '@' call=[FunctionDeclaration] ('(' Arguments ')')?;
 
 
 // Literals

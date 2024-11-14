@@ -34,10 +34,10 @@ describe('formml validator', () => {
   describe('annotation', () => {
     beforeEach(async () => {
       const annotations = `
-        annot fun required()
-        annot fun range(min, max)
-        annot fun range2(min, max?: any)
-        annot fun anything(name1, name2, name3, name4, name5, name6, name7)
+        fun required()
+        fun range(min, max)
+        fun range2(min, max?: any)
+        fun anything(name1, name2, name3, name4, name5, name6, name7)
       `
       await loadDeclaration(annotations, 'file:///builtin-annotations.d.formml')
     })
@@ -114,7 +114,7 @@ describe('formml validator', () => {
     })
 
     test('should error given too many arguments - with optional parameters', async () => {
-      const declaration = 'annot fun test(param1, param2?: any)'
+      const declaration = 'fun test(param1, param2?: any)'
       await loadDeclaration(declaration, 'file:///test-annotation.d.formml')
       const input = `
         form ExampleForm {
@@ -187,7 +187,7 @@ describe('formml validator', () => {
         'can assign any value to a parameter without type hint',
         async (value) => {
           // Arrange
-          const declaration = 'annot fun test(name)'
+          const declaration = 'fun test(name)'
           await loadDeclaration(declaration, 'file:///test-annotation.d.formml')
           const input = `
             form ExampleForm {
@@ -213,7 +213,7 @@ describe('formml validator', () => {
         'null',
       ])('can assign any value to a parameter with any type', async (value) => {
         // Arrange
-        const declaration = 'annot fun test(name: any)'
+        const declaration = 'fun test(name: any)'
         await loadDeclaration(declaration, 'file:///test-annotation.d.formml')
         const input = `
           form ExampleForm {
@@ -242,7 +242,7 @@ describe('formml validator', () => {
         'can assign correct typed value to a parameter with corresponding type hint - %s',
         async (type, value) => {
           // Arrange
-          const declaration = `annot fun test(name: ${type})`
+          const declaration = `fun test(name: ${type})`
           await loadDeclaration(declaration, 'file:///test-annotation.d.formml')
           const input = `
             form ExampleForm {
@@ -269,7 +269,7 @@ describe('formml validator', () => {
         'cannot assign incorrect typed value to a parameter with type hint - %s',
         async (type, value) => {
           // Arrange
-          const declaration = `annot fun test(name: ${type})`
+          const declaration = `fun test(name: ${type})`
           await loadDeclaration(declaration, 'file:///test-annotation.d.formml')
           const input = `
             form ExampleForm {
@@ -289,7 +289,7 @@ describe('formml validator', () => {
 
       test('can omit optional parameter', async () => {
         // Arrange
-        const declaration = 'annot fun test(name: text, optional?: text)'
+        const declaration = 'fun test(name: text, optional?: text)'
         await loadDeclaration(declaration, 'file:///test-annotation.d.formml')
         const input = `
           form ExampleForm {
@@ -307,7 +307,7 @@ describe('formml validator', () => {
 
       test('cannot omit required parameter', async () => {
         // Arrange
-        const declaration = 'annot fun test(name: text, required: text)'
+        const declaration = 'fun test(name: text, required: text)'
         await loadDeclaration(declaration, 'file:///test-annotation.d.formml')
         const input = `
           form ExampleForm {

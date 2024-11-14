@@ -411,7 +411,7 @@ exports[`formml validator > annotation > should error when called annotation is 
       "property": "call",
       "refText": "unknown",
     },
-    "message": "Could not resolve reference to AnnotationDeclaration named 'unknown'.",
+    "message": "Could not resolve reference to FunctionDeclaration named 'unknown'.",
     "range": {
       "end": {
         "character": 18,

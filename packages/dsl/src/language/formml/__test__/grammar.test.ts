@@ -93,12 +93,12 @@ describe('formml grammar', () => {
   describe('validation annotations', () => {
     beforeEach(async () => {
       const annotations = `
-        annot fun required()
-        annot fun required1()
-        annot fun required2()
-        annot fun min(value)
-        annot fun range(min, max)
-        annot fun anything(value)
+        fun required()
+        fun required1()
+        fun required2()
+        fun min(value)
+        fun range(min, max)
+        fun anything(value)
       `
       await loadDeclaration(annotations, 'file:///builtin-annotations.d.formml')
     })

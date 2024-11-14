@@ -1,12 +1,12 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`formml declaration grammar > annotation > declare annotation 1`] = `
+exports[`formml declaration grammar > function > declare function 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "parameters": []
     }
   ],
@@ -14,13 +14,13 @@ exports[`formml declaration grammar > annotation > declare annotation 1`] = `
 }"
 `;
 
-exports[`formml declaration grammar > annotation > declare annotation with multiple parameters 1`] = `
+exports[`formml declaration grammar > function > declare function with multiple parameters 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "parameters": [
         {
           "$type": "Parameter",
@@ -39,13 +39,13 @@ exports[`formml declaration grammar > annotation > declare annotation with multi
 }"
 `;
 
-exports[`formml declaration grammar > annotation > declare annotation with one parameter 1`] = `
+exports[`formml declaration grammar > function > declare function with one parameter 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "parameters": [
         {
           "$type": "Parameter",
@@ -59,13 +59,13 @@ exports[`formml declaration grammar > annotation > declare annotation with one p
 }"
 `;
 
-exports[`formml declaration grammar > annotation > parameters allow trailing comma 1`] = `
+exports[`formml declaration grammar > function > parameters allow trailing comma 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "parameters": [
         {
           "$type": "Parameter",
@@ -79,13 +79,13 @@ exports[`formml declaration grammar > annotation > parameters allow trailing com
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type hints > can omit type hint 1`] = `
+exports[`formml declaration grammar > function > type hints > can omit type hint 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "parameters": [
         {
           "$type": "Parameter",
@@ -104,13 +104,13 @@ exports[`formml declaration grammar > annotation > type hints > can omit type hi
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type hints > parameters can be any 1`] = `
+exports[`formml declaration grammar > function > type hints > parameters can be any 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "parameters": [
         {
           "$type": "Parameter",
@@ -137,13 +137,13 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type hints > parameters can be optional 1`] = `
+exports[`formml declaration grammar > function > type hints > parameters can be optional 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "parameters": [
         {
           "$type": "Parameter",
@@ -170,13 +170,13 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type hints > parameters can be primitive type "bool" 1`] = `
+exports[`formml declaration grammar > function > type hints > parameters can be primitive type "bool" 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "parameters": [
         {
           "$type": "Parameter",
@@ -203,13 +203,13 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type hints > parameters can be primitive type "datetime" 1`] = `
+exports[`formml declaration grammar > function > type hints > parameters can be primitive type "datetime" 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "parameters": [
         {
           "$type": "Parameter",
@@ -236,13 +236,13 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type hints > parameters can be primitive type "decimal" 1`] = `
+exports[`formml declaration grammar > function > type hints > parameters can be primitive type "decimal" 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "parameters": [
         {
           "$type": "Parameter",
@@ -269,13 +269,13 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type hints > parameters can be primitive type "num" 1`] = `
+exports[`formml declaration grammar > function > type hints > parameters can be primitive type "num" 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "parameters": [
         {
           "$type": "Parameter",
@@ -302,13 +302,13 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type hints > parameters can be primitive type "text" 1`] = `
+exports[`formml declaration grammar > function > type hints > parameters can be primitive type "text" 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "parameters": [
         {
           "$type": "Parameter",
@@ -335,13 +335,13 @@ exports[`formml declaration grammar > annotation > type hints > parameters can b
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type hints > return type can be any 1`] = `
+exports[`formml declaration grammar > function > type hints > return type can be any 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "returnType": {
         "$type": "AnyTypeExpr",
         "name": "any"
@@ -353,13 +353,13 @@ exports[`formml declaration grammar > annotation > type hints > return type can 
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type hints > return type can be primitive type "bool" 1`] = `
+exports[`formml declaration grammar > function > type hints > return type can be primitive type "bool" 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "returnType": {
         "$type": "BoolTypeExpr",
         "name": "bool"
@@ -371,13 +371,13 @@ exports[`formml declaration grammar > annotation > type hints > return type can 
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type hints > return type can be primitive type "datetime" 1`] = `
+exports[`formml declaration grammar > function > type hints > return type can be primitive type "datetime" 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "returnType": {
         "$type": "DatetimeTypeExpr",
         "name": "datetime"
@@ -389,13 +389,13 @@ exports[`formml declaration grammar > annotation > type hints > return type can 
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type hints > return type can be primitive type "decimal" 1`] = `
+exports[`formml declaration grammar > function > type hints > return type can be primitive type "decimal" 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "returnType": {
         "$type": "DecimalTypeExpr",
         "name": "decimal"
@@ -407,13 +407,13 @@ exports[`formml declaration grammar > annotation > type hints > return type can 
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type hints > return type can be primitive type "num" 1`] = `
+exports[`formml declaration grammar > function > type hints > return type can be primitive type "num" 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "returnType": {
         "$type": "NumTypeExpr",
         "name": "num"
@@ -425,13 +425,13 @@ exports[`formml declaration grammar > annotation > type hints > return type can 
 }"
 `;
 
-exports[`formml declaration grammar > annotation > type hints > return type can be primitive type "text" 1`] = `
+exports[`formml declaration grammar > function > type hints > return type can be primitive type "text" 1`] = `
 "{
   "$type": "FormMLDeclaration",
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "newAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "returnType": {
         "$type": "TextTypeExpr",
         "name": "text"

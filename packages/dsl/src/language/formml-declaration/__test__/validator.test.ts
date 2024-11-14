@@ -16,9 +16,9 @@ describe('formml-declaration validator', () => {
       validation: true,
     })
 
-  describe('annotation', () => {
+  describe('function', () => {
     test('invalidate required parameters after optional parameters', async () => {
-      const input = 'annot fun foo(a: num, b?: text, c: bool)'
+      const input = 'fun foo(a: num, b?: text, c: bool)'
       const { diagnostics } = await parser(input)
       expect(diagnostics).toHaveLength(1)
       expect(diagnostics).toMatchSnapshot()

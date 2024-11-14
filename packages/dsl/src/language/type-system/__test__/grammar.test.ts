@@ -41,7 +41,7 @@ describe('type system grammar', () => {
     test('type alias can be used as a type', async () => {
       const input = `
         type MyType = text
-        annot fun myAnnotation(param: MyType): MyType
+        fun myFunction(param: MyType): MyType
       `
       const ast = await parser(input)
       expect(serialize(ast)).toMatchSnapshot()
@@ -62,7 +62,7 @@ describe('type system grammar', () => {
     test('call type alias with type parameters', async () => {
       const input = `
         type MyType<T, U> = { name: T; age: U }
-        annot fun myAnnotation(param: MyType<text, num>): MyType<bool, decimal>
+        fun myFunction(param: MyType<text, num>): MyType<bool, decimal>
       `
       const ast = await parser(input)
       expect(serialize(ast)).toMatchSnapshot()

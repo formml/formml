@@ -8,7 +8,7 @@ import * as prettier from 'prettier'
 import { createFormMLDeclarationServices } from '../src/language/formml-declaration/formml-declaration-module.js'
 import {
   type FormMLDeclaration,
-  isAnnotationDeclaration,
+  isFunctionDeclaration,
 } from '../src/language/generated/ast.js'
 import { evaluate } from '../src/language/type-system/types.js'
 
@@ -91,7 +91,7 @@ const pick =
 
 function generateInterface(ast: FormMLDeclaration) {
   const entries = ast.declarations
-    .filter(isAnnotationDeclaration)
+    .filter(isFunctionDeclaration)
     .map((declaration) => {
       const { name, parameters } = declaration
       const parameterSummaries = parameters

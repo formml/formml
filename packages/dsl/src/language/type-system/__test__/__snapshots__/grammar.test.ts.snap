@@ -48,8 +48,8 @@ exports[`type system grammar > type alias > call type alias with type parameters
   ],
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "myAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "parameters": [
         {
           "$type": "Parameter",
@@ -213,8 +213,8 @@ exports[`type system grammar > type alias > type alias can be used as a type 1`]
   ],
   "declarations": [
     {
-      "$type": "AnnotationDeclaration",
-      "name": "myAnnotation",
+      "$type": "FunctionDeclaration",
+      "name": "myFunction",
       "parameters": [
         {
           "$type": "Parameter",

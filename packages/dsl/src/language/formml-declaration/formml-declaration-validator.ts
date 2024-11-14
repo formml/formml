@@ -12,7 +12,7 @@ export function registerFormMLDeclarationValidationChecks(
   const registry = services.validation.ValidationRegistry
   const validator = services.validation.FormMLDeclarationValidator
   const checks: ValidationChecks<ast.FormMLAstType> = {
-    AnnotationDeclaration: validator.checkAnnotationDeclarationParameters,
+    FunctionDeclaration: validator.checkFunctionDeclarationParameters,
   }
   registry.register(checks, validator)
 }
@@ -21,12 +21,12 @@ export function registerFormMLDeclarationValidationChecks(
  * Implementation of custom validations.
  */
 export class FormMLDeclarationValidator {
-  checkAnnotationDeclarationParameters = (
-    annotation: ast.AnnotationDeclaration,
+  checkFunctionDeclarationParameters = (
+    functionDeclaration: ast.FunctionDeclaration,
     accept: ValidationAcceptor,
   ) => {
     let hasOptional = false
-    for (const parameter of annotation.parameters) {
+    for (const parameter of functionDeclaration.parameters) {
       if (parameter.optional) {
         hasOptional = true
         continue

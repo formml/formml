@@ -27,7 +27,8 @@ export function registerFormMLValidationChecks(services: FormMLServices) {
 /**
  * Implementation of custom validations.
  */
-// TODO: Unique identifier
+// TODO: Unique identifier (2024-11-14: Does this mean that one annotation can only be used once?)
+// TODO: Annotation must be a function with specific return type, should be checked in validation & completion
 export class FormMLValidator {
   checkAnnotationCallArgumentsAssignment = (
     annotation: ast.Annotation,
