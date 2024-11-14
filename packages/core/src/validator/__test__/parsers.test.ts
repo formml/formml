@@ -188,7 +188,7 @@ describe('safeParse', () => {
     }
     const mockValibotSchema = {} as unknown as v.GenericSchema
     const mockData = { foo: 'bar' }
-    const expectedResult = {
+    const mockValibotResult = {
       issues: undefined,
       output: { foo: 'parsed' },
       success: true,
@@ -196,12 +196,17 @@ describe('safeParse', () => {
     } as const
 
     vi.mocked(buildSchema).mockReturnValue(mockValibotSchema)
-    vi.mocked(v.safeParse).mockReturnValue(expectedResult)
+    vi.mocked(v.safeParse).mockReturnValue(mockValibotResult)
 
     // Act
     const result = safeParse(mockData, mockSchema)
 
     // Assert
-    expect(result).toBe(expectedResult)
+    expect(result).toEqual({
+      errors: undefined,
+      isValid: true,
+      output: { foo: 'parsed' },
+      typed: true,
+    })
   })
 })

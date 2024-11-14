@@ -37,7 +37,7 @@ const preprocess = {
 interface FieldToEntry extends H.Fn {
   return: [
     H.Call<H.Objects.Get<'name'>, this['arg0']>,
-    PrimitiveTypeMapping[H.Call<H.Objects.Get<'type'>, this['arg0']>],
+    PrimitiveTypeMapping[H.Call<H.Objects.Get<'type'>, this['arg0']>], // TODO: modify return type by annotations
   ]
 }
 
@@ -62,21 +62,21 @@ export function parse<T extends FormMLSchema>(
 
 export type SafeParseResult<T> =
   | {
-      issues: [v.BaseIssue<unknown>, ...v.BaseIssue<unknown>[]]
+      errors: [v.BaseIssue<unknown>, ...v.BaseIssue<unknown>[]]
+      isValid: false
       output: T
-      success: false
       typed: true
     }
   | {
-      issues: [v.BaseIssue<unknown>, ...v.BaseIssue<unknown>[]]
+      errors: [v.BaseIssue<unknown>, ...v.BaseIssue<unknown>[]]
+      isValid: false
       output: unknown
-      success: false
       typed: false
     }
   | {
-      issues: undefined
+      errors: undefined
+      isValid: true
       output: T
-      success: true
       typed: true
     }
 
@@ -85,5 +85,10 @@ export function safeParse<T extends FormMLSchema>(
   schema: T,
 ): SafeParseResult<InferParsed<T>> {
   const valibotSchema = buildSchema(schema.form, preprocess)
-  return v.safeParse(valibotSchema, data) as SafeParseResult<T>
+  const { issues, success, ...rest } = v.safeParse(valibotSchema, data)
+  return {
+    ...rest,
+    errors: issues,
+    isValid: success,
+  } as SafeParseResult<InferParsed<T>>
 }
