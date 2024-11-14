@@ -7,9 +7,9 @@ import { BigNumber } from 'bignumber.js'
 import * as v from 'valibot'
 
 import type { PrimitiveTypeMapping } from '../js-type/index.js'
-import type { IAnnotationAction } from './annotationsReducer.js'
+import type { IAnnotationAction } from './annotations/reducer.js'
 
-import annotationsReducer from './annotationsReducer.js'
+import { annotationsReducer } from './annotations/reducer.js'
 
 const type = (formmlSchema: Field) => {
   if (formmlSchema.type === 'text') {

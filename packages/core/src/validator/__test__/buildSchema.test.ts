@@ -4,13 +4,14 @@ import { BigNumber } from 'bignumber.js'
 import dayjs from 'dayjs'
 import * as v from 'valibot'
 
-import annotationsReducer from '../annotationsReducer.js'
+import { annotationsReducer } from '../annotations/reducer.js'
 import { buildSchema } from '../buildSchema.js'
 
-vi.mock('../annotationsReducer.js', async (importActual) => {
-  const actual = await importActual<typeof import('../annotationsReducer.js')>()
+vi.mock('../annotations/reducer.js', async (importActual) => {
+  const actual =
+    await importActual<typeof import('../annotations/reducer.js')>()
   return {
-    default: vi.fn(actual.default),
+    annotationsReducer: vi.fn(actual.annotationsReducer),
   }
 })
 

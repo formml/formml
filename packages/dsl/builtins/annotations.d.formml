@@ -1,1 +1,7 @@
-fun required(message?: text)
+fun required(message?: text) // TODO: Annotation return type, requiring union type, completion and validation
+
+// TODO: function overloading
+
+// text validations
+
+fun base64(message?: text)
