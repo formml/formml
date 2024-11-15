@@ -27,7 +27,7 @@ export function annotationsReducer(
   schema: GenericSchema,
   action: IAnnotationAction,
 ): GenericSchema {
-  const impl = reducerImpl[action.name] as IAnnotationReducer
+  const impl = reducerImpl[action.name] as IAnnotationReducer // makes TS happy
   if (impl) {
     return impl(schema, action)
   }

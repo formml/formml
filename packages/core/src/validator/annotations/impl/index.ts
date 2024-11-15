@@ -1,8 +1,14 @@
+import type { IAnnotationActions, IAnnotationReducer } from '../reducer.js'
+
 import { base64 } from './base64.js'
 import { bic } from './bic.js'
 import { required } from './required.js'
 
-export const reducerImpl = {
+type ReducerImplementationMap = {
+  [K in keyof IAnnotationActions]: IAnnotationReducer<K>
+}
+
+export const reducerImpl: ReducerImplementationMap = {
   base64,
   bic,
   required,
