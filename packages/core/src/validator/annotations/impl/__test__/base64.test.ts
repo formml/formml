@@ -2,7 +2,7 @@ import * as v from 'valibot'
 
 import { base64 } from '../base64.js'
 
-describe('base64 annotation reducer', () => {
+describe('base64', () => {
   test('should validate valid base64 string', () => {
     // Arrange
     const action = { name: 'base64', options: {} } as const

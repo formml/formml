@@ -5,3 +5,4 @@ fun required(message?: text) // TODO: Annotation return type, requiring union ty
 // text validations
 
 fun base64(message?: text)
+fun bic(message?: text)
