@@ -26,13 +26,20 @@ import {
 } from './iso-datetime.js'
 import { length } from './length.js'
 import { mac, mac48, mac64 } from './mac.js'
+import { maxBytes } from './maxBytes.js'
+import { maxLength } from './maxLength.js'
+import { minBytes } from './minBytes.js'
+import { minLength } from './minLength.js'
+import { nanoid } from './nanoid.js'
+import { notBytes } from './notBytes.js'
+import { notLength } from './notLength.js'
 import { required } from './required.js'
 
 type ReducerImplementationMap = {
   [K in keyof IAnnotationActions]: IAnnotationReducer<K>
 }
 
-export const reducerImpl: ReducerImplementationMap = {
+export const reducerImpl = {
   base64,
   bic,
   bytes,
@@ -61,5 +68,12 @@ export const reducerImpl: ReducerImplementationMap = {
   mac,
   mac48,
   mac64,
+  maxBytes,
+  maxLength,
+  minBytes,
+  minLength,
+  nanoid,
+  notBytes,
+  notLength,
   required,
-}
+} as const satisfies ReducerImplementationMap
