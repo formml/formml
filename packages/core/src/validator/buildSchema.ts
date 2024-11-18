@@ -39,7 +39,7 @@ function buildAction(annotation: Annotation): IAnnotationAction {
       annotation.args,
       annotationsInterface[annotationName],
     ),
-  }
+  } as IAnnotationAction
 }
 
 export function buildSchema<T extends PRIMITIVE>(

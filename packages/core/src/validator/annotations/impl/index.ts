@@ -7,6 +7,10 @@ import { creditCard } from './creditCard.js'
 import { cuid2 } from './cuid2.js'
 import { digits } from './digits.js'
 import { email } from './email.js'
+import { emoji } from './emoji.js'
+import { empty } from './empty.js'
+import { endsWith } from './endsWith.js'
+import { excludes } from './excludes.js'
 import { required } from './required.js'
 
 type ReducerImplementationMap = {
@@ -21,5 +25,9 @@ export const reducerImpl: ReducerImplementationMap = {
   cuid2,
   digits,
   email,
+  emoji,
+  empty,
+  endsWith,
+  excludes,
   required,
 }

@@ -2,12 +2,17 @@ fun required(message?: text) // TODO: Annotation return type, requiring union ty
 
 // TODO: function overloading
 
-// text validations
+// text only validations
 
 fun base64(message?: text)
 fun bic(message?: text)
 fun bytes(requirement: num, message?: text)
 fun creditCard(message?: text)
 fun cuid2(message?: text)
+// fun decimal(message?: text) Placeholder for this valibot api, it's meaningless for FormML since we already have built-in decimal type.
 fun digits(message?: text)
 fun email(message?: text)
+fun emoji(message?: text)
+fun empty(message?: text)
+fun endsWith(requirement: text, message?: text)
+fun excludes(requirement: text, message?: text)
