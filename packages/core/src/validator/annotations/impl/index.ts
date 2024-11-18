@@ -33,7 +33,13 @@ import { minLength } from './minLength.js'
 import { nanoid } from './nanoid.js'
 import { notBytes } from './notBytes.js'
 import { notLength } from './notLength.js'
+import { octal } from './octal.js'
+import { regex } from './regex.js'
 import { required } from './required.js'
+import { startsWith } from './startsWith.js'
+import { ulid } from './ulid.js'
+import { url } from './url.js'
+import { uuid } from './uuid.js'
 
 type ReducerImplementationMap = {
   [K in keyof IAnnotationActions]: IAnnotationReducer<K>
@@ -75,5 +81,11 @@ export const reducerImpl = {
   nanoid,
   notBytes,
   notLength,
+  octal,
+  regex,
   required,
+  startsWith,
+  ulid,
+  url,
+  uuid,
 } as const satisfies ReducerImplementationMap
