@@ -11,6 +11,9 @@ import { emoji } from './emoji.js'
 import { empty } from './empty.js'
 import { endsWith } from './endsWith.js'
 import { excludes } from './excludes.js'
+import { hexColor } from './hexColor.js'
+import { hexadecimal } from './hexadecimal.js'
+import { imei } from './imei.js'
 import { required } from './required.js'
 
 type ReducerImplementationMap = {
@@ -29,5 +32,8 @@ export const reducerImpl: ReducerImplementationMap = {
   empty,
   endsWith,
   excludes,
+  hexColor,
+  hexadecimal,
+  imei,
   required,
 }
