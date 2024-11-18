@@ -14,6 +14,16 @@ import { excludes } from './excludes.js'
 import { hexColor } from './hexColor.js'
 import { hexadecimal } from './hexadecimal.js'
 import { imei } from './imei.js'
+import { includes } from './includes.js'
+import { ip, ipv4, ipv6 } from './ip.js'
+import {
+  isoDate,
+  isoDateTime,
+  isoTime,
+  isoTimeSecond,
+  isoTimestamp,
+  isoWeek,
+} from './iso-datetime.js'
 import { required } from './required.js'
 
 type ReducerImplementationMap = {
@@ -35,5 +45,15 @@ export const reducerImpl: ReducerImplementationMap = {
   hexColor,
   hexadecimal,
   imei,
+  includes,
+  ip,
+  ipv4,
+  ipv6,
+  isoDate,
+  isoDateTime,
+  isoTime,
+  isoTimeSecond,
+  isoTimestamp,
+  isoWeek,
   required,
 }
