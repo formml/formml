@@ -7,3 +7,7 @@ fun required(message?: text) // TODO: Annotation return type, requiring union ty
 fun base64(message?: text)
 fun bic(message?: text)
 fun bytes(requirement: num, message?: text)
+fun creditCard(message?: text)
+fun cuid2(message?: text)
+fun digits(message?: text)
+fun email(message?: text)

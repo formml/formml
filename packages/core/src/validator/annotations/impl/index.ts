@@ -3,6 +3,10 @@ import type { IAnnotationActions, IAnnotationReducer } from '../reducer.js'
 import { base64 } from './base64.js'
 import { bic } from './bic.js'
 import { bytes } from './bytes.js'
+import { creditCard } from './creditCard.js'
+import { cuid2 } from './cuid2.js'
+import { digits } from './digits.js'
+import { email } from './email.js'
 import { required } from './required.js'
 
 type ReducerImplementationMap = {
@@ -13,5 +17,9 @@ export const reducerImpl: ReducerImplementationMap = {
   base64,
   bic,
   bytes,
+  creditCard,
+  cuid2,
+  digits,
+  email,
   required,
 }
