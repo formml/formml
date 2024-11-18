@@ -24,6 +24,8 @@ import {
   isoTimestamp,
   isoWeek,
 } from './iso-datetime.js'
+import { length } from './length.js'
+import { mac, mac48, mac64 } from './mac.js'
 import { required } from './required.js'
 
 type ReducerImplementationMap = {
@@ -55,5 +57,9 @@ export const reducerImpl: ReducerImplementationMap = {
   isoTimeSecond,
   isoTimestamp,
   isoWeek,
+  length,
+  mac,
+  mac48,
+  mac64,
   required,
 }
