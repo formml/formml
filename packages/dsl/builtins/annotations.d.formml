@@ -1,47 +1,396 @@
+/**
+ * Validates that the input is required.
+ *
+ * *Note: For `text` fields, the input must be non-empty.*
+ *
+ * [Details of Valibot API](https://valibot.dev/api/required/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun required(message?: text) // TODO: Annotation return type, requiring union type, completion and validation
 
 // TODO: function overloading
 
 // text only validations
 
+/**
+ * Validates that the input is a base64 encoded text.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/base64/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun base64(message?: text)
+
+/**
+ * Validates that the input is a BIC (Bank Identifier Code).
+ *
+ * [Details of Valibot API](https://valibot.dev/api/bic/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun bic(message?: text)
+
+/**
+ * Validates that the input has a specific byte length.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/bytes/)
+ *
+ * @param {num} requirement - The required byte length.
+ * @param {text} [message] - Optional custom error message.
+ */
 fun bytes(requirement: num, message?: text)
+
+/**
+ * Validates that the input is a valid credit card number.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/credit-card/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun creditCard(message?: text)
+
+/**
+ * Validates that the input is a valid CUID2.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/cuid2/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun cuid2(message?: text)
+
+/**
+ * Validates that the input contains only digits.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/digits/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun digits(message?: text)
+
+/**
+ * Validates that the input is a valid email address.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/email/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun email(message?: text)
+
+/**
+ * Validates that the input is an emoji.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/emoji/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun emoji(message?: text)
+
+/**
+ * Validates that the input is empty.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/empty/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun empty(message?: text)
+
+/**
+ * Validates that the input ends with a specific text.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/ends-with/)
+ *
+ * @param {text} requirement - The required ending text.
+ * @param {text} [message] - Optional custom error message.
+ */
 fun endsWith(requirement: text, message?: text)
+
+/**
+ * Validates that the input does not include a specific text.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/excludes/)
+ *
+ * @param {text} requirement - The text to exclude.
+ * @param {text} [message] - Optional custom error message.
+ */
 fun excludes(requirement: text, message?: text)
+
+/**
+ * Validates that the input is a valid hexadecimal number.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/hexadecimal/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun hexadecimal(message?: text)
+
+/**
+ * Validates that the input is a valid hex color code.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/hex-color/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun hexColor(message?: text)
+
+/**
+ * Validates that the input is a valid IMEI number.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/imei/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun imei(message?: text)
+
+/**
+ * Validates that the input includes a specific text.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/includes/)
+ *
+ * @param {text} requirement - The text to include.
+ * @param {text} [message] - Optional custom error message.
+ */
 fun includes(requirement: text, message?: text)
+
+/**
+ * Validates that the input is a valid IP address.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/ip/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun ip(message?: text)
+
+/**
+ * Validates that the input is a valid IPv4 address.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/ipv4/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun ipv4(message?: text)
+
+/**
+ * Validates that the input is a valid IPv6 address.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/ipv6/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun ipv6(message?: text)
+
+/**
+ * Validates that the input is a valid ISO date.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/iso-date/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun isoDate(message?: text)
+
+/**
+ * Validates that the input is a valid ISO date-time.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/iso-date-time/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun isoDateTime(message?: text)
+
+/**
+ * Validates that the input is a valid ISO time.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/iso-time/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun isoTime(message?: text)
+
+/**
+ * Validates that the input is a valid ISO time with seconds.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/iso-time-second/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun isoTimeSecond(message?: text)
+
+/**
+ * Validates that the input is a valid ISO timestamp.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/iso-timestamp/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun isoTimestamp(message?: text)
+
+/**
+ * Validates that the input is a valid ISO week date.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/iso-week/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun isoWeek(message?: text)
+
+/**
+ * Validates that the input has a specific length.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/length/)
+ *
+ * @param {num} requirement - The required length.
+ * @param {text} [message] - Optional custom error message.
+ */
 fun length(requirement: num, message?: text)
+
+/**
+ * Validates that the input is a valid MAC address.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/mac/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun mac(message?: text)
+
+/**
+ * Validates that the input is a valid MAC-48 address.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/mac48/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun mac48(message?: text)
+
+/**
+ * Validates that the input is a valid MAC-64 address.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/mac64/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun mac64(message?: text)
+
+/**
+ * Validates that the input does not exceed a maximum byte length.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/max-bytes/)
+ *
+ * @param {num} requirement - The maximum byte length.
+ * @param {text} [message] - Optional custom error message.
+ */
 fun maxBytes(requirement: num, message?: text)
+
+/**
+ * Validates that the input does not exceed a maximum length.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/max-length/)
+ *
+ * @param {num} requirement - The maximum length.
+ * @param {text} [message] - Optional custom error message.
+ */
 fun maxLength(requirement: num, message?: text)
+
+/**
+ * Validates that the input meets a minimum byte length.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/min-bytes/)
+ *
+ * @param {num} requirement - The minimum byte length.
+ * @param {text} [message] - Optional custom error message.
+ */
 fun minBytes(requirement: num, message?: text)
+
+/**
+ * Validates that the input meets a minimum length.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/min-length/)
+ *
+ * @param {num} requirement - The minimum length.
+ * @param {text} [message] - Optional custom error message.
+ */
 fun minLength(requirement: num, message?: text)
+
+/**
+ * Validates that the input is a valid Nano ID.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/nanoid/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun nanoid(message?: text)
+
+/**
+ * Validates that the input does not match a specific byte length.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/not-bytes/)
+ *
+ * @param {num} requirement - The byte length to not match.
+ * @param {text} [message] - Optional custom error message.
+ */
 fun notBytes(requirement: num, message?: text)
+
+/**
+ * Validates that the input does not match a specific length.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/not-length/)
+ *
+ * @param {num} requirement - The length to not match.
+ * @param {text} [message] - Optional custom error message.
+ */
 fun notLength(requirement: num, message?: text)
+
+/**
+ * Validates that the input is a valid octal number.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/octal/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun octal(message?: text)
+
+/**
+ * Validates that the input matches a specific regex pattern.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/regex/)
+ *
+ * @param {text} requirement - The regex pattern to match.
+ * @param {text} [message] - Optional custom error message.
+ */
 fun regex(requirement: text, message?: text)
+
+/**
+ * Validates that the input starts with a specific text.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/starts-with/)
+ *
+ * @param {text} requirement - The required starting text.
+ * @param {text} [message] - Optional custom error message.
+ */
 fun startsWith(requirement: text, message?: text)
+
+/**
+ * Validates that the input is a valid ULID.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/ulid/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun ulid(message?: text)
+
+/**
+ * Validates that the input is a valid URL.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/url/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun url(message?: text)
+
+/**
+ * Validates that the input is a valid UUID.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/uuid/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun uuid(message?: text)
