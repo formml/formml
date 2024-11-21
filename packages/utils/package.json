@@ -34,6 +34,7 @@
     "test:watch": "vitest watch --typecheck"
   },
   "dependencies": {
+    "bignumber.js": "^9.1.2",
     "valibot": "^0.42.1"
   },
   "devDependencies": {

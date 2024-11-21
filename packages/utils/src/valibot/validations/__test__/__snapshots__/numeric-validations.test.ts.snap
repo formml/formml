@@ -1,0 +1,438 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`numeric-validations > finite > with BigNumber type > should reject infinite BigNumber %p BigNumber{ s: -1, e: null, c: null } 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": null,
+    "input": "-Infinity",
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid finite: Received BigNumber",
+    "path": undefined,
+    "received": "BigNumber",
+    "requirement": [Function],
+    "type": "finite",
+  },
+]
+`;
+
+exports[`numeric-validations > finite > with BigNumber type > should reject infinite BigNumber %p BigNumber{ s: 1, e: null, c: null } 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": null,
+    "input": "Infinity",
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid finite: Received BigNumber",
+    "path": undefined,
+    "received": "BigNumber",
+    "requirement": [Function],
+    "type": "finite",
+  },
+]
+`;
+
+exports[`numeric-validations > finite > with number type > should reject infinite number %p -Infinity 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": null,
+    "input": -Infinity,
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid finite: Received -Infinity",
+    "path": undefined,
+    "received": "-Infinity",
+    "requirement": [Function],
+    "type": "finite",
+  },
+]
+`;
+
+exports[`numeric-validations > finite > with number type > should reject infinite number %p -Infinity 2`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": null,
+    "input": -Infinity,
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid finite: Received -Infinity",
+    "path": undefined,
+    "received": "-Infinity",
+    "requirement": [Function],
+    "type": "finite",
+  },
+]
+`;
+
+exports[`numeric-validations > finite > with number type > should reject infinite number %p Infinity 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": null,
+    "input": Infinity,
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid finite: Received Infinity",
+    "path": undefined,
+    "received": "Infinity",
+    "requirement": [Function],
+    "type": "finite",
+  },
+]
+`;
+
+exports[`numeric-validations > finite > with number type > should reject infinite number %p Infinity 2`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": null,
+    "input": Infinity,
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid finite: Received Infinity",
+    "path": undefined,
+    "received": "Infinity",
+    "requirement": [Function],
+    "type": "finite",
+  },
+]
+`;
+
+exports[`numeric-validations > integer > with BigNumber type > should reject non-integer BigNumber %p BigNumber{ s: -1, e: 2, c: [ 456, 78900000000000 ] } 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": null,
+    "input": "-456.789",
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid integer: Received BigNumber",
+    "path": undefined,
+    "received": "BigNumber",
+    "requirement": [Function],
+    "type": "integer",
+  },
+]
+`;
+
+exports[`numeric-validations > integer > with BigNumber type > should reject non-integer BigNumber %p BigNumber{ s: 1, e: +0, c: [ 3, 14159000000000 ] } 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": null,
+    "input": "3.14159",
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid integer: Received BigNumber",
+    "path": undefined,
+    "received": "BigNumber",
+    "requirement": [Function],
+    "type": "integer",
+  },
+]
+`;
+
+exports[`numeric-validations > integer > with BigNumber type > should reject non-integer BigNumber %p BigNumber{ s: 1, e: -1, c: [ 10000000000000 ] } 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": null,
+    "input": "0.1",
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid integer: Received BigNumber",
+    "path": undefined,
+    "received": "BigNumber",
+    "requirement": [Function],
+    "type": "integer",
+  },
+]
+`;
+
+exports[`numeric-validations > integer > with BigNumber type > should reject non-integer BigNumber %p BigNumber{ s: 1, e: 2, c: [ 123, 45600000000000 ] } 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": null,
+    "input": "123.456",
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid integer: Received BigNumber",
+    "path": undefined,
+    "received": "BigNumber",
+    "requirement": [Function],
+    "type": "integer",
+  },
+]
+`;
+
+exports[`numeric-validations > integer > with number type > should reject non-integer number %p -456.78 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": null,
+    "input": -456.78,
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid integer: Received -456.78",
+    "path": undefined,
+    "received": "-456.78",
+    "requirement": [Function],
+    "type": "integer",
+  },
+]
+`;
+
+exports[`numeric-validations > integer > with number type > should reject non-integer number %p 0.1 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": null,
+    "input": 0.1,
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid integer: Received 0.1",
+    "path": undefined,
+    "received": "0.1",
+    "requirement": [Function],
+    "type": "integer",
+  },
+]
+`;
+
+exports[`numeric-validations > integer > with number type > should reject non-integer number %p 3.141592653589793 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": null,
+    "input": 3.141592653589793,
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid integer: Received 3.141592653589793",
+    "path": undefined,
+    "received": "3.141592653589793",
+    "requirement": [Function],
+    "type": "integer",
+  },
+]
+`;
+
+exports[`numeric-validations > integer > with number type > should reject non-integer number %p 123.45 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": null,
+    "input": 123.45,
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid integer: Received 123.45",
+    "path": undefined,
+    "received": "123.45",
+    "requirement": [Function],
+    "type": "integer",
+  },
+]
+`;
+
+exports[`numeric-validations > multipleOf > with BigNumber type > should reject BigNumber not multiple of 3: BigNumber{ s: 1, e: 2, c: [ 100 ] } 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "%3",
+    "input": "100",
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid multiple: Expected %3 but received BigNumber",
+    "path": undefined,
+    "received": "BigNumber",
+    "requirement": [Function],
+    "type": "multiple_of",
+  },
+]
+`;
+
+exports[`numeric-validations > multipleOf > with BigNumber type > should reject BigNumber not multiple of 5: BigNumber{ s: -1, e: 1, c: [ 17 ] } 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "%5",
+    "input": "-17",
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid multiple: Expected %5 but received BigNumber",
+    "path": undefined,
+    "received": "BigNumber",
+    "requirement": [Function],
+    "type": "multiple_of",
+  },
+]
+`;
+
+exports[`numeric-validations > multipleOf > with BigNumber type > should reject BigNumber not multiple of 5: BigNumber{ s: 1, e: 1, c: [ 23 ] } 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "%5",
+    "input": "23",
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid multiple: Expected %5 but received BigNumber",
+    "path": undefined,
+    "received": "BigNumber",
+    "requirement": [Function],
+    "type": "multiple_of",
+  },
+]
+`;
+
+exports[`numeric-validations > multipleOf > with number type > should fail validation for decimal multiple due to precision issues: 0.1, 0.3 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "%0.1",
+    "input": 0.3,
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid multiple: Expected %0.1 but received 0.3",
+    "path": undefined,
+    "received": "0.3",
+    "requirement": [Function],
+    "type": "multiple_of",
+  },
+]
+`;
+
+exports[`numeric-validations > multipleOf > with number type > should fail validation for decimal multiple due to precision issues: 0.1, 0.7 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "%0.1",
+    "input": 0.7,
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid multiple: Expected %0.1 but received 0.7",
+    "path": undefined,
+    "received": "0.7",
+    "requirement": [Function],
+    "type": "multiple_of",
+  },
+]
+`;
+
+exports[`numeric-validations > multipleOf > with number type > should reject number not multiple of 3: 10 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "%3",
+    "input": 10,
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid multiple: Expected %3 but received 10",
+    "path": undefined,
+    "received": "10",
+    "requirement": [Function],
+    "type": "multiple_of",
+  },
+]
+`;
+
+exports[`numeric-validations > multipleOf > with number type > should reject number not multiple of 5: -13 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "%5",
+    "input": -13,
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid multiple: Expected %5 but received -13",
+    "path": undefined,
+    "received": "-13",
+    "requirement": [Function],
+    "type": "multiple_of",
+  },
+]
+`;
+
+exports[`numeric-validations > multipleOf > with number type > should reject number not multiple of 5: 2 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "%5",
+    "input": 2,
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid multiple: Expected %5 but received 2",
+    "path": undefined,
+    "received": "2",
+    "requirement": [Function],
+    "type": "multiple_of",
+  },
+]
+`;
+
+exports[`numeric-validations > multipleOf > with number type > should reject number not multiple of 5: 7 1`] = `
+[
+  {
+    "abortEarly": undefined,
+    "abortPipeEarly": undefined,
+    "expected": "%5",
+    "input": 7,
+    "issues": undefined,
+    "kind": "validation",
+    "lang": undefined,
+    "message": "Invalid multiple: Expected %5 but received 7",
+    "path": undefined,
+    "received": "7",
+    "requirement": [Function],
+    "type": "multiple_of",
+  },
+]
+`;
