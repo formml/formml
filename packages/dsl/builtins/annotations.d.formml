@@ -44,7 +44,7 @@ fun bytes(requirement: num, message?: text)
 /**
  * Validates that the input is a valid credit card number.
  *
- * [Details of Valibot API](https://valibot.dev/api/credit-card/)
+ * [Details of Valibot API](https://valibot.dev/api/creditCard/)
  *
  * @param {text} [message] - Optional custom error message.
  */
@@ -98,7 +98,7 @@ fun empty(message?: text)
 /**
  * Validates that the input ends with a specific text.
  *
- * [Details of Valibot API](https://valibot.dev/api/ends-with/)
+ * [Details of Valibot API](https://valibot.dev/api/endsWith/)
  *
  * @param {text} requirement - The required ending text.
  * @param {text} [message] - Optional custom error message.
@@ -127,7 +127,7 @@ fun hexadecimal(message?: text)
 /**
  * Validates that the input is a valid hex color code.
  *
- * [Details of Valibot API](https://valibot.dev/api/hex-color/)
+ * [Details of Valibot API](https://valibot.dev/api/hexColor/)
  *
  * @param {text} [message] - Optional custom error message.
  */
@@ -182,7 +182,7 @@ fun ipv6(message?: text)
 /**
  * Validates that the input is a valid ISO date.
  *
- * [Details of Valibot API](https://valibot.dev/api/iso-date/)
+ * [Details of Valibot API](https://valibot.dev/api/isoDate/)
  *
  * @param {text} [message] - Optional custom error message.
  */
@@ -191,7 +191,7 @@ fun isoDate(message?: text)
 /**
  * Validates that the input is a valid ISO date-time.
  *
- * [Details of Valibot API](https://valibot.dev/api/iso-date-time/)
+ * [Details of Valibot API](https://valibot.dev/api/isoDateTime/)
  *
  * @param {text} [message] - Optional custom error message.
  */
@@ -200,7 +200,7 @@ fun isoDateTime(message?: text)
 /**
  * Validates that the input is a valid ISO time.
  *
- * [Details of Valibot API](https://valibot.dev/api/iso-time/)
+ * [Details of Valibot API](https://valibot.dev/api/isoTime/)
  *
  * @param {text} [message] - Optional custom error message.
  */
@@ -209,7 +209,7 @@ fun isoTime(message?: text)
 /**
  * Validates that the input is a valid ISO time with seconds.
  *
- * [Details of Valibot API](https://valibot.dev/api/iso-time-second/)
+ * [Details of Valibot API](https://valibot.dev/api/isoTimeSecond/)
  *
  * @param {text} [message] - Optional custom error message.
  */
@@ -218,7 +218,7 @@ fun isoTimeSecond(message?: text)
 /**
  * Validates that the input is a valid ISO timestamp.
  *
- * [Details of Valibot API](https://valibot.dev/api/iso-timestamp/)
+ * [Details of Valibot API](https://valibot.dev/api/isoTimestamp/)
  *
  * @param {text} [message] - Optional custom error message.
  */
@@ -227,7 +227,7 @@ fun isoTimestamp(message?: text)
 /**
  * Validates that the input is a valid ISO week date.
  *
- * [Details of Valibot API](https://valibot.dev/api/iso-week/)
+ * [Details of Valibot API](https://valibot.dev/api/isoWeek/)
  *
  * @param {text} [message] - Optional custom error message.
  */
@@ -273,7 +273,7 @@ fun mac64(message?: text)
 /**
  * Validates that the input does not exceed a maximum byte length.
  *
- * [Details of Valibot API](https://valibot.dev/api/max-bytes/)
+ * [Details of Valibot API](https://valibot.dev/api/maxBytes/)
  *
  * @param {num} requirement - The maximum byte length.
  * @param {text} [message] - Optional custom error message.
@@ -283,7 +283,7 @@ fun maxBytes(requirement: num, message?: text)
 /**
  * Validates that the input does not exceed a maximum length.
  *
- * [Details of Valibot API](https://valibot.dev/api/max-length/)
+ * [Details of Valibot API](https://valibot.dev/api/maxLength/)
  *
  * @param {num} requirement - The maximum length.
  * @param {text} [message] - Optional custom error message.
@@ -293,7 +293,7 @@ fun maxLength(requirement: num, message?: text)
 /**
  * Validates that the input meets a minimum byte length.
  *
- * [Details of Valibot API](https://valibot.dev/api/min-bytes/)
+ * [Details of Valibot API](https://valibot.dev/api/minBytes/)
  *
  * @param {num} requirement - The minimum byte length.
  * @param {text} [message] - Optional custom error message.
@@ -303,7 +303,7 @@ fun minBytes(requirement: num, message?: text)
 /**
  * Validates that the input meets a minimum length.
  *
- * [Details of Valibot API](https://valibot.dev/api/min-length/)
+ * [Details of Valibot API](https://valibot.dev/api/minLength/)
  *
  * @param {num} requirement - The minimum length.
  * @param {text} [message] - Optional custom error message.
@@ -322,7 +322,7 @@ fun nanoid(message?: text)
 /**
  * Validates that the input does not match a specific byte length.
  *
- * [Details of Valibot API](https://valibot.dev/api/not-bytes/)
+ * [Details of Valibot API](https://valibot.dev/api/notBytes/)
  *
  * @param {num} requirement - The byte length to not match.
  * @param {text} [message] - Optional custom error message.
@@ -332,7 +332,7 @@ fun notBytes(requirement: num, message?: text)
 /**
  * Validates that the input does not match a specific length.
  *
- * [Details of Valibot API](https://valibot.dev/api/not-length/)
+ * [Details of Valibot API](https://valibot.dev/api/notLength/)
  *
  * @param {num} requirement - The length to not match.
  * @param {text} [message] - Optional custom error message.
@@ -361,7 +361,7 @@ fun regex(requirement: text, message?: text)
 /**
  * Validates that the input starts with a specific text.
  *
- * [Details of Valibot API](https://valibot.dev/api/starts-with/)
+ * [Details of Valibot API](https://valibot.dev/api/startsWith/)
  *
  * @param {text} requirement - The required starting text.
  * @param {text} [message] - Optional custom error message.
@@ -397,12 +397,41 @@ fun uuid(message?: text)
 
 // num only validations
 
+/**
+ * Validates that the input is a safe integer.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/safeInteger/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun safeInteger(message?: text)
 
 // numeric (num and decimal) validations
 
+/**
+ * Validates that the input is a finite number/decimal.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/finite/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun finite(message?: text)
 
+/**
+ * Validates that the input is an integer.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/integer/)
+ *
+ * @param {text} [message] - Optional custom error message.
+ */
 fun integer(message?: text)
 
+/**
+ * Validates that the input is a multiple of the specified number.
+ *
+ * [Details of Valibot API](https://valibot.dev/api/multipleOf/)
+ *
+ * @param {num} requirement - The number that the input must be a multiple of.
+ * @param {text} [message] - Optional custom error message.
+ */
 fun multipleOf(requirement: num, message?: text)
