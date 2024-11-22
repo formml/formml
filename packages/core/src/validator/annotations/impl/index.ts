@@ -36,6 +36,7 @@ import { notLength } from './notLength.js'
 import { octal } from './octal.js'
 import { regex } from './regex.js'
 import { required } from './required.js'
+import { safeInteger } from './safeInteger.js'
 import { startsWith } from './startsWith.js'
 import { ulid } from './ulid.js'
 import { url } from './url.js'
@@ -84,6 +85,7 @@ export const reducerImpl = {
   octal,
   regex,
   required,
+  safeInteger,
   startsWith,
   ulid,
   url,

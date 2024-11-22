@@ -394,3 +394,7 @@ fun url(message?: text)
  * @param {text} [message] - Optional custom error message.
  */
 fun uuid(message?: text)
+
+// number only validations
+
+fun safeInteger(message?: text)
