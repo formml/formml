@@ -395,6 +395,14 @@ fun url(message?: text)
  */
 fun uuid(message?: text)
 
-// number only validations
+// num only validations
 
 fun safeInteger(message?: text)
+
+// numeric (num and decimal) validations
+
+fun finite(message?: text)
+
+fun integer(message?: text)
+
+fun multipleOf(requirement: num, message?: text)

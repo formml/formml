@@ -11,10 +11,12 @@ import { emoji } from './emoji.js'
 import { empty } from './empty.js'
 import { endsWith } from './endsWith.js'
 import { excludes } from './excludes.js'
+import { finite } from './finite.js'
 import { hexColor } from './hexColor.js'
 import { hexadecimal } from './hexadecimal.js'
 import { imei } from './imei.js'
 import { includes } from './includes.js'
+import { integer } from './integer.js'
 import { ip, ipv4, ipv6 } from './ip.js'
 import {
   isoDate,
@@ -30,6 +32,7 @@ import { maxBytes } from './maxBytes.js'
 import { maxLength } from './maxLength.js'
 import { minBytes } from './minBytes.js'
 import { minLength } from './minLength.js'
+import { multipleOf } from './multipleOf.js'
 import { nanoid } from './nanoid.js'
 import { notBytes } from './notBytes.js'
 import { notLength } from './notLength.js'
@@ -58,10 +61,12 @@ export const reducerImpl = {
   empty,
   endsWith,
   excludes,
+  finite,
   hexColor,
   hexadecimal,
   imei,
   includes,
+  integer,
   ip,
   ipv4,
   ipv6,
@@ -79,6 +84,7 @@ export const reducerImpl = {
   maxLength,
   minBytes,
   minLength,
+  multipleOf,
   nanoid,
   notBytes,
   notLength,
