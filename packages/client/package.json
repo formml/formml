@@ -37,7 +37,8 @@
     "lint:fix": "pnpm run lint --fix",
     "lint:type": "tsc",
     "test": "vitest run --typecheck",
-    "test:watch": "vitest watch --typecheck"
+    "test:watch": "vitest watch --typecheck",
+    "gen:docs": "typedoc --plugin typedoc-plugin-markdown --out ./docs src/index.ts"
   },
   "dependencies": {
     "@formml/core": "workspace:^",
