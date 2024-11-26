@@ -8,7 +8,7 @@ import type { PrimitiveTypeMapping } from '../js-type/index.js'
 
 import { fromPlain } from '../js-type/plain/conversion.js'
 import { schemas } from '../js-type/plain/validation.js'
-import { buildSchema } from './buildSchema.js'
+import { buildValibotSchema } from './buildValibotSchema.js'
 
 const preprocess = {
   bool: v.pipe(
@@ -57,7 +57,7 @@ export function parse<T extends FormMLSchema>(
   data: unknown,
   schema: T,
 ): InferParsed<T> {
-  const valibotSchema = buildSchema(schema.form, preprocess)
+  const valibotSchema = buildValibotSchema(schema.form, preprocess)
   return v.parse(valibotSchema, data) as InferParsed<T>
 }
 
@@ -85,7 +85,7 @@ export function safeParse<T extends FormMLSchema>(
   data: unknown,
   schema: T,
 ): SafeParseResult<InferParsed<T>> {
-  const valibotSchema = buildSchema(schema.form, preprocess)
+  const valibotSchema = buildValibotSchema(schema.form, preprocess)
   const { issues, success, ...rest } = v.safeParse(valibotSchema, data)
   return {
     ...rest,

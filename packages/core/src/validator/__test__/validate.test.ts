@@ -3,11 +3,11 @@ import type { BaseIssue } from 'valibot'
 
 import { safeParse } from 'valibot'
 
-import { buildSchema } from '../buildSchema.js'
+import { buildValibotSchema } from '../buildValibotSchema.js'
 import { validate } from '../validate.js'
 
 vi.mock('valibot')
-vi.mock('../buildSchema.js')
+vi.mock('../buildValibotSchema.js')
 
 describe('validate', () => {
   const mockSchema: FormMLSchema = {
@@ -31,7 +31,7 @@ describe('validate', () => {
   const mockValibotSchema = {} as never
 
   beforeEach(() => {
-    vi.mocked(buildSchema).mockReturnValue(mockValibotSchema)
+    vi.mocked(buildValibotSchema).mockReturnValue(mockValibotSchema)
   })
 
   test('should return isValid true when validation succeeds', () => {
@@ -47,7 +47,7 @@ describe('validate', () => {
     const result = validate({ textField: 'value' }, mockSchema)
 
     // Assert
-    expect(buildSchema).toBeCalledWith(mockSchema.form)
+    expect(buildValibotSchema).toBeCalledWith(mockSchema.form)
     expect(safeParse).toBeCalledWith(mockValibotSchema, {
       textField: 'value',
     })
@@ -67,7 +67,7 @@ describe('validate', () => {
     const result = validate({ textField: 123 }, mockSchema)
 
     // Assert
-    expect(buildSchema).toBeCalledWith(mockSchema.form)
+    expect(buildValibotSchema).toBeCalledWith(mockSchema.form)
     expect(safeParse).toBeCalledWith(mockValibotSchema, {
       textField: 123,
     })

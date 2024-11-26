@@ -1,6 +1,6 @@
 import type { Field, Form } from '@formml/dsl'
 
-import { type Validator, buildSchema } from '@formml/core'
+import { type Validator, buildValibotSchema } from '@formml/core'
 import * as v from 'valibot'
 
 import { fromString } from './js-type/string/conversion.js'
@@ -17,7 +17,7 @@ const preprocess = {
 export const createInputValidator = <TInput = unknown>(
   schema: Field | Form,
 ): Validator<TInput> => {
-  const valibotSchema = buildSchema(schema, preprocess)
+  const valibotSchema = buildValibotSchema(schema, preprocess)
   return (value) => {
     const result = v.safeParse(valibotSchema, value)
     return result.success

@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import * as v from 'valibot'
 
 import { annotationsReducer } from '../annotations/reducer.js'
-import { buildSchema } from '../buildSchema.js'
+import { buildValibotSchema } from '../buildValibotSchema.js'
 
 vi.mock('../annotations/reducer.js', async (importActual) => {
   const actual =
@@ -15,7 +15,7 @@ vi.mock('../annotations/reducer.js', async (importActual) => {
   }
 })
 
-describe('buildSchema', () => {
+describe('buildValibotSchema', () => {
   describe('for field', () => {
     describe('integration', () => {
       describe.each(['text', 'num', 'bool', 'datetime', 'decimal'] as const)(
@@ -60,7 +60,7 @@ describe('buildSchema', () => {
             }
 
             // Act
-            const schema = buildSchema(field)
+            const schema = buildValibotSchema(field)
             const result = v.safeParse(schema, fixtures[type].validInput)
 
             // Assert
@@ -78,7 +78,7 @@ describe('buildSchema', () => {
             }
 
             // Act
-            const schema = buildSchema(field)
+            const schema = buildValibotSchema(field)
             const result = v.safeParse(schema, fixtures[type].invalidInput)
 
             // Assert
@@ -105,7 +105,7 @@ describe('buildSchema', () => {
             }
 
             // Act
-            const schema = buildSchema(field, failedPreprocess)
+            const schema = buildValibotSchema(field, failedPreprocess)
             const result = v.safeParse(schema, fixtures[type].invalidInput)
 
             // Assert
@@ -128,7 +128,7 @@ describe('buildSchema', () => {
           }
 
           // Act
-          const schema = buildSchema(field)
+          const schema = buildValibotSchema(field)
           const result = v.safeParse(schema, undefined)
 
           // Assert
@@ -160,7 +160,7 @@ describe('buildSchema', () => {
         vi.mocked(annotationsReducer).mockReturnValueOnce(stubWrappedSchema)
 
         // Act
-        const schema = buildSchema(field)
+        const schema = buildValibotSchema(field)
 
         // Assert
         expect(annotationsReducer).toBeCalledWith(
@@ -203,7 +203,7 @@ describe('buildSchema', () => {
       }
 
       // Act
-      const schema = buildSchema(form)
+      const schema = buildValibotSchema(form)
 
       // Assert
       expect(schema).toEqual(
@@ -252,7 +252,7 @@ describe('buildSchema', () => {
       }
 
       // Act
-      const schema = buildSchema(form, failedPreprocess)
+      const schema = buildValibotSchema(form, failedPreprocess)
 
       // Assert
       expect(schema).toEqual(

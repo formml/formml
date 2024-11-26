@@ -3,7 +3,7 @@ import type { GenericIssue } from 'valibot'
 
 import { safeParse } from 'valibot'
 
-import { buildSchema } from './buildSchema.js'
+import { buildValibotSchema } from './buildValibotSchema.js'
 
 export type ValidationError = GenericIssue
 
@@ -17,7 +17,7 @@ export function validate(
   data: unknown,
   schema: FormMLSchema,
 ): ValidationResult {
-  const valibotSchema = buildSchema(schema.form)
+  const valibotSchema = buildValibotSchema(schema.form)
   const result = safeParse(valibotSchema, data)
   return result.success
     ? { errors: undefined, isValid: true }

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { Field } from '@formml/dsl'
 
-import { buildSchema } from '@formml/core'
+import { buildValibotSchema } from '@formml/core'
 
 import { createInputValidator } from '../validator.js'
 
@@ -38,6 +38,6 @@ describe('validator', () => {
       num: expectedSchemaShape,
       text: expectedSchemaShape,
     }
-    expect(buildSchema).toBeCalledWith(field, expectedPreprocess)
+    expect(buildValibotSchema).toBeCalledWith(field, expectedPreprocess)
   })
 })

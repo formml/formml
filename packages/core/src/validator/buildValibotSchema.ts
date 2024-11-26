@@ -42,26 +42,26 @@ function buildAction(annotation: Annotation): IAnnotationAction {
   } as IAnnotationAction
 }
 
-export function buildSchema<T extends PRIMITIVE>(
+export function buildValibotSchema<T extends PRIMITIVE>(
   formmlSchema: Field<T>,
   preprocess?: Record<PRIMITIVE, v.GenericSchema>,
 ): v.GenericSchema<PrimitiveTypeMapping[T]>
-export function buildSchema(
+export function buildValibotSchema(
   formmlSchema: Form,
   preprocess?: Record<PRIMITIVE, v.GenericSchema>,
 ): v.StrictObjectSchema<Record<string, v.GenericSchema>, string>
-export function buildSchema(
+export function buildValibotSchema(
   formmlSchema: Field | Form,
   preprocess?: Record<PRIMITIVE, v.GenericSchema>,
 ): v.GenericSchema
-export function buildSchema(
+export function buildValibotSchema(
   formmlSchema: Field | Form,
   preprocess?: Record<PRIMITIVE, v.GenericSchema>,
 ) {
   if (isForm(formmlSchema)) {
     const entries = formmlSchema.fields.map((field) => [
       field.name,
-      buildSchema(field, preprocess),
+      buildValibotSchema(field, preprocess),
     ])
     return v.strictObject(Object.fromEntries(entries))
   }

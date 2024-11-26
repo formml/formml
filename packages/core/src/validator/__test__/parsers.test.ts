@@ -2,10 +2,10 @@ import type { Form, FormMLSchema } from '@formml/dsl'
 
 import * as v from 'valibot'
 
-import { buildSchema } from '../buildSchema.js'
+import { buildValibotSchema } from '../buildValibotSchema.js'
 import { parse, safeParse } from '../parsers.js'
 
-vi.mock('../buildSchema.js')
+vi.mock('../buildValibotSchema.js')
 
 vi.mock('valibot', async () => {
   const actual = await vi.importActual('valibot')
@@ -17,7 +17,7 @@ vi.mock('valibot', async () => {
 })
 
 describe('parse', () => {
-  test('should call buildSchema with correct arguments', () => {
+  test('should call buildValibotSchema with correct arguments', () => {
     // Arrange
     const mockSchema: FormMLSchema = {
       $type: 'FormMLSchema',
@@ -26,7 +26,7 @@ describe('parse', () => {
     const mockValibotSchema = {} as unknown as v.GenericSchema
     const mockData = { foo: 'bar' }
 
-    vi.mocked(buildSchema).mockReturnValue(mockValibotSchema)
+    vi.mocked(buildValibotSchema).mockReturnValue(mockValibotSchema)
     vi.mocked(v.parse).mockReturnValue(mockData)
 
     // Act
@@ -45,7 +45,7 @@ describe('parse', () => {
       ],
       type: expect.any(String),
     })
-    expect(buildSchema).toBeCalledWith(mockSchema.form, {
+    expect(buildValibotSchema).toBeCalledWith(mockSchema.form, {
       bool: expectedSchemaShape,
       datetime: expectedSchemaShape,
       decimal: expectedSchemaShape,
@@ -63,7 +63,7 @@ describe('parse', () => {
     const mockValibotSchema = {} as unknown as v.GenericSchema
     const mockData = { foo: 'bar' }
 
-    vi.mocked(buildSchema).mockReturnValue(mockValibotSchema)
+    vi.mocked(buildValibotSchema).mockReturnValue(mockValibotSchema)
     vi.mocked(v.parse).mockReturnValue(mockData)
 
     // Act
@@ -83,7 +83,7 @@ describe('parse', () => {
     const mockData = { foo: 'bar' }
     const expectedResult = { foo: 'parsed' }
 
-    vi.mocked(buildSchema).mockReturnValue(mockValibotSchema)
+    vi.mocked(buildValibotSchema).mockReturnValue(mockValibotSchema)
     vi.mocked(v.parse).mockReturnValue(expectedResult)
 
     // Act
@@ -103,7 +103,7 @@ describe('parse', () => {
     const mockData = { foo: 'bar' }
     const mockError = new Error('Validation failed')
 
-    vi.mocked(buildSchema).mockReturnValue(mockValibotSchema)
+    vi.mocked(buildValibotSchema).mockReturnValue(mockValibotSchema)
     vi.mocked(v.parse).mockImplementation(() => {
       throw mockError
     })
@@ -114,7 +114,7 @@ describe('parse', () => {
 })
 
 describe('safeParse', () => {
-  test('should call buildSchema with correct arguments', () => {
+  test('should call buildValibotSchema with correct arguments', () => {
     // Arrange
     const mockSchema: FormMLSchema = {
       $type: 'FormMLSchema',
@@ -123,7 +123,7 @@ describe('safeParse', () => {
     const mockValibotSchema = {} as unknown as v.GenericSchema
     const mockData = { foo: 'bar' }
 
-    vi.mocked(buildSchema).mockReturnValue(mockValibotSchema)
+    vi.mocked(buildValibotSchema).mockReturnValue(mockValibotSchema)
     vi.mocked(v.safeParse).mockReturnValue({
       issues: undefined,
       output: mockData,
@@ -147,7 +147,7 @@ describe('safeParse', () => {
       ],
       type: expect.any(String),
     })
-    expect(buildSchema).toBeCalledWith(mockSchema.form, {
+    expect(buildValibotSchema).toBeCalledWith(mockSchema.form, {
       bool: expectedSchemaShape,
       datetime: expectedSchemaShape,
       decimal: expectedSchemaShape,
@@ -165,7 +165,7 @@ describe('safeParse', () => {
     const mockValibotSchema = {} as unknown as v.GenericSchema
     const mockData = { foo: 'bar' }
 
-    vi.mocked(buildSchema).mockReturnValue(mockValibotSchema)
+    vi.mocked(buildValibotSchema).mockReturnValue(mockValibotSchema)
     vi.mocked(v.safeParse).mockReturnValue({
       issues: undefined,
       output: mockData,
@@ -195,7 +195,7 @@ describe('safeParse', () => {
       typed: true,
     } as const
 
-    vi.mocked(buildSchema).mockReturnValue(mockValibotSchema)
+    vi.mocked(buildValibotSchema).mockReturnValue(mockValibotSchema)
     vi.mocked(v.safeParse).mockReturnValue(mockValibotResult)
 
     // Act

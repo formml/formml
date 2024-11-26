@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`buildSchema > for field > integration > types - bool > should invalidate non-boolean input if field type is bool 1`] = `
+exports[`buildValibotSchema > for field > integration > types - bool > should invalidate non-boolean input if field type is bool 1`] = `
 [
   {
     "abortEarly": undefined,
@@ -19,7 +19,7 @@ exports[`buildSchema > for field > integration > types - bool > should invalidat
 ]
 `;
 
-exports[`buildSchema > for field > integration > types - bool > should preprocess bool input if preprocessors are provided 1`] = `
+exports[`buildValibotSchema > for field > integration > types - bool > should preprocess bool input if preprocessors are provided 1`] = `
 [
   {
     "abortEarly": undefined,
@@ -38,7 +38,7 @@ exports[`buildSchema > for field > integration > types - bool > should preproces
 ]
 `;
 
-exports[`buildSchema > for field > integration > types - datetime > should invalidate non-Date input if field type is datetime 1`] = `
+exports[`buildValibotSchema > for field > integration > types - datetime > should invalidate non-Date input if field type is datetime 1`] = `
 [
   {
     "abortEarly": undefined,
@@ -57,7 +57,7 @@ exports[`buildSchema > for field > integration > types - datetime > should inval
 ]
 `;
 
-exports[`buildSchema > for field > integration > types - datetime > should preprocess datetime input if preprocessors are provided 1`] = `
+exports[`buildValibotSchema > for field > integration > types - datetime > should preprocess datetime input if preprocessors are provided 1`] = `
 [
   {
     "abortEarly": undefined,
@@ -76,7 +76,7 @@ exports[`buildSchema > for field > integration > types - datetime > should prepr
 ]
 `;
 
-exports[`buildSchema > for field > integration > types - decimal > should invalidate non-BigNumber input if field type is decimal 1`] = `
+exports[`buildValibotSchema > for field > integration > types - decimal > should invalidate non-BigNumber input if field type is decimal 1`] = `
 [
   {
     "abortEarly": undefined,
@@ -95,7 +95,7 @@ exports[`buildSchema > for field > integration > types - decimal > should invali
 ]
 `;
 
-exports[`buildSchema > for field > integration > types - decimal > should preprocess decimal input if preprocessors are provided 1`] = `
+exports[`buildValibotSchema > for field > integration > types - decimal > should preprocess decimal input if preprocessors are provided 1`] = `
 [
   {
     "abortEarly": undefined,
@@ -114,7 +114,7 @@ exports[`buildSchema > for field > integration > types - decimal > should prepro
 ]
 `;
 
-exports[`buildSchema > for field > integration > types - num > should invalidate non-number input if field type is num 1`] = `
+exports[`buildValibotSchema > for field > integration > types - num > should invalidate non-number input if field type is num 1`] = `
 [
   {
     "abortEarly": undefined,
@@ -133,7 +133,7 @@ exports[`buildSchema > for field > integration > types - num > should invalidate
 ]
 `;
 
-exports[`buildSchema > for field > integration > types - num > should preprocess num input if preprocessors are provided 1`] = `
+exports[`buildValibotSchema > for field > integration > types - num > should preprocess num input if preprocessors are provided 1`] = `
 [
   {
     "abortEarly": undefined,
@@ -152,7 +152,7 @@ exports[`buildSchema > for field > integration > types - num > should preprocess
 ]
 `;
 
-exports[`buildSchema > for field > integration > types - text > should invalidate non-string input if field type is text 1`] = `
+exports[`buildValibotSchema > for field > integration > types - text > should invalidate non-string input if field type is text 1`] = `
 [
   {
     "abortEarly": undefined,
@@ -171,7 +171,7 @@ exports[`buildSchema > for field > integration > types - text > should invalidat
 ]
 `;
 
-exports[`buildSchema > for field > integration > types - text > should preprocess text input if preprocessors are provided 1`] = `
+exports[`buildValibotSchema > for field > integration > types - text > should preprocess text input if preprocessors are provided 1`] = `
 [
   {
     "abortEarly": undefined,
@@ -190,7 +190,7 @@ exports[`buildSchema > for field > integration > types - text > should preproces
 ]
 `;
 
-exports[`buildSchema > for form > should preprocess all fields if given preprocessors 1`] = `
+exports[`buildValibotSchema > for form > should preprocess all fields if given preprocessors 1`] = `
 [
   {
     "abortEarly": undefined,
