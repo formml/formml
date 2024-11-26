@@ -13,6 +13,37 @@ export type ValidationResult =
 
 export type Validator<TInput = unknown> = (value: TInput) => ValidationResult
 
+/**
+ * Validates unknown data against a FormML schema.
+ *
+ * @param data - The data to validate
+ * @param schema - The FormML schema to validate against
+ * @returns A validation result object indicating success or failure
+ *
+ * @example
+ * const schema = formml`
+ *   form user {
+ *     ⁣@required
+ *     text name
+ *     ⁣@required
+ *     num age
+ *     datetime birthday
+ *   }
+ * `
+ *
+ * const result1 = validate(
+ *   {
+ *     name: 'John',
+ *     age: 25,
+ *     birthday: new Date('1999-12-31'),
+ *   },
+ *   schema,
+ * )
+ * // { isValid: true }
+ *
+ * const result2 = validate({ name: 'Jane' }, schema)
+ * // { isValid: false, errors: ValidationError[] }
+ */
 export function validate(
   data: unknown,
   schema: FormMLSchema,

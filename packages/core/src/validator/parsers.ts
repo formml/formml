@@ -53,6 +53,49 @@ type InferParsed<T extends generics.FormMLSchema> = H.Pipe<
   ]
 >
 
+/**
+ * Parses plain data to be typed according to a FormML schema. Throws error if validation fails.
+ *
+ * This function is mainly used to parse JSON data from form submissions.
+ *
+ * | FormML Type | Plain (JSON) Type | Parsed Type |
+ * | ----------- | ---------------- | ----------- |
+ * | text        | string           | string      |
+ * | num         | number           | number      |
+ * | decimal     | string           | BigNumber   |
+ * | datetime    | string           | Date        |
+ * | bool        | boolean          | boolean     |
+ *
+ * @param data - The data to parse
+ * @param schema - The FormML schema to validate against
+ * @returns The typed data
+ *
+ * @example
+ * const schema = formml`
+ *   form user {
+ *     text name
+ *     num age
+ *     datetime birthday
+ *     decimal salary
+ *   }
+ * `
+ *
+ * // likely comes from JSON.parse()
+ * const data = {
+ *   name: "John",
+ *   age: 25,
+ *   birthday: "1999-12-31T00:00:00.000Z",
+ *   salary: "100001.23"
+ * }
+ *
+ * const result = parse(data, schema)
+ * // {
+ * //   name: "John",
+ * //   age: 25,
+ * //   birthday: Date("1999-12-31T00:00:00.000Z"),
+ * //   salary: BigNumber("100001.23")
+ * // }
+ */
 export function parse<T extends FormMLSchema>(
   data: unknown,
   schema: T,
@@ -81,6 +124,60 @@ export type SafeParseResult<T> =
       typed: true
     }
 
+/**
+ * Safely parses plain data to be typed according to a FormML schema.
+ *
+ * This function is mainly used to parse JSON data from form submissions.
+ *
+ * | FormML Type | Plain (JSON) Type | Parsed Type |
+ * | ----------- | ---------------- | ----------- |
+ * | text        | string           | string      |
+ * | num         | number           | number      |
+ * | decimal     | string           | BigNumber   |
+ * | datetime    | string           | Date        |
+ * | bool        | boolean          | boolean     |
+ *
+ * @param data - The data to parse
+ * @param schema - The FormML schema to validate against
+ * @returns The result object with typed data or validation errors
+ *
+ * @example
+ * const schema = formml`
+ *   form user {
+ *     text name
+ *     num age
+ *     datetime birthday
+ *     decimal salary
+ *   }
+ * `
+ *
+ * const result1 = safeParse(
+ *   {
+ *     name: "John",
+ *     age: 25,
+ *     birthday: "1999-12-31T00:00:00.000Z",
+ *     salary: "100001.23"
+ *   },
+ *   schema
+ * )
+ * // {
+ * //   isValid: true,
+ * //   typed: true,
+ * //   output: {
+ * //     name: "John",
+ * //     age: 25,
+ * //     birthday: Date("1999-12-31T00:00:00.000Z"),
+ * //     salary: BigNumber("100001.23")
+ * //   }
+ * // }
+ *
+ * const result2 = safeParse({ name: "John", age: "abc" }, schema)
+ * // {
+ * //   isValid: false,
+ * //   typed: false,
+ * //   errors: ValidationError[]
+ * // }
+ */
 export function safeParse<T extends FormMLSchema>(
   data: unknown,
   schema: T,
