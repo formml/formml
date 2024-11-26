@@ -6,7 +6,8 @@ import * as v from 'valibot'
 
 import type { PrimitiveTypeMapping } from '../js-type/index.js'
 
-import { fromPlain, schemas } from '../js-type/index.js'
+import { fromPlain } from '../js-type/plain/conversion.js'
+import { schemas } from '../js-type/plain/validation.js'
 import { buildSchema } from './buildSchema.js'
 
 const preprocess = {
