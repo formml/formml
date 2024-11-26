@@ -32,4 +32,4 @@
 
 ## Defined in
 
-[js-type/types.ts:3](https://github.com/formml/formml/blob/5c707903361ee929472a81de07fd0204242687ee/packages/core/src/js-type/types.ts#L3)
+[js-type/types.ts:3](https://github.com/formml/formml/blob/6aacaa756f672e3d18c3bdf35091d08edefd594c/packages/core/src/js-type/types.ts#L3)

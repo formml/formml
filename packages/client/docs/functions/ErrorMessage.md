@@ -6,9 +6,35 @@
 
 # Function: ErrorMessage()
 
+A React component that displays validation error messages for bound form field
+
+## Param
+
+Component props
+
+## Param
+
+The field index to bind to
+
+## Param
+
+Optional HTML element name to render the error message with
+
+## Example
+
+```tsx
+// Returns string directly if no `as` prop was given
+<span><ErrorMessage $bind={$form.email} /></span>
+
+// Returns div, accepting any other props that div can take
+<ErrorMessage $bind={$form.email} as="div" className="error" />
+```
+
 ## ErrorMessage(props)
 
 > **ErrorMessage**(`props`): `ReactNode`
+
+A React component that displays validation error messages for bound form field
 
 ### Parameters
 
@@ -20,13 +46,37 @@
 
 `ReactNode`
 
+### Param
+
+Component props
+
+### Param
+
+The field index to bind to
+
+### Param
+
+Optional HTML element name to render the error message with
+
+### Example
+
+```tsx
+// Returns string directly if no `as` prop was given
+<span><ErrorMessage $bind={$form.email} /></span>
+
+// Returns div, accepting any other props that div can take
+<ErrorMessage $bind={$form.email} as="div" className="error" />
+```
+
 ### Defined in
 
-[packages/client/src/ErrorMessage.tsx:34](https://github.com/formml/formml/blob/5c707903361ee929472a81de07fd0204242687ee/packages/client/src/ErrorMessage.tsx#L34)
+[packages/client/src/ErrorMessage.tsx:51](https://github.com/formml/formml/blob/6aacaa756f672e3d18c3bdf35091d08edefd594c/packages/client/src/ErrorMessage.tsx#L51)
 
 ## ErrorMessage(props)
 
 > **ErrorMessage**\<`TElementName`\>(`props`): `ReactNode`
+
+A React component that displays validation error messages for bound form field
 
 ### Type Parameters
 
@@ -40,6 +90,28 @@
 
 `ReactNode`
 
+### Param
+
+Component props
+
+### Param
+
+The field index to bind to
+
+### Param
+
+Optional HTML element name to render the error message with
+
+### Example
+
+```tsx
+// Returns string directly if no `as` prop was given
+<span><ErrorMessage $bind={$form.email} /></span>
+
+// Returns div, accepting any other props that div can take
+<ErrorMessage $bind={$form.email} as="div" className="error" />
+```
+
 ### Defined in
 
-[packages/client/src/ErrorMessage.tsx:34](https://github.com/formml/formml/blob/5c707903361ee929472a81de07fd0204242687ee/packages/client/src/ErrorMessage.tsx#L34)
+[packages/client/src/ErrorMessage.tsx:51](https://github.com/formml/formml/blob/6aacaa756f672e3d18c3bdf35091d08edefd594c/packages/client/src/ErrorMessage.tsx#L51)

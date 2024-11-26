@@ -62,7 +62,7 @@ v.parse(schema, 'abc') // ✗ throws "Invalid type: Expected number but received
 
 ### Defined in
 
-[validator/buildValibotSchema.ts:75](https://github.com/formml/formml/blob/5c707903361ee929472a81de07fd0204242687ee/packages/core/src/validator/buildValibotSchema.ts#L75)
+[validator/buildValibotSchema.ts:75](https://github.com/formml/formml/blob/6aacaa756f672e3d18c3bdf35091d08edefd594c/packages/core/src/validator/buildValibotSchema.ts#L75)
 
 ## buildValibotSchema(formmlSchema, preprocess)
 
@@ -118,7 +118,7 @@ v.parse(schema, { name: 'John', age: 'abc' }) // ✗ throws "Invalid type: Expec
 
 ### Defined in
 
-[validator/buildValibotSchema.ts:112](https://github.com/formml/formml/blob/5c707903361ee929472a81de07fd0204242687ee/packages/core/src/validator/buildValibotSchema.ts#L112)
+[validator/buildValibotSchema.ts:112](https://github.com/formml/formml/blob/6aacaa756f672e3d18c3bdf35091d08edefd594c/packages/core/src/validator/buildValibotSchema.ts#L112)
 
 ## buildValibotSchema(formmlSchema, preprocess)
 
@@ -144,4 +144,4 @@ A Valibot schema that validates the input
 
 ### Defined in
 
-[validator/buildValibotSchema.ts:123](https://github.com/formml/formml/blob/5c707903361ee929472a81de07fd0204242687ee/packages/core/src/validator/buildValibotSchema.ts#L123)
+[validator/buildValibotSchema.ts:123](https://github.com/formml/formml/blob/6aacaa756f672e3d18c3bdf35091d08edefd594c/packages/core/src/validator/buildValibotSchema.ts#L123)

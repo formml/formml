@@ -55,4 +55,4 @@ const result2 = validate({ name: 'Jane' }, schema)
 
 ## Defined in
 
-[validator/validate.ts:47](https://github.com/formml/formml/blob/5c707903361ee929472a81de07fd0204242687ee/packages/core/src/validator/validate.ts#L47)
+[validator/validate.ts:47](https://github.com/formml/formml/blob/6aacaa756f672e3d18c3bdf35091d08edefd594c/packages/core/src/validator/validate.ts#L47)

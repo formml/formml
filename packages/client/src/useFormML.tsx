@@ -48,7 +48,7 @@ type NonGenericParams = H.Call<
  * ```
  */
 export function useFormML<T extends FormMLSchema>(
-  ...props: [T, ...NonGenericParams]
+  ...props: [schema: T, ...NonGenericParams]
 ) {
   const formML = useConstant(() => new FormML(...props), props)
 

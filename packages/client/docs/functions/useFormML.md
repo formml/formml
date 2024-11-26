@@ -8,6 +8,8 @@
 
 > **useFormML**\<`T`\>(...`props`): `object`
 
+Hook to create and manage a FormML instance
+
 ## Type Parameters
 
 • **T** _extends_ `FormMLSchema`
@@ -19,6 +21,8 @@
 ## Returns
 
 `object`
+
+Object containing fields index root, FormML instance and helper components/functions
 
 ### $form
 
@@ -56,6 +60,26 @@
 
 > **instance**: [`FormML`](../classes/FormML.md)\<`T`\> = `formML`
 
+## Example
+
+```tsx
+const { $form, FormML, handleSubmit } = useFormML(schema)
+
+const onSubmit = handleSubmit((data) => {
+  console.log(data)
+})
+
+return (
+  <FormML>
+    <form onSubmit={onSubmit}>
+      <Field $bind={$form.email} />
+      <Field $bind={$form.password} />
+      <button>Submit</button>
+    </form>
+  </FormML>
+)
+```
+
 ## Defined in
 
-[packages/client/src/useFormML.tsx:24](https://github.com/formml/formml/blob/5c707903361ee929472a81de07fd0204242687ee/packages/client/src/useFormML.tsx#L24)
+[packages/client/src/useFormML.tsx:50](https://github.com/formml/formml/blob/6aacaa756f672e3d18c3bdf35091d08edefd594c/packages/client/src/useFormML.tsx#L50)
