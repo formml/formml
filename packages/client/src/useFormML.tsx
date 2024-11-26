@@ -21,6 +21,32 @@ type NonGenericParams = H.Call<
   ConstructorParameters<typeof FormML>
 >
 
+/**
+ * Hook to create and manage a FormML instance
+ *
+ * @param schema - The FormML schema
+ * @param options - Optional FormML configurations
+ * @returns Object containing fields index root, FormML instance and helper components/functions
+ *
+ * @example
+ * ```tsx
+ * const { $form, FormML, handleSubmit } = useFormML(schema)
+ *
+ * const onSubmit = handleSubmit((data) => {
+ *   console.log(data)
+ * })
+ *
+ * return (
+ *   <FormML>
+ *     <form onSubmit={onSubmit}>
+ *       <Field $bind={$form.email} />
+ *       <Field $bind={$form.password} />
+ *       <button>Submit</button>
+ *     </form>
+ *   </FormML>
+ * )
+ * ```
+ */
 export function useFormML<T extends FormMLSchema>(
   ...props: [T, ...NonGenericParams]
 ) {

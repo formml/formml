@@ -75,6 +75,22 @@ const selectFieldPackByIndex = createMemoSelectorGrouper(
   }),
 )
 
+/**
+ * Hook to access field state and helpers.
+ *
+ * *It's based on a subscribing-pushing mechanism. Component will only rerender when the watching states change.*
+ *
+ * @param index - The field index to bind to
+ * @returns Object containing field props, metadata and helper functions
+ *
+ * @example
+ * ```tsx
+ * function MyInput({ $bind }: { $bind: BaseIndex }) {
+ *   const { field } = useField($bind)
+ *   return <input {...field} /> // includes name, value, onChange, onBlur
+ * }
+ * ```
+ */
 export function useField(index: BaseIndex): FieldPack {
   const formML = useFormMLContext()
 

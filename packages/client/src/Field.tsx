@@ -50,6 +50,42 @@ type Props = {
   $bind: BaseIndex
 } & (InputProps | TextAreaProps)
 
+/**
+ * A smart field component that displays the bound form field with appropriate default settings.
+ *
+ * *The Default Settings refer to a batch of HTML attributes inferred by a heuristic algorithm. You can override them anytime you like.*
+ *
+ * @param props - Component props
+ * @param props.$bind - The field index to bind to
+ * @param props.as - Optional HTML element name to render the field with, defaults to `input`
+ * @returns A controlled form `input`/`textarea` element
+ *
+ * @example
+ * ```tsx
+ * // usual text input
+ * <Field $bind={$form.text} />
+ *
+ * // textarea
+ * <Field $bind={$form.bio} as="textarea" />
+ *
+ * // displays as a checkbox
+ * <Field $bind={$form.bool} />
+ *
+ * // type="number"
+ * <Field $bind={$form.num} />
+ *
+ * // type="datetime-local"
+ * <Field $bind={$form.datetime} />
+ *
+ * // accepts any other props that input can take
+ * <Field
+ *   $bind={$form.email}
+ *   type="email"
+ *   className="email"
+ *   ref={myRef}
+ * />
+ * ```
+ */
 export const Field = forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>(
   function Field({ $bind, ...rest }: Props, ref) {
     const fieldPack = useField($bind)
