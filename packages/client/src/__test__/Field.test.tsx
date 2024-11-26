@@ -8,9 +8,20 @@ import { useEffect, useRef } from 'react'
 
 import { Field } from '../Field.js'
 import { useFormML } from '../useFormML.js'
+import suppressErrorOutput from './helpers/suppressErrorOutput.js'
 
 describe('Field', () => {
   const parse = createFormMLParser()
+
+  let restoreConsole: () => void
+
+  beforeAll(() => {
+    restoreConsole = suppressErrorOutput()
+  })
+
+  afterAll(() => {
+    restoreConsole()
+  })
 
   describe('as input', () => {
     test('should render as an input element by default', async () => {
@@ -480,5 +491,27 @@ describe('Field', () => {
       expect(input).toHaveAttribute('name', 'textField')
       expect(input).toHaveValue('')
     })
+  })
+
+  test('should throw if unsupported element name is given', async () => {
+    // Arrange
+    const schema = await parse(`
+        form ExampleForm {
+          text textField
+        }
+      `)
+    const Form = () => {
+      const { $form, FormML } = useFormML(schema)
+      return (
+        <FormML>
+          <Field $bind={$form['textField']} as={'unsupported' as 'input'} />
+        </FormML>
+      )
+    }
+
+    // Act & Assert
+    expect(() => render(<Form />)).toThrow(
+      'Unsupported element name: "unsupported".',
+    )
   })
 })

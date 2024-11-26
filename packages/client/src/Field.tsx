@@ -1,5 +1,6 @@
 import type { ChangeEvent, ForwardedRef } from 'react'
 
+import { assertNever } from '@formml/utils'
 import dayjs from 'dayjs'
 import { forwardRef } from 'react'
 
@@ -108,8 +109,6 @@ export const Field = forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>(
         />
       )
     }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const never: never = rest.as
-    return null
+    return assertNever`Unsupported element name: ${rest.as}.`
   },
 )
