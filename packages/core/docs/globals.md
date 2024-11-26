@@ -17,7 +17,7 @@
 
 ## Functions
 
-- [buildSchema](functions/buildSchema.md)
+- [buildValibotSchema](functions/buildValibotSchema.md)
 - [parse](functions/parse.md)
 - [safeParse](functions/safeParse.md)
 - [validate](functions/validate.md)
