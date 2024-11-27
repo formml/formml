@@ -10,11 +10,57 @@ import { FormML } from './FormML.js'
 import { FormMLProvider } from './useFormMLContext.js'
 import { useConstant } from './utils/useConstant.js'
 
+/**
+ * Submit handler type
+ * @param data - The form data object containing field values
+ * @param event - The original form submit event
+ */
 export type SubmitHandler = (
   data: object,
   event: React.FormEvent<HTMLFormElement>,
 ) => void
+
+/**
+ * Submit error handler type
+ * @param errors - Array of validation errors that occurred
+ */
 export type SubmitErrorHandler = (errors: ValidationError[]) => void
+
+interface FormMLPack<T extends FormMLSchema> {
+  /** Index to the form, the root of all child indexes */
+  $form: IndexRoot<T>
+  /** FormML context provider */
+  FormML: React.FC<React.PropsWithChildren>
+  /**
+   * Creates a submit handler
+   * @param onSubmit - Callback function called with form data when validation succeeds
+   * @param onError - Optional callback function called with validation errors when validation fails
+   * @returns Form submit event handler
+   * @example
+   * ```tsx
+   * const { handleSubmit } = useFormML(schema)
+   * const onSubmit = handleSubmit(
+   *   (data) => {
+   *     console.log('Validation succeeded:', data)
+   *   },
+   *   (errors) => {
+   *     console.log('Validation failed:', errors)
+   *   },
+   * )
+   * return (
+   *   <form onSubmit={onSubmit}>
+   *     ...
+   *   </form>
+   * )
+   * ```
+   */
+  handleSubmit(
+    onSubmit: SubmitHandler,
+    onError?: SubmitErrorHandler,
+  ): React.FormEventHandler<HTMLFormElement>
+  /** FormML instance */
+  instance: FormML<T>
+}
 
 /**
  * Hook to create and manage a FormML instance
@@ -43,7 +89,7 @@ export type SubmitErrorHandler = (errors: ValidationError[]) => void
 export function useFormML<T extends FormMLSchema>(
   schema: T,
   options?: PartialFormMLOptions,
-) {
+): FormMLPack<T> {
   const formML = useConstant(
     () => new FormML(schema, options),
     [schema, options],
@@ -73,7 +119,7 @@ export function useFormML<T extends FormMLSchema>(
   )
 
   return {
-    $form: formML.indexRoot as IndexRoot<T>,
+    $form: formML.indexRoot,
     FormML: FormMLWrapper,
     handleSubmit,
     instance: formML,

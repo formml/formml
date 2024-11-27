@@ -10,39 +10,58 @@ export const IndexSymbol = {
   type: IndexTypeSymbol,
 } as const
 
+/** Base index shape, compatible with any index */
 export interface BaseIndex {
   [IndexNameSymbol]: string
   [IndexTypeSymbol]: string
 }
 
+/** Unknown index that contains child indexes */
 export interface GenericIndex extends BaseIndex {
   [child: string]: GenericIndex
 }
 
+/** Base form index shape */
 interface BaseFormIndex extends BaseIndex {
   [IndexTypeSymbol]: 'form'
 }
 
+/**
+ * Form index that contains given child field indexes
+ * @template TChildren - Record of child field indexes, defaults to record of `GenericIndex`es
+ * @example
+ * ```ts
+ * type UserForm = FormIndex<{
+ *   name: TextIndex
+ *   age: NumIndex
+ * }>
+ * ```
+ */
 export type FormIndex<
   TChildren extends Record<string, BaseIndex> = Record<string, GenericIndex>,
 > = BaseFormIndex & TChildren
 
+/** Text field index */
 export interface TextIndex extends BaseIndex {
   [IndexTypeSymbol]: 'text'
 }
 
+/** Num field index */
 export interface NumIndex extends BaseIndex {
   [IndexTypeSymbol]: 'num'
 }
 
+/** Bool field index */
 export interface BoolIndex extends BaseIndex {
   [IndexTypeSymbol]: 'bool'
 }
 
+/** Datetime field index */
 export interface DatetimeIndex extends BaseIndex {
   [IndexTypeSymbol]: 'datetime'
 }
 
+/** Decimal field index */
 export interface DecimalIndex extends BaseIndex {
   [IndexTypeSymbol]: 'decimal'
 }
@@ -85,8 +104,10 @@ type InferIndex<T> = T extends generics.Form
       >
     : never
 
+/** @internal */
 export type IndexRoot<T extends generics.FormMLSchema> = InferIndex<T['form']>
 
+/** @internal */
 export default class IndexManager<T extends generics.FormMLSchema> {
   private readonly stores: Map<
     BaseIndex,

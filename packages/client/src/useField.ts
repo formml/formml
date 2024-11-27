@@ -10,30 +10,64 @@ import type { BaseIndex } from './IndexManager.js'
 import { useFormMLContext } from './useFormMLContext.js'
 import { createMemoSelectorGrouper } from './utils/createMemoSelectorGrouper.js'
 
-export type FieldProps = {
+export interface FieldProps {
+  /** Field name */
   name: string
+  /** Field blur event handler */
   onBlur: React.FocusEventHandler
+  /** Field change event handler */
   onChange: React.ChangeEventHandler<HTMLElement & { value: string }>
+  /** Field raw value */
   value: string
 }
 
-export type FieldMetaData = {
+export interface FieldMetaData {
+  /** Field error */
   error: ValidationError | undefined
+  /** FormML schema used to create the field */
   schema: Field
+  /** Whether the field has been touched */
   touched: boolean
+  /** Field typed value */
   typedValue: JSType.PrimitiveType
 }
 
-export type FieldHelpers = {
-  blur: () => void
-  commitRawValue: () => void
-  setRawValue: (value: string) => void
-  setTypedValue: (value: JSType.PrimitiveType) => void
+export interface FieldHelpers {
+  /**
+   * Marks the field as touched, indicating user interaction
+   */
+  blur(): void
+
+  /**
+   * Commits the current raw string value to storage, converting it to the field's type and triggering post-processes.
+   * Usually used together with {@link setRawValue}.
+   * @example
+   * ```ts
+   * field.helpers.setRawValue("123")
+   * field.helpers.commitRawValue() // Converts string "123" to number 123 for `num` fields
+   * ```
+   */
+  commitRawValue(): void
+
+  /**
+   * Sets the raw string value to represent user input, without any post-processes.
+   * @param value - The string value to set
+   */
+  setRawValue(value: string): void
+
+  /**
+   * Sets the typed value directly into storage, triggering post-processes.
+   * @param value - The typed value matching the field's type
+   */
+  setTypedValue(value: JSType.PrimitiveType): void
 }
 
-export type FieldPack = {
+export interface FieldPack {
+  /** Field props for creating a HTML element */
   field: FieldProps
+  /** Field helper functions */
   helpers: FieldHelpers
+  /** Field states & metadata */
   meta: FieldMetaData
 }
 
@@ -77,8 +111,8 @@ const selectFieldPackByIndex = createMemoSelectorGrouper(
 
 /**
  * Hook to access field state and helpers.
- *
- * It's based on a subscribing-pushing mechanism. Component will only rerender when the watching states change.*
+ * @remarks
+ * It's based on a subscribing-pushing mechanism. Component will only rerender when the watching states change.
  * @param index - The field index to bind to
  * @returns Object containing field props, metadata and helper functions
  * @example

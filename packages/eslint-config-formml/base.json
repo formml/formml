@@ -36,7 +36,8 @@
         "partition-by-comment": "Part:**"
       }
     ],
-    "jsdoc/require-jsdoc": "off"
+    "jsdoc/require-jsdoc": "off",
+    "jsdoc/check-tag-names": ["warn", { "definedTags": ["remarks"] }]
   },
   "overrides": [
     {

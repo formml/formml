@@ -46,6 +46,7 @@ interface ErrorMessageComponent {
  * @param props - Component props
  * @returns React element showing error message if validation fails
  * @example
+ * ```tsx
  * // Returns string directly if no `as` prop was given
  * <span><ErrorMessage $bind={$form.email} /></span>
  *
@@ -56,6 +57,7 @@ interface ErrorMessageComponent {
  *   className="error"
  *   ref={myRef}
  * />
+ * ```
  */
 export const ErrorMessage: ErrorMessageComponent =
   React.forwardRef(ErrorMessageImpl)

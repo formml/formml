@@ -17,8 +17,17 @@ import { createInputValidator } from './validator.js'
 
 export type FormMLEvent = 'all' | 'blur' | 'change' | 'none'
 export type FormMLOptions = {
+  /**
+   * Configures when to run pre-validations before final submission
+   */
   preValidateOn: {
+    /**
+     * When to run the first pre-validation
+     */
     initial: FormMLEvent
+    /**
+     * When to run subsequent pre-validations after the initial validation
+     */
     subsequent: FormMLEvent
   }
 }

@@ -42,22 +42,29 @@ function selectInputProps({ field, helpers, meta }: FieldPack) {
   return field
 }
 
-type InputProps = { as?: 'input' } & React.ComponentPropsWithoutRef<'input'>
-type TextAreaProps = {
-  as: 'textarea'
-} & React.ComponentPropsWithoutRef<'textarea'>
-
-type Props = {
+interface BaseFieldProps {
+  /** The field index to bind to */
   $bind: BaseIndex
-} & (InputProps | TextAreaProps)
+}
+interface InputFieldProps
+  extends BaseFieldProps,
+    React.ComponentPropsWithoutRef<'input'> {
+  /** Optional HTML element name to render the field with, defaults to `input` */
+  as?: 'input'
+}
+interface TextAreaFieldProps
+  extends BaseFieldProps,
+    React.ComponentPropsWithoutRef<'textarea'> {
+  /** HTML element name to render the field with */
+  as: 'textarea'
+}
+type Props = InputFieldProps | TextAreaFieldProps
 
 /**
  * A smart field component that displays the bound form field with appropriate default settings.
- *
- * The Default Settings refer to a batch of HTML attributes inferred by a heuristic algorithm. You can override them anytime you like.*
+ * @remarks
+ * The Default Settings refer to a batch of HTML attributes inferred by a heuristic algorithm. You can override them anytime you like.
  * @param props - Component props
- * @param props.$bind - The field index to bind to
- * @param props.as - Optional HTML element name to render the field with, defaults to `input`
  * @returns A controlled form `input`/`textarea` element
  * @example
  * ```tsx
