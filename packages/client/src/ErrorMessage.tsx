@@ -21,12 +21,12 @@ function ErrorMessageImpl(
   return React.createElement(as, { ...props, ref }, meta.error.message)
 }
 
-interface BaseErrorMessageProps {
+export interface BaseErrorMessageProps {
   /** The field index to bind to */
   $bind: BaseIndex
 }
 
-interface HTMLElementAsErrorMessageProps<
+export interface HTMLElementAsErrorMessageProps<
   TElementName extends keyof React.ReactHTML,
 > extends BaseErrorMessageProps {
   /** HTML element name to render the error message with */

@@ -12,14 +12,6 @@ A React component that displays validation error messages for bound form field
 
 Component props
 
-## Param
-
-The field index to bind to
-
-## Param
-
-Optional HTML element name to render the error message with
-
 ## Example
 
 ```tsx
@@ -27,7 +19,12 @@ Optional HTML element name to render the error message with
 <span><ErrorMessage $bind={$form.email} /></span>
 
 // Returns div, accepting any other props that div can take
-<ErrorMessage $bind={$form.email} as="div" className="error" />
+<ErrorMessage
+  $bind={$form.email}
+  as="div"
+  className="error"
+  ref={myRef}
+/>
 ```
 
 ## ErrorMessage(props)
@@ -38,9 +35,7 @@ A React component that displays validation error messages for bound form field
 
 ### Parameters
 
-• **props**
-
-• **props.$bind**: `BaseIndex`
+• **props**: [`BaseErrorMessageProps`](../interfaces/BaseErrorMessageProps.md)
 
 ### Returns
 
@@ -50,14 +45,6 @@ A React component that displays validation error messages for bound form field
 
 Component props
 
-### Param
-
-The field index to bind to
-
-### Param
-
-Optional HTML element name to render the error message with
-
 ### Example
 
 ```tsx
@@ -65,12 +52,17 @@ Optional HTML element name to render the error message with
 <span><ErrorMessage $bind={$form.email} /></span>
 
 // Returns div, accepting any other props that div can take
-<ErrorMessage $bind={$form.email} as="div" className="error" />
+<ErrorMessage
+  $bind={$form.email}
+  as="div"
+  className="error"
+  ref={myRef}
+/>
 ```
 
 ### Defined in
 
-[packages/client/src/ErrorMessage.tsx:51](https://github.com/formml/formml/blob/6aacaa756f672e3d18c3bdf35091d08edefd594c/packages/client/src/ErrorMessage.tsx#L51)
+[packages/client/src/ErrorMessage.tsx:62](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/ErrorMessage.tsx#L62)
 
 ## ErrorMessage(props)
 
@@ -84,7 +76,7 @@ A React component that displays validation error messages for bound form field
 
 ### Parameters
 
-• **props**: `object` & `ComponentPropsWithRef`\<`TElementName`\>
+• **props**: [`HTMLElementAsErrorMessageProps`](../interfaces/HTMLElementAsErrorMessageProps.md)\<`TElementName`\> & `ComponentPropsWithRef`\<`TElementName`\>
 
 ### Returns
 
@@ -94,14 +86,6 @@ A React component that displays validation error messages for bound form field
 
 Component props
 
-### Param
-
-The field index to bind to
-
-### Param
-
-Optional HTML element name to render the error message with
-
 ### Example
 
 ```tsx
@@ -109,9 +93,14 @@ Optional HTML element name to render the error message with
 <span><ErrorMessage $bind={$form.email} /></span>
 
 // Returns div, accepting any other props that div can take
-<ErrorMessage $bind={$form.email} as="div" className="error" />
+<ErrorMessage
+  $bind={$form.email}
+  as="div"
+  className="error"
+  ref={myRef}
+/>
 ```
 
 ### Defined in
 
-[packages/client/src/ErrorMessage.tsx:51](https://github.com/formml/formml/blob/6aacaa756f672e3d18c3bdf35091d08edefd594c/packages/client/src/ErrorMessage.tsx#L51)
+[packages/client/src/ErrorMessage.tsx:62](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/ErrorMessage.tsx#L62)

@@ -8,15 +8,25 @@
 
 - [FormML](classes/FormML.md)
 
+## Interfaces
+
+- [BaseErrorMessageProps](interfaces/BaseErrorMessageProps.md)
+- [BaseFieldProps](interfaces/BaseFieldProps.md)
+- [FieldHelpers](interfaces/FieldHelpers.md)
+- [FieldMetaData](interfaces/FieldMetaData.md)
+- [FieldPack](interfaces/FieldPack.md)
+- [FieldProps](interfaces/FieldProps.md)
+- [FormMLPack](interfaces/FormMLPack.md)
+- [HTMLElementAsErrorMessageProps](interfaces/HTMLElementAsErrorMessageProps.md)
+- [InputFieldProps](interfaces/InputFieldProps.md)
+- [TextAreaFieldProps](interfaces/TextAreaFieldProps.md)
+
 ## Type Aliases
 
-- [FieldHelpers](type-aliases/FieldHelpers.md)
-- [FieldMetaData](type-aliases/FieldMetaData.md)
-- [FieldPack](type-aliases/FieldPack.md)
-- [FieldProps](type-aliases/FieldProps.md)
 - [FieldResult](type-aliases/FieldResult.md)
 - [FormMLEvent](type-aliases/FormMLEvent.md)
 - [FormMLOptions](type-aliases/FormMLOptions.md)
+- [PartialFormMLOptions](type-aliases/PartialFormMLOptions.md)
 - [SubmitErrorHandler](type-aliases/SubmitErrorHandler.md)
 - [SubmitHandler](type-aliases/SubmitHandler.md)
 

@@ -42,23 +42,24 @@ function selectInputProps({ field, helpers, meta }: FieldPack) {
   return field
 }
 
-interface BaseFieldProps {
+export interface BaseFieldProps {
   /** The field index to bind to */
   $bind: BaseIndex
 }
-interface InputFieldProps
+
+export interface InputFieldProps
   extends BaseFieldProps,
     React.ComponentPropsWithoutRef<'input'> {
   /** Optional HTML element name to render the field with, defaults to `input` */
   as?: 'input'
 }
-interface TextAreaFieldProps
+
+export interface TextAreaFieldProps
   extends BaseFieldProps,
     React.ComponentPropsWithoutRef<'textarea'> {
   /** HTML element name to render the field with */
   as: 'textarea'
 }
-type Props = InputFieldProps | TextAreaFieldProps
 
 /**
  * A smart field component that displays the bound form field with appropriate default settings.
@@ -92,28 +93,32 @@ type Props = InputFieldProps | TextAreaFieldProps
  * />
  * ```
  */
-export const Field = forwardRef<HTMLInputElement | HTMLTextAreaElement, Props>(
-  function Field({ $bind, ...rest }: Props, ref) {
-    const fieldPack = useField($bind)
+export const Field = forwardRef<
+  HTMLInputElement | HTMLTextAreaElement,
+  InputFieldProps | TextAreaFieldProps
+>(function Field(
+  { $bind, ...rest }: InputFieldProps | TextAreaFieldProps,
+  ref,
+) {
+  const fieldPack = useField($bind)
 
-    if (rest.as === undefined || rest.as === 'input') {
-      return (
-        <input
-          ref={ref as ForwardedRef<HTMLInputElement>}
-          {...selectInputProps(fieldPack)}
-          {...omit(rest, ['as'])}
-        />
-      )
-    }
-    if (rest.as === 'textarea') {
-      return (
-        <textarea
-          ref={ref as ForwardedRef<HTMLTextAreaElement>}
-          {...fieldPack.field}
-          {...omit(rest, ['as'])}
-        />
-      )
-    }
-    return assertNever`Unsupported element name: ${rest.as}.`
-  },
-)
+  if (rest.as === undefined || rest.as === 'input') {
+    return (
+      <input
+        ref={ref as ForwardedRef<HTMLInputElement>}
+        {...selectInputProps(fieldPack)}
+        {...omit(rest, ['as'])}
+      />
+    )
+  }
+  if (rest.as === 'textarea') {
+    return (
+      <textarea
+        ref={ref as ForwardedRef<HTMLTextAreaElement>}
+        {...fieldPack.field}
+        {...omit(rest, ['as'])}
+      />
+    )
+  }
+  return assertNever`Unsupported element name: ${rest.as}.`
+})

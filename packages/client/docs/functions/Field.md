@@ -10,11 +10,9 @@
 
 A smart field component that displays the bound form field with appropriate default settings.
 
-_The Default Settings refer to a batch of HTML attributes inferred by a heuristic algorithm. You can override them anytime you like._
-
 ## Parameters
 
-• **props**: `Props` & `RefAttributes`\<`HTMLInputElement` \| `HTMLTextAreaElement`\>
+• **props**: [`InputFieldProps`](../interfaces/InputFieldProps.md) \| [`TextAreaFieldProps`](../interfaces/TextAreaFieldProps.md) & `RefAttributes`\<`HTMLInputElement` \| `HTMLTextAreaElement`\>
 
 ## Returns
 
@@ -22,17 +20,13 @@ _The Default Settings refer to a batch of HTML attributes inferred by a heuristi
 
 A controlled form `input`/`textarea` element
 
+## Remarks
+
+The Default Settings refer to a batch of HTML attributes inferred by a heuristic algorithm. You can override them anytime you like.
+
 ## Param
 
 Component props
-
-## Param
-
-The field index to bind to
-
-## Param
-
-Optional HTML element name to render the field with, defaults to `input`
 
 ## Example
 
@@ -63,4 +57,4 @@ Optional HTML element name to render the field with, defaults to `input`
 
 ## Defined in
 
-[packages/client/src/Field.tsx:89](https://github.com/formml/formml/blob/6aacaa756f672e3d18c3bdf35091d08edefd594c/packages/client/src/Field.tsx#L89)
+[packages/client/src/Field.tsx:96](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/Field.tsx#L96)

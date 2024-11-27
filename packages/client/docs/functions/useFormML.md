@@ -6,7 +6,7 @@
 
 # Function: useFormML()
 
-> **useFormML**\<`T`\>(...`props`): `object`
+> **useFormML**\<`T`\>(`schema`, `options`?): [`FormMLPack`](../interfaces/FormMLPack.md)\<`T`\>
 
 Hook to create and manage a FormML instance
 
@@ -16,49 +16,19 @@ Hook to create and manage a FormML instance
 
 ## Parameters
 
-• ...**props**: [`T`, `DeepPartial`\<[`FormMLOptions`](../type-aliases/FormMLOptions.md)\>]
+• **schema**: `T`
+
+The FormML schema
+
+• **options?**: `DeepPartial`\<[`FormMLOptions`](../type-aliases/FormMLOptions.md)\>
+
+Optional FormML configurations
 
 ## Returns
 
-`object`
+[`FormMLPack`](../interfaces/FormMLPack.md)\<`T`\>
 
 Object containing fields index root, FormML instance and helper components/functions
-
-### $form
-
-> **$form**: `IndexRoot`\<`T`\>
-
-### FormML()
-
-> **FormML**: (`props`) => `Element` = `FormMLWrapper`
-
-#### Parameters
-
-• **props**
-
-• **props.children?**: `ReactNode`
-
-#### Returns
-
-`Element`
-
-### handleSubmit()
-
-> **handleSubmit**: (`onSubmit`, `onError`?) => `FormEventHandler`\<`HTMLFormElement`\>
-
-#### Parameters
-
-• **onSubmit**: [`SubmitHandler`](../type-aliases/SubmitHandler.md)
-
-• **onError?**: [`SubmitErrorHandler`](../type-aliases/SubmitErrorHandler.md)
-
-#### Returns
-
-`FormEventHandler`\<`HTMLFormElement`\>
-
-### instance
-
-> **instance**: [`FormML`](../classes/FormML.md)\<`T`\> = `formML`
 
 ## Example
 
@@ -82,4 +52,4 @@ return (
 
 ## Defined in
 
-[packages/client/src/useFormML.tsx:50](https://github.com/formml/formml/blob/6aacaa756f672e3d18c3bdf35091d08edefd594c/packages/client/src/useFormML.tsx#L50)
+[packages/client/src/useFormML.tsx:89](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/useFormML.tsx#L89)

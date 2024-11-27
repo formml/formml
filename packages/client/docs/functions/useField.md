@@ -6,11 +6,9 @@
 
 # Function: useField()
 
-> **useField**(`index`): [`FieldPack`](../type-aliases/FieldPack.md)
+> **useField**(`index`): [`FieldPack`](../interfaces/FieldPack.md)
 
 Hook to access field state and helpers.
-
-_It's based on a subscribing-pushing mechanism. Component will only rerender when the watching states change._
 
 ## Parameters
 
@@ -20,9 +18,13 @@ The field index to bind to
 
 ## Returns
 
-[`FieldPack`](../type-aliases/FieldPack.md)
+[`FieldPack`](../interfaces/FieldPack.md)
 
 Object containing field props, metadata and helper functions
+
+## Remarks
+
+It's based on a subscribing-pushing mechanism. Component will only rerender when the watching states change.
 
 ## Example
 
@@ -35,4 +37,4 @@ function MyInput({ $bind }: { $bind: BaseIndex }) {
 
 ## Defined in
 
-[packages/client/src/useField.ts:94](https://github.com/formml/formml/blob/6aacaa756f672e3d18c3bdf35091d08edefd594c/packages/client/src/useField.ts#L94)
+[packages/client/src/useField.ts:126](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/useField.ts#L126)

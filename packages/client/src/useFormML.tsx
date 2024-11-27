@@ -26,7 +26,7 @@ export type SubmitHandler = (
  */
 export type SubmitErrorHandler = (errors: ValidationError[]) => void
 
-interface FormMLPack<T extends FormMLSchema> {
+export interface FormMLPack<T extends FormMLSchema> {
   /** Index to the form, the root of all child indexes */
   $form: IndexRoot<T>
   /** FormML context provider */
