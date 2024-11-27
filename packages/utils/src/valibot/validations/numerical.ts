@@ -54,7 +54,6 @@ export interface NumericalAction<
 
 /**
  * Creates a numerical validation action.
- *
  * @returns A numerical action.
  */
 export function numerical<TInput extends string>(): NumericalAction<
@@ -64,9 +63,7 @@ export function numerical<TInput extends string>(): NumericalAction<
 
 /**
  * Creates a numerical validation action.
- *
  * @param message The error message.
- *
  * @returns A numerical action.
  */
 export function numerical<

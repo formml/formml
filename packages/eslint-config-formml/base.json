@@ -4,12 +4,13 @@
     "shared-node-browser": true
   },
   "ignorePatterns": ["node_modules/", "dist/"],
-  "plugins": ["perfectionist", "@typescript-eslint"],
+  "plugins": ["perfectionist", "@typescript-eslint", "jsdoc"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:perfectionist/recommended-natural",
     "plugin:prettier/recommended",
+    "plugin:jsdoc/recommended-typescript",
     "eslint-config-turbo"
   ],
   "parser": "@typescript-eslint/parser",
@@ -34,7 +35,8 @@
         "order": "asc",
         "partition-by-comment": "Part:**"
       }
-    ]
+    ],
+    "jsdoc/require-jsdoc": "off"
   },
   "overrides": [
     {

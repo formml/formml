@@ -55,9 +55,7 @@ export interface AllowBlankAction<
 
 /**
  * Creates an allow blank validation action.
- *
  * @param wrapped The wrapped validation.
- *
  * @returns An allow blank action.
  */
 export function allowBlank<
@@ -67,10 +65,8 @@ export function allowBlank<
 
 /**
  * Creates an allow blank validation action.
- *
  * @param wrapped The wrapped validation.
  * @param message The error message.
- *
  * @returns An allow blank action.
  */
 export function allowBlank<

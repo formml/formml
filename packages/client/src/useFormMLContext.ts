@@ -8,10 +8,8 @@ export const FormMLProvider = FormMLContext.Provider
 
 /**
  * Hook to access FormML instance from context
- *
  * @returns FormML instance from nearest provider
  * @throws Error if used outside FormMLProvider
- *
  * @example
  * ```tsx
  * const formML = useFormMLContext()

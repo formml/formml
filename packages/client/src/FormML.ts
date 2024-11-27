@@ -22,6 +22,7 @@ export type FormMLOptions = {
     subsequent: FormMLEvent
   }
 }
+export type PartialFormMLOptions = DeepPartial<FormMLOptions>
 
 export type FieldResult = {
   _internalState: { isInitiallyValidated: boolean }
@@ -83,7 +84,7 @@ export class FormML<T extends FormMLSchema = FormMLSchema> {
 
   public readonly options: FormMLOptions
 
-  constructor(schema: T, options?: DeepPartial<FormMLOptions>) {
+  constructor(schema: T, options?: PartialFormMLOptions) {
     this._schema = schema
     this.options = mergeOptions(options, {
       preValidateOn: {

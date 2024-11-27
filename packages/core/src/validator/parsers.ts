@@ -65,11 +65,9 @@ type InferParsed<T extends generics.FormMLSchema> = H.Pipe<
  * | decimal     | string           | BigNumber   |
  * | datetime    | string           | Date        |
  * | bool        | boolean          | boolean     |
- *
  * @param data - The data to parse
  * @param schema - The FormML schema to validate against
  * @returns The typed data
- *
  * @example
  * const schema = formml`
  *   form user {
@@ -136,11 +134,9 @@ export type SafeParseResult<T> =
  * | decimal     | string           | BigNumber   |
  * | datetime    | string           | Date        |
  * | bool        | boolean          | boolean     |
- *
  * @param data - The data to parse
  * @param schema - The FormML schema to validate against
  * @returns The result object with typed data or validation errors
- *
  * @example
  * const schema = formml`
  *   form user {

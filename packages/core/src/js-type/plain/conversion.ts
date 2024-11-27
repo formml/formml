@@ -8,10 +8,8 @@ import type { PrimitiveTypeMapping } from '../types.js'
 
 /**
  * Creates a function that converts a plain value to a specific primitive type.
- *
- * @param {TType} type - The primitive type to convert to.
- * @returns {(plain: unknown) => PrimitiveTypeMapping[TType] | undefined} A function that takes a plain value and returns the converted primitive type or `undefined`.
- *
+ * @param type - The primitive type to convert to.
+ * @returns A function that takes a plain value and returns the converted primitive type or `undefined`.
  * @example
  * // text: JS string
  * const result = fromPlain('text')('hello') // 'hello'
@@ -34,11 +32,9 @@ export function fromPlain<TType extends DslTypes.PRIMITIVE>(
 
 /**
  * Converts a plain value to a specific primitive type.
- *
- * @param {unknown} plain - The value to convert.
- * @param {TType} type - The primitive type to convert to.
- * @returns {PrimitiveTypeMapping[TType] | undefined} The converted primitive value or `undefined` if the conversion is not supported.
- *
+ * @param plain - The value to convert.
+ * @param type - The primitive type to convert to.
+ * @returns The converted primitive value or `undefined` if the conversion is not supported.
  * @example
  * // text: JS string
  * const result = fromPlain('hello', 'text') // 'hello'

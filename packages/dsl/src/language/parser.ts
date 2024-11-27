@@ -46,6 +46,8 @@ export class FormMLParserValidationError extends FormMLParserError {
 }
 
 /**
+ * @param services - The services to use.
+ * @returns A parser function.
  * @deprecated Use `createFormMLParser` instead.
  */
 export const createParser = (services?: FormMLServices) => {

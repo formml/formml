@@ -62,9 +62,7 @@ export interface RequiredSchema<
 
 /**
  * Creates a required schema.
- *
  * @param wrapped The wrapped schema.
- *
  * @returns A required schema.
  */
 export function required<
@@ -73,10 +71,8 @@ export function required<
 
 /**
  * Creates a required schema.
- *
  * @param wrapped The wrapped schema.
  * @param message The error message.
- *
  * @returns A required schema.
  */
 export function required<

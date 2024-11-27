@@ -37,10 +37,8 @@ function fromStringImpl(
 
 /**
  * Creates a function that converts a string to a specific primitive type.
- *
- * @param {TType} type - The primitive type to convert to.
- * @returns {(input: string) => JSType.PrimitiveTypeMapping[TType]} A function that takes a string input and returns the converted primitive type.
- *
+ * @param type - The primitive type to convert to.
+ * @returns A function that takes a string input and returns the converted primitive type.
  * @example
  * // text
  * const result = fromString('text')('hello') // 'hello'
@@ -71,11 +69,9 @@ export function fromString<TType extends DSLType.PRIMITIVE>(
 
 /**
  * Converts a string to a specific primitive type.
- *
- * @param {string} input - The string to convert.
- * @param {TType} type - The primitive type to convert to.
- * @returns {JSType.PrimitiveTypeMapping[TType]} The converted primitive value.
- *
+ * @param input - The string to convert.
+ * @param type - The primitive type to convert to.
+ * @returns The converted primitive value.
  * @example
  * // text
  * const result = fromString('hello', 'text') // 'hello'
@@ -117,10 +113,8 @@ export function fromString(
 
 /**
  * Converts a primitive type to string.
- *
- * @param {JSType.PrimitiveType} value - The primitive type to convert.
- * @returns {string} The converted string.
- *
+ * @param value - The primitive type to convert.
+ * @returns The converted string.
  * @example
  * const result = toString(undefined) // ''
  * // text

@@ -54,13 +54,11 @@ type Props = {
 /**
  * A smart field component that displays the bound form field with appropriate default settings.
  *
- * *The Default Settings refer to a batch of HTML attributes inferred by a heuristic algorithm. You can override them anytime you like.*
- *
+ * The Default Settings refer to a batch of HTML attributes inferred by a heuristic algorithm. You can override them anytime you like.*
  * @param props - Component props
  * @param props.$bind - The field index to bind to
  * @param props.as - Optional HTML element name to render the field with, defaults to `input`
  * @returns A controlled form `input`/`textarea` element
- *
  * @example
  * ```tsx
  * // usual text input

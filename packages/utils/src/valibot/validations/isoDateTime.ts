@@ -58,7 +58,6 @@ export interface IsoDateTimeAction<
 
 /**
  * Creates a loose ISO-8601 date time validation action.
- *
  * @returns A loose ISO-8601 date time action.
  */
 export function isoDateTime<TInput extends string>(): IsoDateTimeAction<
@@ -68,9 +67,7 @@ export function isoDateTime<TInput extends string>(): IsoDateTimeAction<
 
 /**
  * Creates a loose ISO-8601 date time validation action.
- *
  * @param message The error message.
- *
  * @returns A loose ISO-8601 date time action.
  */
 export function isoDateTime<

@@ -8,9 +8,6 @@ import type { FormMLServices } from './formml-module.js'
 import * as ast from '../generated/ast.js'
 import * as t from '../type-system/index.js'
 
-/**
- * Register custom validation checks.
- */
 export function registerFormMLValidationChecks(services: FormMLServices) {
   const registry = services.validation.ValidationRegistry
   const validator = services.validation.FormMLValidator

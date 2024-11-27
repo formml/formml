@@ -33,12 +33,10 @@ type ErrorMessageComponent = {
 
 /**
  * A React component that displays validation error messages for bound form field
- *
  * @param props - Component props
  * @param props.$bind - The field index to bind to
  * @param props.as - Optional HTML element name to render the error message with
  * @returns React element showing error message if validation fails
- *
  * @example
  * ```tsx
  * // Returns string directly if no `as` prop was given

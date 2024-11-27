@@ -3,9 +3,6 @@ import type { ValidationAcceptor, ValidationChecks } from 'langium'
 import type * as ast from '../generated/ast.js'
 import type { FormMLDeclarationServices } from './formml-declaration-module.js'
 
-/**
- * Register custom validation checks.
- */
 export function registerFormMLDeclarationValidationChecks(
   services: FormMLDeclarationServices,
 ) {
