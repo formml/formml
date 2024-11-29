@@ -82,10 +82,10 @@ These aren't niche problems specific to certain scenarios, but common challenges
 
 ## Getting Started
 
-> Tips: You may not need to read everything
+> 💡 You may not need to read everything
 >
-> - For non-technical people (FormML Model authors): You only need to understand the [Create Your First FormML Model](#create-your-first-formml-model) section
-> - For developers: It's recommended to read all
+> - 📝 For non-technical people (FormML Model authors): You only need to understand the [Create Your First FormML Model](#create-your-first-formml-model) section
+> - 👨‍💻 For developers: It's recommended to read all
 
 ### Create Your First FormML Model
 
@@ -168,10 +168,20 @@ Perfect! You now have your first complete FormML Model. For more FormML DSL synt
 
 ### Server-side Validation
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## FormML DSL Reference
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## API Reference
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Known Issues
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Roadmap
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
