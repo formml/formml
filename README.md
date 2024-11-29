@@ -13,7 +13,7 @@
   <br>
 </h1>
 
-<h4 align="center">The Ultimate Solution for Building <a href="#whats-the-enterprise-level-forms">Enterprise-Level</a> Forms<br><small>(or at least, we're aiming for it 😅)</small></h4>
+<h4 align="center">The Ultimate Solution for Building <a href="#whats-the-enterprise-level-forms">Enterprise-Level</a> Forms<br><small>(or at least, I'm aiming for it 😅)</small></h4>
 
 <h5 align="center">- 🚧 In Active Development 🏗️ -</h5>
 
@@ -81,6 +81,92 @@ These aren't niche problems specific to certain scenarios, but common challenges
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Getting Started
+
+> Tips: You may not need to read everything
+>
+> - For non-technical people (FormML Model authors): You only need to understand the [Create Your First FormML Model](#create-your-first-formml-model) section
+> - For developers: It's recommended to read all
+
+### Create Your First FormML Model
+
+At its core, FormML features a non-developers friendly DSL (Domain-Specific Language) designed to describe form structure, types, and logic. These descriptions are typically written in one (or a set of) `.fml` files. All form definitions within `.fml` files together constitute a "FormML Model".
+
+Let's create your first FormML Model step by step.
+
+1. Install and open [Visual Studio Code](https://code.visualstudio.com/)
+2. Install the FormML extension (VSCode only for now)
+3. Create a `sign-up.fml` file anywhere
+4. Enter the following content:
+
+```kotlin
+form SignUp {
+  text     name
+  text     email
+  text     password
+  datetime birthday
+}
+```
+
+Congratulations! You've just created a simplest FormML Model.
+
+<details>
+<summary>Explanation for beginners</summary>
+
+This code demonstrates 2 core syntactic elements of FormML DSL:
+
+- `form SignUp { ... }`: Defines a form named `SignUp`, with its contents enclosed within the `{ ... }` code block
+- `text name`: Defines a form field named `name` of type `text`
+
+</details>
+
+In FormML DSL, fields are optional by default (since required fields are typically the minority in complex forms).
+
+To make a field required, you can add the `@required` annotation. Let's make `name`, `email`, and `password` required:
+
+```kotlin
+form SignUp {
+  @required
+  text     name
+  @required
+  text     email
+  @required
+  text     password
+  datetime birthday
+}
+```
+
+Now these three fields cannot be empty, or users will see error messages.
+
+We can further enhance field validation by adding more annotations or modifying annotation parameters:
+
+```kotlin
+form SignUp {
+  @required("Let me know your cool name!")
+  text     name
+  @required @email
+  text     email
+  @required @minLength(8)
+  text     password
+  datetime birthday
+}
+```
+
+<details>
+<summary>Explanation for beginners</summary>
+
+Here's what we changed/added:
+
+- `@required("Let me know your cool name!")`: Added a new parameter to `name` field's `@required` annotation, that specifies a custom error message
+- `@email`: Added the `@email` annotation to `email` field to validate text format
+- `@minLength(8)`: Added the `@minLength` annotation with parameter 8 to `password` field to enforce a minimum length of 8 characters
+
+</details>
+
+Perfect! You now have your first complete FormML Model. For more FormML DSL syntax, please refer to the [FormML DSL Reference](#formml-dsl-reference) section.
+
+### Create UI
+
+### Server-side Validation
 
 ## FormML DSL Reference
 
