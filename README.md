@@ -54,6 +54,10 @@
   ⚡ First-class real-time forms support (WIP)
 </p>
 
+**FormML** (Form Modeling Language, pronounced as "formal") is a full-stack framework for building **enterprise-level** forms.
+
+It's under active development now and currently provides official **React** bindings.
+
 ## Motivation
 
 Forms can be **simple** (a sign-up or a survey) or **complex** (a loan application or a tax return). While there are many powerful tools in the ecosystem for building basic forms, such as [Formik](https://formik.org/) and [React Hook Form](https://react-hook-form.com/), there isn't yet a serious solution (to my knowledge) that specifically addresses the pain points of complex forms - the **Enterprise-Level** forms.
@@ -166,6 +170,70 @@ Perfect! You now have your first complete FormML Model. For more FormML DSL synt
 
 ### Create UI
 
+Once you have your FormML Model ready (either written by yourself or from non-technical experts), you can start to create your form UI with React now.
+
+> 💡 FormML itself is framework agnostic. But for now, only React bindings are ready.
+
+To import `.fml` files directly into your JS/TS files, you'll need to complete these 2 setups firstly:
+
+<details>
+<summary>Set up your bundler</summary>
+
+FormML provides a Vite/Rollup plugin for importing `.fml` files in JavaScript (other bundlers support is coming soon). Here's how to set it up with Vite (Rollup configuration is similar):
+
+1 - Install the plugin
+
+```bash
+npm install rollup-plugin-formml --save-dev
+```
+
+2 - Edit your `vite.config.ts` file to enable the plugin:
+
+```ts
+...
+import formml from 'rollup-plugin-formml'
+
+export default defineConfig({
+  ...
+  plugins: [formml()],
+})
+```
+
+</details>
+
+<details>
+<summary>Set up TypeScript</summary>
+
+To provide real-time type checking (even after editing `.fml` files), FormML uses [TypeScript's Language Service Plugin](https://github.com/microsoft/TypeScript/wiki/Writing-a-Language-Service-Plugin) feature. Here's how to set it up:
+
+> See [Why not code generation?](#why-not-code-generation) to learn the reason of this decision.
+
+> TypeScript Language Service Plugin [only affects your editing experience](https://github.com/microsoft/TypeScript/wiki/Writing-a-Language-Service-Plugin#whats-a-language-service-plugin), meaning FormML Model's type information won't be included when running the `tsc` command.
+>
+> For more information, see: [Using `tsc` to check FormML Model types](#using-tsc-to-check-formml-model-types).
+
+1 - (For VSCode users) VSCode defaults to using the global TypeScript version which won't load the plugin correctly. Configure VSCode to [use the workspace version of TypeScript](https://code.visualstudio.com/docs/typescript/typescript-compiling#_using-the-workspace-version-of-typescript)
+
+2 - Install the FormML TypeScript plugin
+
+```bash
+npm install @formml/ts-plugin --save-dev
+```
+
+3 - Edit your `tsconfig.json` file to enable the plugin:
+
+```json
+{
+  "compilerOptions": {
+    "plugins": [{ "name": "@formml/ts-plugin" }]
+  }
+}
+```
+
+4 - Restart TS Server to see type information
+
+</details>
+
 ### Server-side Validation
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -183,5 +251,13 @@ Perfect! You now have your first complete FormML Model. For more FormML DSL synt
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Roadmap
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## FAQs
+
+### Why not code generation?
+
+### Using `tsc` to check FormML Model types
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
