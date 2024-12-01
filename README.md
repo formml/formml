@@ -13,9 +13,9 @@
   <br>
 </h1>
 
-<h4 align="center">The Ultimate Solution for Building <a href="#whats-the-enterprise-level-forms">Enterprise-Level</a> Forms<br><small>(or at least, I'm aiming for it 😅)</small></h4>
+<p align="center"><strong>The Ultimate Solution for Building <a href="#whats-the-enterprise-level-forms">Enterprise-Level</a> Forms<br><small>(or at least, I'm aiming for it 😅)</small></strong></p>
 
-<h5 align="center">- 🚧 In Active Development 🏗️ -</h5>
+<p align="center"><small>- 🚧 In Active Development 🏗️ -</small></p>
 
 <p align="center">  
   <a href="https://www.npmjs.com/package/@formml/client">
