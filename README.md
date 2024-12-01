@@ -54,6 +54,10 @@
   ⚡ First-class real-time forms support (WIP)
 </p>
 
+<p align="center">
+  <img src="docs/image/demo.jpg" alt="FormML Demo" width="500">
+</p>
+
 **FormML** (Form Modeling Language, pronounced as "formal") is a full-stack framework for building **enterprise-level** forms.
 
 It's under active development now and currently provides official **React** bindings.
@@ -93,7 +97,7 @@ These aren't niche problems specific to certain scenarios, but common challenges
 
 ### Create Your First FormML Model
 
-At its core, FormML features a non-developers friendly DSL (Domain-Specific Language) designed to describe form structure, types, and logic. These descriptions are typically written in one (or a set of) `.fml` files. All form definitions within `.fml` files together constitute a "FormML Model".
+At its core, FormML features a non-developers friendly DSL (Domain-Specific Language) designed to describe form structure, types, and logic. These descriptions are typically written in one (or a set of) `.fml` files. All form definitions within `.fml` files together constitute a _FormML Model_.
 
 Let's create your first FormML Model step by step.
 
@@ -123,7 +127,7 @@ This code demonstrates 2 core syntactic elements of FormML DSL:
 
 </details>
 
-In FormML DSL, fields are optional by default (since required fields are typically the minority in complex forms).
+In FormML DSL, fields are **optional** by default (since required fields are typically the minority in complex forms).
 
 To make a field required, you can add the `@required` annotation. Let's make `name`, `email`, and `password` required:
 
@@ -172,7 +176,7 @@ Perfect! You now have your first complete FormML Model. For more FormML DSL synt
 
 Once you have your FormML Model ready (either written by yourself or from non-technical experts), you can start to create your form UI with React now.
 
-> 💡 FormML itself is framework agnostic. But for now, only React bindings are ready.
+> 💡 FormML itself is framework agnostic. But for now only the React bindings is ready.
 
 To import `.fml` files directly into your JS/TS files, you'll need to complete these 2 setups firstly:
 
@@ -231,6 +235,124 @@ npm install @formml/ts-plugin --save-dev
 ```
 
 4 - Restart TS Server to see type information
+
+</details>
+
+Next, create your first form component with FormML Model.
+
+1 - Install FormML React bindings
+
+```bash
+npm install @formml/react --save
+```
+
+2 - Create a `SignUpForm.tsx` file then display your first field:
+
+```jsx
+import { Field, ErrorMessage, useFormML } from '@formml/react'
+
+// import `.fml` directly and enjoy real-time type checking
+import SignUp from './sign-up.fml'
+
+export default function App() {
+  const { $form, FormML, handleSubmit } = useFormML(SignUp)
+
+  // "handleSubmit" will validate inputs before invoking real "onSubmit"
+  const onSubmit = handleSubmit(data => console.log(data))
+
+  return (
+    {/* "FormML" - a context provider */}
+    <FormML>
+      <form onSubmit={onSubmit}>
+        <label>Name</label>
+
+        {/* "Field" - a smart input component that binds to FormML Model field via `$form.name` */}
+        <Field $bind={$form.name} />
+
+        {/* "ErrorMessage" - a helper component that displays error message for the field */}
+        <ErrorMessage $bind={$form.name} as="span" />
+
+        <button>Submit</button>
+      </form>
+    </FormML>
+  )
+}
+```
+
+Congratulations! You've just created your first FormML form. Integrate it into your app and run `vite dev` to see the result now!
+
+Learn more details by expanding below sections.
+
+<details>
+<summary>Understanding <code>$form.name</code> and <i>field indexes</i>: How do they enable the <strong>next-level</strong> type safety?</summary>
+
+We call `$form.name` above a _field index_. It's a tool for referencing a FormML Model field in JavaScript, and is typically passed as the `$bind` prop to components like `Field` and `ErrorMessage`.
+
+Unlike string-based indexing approaches (used by Formik, React Hook Form, etc.), field indexes are generated from the FormML Model (with real-time type information provided through the TS plugin), enabling truly next-level type safety.
+
+This next-level type safety manifests in three ways:
+
+1 - Type-Based Completion
+
+`$form` is known as the _index root_ - think of it as an index pointing to the entire form, making it the root of all child indexes.
+
+Crucially, it's fully typed, so when you access its children via dot notation, VSCode automatically lists all possible child indexes.
+
+(image)
+
+This feature will also apply to planned _FormML Model composite types_, providing autocompletion when writing nested paths like `$form.parent.child`.
+
+2 - Field-Level Type Checking
+
+`$form.name` has type `TextIndex` because it's defined as `text name` in the FormML Model.
+
+Therefore, if you have a custom `DatePicker` component (introduced in the next section) that only accepts `datetime` fields, `$form.name` cannot be passed to it:
+
+```tsx
+function DatePicker(props: { $bind: DatetimeIndex }) {
+  ...
+}
+
+<DatePicker $bind={$form.name} /> {/* TS Error: "$form.name" is not of type DatetimeIndex */}
+```
+
+3 - Enabling Truly **Reusable** Form Components
+
+This is where field indexes truly shine!
+
+Field indexes provide an interface layer that decouples specific form content from generic form components, making components genuinely reusable.
+
+For example, the `DatePicker` component above depends on the `DatetimeIndex` type rather than any specific form, so it can be reused across different scenarios - like `birthday` in a sign-up form, `dueDate` in a todo-list form, etc.
+
+> 🎁 Planned _FormML Model composite types_ will take reusability to new heights:
+>
+> FormML Models will be able to group related fields into new composite types. Meanwhile generic components can also declare which fields they depend on.
+>
+> Type compatibility checks are then left entirely to TypeScript.
+
+</details>
+
+<details>
+<summary>Creating custom field components with <code>useField</code> hook</summary>
+
+Let's create a custom `DatePicker` component mentioned above using the `useField` hook:
+
+```tsx
+function DatePicker(props: { $bind: DatetimeIndex }) {
+  const { field, meta } = useField(props.$bind)
+  return (
+    <>
+      <input type="datetime-local" {...field} /> {/* Includes `name`, `value`, `onChange`, `onBlur` */}
+      {meta.error && <span>{meta.error.message}</span>}
+      {meta.touched && <span>Ta-Da!</span>}
+    </>
+  )
+}
+```
+
+> 📝 For more details about `useField` API, please refer to [API Reference](#api-reference).
+
+FormML implements a reactivity system based on [@vue/reactivity](https://github.com/vuejs/core/tree/main/packages/reactivity). When form state updates occur, FormML ensures components only re-render when their specifically watched states change.
 
 </details>
 
