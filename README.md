@@ -35,10 +35,11 @@
 <p align="center">
   <a href="#motivation">Motivation</a> •
   <a href="#getting-started">Getting Started</a> •
-  <a href="#formml-dsl-reference">FormML DSL Reference</a> •
+  <a href="#formml-model-reference">FormML Model Reference</a> •
   <a href="#api-reference">API Reference</a> •
   <a href="#known-issues">Known Issues</a> •
-  <a href="#roadmap">Roadmap</a>
+  <a href="#roadmap">Roadmap</a> •
+  <a href="#faqs">FAQs</a>
 </p>
 
 <p align="center">
@@ -81,7 +82,7 @@ These aren't niche problems specific to certain scenarios, but common challenges
 ### How Does FormML Address These?
 
 - **Non-Tech Stakeholders Driven** ➡️ **Non-Dev Friendly DSL**: As its full name "Form Modeling Language" suggests, FormML's core is a DSL for modeling forms. It was designed from the ground up for non-developers, with simple structure, minimal syntax, and more natural terminology (e.g., "text" instead of "string").
-- **Branded UI & Custom UX** ➡️ **Model-View Separation**: FormML DSL focuses on modeling form business logic. Once the model (`.formml` file) is complete, UI/view implementation is entirely in developers' hands and fully customizable.
+- **Branded UI & Custom UX** ➡️ **Model-View Separation**: FormML DSL focuses on modeling form business logic. Once the model (`.fml` file) is complete, UI/view implementation is entirely in developers' hands and fully customizable.
 - **Calculations, Formulas & Dynamic Behavior** ➡️ **First-class dynamic forms support** & **Excel-like formula** (WIP)
 - **Auto-save & Resume** ➡️ **First-class real-time forms support** (WIP)
 - **Others**: Performance (reactivity system based on [@vue/reactivity](https://github.com/vuejs/core/tree/main/packages/reactivity)), validation (annotations based on [valibot](https://valibot.dev/)), prefilling (plugin system)
@@ -358,9 +359,68 @@ FormML implements a reactivity system based on [@vue/reactivity](https://github.
 
 ### Server-side Validation
 
+FormML is full-stack - you can use the same FormML Model to validate form submissions on the server side.
+
+> Before starting, make sure you've completed the bundler and TypeScript setup as described in the previous [Create UI](#create-ui) section.
+
+1 - Install `@formml/core`
+
+```bash
+npm install @formml/core --save
+```
+
+2 - Use the `parse` function to validate and transform data ([Express.js](https://expressjs.com/) example)
+
+```ts
+import express from 'express'
+import { parse } from '@formml/core'
+import SignUp from './sign-up.fml'
+
+const app = express()
+
+app.post('/sign-up', (req, res) => {
+  // Assuming form data is submitted as JSON
+  // Validate & parse plain object into rich object
+  const data = parse(req.body, SignUp)
+  res.status(201).end()
+})
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000')
+})
+```
+
+Each primitive type in FormML Model has its corresponding [JavaScript type](#primitive-types). The `parse` function will first validate the data according to the FormML Model definition, then convert plain data to rich types.
+
+```ts
+const data = {
+  name: 'John',
+  email: 'john@example.com',
+  password: 'password',
+  birthday: '1999-12-31T00:00:00.000Z',
+}
+
+const result = parse(data, SignUp) // Converts string => Date
+// result is:
+// {
+//   name: "John",
+//   email: "john@example.com",
+//   password: "password",
+//   birthday: Date("1999-12-31T00:00:00.000Z"),
+// }
+```
+
+If validation fails, the `parse` function will throw an error.
+
+> 📝 For more information about the `parse` function, please refer to the [API Reference](#api-reference).
+
+> FormML also provides `safeParse` and `validate` functions for different scenarios. See the [API Reference](#api-reference) for details.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## FormML DSL Reference
+## FormML Model Reference
+
+### Primitive Types
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
