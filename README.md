@@ -35,7 +35,7 @@
 <p align="center">
   <a href="#motivation">Motivation</a> •
   <a href="#getting-started">Getting Started</a> •
-  <a href="#formml-model-reference">FormML Model Reference</a> •
+  <a href="#formml-model-dsl-reference">FormML Model Reference</a> •
   <a href="#api-reference">API Reference</a> •
   <a href="#known-issues">Known Issues</a> •
   <a href="#roadmap">Roadmap</a> •
@@ -71,7 +71,7 @@ Forms can be **simple** (a sign-up or a survey) or **complex** (a loan applicati
 
 Imagine you're a financial company building an online loan application form. What challenges might you face?
 
-- **Non-Tech Stakeholders Driven**: Loans are serious business involving specialized knowledge across finance, accounting, and legal domains - knowledge typically held only by **non-technical experts**. A key challenge is enabling these stakeholders to lead form design while maintaining smooth collaboration with developers.
+- **Non-Tech Stakeholder Involvement**: Loans are serious business involving specialized knowledge across finance, accounting, and legal domains - knowledge typically held only by **non-technical experts**. A key challenge is enabling these stakeholders to lead form design while maintaining smooth collaboration with developers.
 - **Branded UI & Custom UX**: Developers matter too! Companies don't want cookie-cutter form designs. Every serious enterprise wants to build their brand and deliver unique user experiences, goals that require developer expertise to achieve.
 - **Calculations, Formulas & Dynamic Behavior**: Loan amounts, monthly payments and other fields need real-time calculation through formulas. Different fields also need to be shown or hidden based on the selected "loan type".
 - **Auto-save & Resume**: Complex forms can have hundreds of fields - users don't want to start over if they accidentally close their browser.
@@ -81,7 +81,7 @@ These aren't niche problems specific to certain scenarios, but common challenges
 
 ### How Does FormML Address These?
 
-- **Non-Tech Stakeholders Driven** ➡️ **Non-Dev Friendly DSL**: As its full name "Form Modeling Language" suggests, FormML's core is a DSL for modeling forms. It was designed from the ground up for non-developers, with simple structure, minimal syntax, and more natural terminology (e.g., "text" instead of "string").
+- **Non-Tech Stakeholder Involvement** ➡️ **Non-Dev Friendly DSL**: As its full name "Form Modeling Language" suggests, FormML's core is a DSL for modeling forms. It was designed from the ground up for non-developers, with simple structure, minimal syntax, and more natural terminology (e.g., "text" instead of "string").
 - **Branded UI & Custom UX** ➡️ **Model-View Separation**: FormML DSL focuses on modeling form business logic. Once the model (`.fml` file) is complete, UI/view implementation is entirely in developers' hands and fully customizable.
 - **Calculations, Formulas & Dynamic Behavior** ➡️ **First-class dynamic forms support** & **Excel-like formula** (WIP)
 - **Auto-save & Resume** ➡️ **First-class real-time forms support** (WIP)
@@ -418,9 +418,161 @@ If validation fails, the `parse` function will throw an error.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## FormML Model Reference
+## FormML Model (DSL) Reference
 
-### Primitive Types
+**FormML Model** refers to the `.fml` file(s) that define a form's structure, types, and logic with FormML DSL.
+
+For basic knowledge and how to create a new FormML Model, please refer to the [Create Your First FormML Model](#create-your-first-formml-model) section.
+
+### `form` Block
+
+Every FormML Model starts with a `form` block. Each model can only contain **one** `form` block as its unique entry point.
+
+**Syntax**
+
+```java
+form [name] {
+  ...
+  [fields]
+  ...
+}
+```
+
+**Elements**
+
+- `[name]`: A unique name for the form. Can be ASCII letters, numbers, and underscores, but **cannot start with a number**. (Use [pascal case](https://en.wikipedia.org/wiki/PascalCase) conventionally)
+- `[fields]`: One or more [field definitions](#field)
+
+### Field
+
+Defines a form field inside a `form` block.
+
+**Syntax**
+
+```java
+@[annotations]
+[type] [name]
+```
+
+**Elements**
+
+- `@[annotations]`: Zero or more [annotations](#annotation)
+- `[type]`: The type of the field. Can be a [primitive type](#primitive-type) or a [composite type](#composite-type) (WIP).
+- `[name]`: The unique name of the field. Can be ASCII letters, numbers, and underscores, but **cannot start with a number**. (Use [camel case](https://en.wikipedia.org/wiki/CamelCase) conventionally)
+
+#### Primitive Type
+
+##### `text`
+
+Represents a piece of textual content in any language (e.g., a name, email, or bio).
+
+> Runtime JavaScript type: `string`
+
+##### `num`
+
+Represents a **general-purpose** number value (e.g., a quantity, age, or score).
+
+> ⚠️ It follows the [IEEE 754](https://en.wikipedia.org/wiki/IEEE_754) floating-point representation under the hood. You may encounter **precision issues** when using it to represent **currency** or other high precision values.
+>
+> For that purpose, refer to the [`decimal`](#decimal) type instead.
+
+> Runtime JavaScript type: `number`
+
+##### `bool`
+
+Represents a [boolean](https://en.wikipedia.org/wiki/Boolean_data_type) (an either/or choice) value (e.g., true/false, yes/no).
+
+> Runtime JavaScript type: `boolean`
+
+##### `decimal`
+
+Represents a **decimal** number value that won't lose precision on arithmetic operations (except for division). It's suitable for representing **currency** or other high precision values (e.g., a price, tax, or payment).
+
+> For general number scenarios that don't require high precision, use [`num`](#num) type instead.
+
+> Runtime JavaScript type: [`BigNumber`](https://mikemcl.github.io/bignumber.js/)
+
+##### `datetime`
+
+Represents a date, time, or date & time value.
+
+> Runtime JavaScript type: `Date`
+
+#### Composite Type
+
+WIP
+
+#### Annotation
+
+Annotations are optional modifiers that can be added to a field to enhance its behavior. Typically they are used for further validation beyond basic field type checks.
+
+**Syntax**
+
+```java
+@[name]([arguments])
+```
+
+**Elements**
+
+- `[name]`: The name of the annotation. Refer to the [Annotation Reference](#annotation-reference) for the full list.
+- `[arguments]`: Zero or more arguments passed to the annotation.
+
+**Examples**
+
+```java
+@required()
+text name
+```
+
+You can omit optional parameters.
+
+```java
+@required
+text name
+```
+
+If no arguments, you can also omit the parentheses.
+
+```java
+@maxLength(10, "Up to 10 characters")
+text name
+```
+
+You can pass arguments namelessly,
+
+```java
+@maxLength(length: 10, message: "Up to 10 characters")
+text name
+```
+
+...or namely,
+
+```java
+@maxLength(message: "Up to 10 characters", length: 10)
+text name
+```
+
+...with any order.
+
+```java
+@maxLength(10, message: "Up to 10 characters")
+text name
+```
+
+Of course you can mix them together,
+
+```java
+@maxLength(length: 10, "Up to 10 characters") // Error: Named argument can only appear after all positional arguments.
+text name
+```
+
+...but remember, named arguments can only come after all positional arguments.
+
+##### Annotation Reference
+
+All available annotations are defined in `annotations.d.formml`. You can click the link and `cmd/ctrl + F` to search.
+
+https://github.com/formml/formml/blob/main/packages/dsl/builtins/annotations.d.formml
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
