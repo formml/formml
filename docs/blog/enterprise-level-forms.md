@@ -70,13 +70,19 @@ Consider implementing a loan calculator in [React Hook Form](https://react-hook-
 function LoanForm() {
   const { watch, setValue } = useForm()
 
-  const [loanAmount, interestRate, term] = watch(['loanAmount', 'interestRate', 'term'])
+  const [loanAmount, interestRate, term] = watch([
+    'loanAmount',
+    'interestRate',
+    'term',
+  ])
 
   useEffect(() => {
     if (loanAmount && interestRate && term) {
       const monthlyRate = interestRate / 100 / 12
       const months = term * 12
-      const payment = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1)
+      const payment =
+        (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, months)) /
+        (Math.pow(1 + monthlyRate, months) - 1)
       setValue('monthlyPayment', payment.toFixed(2))
     }
   }, [loanAmount, interestRate, term, setValue])
@@ -125,7 +131,7 @@ As its full name "Form Modeling Language" suggests, FormML introduces a **Domain
 
 To build up a simplest runnable tax filling form, a skilled accountant without any programming knowledge can do it in just 5 minutes:
 
-```kotlin
+```java
 form Tax {
   @required
   text     name

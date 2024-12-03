@@ -17,7 +17,7 @@
 
 <p align="center"><small>- 🚧 In Active Development 🏗️ -</small></p>
 
-<p align="center">  
+<p align="center">
   <a href="https://www.npmjs.com/package/@formml/client">
     <img src="https://img.shields.io/npm/v/%40formml%2Fclient?logo=npm&label=%40formml%2Fclient" alt="client npm version">
   </a>
@@ -345,7 +345,9 @@ function DatePicker(props: { $bind: DatetimeIndex }) {
   const { field, meta } = useField(props.$bind)
   return (
     <>
-      <input type="datetime-local" {...field} /> {/* Includes `name`, `value`, `onChange`, `onBlur` */}
+      <input type="datetime-local" {...field} />
+      {/* Includes `name`, `value`, `onChange`, `onBlur` */}
+
       {meta.error && <span>{meta.error.message}</span>}
       {meta.touched && <span>Ta-Da!</span>}
     </>
