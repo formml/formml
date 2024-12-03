@@ -107,7 +107,7 @@ Let's create your first FormML Model step by step.
 3. Create a `sign-up.fml` file anywhere
 4. Enter the following content:
 
-```kotlin
+```java
 form SignUp {
   text     name
   text     email
@@ -132,7 +132,7 @@ In FormML DSL, fields are **optional** by default (since required fields are typ
 
 To make a field required, you can add the `@required` annotation. Let's make `name`, `email`, and `password` required:
 
-```kotlin
+```java
 form SignUp {
   @required
   text     name
@@ -148,7 +148,7 @@ Now these three fields cannot be empty, or users will see error messages.
 
 We can further enhance field validation by adding more annotations or modifying annotation parameters:
 
-```kotlin
+```java
 form SignUp {
   @required("Let me know your cool name!")
   text     name
@@ -515,64 +515,64 @@ Annotations are optional modifiers that can be added to a field to enhance its b
 **Elements**
 
 - `[name]`: The name of the annotation. Refer to the [Annotation Reference](#annotation-reference) for the full list.
-- `[arguments]`: Zero or more arguments passed to the annotation.
+- `[arguments]`: Zero or more arguments passed to the annotation. See examples below for more details.
 
 **Examples**
-
-```java
-@required()
-text name
-```
 
 You can omit optional parameters.
 
 ```java
-@required
+@required() // omit optional param `message`
 text name
 ```
 
 If no arguments, you can also omit the parentheses.
 
 ```java
-@maxLength(10, "Up to 10 characters")
+@required
 text name
 ```
 
 You can pass arguments namelessly,
 
 ```java
-@maxLength(length: 10, message: "Up to 10 characters")
+@maxLength(10, "Up to 10 characters")
 text name
 ```
 
-...or namely,
+...or named-ly,
 
 ```java
-@maxLength(message: "Up to 10 characters", length: 10)
+@maxLength(length: 10, message: "Up to 10 characters")
 text name
 ```
 
 ...with any order.
 
 ```java
-@maxLength(10, message: "Up to 10 characters")
+@maxLength(message: "Up to 10 characters", length: 10)
 text name
 ```
 
 Of course you can mix them together,
 
 ```java
-@maxLength(length: 10, "Up to 10 characters") // Error: Named argument can only appear after all positional arguments.
+@maxLength(10, message: "Up to 10 characters")
 text name
 ```
 
 ...but remember, named arguments can only come after all positional arguments.
 
+```java
+@maxLength(length: 10, "Up to 10 characters") // Error: Named argument can only appear after all positional arguments.
+text name
+```
+
 ##### Annotation Reference
 
-All available annotations are defined in `annotations.d.formml`. You can click the link and `cmd/ctrl + F` to search.
+All available annotations are defined in `annotations.d.fml`. You can click the link below and `cmd/ctrl + F` to search annotations.
 
-https://github.com/formml/formml/blob/main/packages/dsl/builtins/annotations.d.formml
+[Latest Annotations List](https://github.com/formml/formml/blob/main/packages/dsl/builtins/annotations.d.formml)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
