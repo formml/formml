@@ -237,6 +237,8 @@ npm install @formml/ts-plugin --save-dev
 
 4 - Restart TS Server to see type information
 
+> If your **ESLint** fails due to some `.fml` and `typescript-eslint` related errors, refer to this [troubleshooting](#typescript-eslint-cannot-resolve-fml-file-types) section for potential fixes.
+
 </details>
 
 Next, create your first form component with FormML Model.
@@ -578,20 +580,92 @@ All available annotations are defined in `annotations.d.fml`. You can click the 
 
 ## API Reference
 
+- [`@formml/react`](./packages/client/docs/README.md)
+- [`@formml/core`](./packages/core/docs/README.md)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Known Issues
+
+[Known Issues List](https://github.com/formml/formml/issues?q=is%3Aopen+is%3Aissue+label%3Abug+label%3Aenhancement)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Roadmap
 
+> Only epics are listed
+
+- [x] Basic forms
+- [ ] Field calculations - JavaScript
+- [ ] Composite field types
+- [ ] Field calculations - Excel-like formula
+- [ ] Synchronization (infra for auto-saving)
+- [ ] Code blocks in DSL
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## FAQs
 
+### Comparison with X
+
+I explained the motivation of FormML in detail in blog [Beyond Basic Forms: Why Enterprise-Level Forms Remain a Challenge](./docs/blog/enterprise-level-forms.md).
+
+There are some comparisons with awesome tools in the ecosystem like React Hook Form.
+
+If you are still confused, welcome to new a discussion in this repo.
+
 ### Why not code generation?
 
+When implementing type support for FormML DSL, I had two choices with different pros and cons:
+
+- Code generation: Like [Prisma](https://www.prisma.io/), create a CLI to manually or semi-automatically generate type files in the filesystem.
+- TypeScript language service plugin: Leverage TypeScript's native capabilities to provide real-time type support in the editor.
+
+Neither solution is perfect. For example, the current approach (option 2) cannot support type checking in `tsc` (see [Using `tsc` to check FormML Model types](#using-tsc-to-check-formml-model-types)).
+
+However, code generation has some significant drawbacks I couldn't accept:
+
+- Whether visible or not, it always shits in your filesystem - managing these files has costs, both for users and FormML itself.
+- It brings additional mental burden - requiring users to switch contexts (their code vs generated code).
+- It adds complexity to CI/CD - extra build steps, more dependencies.
+- Real-time updates require extra background process, or you have to do it by hands.
+
+So I chose option 2 without much hesitation.
+
+To be honest, while the ts-plugin has worked well so far, I'm still not entirely confident in this approach. This is mainly due to the TypeScript team's inaction on the plugin system (it has minimal documentation, limited functionality, and more importantly, the team doesn't seem very interested in it).
+
+The good news is that FormML can always switch to option 1 in the future if we encounter insurmountable issues, since this is just one minor aspect of FormML. 😉
+
 ### Using `tsc` to check FormML Model types
+
+Due to the [limitation of TypeScript language service plugin](https://github.com/microsoft/TypeScript/wiki/Writing-a-Language-Service-Plugin), it's impossible to provide type infos of `.fml` files when running `tsc` cli.
+
+That is, if you rely on `tsc` (directly or indirectly) to check types (mostly in CI/CD), you may get errors like:
+
+```
+error TS2307: Cannot find module 'xxx.fml' or its corresponding type declarations.
+```
+
+A mitigation is to create a `.d.ts` file to basically skip all type checks for `.fml` files, like:
+
+```ts
+// formml.d.ts
+declare module '*.fml' {
+  const model: any
+  export default model
+}
+```
+
+Place it anywhere in your project, and ensure it's included by your `tsconfig.json`.
+
+Now you can run `tsc` without errors.
+
+To resolve this issue completely, I plan to create a cli with command like `formml check` to replace `tsc --noEmit` for type checking.
+
+### `typescript-eslint` cannot resolve `.fml` file types
+
+If you are using "Linting with Type Information" feature of `typescript-eslint`, it may fail due to `typescript-eslint` cannot resolve `.fml` file types correctly, even though TypeScript itself can.
+
+To fix this, please ensure `parserOptions.project: true` is set in your ESLint config (more details [here](https://typescript-eslint.io/packages/parser#project)). This enables `typescript-eslint` to have the completely same type information as TypeScript.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
