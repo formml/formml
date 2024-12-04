@@ -36,7 +36,7 @@ export interface FieldHelpers {
   /**
    * Marks the field as touched, indicating user interaction
    */
-  blur(): void
+  blur(this: void): void
 
   /**
    * Commits the current raw string value to storage, converting it to the field's type and triggering post-processes.
@@ -47,19 +47,19 @@ export interface FieldHelpers {
    * field.helpers.commitRawValue() // Converts string "123" to number 123 for `num` fields
    * ```
    */
-  commitRawValue(): void
+  commitRawValue(this: void): void
 
   /**
    * Sets the raw string value to represent user input, without any post-processes.
    * @param value - The string value to set
    */
-  setRawValue(value: string): void
+  setRawValue(this: void, value: string): void
 
   /**
    * Sets the typed value directly into storage, triggering post-processes.
    * @param value - The typed value matching the field's type
    */
-  setTypedValue(value: JSType.PrimitiveType): void
+  setTypedValue(this: void, value: JSType.PrimitiveType): void
 }
 
 export interface FieldPack {

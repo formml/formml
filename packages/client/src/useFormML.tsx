@@ -55,6 +55,7 @@ export interface FormMLPack<T extends FormMLSchema> {
    * ```
    */
   handleSubmit(
+    this: void,
     onSubmit: SubmitHandler,
     onError?: SubmitErrorHandler,
   ): React.FormEventHandler<HTMLFormElement>
