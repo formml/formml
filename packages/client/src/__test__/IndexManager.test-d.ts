@@ -14,6 +14,18 @@ import IndexManager from '../IndexManager.js'
 
 describe('IndexManager', () => {
   describe('indexes', () => {
+    test('should be any given any', () => {
+      // Arrange
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+      const schema = {} as any
+
+      // Act
+      const indexManager = new IndexManager(schema)
+
+      // Assert
+      expectTypeOf(indexManager.root).toBeAny()
+    })
+
     test('should contain uncertain children given a generic schema', () => {
       // Arrange
       const schema = {} as FormMLSchema

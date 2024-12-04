@@ -73,36 +73,42 @@ interface FieldToEntry extends H.Fn {
   ]
 }
 
-type InferIndex<T> = T extends generics.Form
-  ? FormIndex<
-      H.Pipe<
-        T,
-        [
-          H.Objects.Get<'fields'>,
-          H.Tuples.Map<FieldToEntry>,
-          H.Tuples.ToUnion,
-          H.Objects.FromEntries,
-        ]
-      >
-    >
-  : T extends generics.Field
-    ? H.Pipe<
-        T,
-        [
-          H.Objects.Get<'type'>,
-          H.Match<
+type IsAny<T> = 0 extends 1 & T ? true : false
+
+type InferIndex<T> =
+  IsAny<T> extends true
+    ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      any
+    : T extends generics.Form
+      ? FormIndex<
+          H.Pipe<
+            T,
             [
-              H.Match.With<'text', TextIndex>,
-              H.Match.With<'num', NumIndex>,
-              H.Match.With<'bool', BoolIndex>,
-              H.Match.With<'datetime', DatetimeIndex>,
-              H.Match.With<'decimal', DecimalIndex>,
-              H.Match.With<string, GenericIndex>, // fallback
+              H.Objects.Get<'fields'>,
+              H.Tuples.Map<FieldToEntry>,
+              H.Tuples.ToUnion,
+              H.Objects.FromEntries,
             ]
-          >,
-        ]
-      >
-    : never
+          >
+        >
+      : T extends generics.Field
+        ? H.Pipe<
+            T,
+            [
+              H.Objects.Get<'type'>,
+              H.Match<
+                [
+                  H.Match.With<'text', TextIndex>,
+                  H.Match.With<'num', NumIndex>,
+                  H.Match.With<'bool', BoolIndex>,
+                  H.Match.With<'datetime', DatetimeIndex>,
+                  H.Match.With<'decimal', DecimalIndex>,
+                  H.Match.With<string, GenericIndex>, // fallback
+                ]
+              >,
+            ]
+          >
+        : never
 
 /** @internal */
 export type IndexRoot<T extends generics.FormMLSchema> = InferIndex<T['form']>
