@@ -56,7 +56,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/image/demo.jpg" alt="FormML Demo" width="500">
+  <img src="docs/image/demo.png" alt="FormML Demo" width="500">
 </p>
 
 **FormML** (Form Modeling Language, pronounced as "formal") is a full-stack framework for building **enterprise-level** forms.
@@ -301,7 +301,7 @@ This next-level type safety manifests in three ways:
 
 Crucially, it's fully typed, so when you access its children via dot notation, VSCode automatically lists all possible child indexes.
 
-(image)
+![Type-based completion](docs/image/ts-completion.png)
 
 This feature will also apply to planned _FormML Model composite types_, providing autocompletion when writing nested paths like `$form.parent.child`.
 
