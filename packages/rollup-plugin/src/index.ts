@@ -7,7 +7,7 @@ export default function formml(): Plugin {
     name: 'formml',
 
     async transform(formml, id) {
-      if (id.slice(-7) !== '.formml') return null
+      if (!id.endsWith('.fml') && !id.endsWith('.formml')) return null
 
       try {
         return {
