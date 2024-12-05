@@ -1,0 +1,9 @@
+{
+  "extends": "@formml/typescript-config/jsx.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["vitest/globals", "vitest/importMeta", "vite/client", "node"],
+    "jsx": "react-jsx"
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
+}

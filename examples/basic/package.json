@@ -12,7 +12,7 @@
     "lint:type": "tsc"
   },
   "dependencies": {
-    "@formml/client": "workspace:*"
+    "@formml/react": "workspace:*"
   },
   "devDependencies": {
     "@formml/ts-plugin": "workspace:*",

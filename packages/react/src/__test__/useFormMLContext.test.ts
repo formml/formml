@@ -1,8 +1,7 @@
+import type { FormML } from '@formml/client'
 import type { RenderHookResult } from '@testing-library/react'
 
 import { renderHook } from '@testing-library/react'
-
-import type { FormML } from '../FormML.js'
 
 import { useFormMLContext } from '../useFormMLContext.js'
 import { renderHookWithContext } from './helpers/renderHookWithContext.js'

@@ -1,6 +1,6 @@
-import { createContext, useContext } from 'react'
+import type { FormML } from '@formml/client'
 
-import type { FormML } from './FormML.js'
+import { createContext, useContext } from 'react'
 
 const FormMLContext = createContext<FormML | null>(null)
 

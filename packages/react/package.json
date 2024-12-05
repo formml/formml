@@ -1,15 +1,15 @@
 {
-  "name": "@formml/client",
+  "name": "@formml/react",
   "version": "0.0.1",
-  "description": "The client to evaluate formml files for frontend",
+  "description": "The React bindings for FormML",
   "keywords": [
     "formml",
     "form",
-    "frontend",
-    "UI"
+    "react",
+    "react-hooks"
   ],
-  "homepage": "https://github.com/formml/formml/tree/main/packages/client",
-  "repository": "https://github.com/formml/formml/tree/main/packages/client",
+  "homepage": "https://github.com/formml/formml/tree/main/packages/react",
+  "repository": "https://github.com/formml/formml/tree/main/packages/react",
   "bugs": "https://github.com/formml/formml/issues",
   "author": "Jindong Zhang <jindong.zhannng@gmail.com>",
   "license": "MIT",
@@ -41,18 +41,18 @@
     "gen:docs": "typedoc --plugin typedoc-plugin-markdown --out ./docs src/index.ts"
   },
   "dependencies": {
-    "@formml/core": "workspace:^",
+    "@formml/client": "workspace:^",
     "@formml/utils": "workspace:^",
-    "@vue-reactivity/watch": "^0.2.0",
-    "@vue/reactivity": "^3.4.3",
-    "bignumber.js": "^9.1.2",
     "dayjs": "^1.11.13",
-    "valibot": "^0.42.1"
+    "use-sync-external-store": "^1.2.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@formml/dsl": "workspace:^",
     "@formml/typescript-config": "workspace:*",
-    "eslint-config-formml": "workspace:*",
-    "hotscript": "^1.0.13"
+    "eslint-config-formml": "workspace:*"
   }
 }

@@ -1,5 +1,3 @@
-import type { FormMLSchema, generics } from '@formml/dsl'
-
 import type {
   BoolIndex,
   DatetimeIndex,
@@ -7,7 +5,8 @@ import type {
   GenericIndex,
   NumIndex,
   TextIndex,
-} from '../IndexManager.js'
+} from '@formml/client'
+import type { FormMLSchema, generics } from '@formml/dsl'
 
 import { useFormML } from '../useFormML.js'
 

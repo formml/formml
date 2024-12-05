@@ -1,10 +1,10 @@
+import type { BaseIndex } from '@formml/client'
+
+import { FormML } from '@formml/client'
 import { createFormMLParser } from '@formml/dsl'
 import { act, renderHook, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 
-import type { BaseIndex } from '../IndexManager.js'
-
-import { FormML } from '../FormML.js'
 import { useField } from '../useField.js'
 import { renderHookWithContext } from './helpers/renderHookWithContext.js'
 import { renderWithContext } from './helpers/renderWithContext.js'

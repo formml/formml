@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, useFormML } from '@formml/client'
+import { ErrorMessage, Field, useFormML } from '@formml/react'
 
 import basic from './basic.fml'
 

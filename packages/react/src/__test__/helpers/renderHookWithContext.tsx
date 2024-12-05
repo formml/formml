@@ -1,3 +1,4 @@
+import type { FormML } from '@formml/client'
 import type {
   Queries,
   RenderHookOptions,
@@ -6,8 +7,6 @@ import type {
 } from '@testing-library/react'
 
 import { renderHook } from '@testing-library/react'
-
-import type { FormML } from '../../FormML.js'
 
 import { buildWrapper } from './buildWrapper.js'
 

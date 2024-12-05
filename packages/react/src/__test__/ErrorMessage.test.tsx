@@ -1,9 +1,9 @@
+import type { BaseIndex } from '@formml/client'
+
 import { createFormMLParser } from '@formml/dsl'
 import { render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import React from 'react'
-
-import type { BaseIndex } from '../IndexManager.js'
 
 import { ErrorMessage } from '../ErrorMessage.js'
 import { Field } from '../Field.js'

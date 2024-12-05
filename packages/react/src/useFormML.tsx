@@ -1,12 +1,10 @@
+import type { IndexRoot, PartialFormMLOptions } from '@formml/client'
 import type { ValidationError } from '@formml/core'
 import type { FormMLSchema } from '@formml/dsl'
 
+import { FormML } from '@formml/client'
 import React from 'react'
 
-import type { PartialFormMLOptions } from './FormML.js'
-import type { IndexRoot } from './IndexManager.js'
-
-import { FormML } from './FormML.js'
 import { FormMLProvider } from './useFormMLContext.js'
 import { useConstant } from './utils/useConstant.js'
 

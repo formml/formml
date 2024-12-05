@@ -1,4 +1,4 @@
-import type { FormML } from '../../FormML.js'
+import type { FormML } from '@formml/client'
 
 import { FormMLProvider } from '../../useFormMLContext.js'
 

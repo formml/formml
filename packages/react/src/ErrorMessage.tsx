@@ -1,6 +1,6 @@
-import React from 'react'
+import type { BaseIndex } from '@formml/client'
 
-import type { BaseIndex } from './IndexManager.js'
+import React from 'react'
 
 import { useField } from './useField.js'
 

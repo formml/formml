@@ -1,18 +1,17 @@
+import type { FormMLOptions } from '@formml/client'
 import type { ValidationError } from '@formml/core'
 
+import { FormML } from '@formml/client'
 import { createFormMLParser } from '@formml/dsl'
 import { render, renderHook } from '@testing-library/react'
 import { Profiler } from 'react'
 
-import type { FormMLOptions } from '../FormML.js'
-
-import { FormML } from '../FormML.js'
 import { useFormML } from '../useFormML.js'
 import { useFormMLContext } from '../useFormMLContext.js'
 
-vi.mock('../FormML.js', async (importOriginal) => {
+vi.mock('@formml/client', async (importOriginal) => {
   const { FormML: realFormML } =
-    await importOriginal<typeof import('../FormML.js')>()
+    await importOriginal<typeof import('@formml/client')>()
   return {
     FormML: vi.fn((schema) => new realFormML(schema)),
   }

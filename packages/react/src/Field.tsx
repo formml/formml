@@ -1,10 +1,10 @@
+import type { BaseIndex } from '@formml/client'
 import type { ChangeEvent, ForwardedRef } from 'react'
 
 import { assertNever } from '@formml/utils'
 import dayjs from 'dayjs'
 import { forwardRef } from 'react'
 
-import type { BaseIndex } from './IndexManager.js'
 import type { FieldPack } from './useField.js'
 
 import { useField } from './useField.js'

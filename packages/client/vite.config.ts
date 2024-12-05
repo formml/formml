@@ -1,12 +1,10 @@
 /// <reference types="vitest" />
-import react from '@vitejs/plugin-react'
 import ts from 'typescript'
 import { defineConfig } from 'vite'
 import { vitePluginTypescriptTransform } from 'vite-plugin-typescript-transform'
 
 export default defineConfig({
   plugins: [
-    react(),
     vitePluginTypescriptTransform({
       enforce: 'pre',
       filter: {
@@ -24,10 +22,8 @@ export default defineConfig({
   ],
 
   test: {
-    environment: 'jsdom',
     globals: true,
     include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     restoreMocks: true,
-    setupFiles: ['src/__test__/vitest-setup.ts'],
   },
 })
