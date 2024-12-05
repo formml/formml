@@ -6,7 +6,7 @@ import { multipleOf } from '../multipleOf.js'
 describe('multipleOf', () => {
   test('should validate number multiple of requirement', () => {
     // Arrange
-    const action = { name: 'multipleOf', options: { requirement: 5 } } as const
+    const action = { name: 'multipleOf', options: { divisor: 5 } } as const
     const validNumber = 15
 
     // Act
@@ -19,7 +19,7 @@ describe('multipleOf', () => {
 
   test('should reject number not multiple of requirement', () => {
     // Arrange
-    const action = { name: 'multipleOf', options: { requirement: 5 } } as const
+    const action = { name: 'multipleOf', options: { divisor: 5 } } as const
     const invalidNumber = 17
 
     // Act
@@ -50,7 +50,7 @@ describe('multipleOf', () => {
 
   test('should validate BigNumber multiple of requirement', () => {
     // Arrange
-    const action = { name: 'multipleOf', options: { requirement: 5 } } as const
+    const action = { name: 'multipleOf', options: { divisor: 5 } } as const
     const validBigNumber = new BigNumber('15')
 
     // Act
@@ -63,7 +63,7 @@ describe('multipleOf', () => {
 
   test('should reject BigNumber not multiple of requirement', () => {
     // Arrange
-    const action = { name: 'multipleOf', options: { requirement: 5 } } as const
+    const action = { name: 'multipleOf', options: { divisor: 5 } } as const
     const invalidBigNumber = new BigNumber('17')
 
     // Act
@@ -97,7 +97,7 @@ describe('multipleOf', () => {
     const customMessage = 'Value must be divisible by 5'
     const action = {
       name: 'multipleOf',
-      options: { message: customMessage, requirement: 5 },
+      options: { divisor: 5, message: customMessage },
     } as const
     const invalidNumber = 17
 

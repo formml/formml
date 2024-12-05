@@ -7,7 +7,7 @@ describe('excludes', () => {
     // Arrange
     const action = {
       name: 'excludes',
-      options: { requirement: 'world' },
+      options: { value: 'world' },
     } as const
     const validString = 'hello there'
 
@@ -23,7 +23,7 @@ describe('excludes', () => {
     // Arrange
     const action = {
       name: 'excludes',
-      options: { requirement: 'world' },
+      options: { value: 'world' },
     } as const
     const invalidString = 'hello world'
 
@@ -59,7 +59,7 @@ describe('excludes', () => {
       name: 'excludes',
       options: {
         message: 'Custom excludes error message',
-        requirement: 'world',
+        value: 'world',
       },
     } as const
     const invalidString = 'hello world'

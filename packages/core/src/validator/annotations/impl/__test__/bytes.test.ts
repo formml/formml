@@ -7,7 +7,7 @@ describe('bytes', () => {
     // Arrange
     const action = {
       name: 'bytes',
-      options: { requirement: 5 },
+      options: { length: 5 },
     } as const
     const validString = 'hello' // 5 bytes
 
@@ -23,7 +23,7 @@ describe('bytes', () => {
     // Arrange
     const action = {
       name: 'bytes',
-      options: { requirement: 5 },
+      options: { length: 5 },
     } as const
     const invalidString = 'hi' // 2 bytes
 
@@ -58,8 +58,8 @@ describe('bytes', () => {
     const action = {
       name: 'bytes',
       options: {
+        length: 5,
         message: 'String must be exactly 5 bytes long',
-        requirement: 5,
       },
     } as const
     const invalidString = 'hi' // 2 bytes
@@ -94,7 +94,7 @@ describe('bytes', () => {
     // Arrange
     const action = {
       name: 'bytes',
-      options: { requirement: 6 },
+      options: { length: 6 },
     } as const
     const validString = '你好' // 6 bytes (3 bytes per character)
 

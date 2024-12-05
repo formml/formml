@@ -7,7 +7,7 @@ describe('notLength', () => {
     // Arrange
     const action = {
       name: 'notLength',
-      options: { requirement: 5 },
+      options: { length: 5 },
     } as const
     const validString = 'Hello World' // length 11
 
@@ -23,7 +23,7 @@ describe('notLength', () => {
     // Arrange
     const action = {
       name: 'notLength',
-      options: { requirement: 5 },
+      options: { length: 5 },
     } as const
     const invalidString = 'Hello' // length 5
 
@@ -58,8 +58,8 @@ describe('notLength', () => {
     const action = {
       name: 'notLength',
       options: {
+        length: 5,
         message: 'String must not be 5 characters long',
-        requirement: 5,
       },
     } as const
     const invalidString = 'Hello'

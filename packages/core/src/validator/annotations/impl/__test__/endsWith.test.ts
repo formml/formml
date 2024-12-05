@@ -7,7 +7,7 @@ describe('endsWith', () => {
     // Arrange
     const action = {
       name: 'endsWith',
-      options: { requirement: 'world' },
+      options: { suffix: 'world' },
     } as const
     const validString = 'hello world'
 
@@ -23,7 +23,7 @@ describe('endsWith', () => {
     // Arrange
     const action = {
       name: 'endsWith',
-      options: { requirement: 'world' },
+      options: { suffix: 'world' },
     } as const
     const invalidString = 'world hello'
 
@@ -59,7 +59,7 @@ describe('endsWith', () => {
       name: 'endsWith',
       options: {
         message: 'Custom endsWith error message',
-        requirement: 'world',
+        suffix: 'world',
       },
     } as const
     const invalidString = 'world hello'

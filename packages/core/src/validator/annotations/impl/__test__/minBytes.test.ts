@@ -7,7 +7,7 @@ describe('minBytes', () => {
     // Arrange
     const action = {
       name: 'minBytes',
-      options: { requirement: 5 },
+      options: { length: 5 },
     } as const
     const validString = 'Hello World'
 
@@ -23,7 +23,7 @@ describe('minBytes', () => {
     // Arrange
     const action = {
       name: 'minBytes',
-      options: { requirement: 5 },
+      options: { length: 5 },
     } as const
     const invalidString = 'Hi'
 
@@ -58,8 +58,8 @@ describe('minBytes', () => {
     const action = {
       name: 'minBytes',
       options: {
+        length: 5,
         message: 'String too short in bytes',
-        requirement: 5,
       },
     } as const
     const invalidString = 'Hi'

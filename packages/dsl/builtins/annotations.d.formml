@@ -36,10 +36,10 @@ fun bic(message?: text)
  *
  * [Details of Valibot API](https://valibot.dev/api/bytes/)
  *
- * @param {num} requirement - The required byte length.
+ * @param {num} length - The required byte length.
  * @param {text} [message] - Optional custom error message.
  */
-fun bytes(requirement: num, message?: text)
+fun bytes(length: num, message?: text)
 
 /**
  * Validates that the input is a valid credit card number.
@@ -100,20 +100,20 @@ fun empty(message?: text)
  *
  * [Details of Valibot API](https://valibot.dev/api/endsWith/)
  *
- * @param {text} requirement - The required ending text.
+ * @param {text} suffix - The required ending text.
  * @param {text} [message] - Optional custom error message.
  */
-fun endsWith(requirement: text, message?: text)
+fun endsWith(suffix: text, message?: text)
 
 /**
  * Validates that the input does not include a specific text.
  *
  * [Details of Valibot API](https://valibot.dev/api/excludes/)
  *
- * @param {text} requirement - The text to exclude.
+ * @param {text} value - The text to exclude.
  * @param {text} [message] - Optional custom error message.
  */
-fun excludes(requirement: text, message?: text)
+fun excludes(value: text, message?: text)
 
 /**
  * Validates that the input is a valid hexadecimal number.
@@ -147,10 +147,10 @@ fun imei(message?: text)
  *
  * [Details of Valibot API](https://valibot.dev/api/includes/)
  *
- * @param {text} requirement - The text to include.
+ * @param {text} value - The text to include.
  * @param {text} [message] - Optional custom error message.
  */
-fun includes(requirement: text, message?: text)
+fun includes(value: text, message?: text)
 
 /**
  * Validates that the input is a valid IP address.
@@ -238,10 +238,10 @@ fun isoWeek(message?: text)
  *
  * [Details of Valibot API](https://valibot.dev/api/length/)
  *
- * @param {num} requirement - The required length.
+ * @param {num} length - The required length.
  * @param {text} [message] - Optional custom error message.
  */
-fun length(requirement: num, message?: text)
+fun length(length: num, message?: text)
 
 /**
  * Validates that the input is a valid MAC address.
@@ -275,40 +275,40 @@ fun mac64(message?: text)
  *
  * [Details of Valibot API](https://valibot.dev/api/maxBytes/)
  *
- * @param {num} requirement - The maximum byte length.
+ * @param {num} length - The maximum byte length.
  * @param {text} [message] - Optional custom error message.
  */
-fun maxBytes(requirement: num, message?: text)
+fun maxBytes(length: num, message?: text)
 
 /**
  * Validates that the input does not exceed a maximum length.
  *
  * [Details of Valibot API](https://valibot.dev/api/maxLength/)
  *
- * @param {num} requirement - The maximum length.
+ * @param {num} length - The maximum length.
  * @param {text} [message] - Optional custom error message.
  */
-fun maxLength(requirement: num, message?: text)
+fun maxLength(length: num, message?: text)
 
 /**
  * Validates that the input meets a minimum byte length.
  *
  * [Details of Valibot API](https://valibot.dev/api/minBytes/)
  *
- * @param {num} requirement - The minimum byte length.
+ * @param {num} length - The minimum byte length.
  * @param {text} [message] - Optional custom error message.
  */
-fun minBytes(requirement: num, message?: text)
+fun minBytes(length: num, message?: text)
 
 /**
  * Validates that the input meets a minimum length.
  *
  * [Details of Valibot API](https://valibot.dev/api/minLength/)
  *
- * @param {num} requirement - The minimum length.
+ * @param {num} length - The minimum length.
  * @param {text} [message] - Optional custom error message.
  */
-fun minLength(requirement: num, message?: text)
+fun minLength(length: num, message?: text)
 
 /**
  * Validates that the input is a valid Nano ID.
@@ -324,20 +324,20 @@ fun nanoid(message?: text)
  *
  * [Details of Valibot API](https://valibot.dev/api/notBytes/)
  *
- * @param {num} requirement - The byte length to not match.
+ * @param {num} length - The byte length to not match.
  * @param {text} [message] - Optional custom error message.
  */
-fun notBytes(requirement: num, message?: text)
+fun notBytes(length: num, message?: text)
 
 /**
  * Validates that the input does not match a specific length.
  *
  * [Details of Valibot API](https://valibot.dev/api/notLength/)
  *
- * @param {num} requirement - The length to not match.
+ * @param {num} length - The length to not match.
  * @param {text} [message] - Optional custom error message.
  */
-fun notLength(requirement: num, message?: text)
+fun notLength(length: num, message?: text)
 
 /**
  * Validates that the input is a valid octal number.
@@ -353,20 +353,20 @@ fun octal(message?: text)
  *
  * [Details of Valibot API](https://valibot.dev/api/regex/)
  *
- * @param {text} requirement - The regex pattern to match.
+ * @param {text} pattern - The regex pattern to match.
  * @param {text} [message] - Optional custom error message.
  */
-fun regex(requirement: text, message?: text)
+fun regex(pattern: text, message?: text)
 
 /**
  * Validates that the input starts with a specific text.
  *
  * [Details of Valibot API](https://valibot.dev/api/startsWith/)
  *
- * @param {text} requirement - The required starting text.
+ * @param {text} prefix - The required starting text.
  * @param {text} [message] - Optional custom error message.
  */
-fun startsWith(requirement: text, message?: text)
+fun startsWith(prefix: text, message?: text)
 
 /**
  * Validates that the input is a valid ULID.
@@ -431,7 +431,7 @@ fun integer(message?: text)
  *
  * [Details of Valibot API](https://valibot.dev/api/multipleOf/)
  *
- * @param {num} requirement - The number that the input must be a multiple of.
+ * @param {num} divisor - The number that the input must be a multiple of.
  * @param {text} [message] - Optional custom error message.
  */
-fun multipleOf(requirement: num, message?: text)
+fun multipleOf(divisor: num, message?: text)

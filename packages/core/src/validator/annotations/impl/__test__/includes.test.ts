@@ -7,7 +7,7 @@ describe('includes', () => {
     // Arrange
     const action = {
       name: 'includes',
-      options: { requirement: 'world' },
+      options: { value: 'world' },
     } as const
 
     // Act
@@ -22,7 +22,7 @@ describe('includes', () => {
     // Arrange
     const action = {
       name: 'includes',
-      options: { requirement: 'world' },
+      options: { value: 'world' },
     } as const
 
     // Act
@@ -57,7 +57,7 @@ describe('includes', () => {
       name: 'includes',
       options: {
         message: 'Custom includes error message',
-        requirement: 'world',
+        value: 'world',
       },
     } as const
 

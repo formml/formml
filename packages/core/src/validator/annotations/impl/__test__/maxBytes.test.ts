@@ -7,7 +7,7 @@ describe('maxBytes', () => {
     // Arrange
     const action = {
       name: 'maxBytes',
-      options: { requirement: 5 },
+      options: { length: 5 },
     } as const
     const validString = 'Hello'
 
@@ -23,7 +23,7 @@ describe('maxBytes', () => {
     // Arrange
     const action = {
       name: 'maxBytes',
-      options: { requirement: 5 },
+      options: { length: 5 },
     } as const
     const invalidString = 'Hello World'
 
@@ -58,8 +58,8 @@ describe('maxBytes', () => {
     const action = {
       name: 'maxBytes',
       options: {
+        length: 5,
         message: 'String too long in bytes',
-        requirement: 5,
       },
     } as const
     const invalidString = 'Hello World'

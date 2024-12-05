@@ -7,7 +7,7 @@ describe('startsWith', () => {
     // Arrange
     const action = {
       name: 'startsWith',
-      options: { requirement: 'hello' },
+      options: { prefix: 'hello' },
     } as const
     const validString = 'hello world'
 
@@ -23,7 +23,7 @@ describe('startsWith', () => {
     // Arrange
     const action = {
       name: 'startsWith',
-      options: { requirement: 'hello' },
+      options: { prefix: 'hello' },
     } as const
     const invalidString = 'world hello'
 
@@ -59,7 +59,7 @@ describe('startsWith', () => {
       name: 'startsWith',
       options: {
         message: 'Custom startsWith error message',
-        requirement: 'hello',
+        prefix: 'hello',
       },
     } as const
     const invalidString = 'world hello'

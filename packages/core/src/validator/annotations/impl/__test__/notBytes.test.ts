@@ -7,7 +7,7 @@ describe('notBytes', () => {
     // Arrange
     const action = {
       name: 'notBytes',
-      options: { requirement: 5 },
+      options: { length: 5 },
     } as const
     const validString = 'Hello World' // 11 bytes
 
@@ -23,7 +23,7 @@ describe('notBytes', () => {
     // Arrange
     const action = {
       name: 'notBytes',
-      options: { requirement: 5 },
+      options: { length: 5 },
     } as const
     const invalidString = 'Hello' // 5 bytes
 
@@ -58,8 +58,8 @@ describe('notBytes', () => {
     const action = {
       name: 'notBytes',
       options: {
+        length: 5,
         message: 'String must not be 5 bytes',
-        requirement: 5,
       },
     } as const
     const invalidString = 'Hello'

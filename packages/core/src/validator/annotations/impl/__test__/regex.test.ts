@@ -7,7 +7,7 @@ describe('regex', () => {
     // Arrange
     const action = {
       name: 'regex',
-      options: { requirement: '^[A-Z]{3}$' },
+      options: { pattern: '^[A-Z]{3}$' },
     } as const
     const validString = 'ABC'
 
@@ -23,7 +23,7 @@ describe('regex', () => {
     // Arrange
     const action = {
       name: 'regex',
-      options: { requirement: '^[A-Z]{3}$' },
+      options: { pattern: '^[A-Z]{3}$' },
     } as const
     const invalidString = 'abc'
 
@@ -59,7 +59,7 @@ describe('regex', () => {
       name: 'regex',
       options: {
         message: 'Custom regex error message',
-        requirement: '^[A-Z]{3}$',
+        pattern: '^[A-Z]{3}$',
       },
     } as const
     const invalidString = 'abc'

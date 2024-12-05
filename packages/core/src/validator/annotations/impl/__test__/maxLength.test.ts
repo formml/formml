@@ -7,7 +7,7 @@ describe('maxLength', () => {
     // Arrange
     const action = {
       name: 'maxLength',
-      options: { requirement: 5 },
+      options: { length: 5 },
     } as const
     const validString = 'Hello'
 
@@ -23,7 +23,7 @@ describe('maxLength', () => {
     // Arrange
     const action = {
       name: 'maxLength',
-      options: { requirement: 5 },
+      options: { length: 5 },
     } as const
     const invalidString = 'Hello World'
 
@@ -58,8 +58,8 @@ describe('maxLength', () => {
     const action = {
       name: 'maxLength',
       options: {
+        length: 5,
         message: 'String too long',
-        requirement: 5,
       },
     } as const
     const invalidString = 'Hello World'

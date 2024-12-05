@@ -82,7 +82,28 @@ class Transpiler {
 // Transformers
 
 const services = createFormMLDeclarationServices(EmptyFileSystem)
-const parse = parseHelper<FormMLDeclaration>(services.FormMLDeclaration)
+const parse = async (code: string) => {
+  const { diagnostics, parseResult } = await parseHelper<FormMLDeclaration>(
+    services.FormMLDeclaration,
+  )(code, { validation: true })
+  if (
+    (diagnostics && diagnostics.length > 0) ||
+    parseResult.lexerErrors.length > 0 ||
+    parseResult.parserErrors.length > 0
+  ) {
+    throw new Error(
+      'Parsing failed with errors:\n' +
+        [
+          ...(diagnostics ?? []),
+          ...parseResult.lexerErrors,
+          ...parseResult.parserErrors,
+        ]
+          .map((e) => e.message)
+          .join('\n'),
+    )
+  }
+  return parseResult.value
+}
 
 const pick =
   <K extends string, T extends { [key in K]?: unknown }>(keys: K[]) =>
@@ -103,7 +124,7 @@ function generateInterface(ast: FormMLDeclaration) {
 }
 
 const transformToInterface: Transformer = async ({ code, fileName }) => {
-  const ast = (await parse(code)).parseResult.value
+  const ast = await parse(code)
   const interface_ = generateInterface(ast)
   const interfaceCode = `export default ${JSON.stringify(
     interface_,

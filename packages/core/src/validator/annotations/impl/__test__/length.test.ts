@@ -7,7 +7,7 @@ describe('length', () => {
     // Arrange
     const action = {
       name: 'length',
-      options: { requirement: 5 },
+      options: { length: 5 },
     } as const
     const validString = 'hello'
 
@@ -23,7 +23,7 @@ describe('length', () => {
     // Arrange
     const action = {
       name: 'length',
-      options: { requirement: 5 },
+      options: { length: 5 },
     } as const
     const invalidString = 'hi'
 
@@ -58,8 +58,8 @@ describe('length', () => {
     const action = {
       name: 'length',
       options: {
+        length: 5,
         message: 'Custom length error message',
-        requirement: 5,
       },
     } as const
     const invalidString = 'hi'

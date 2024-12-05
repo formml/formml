@@ -7,7 +7,7 @@ describe('minLength', () => {
     // Arrange
     const action = {
       name: 'minLength',
-      options: { requirement: 5 },
+      options: { length: 5 },
     } as const
     const validString = 'Hello World'
 
@@ -23,7 +23,7 @@ describe('minLength', () => {
     // Arrange
     const action = {
       name: 'minLength',
-      options: { requirement: 5 },
+      options: { length: 5 },
     } as const
     const invalidString = 'Hi'
 
@@ -58,8 +58,8 @@ describe('minLength', () => {
     const action = {
       name: 'minLength',
       options: {
+        length: 5,
         message: 'String too short',
-        requirement: 5,
       },
     } as const
     const invalidString = 'Hi'
