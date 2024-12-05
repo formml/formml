@@ -5,7 +5,7 @@ export default defineConfig({
   entry: ['src/index.ts', 'src/language/main.ts'],
   external: ['vscode'],
   loader: {
-    '.formml': 'binary',
+    '.fml': 'binary',
   },
   noExternal: ['@formml/dsl', 'langium'],
   sourcemap: true,

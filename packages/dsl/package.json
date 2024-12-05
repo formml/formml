@@ -46,7 +46,7 @@
       "default": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./builtins/*.formml": "./builtins/*.formml",
+    "./builtins/*.fml": "./builtins/*.fml",
     "./interfaces/*.js": {
       "default": "./builtins/generated/interfaces/*.js",
       "types": "./builtins/generated/interfaces/*.d.ts"

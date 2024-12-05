@@ -1,10 +1,10 @@
-import builtinAnnotations from '@formml/dsl/builtins/annotations.d.formml'
-import builtinTypes from '@formml/dsl/builtins/types.d.formml'
+import builtinAnnotations from '@formml/dsl/builtins/annotations.d.fml'
+import builtinTypes from '@formml/dsl/builtins/types.d.fml'
 import * as vscode from 'vscode'
 
 const builtinFiles: Record<string, Uint8Array> = {
-  '/annotations.d.formml': builtinAnnotations,
-  '/types.d.formml': builtinTypes,
+  '/annotations.d.fml': builtinAnnotations,
+  '/types.d.fml': builtinTypes,
 }
 
 export class BuiltinsFileSystemProvider implements vscode.FileSystemProvider {

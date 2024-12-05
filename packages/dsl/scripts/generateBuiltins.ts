@@ -136,7 +136,7 @@ const transformToInterface: Transformer = async ({ code, fileName }) => {
     fileName: path.join(
       'generated',
       'interfaces',
-      fileName.replace('.d.formml', '.ts'),
+      fileName.replace('.d.fml', '.ts'),
     ),
   }
 }
@@ -147,7 +147,7 @@ const transformToModule: Transformer = ({ code, fileName }) => [
     fileName: path.join(
       'generated',
       'modules',
-      fileName.replace('.d.formml', '.js'),
+      fileName.replace('.d.fml', '.js'),
     ),
   },
   {
@@ -155,7 +155,7 @@ const transformToModule: Transformer = ({ code, fileName }) => [
     fileName: path.join(
       'generated',
       'modules',
-      fileName.replace('.d.formml', '.d.ts'),
+      fileName.replace('.d.fml', '.d.ts'),
     ),
   },
 ]

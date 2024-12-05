@@ -28,13 +28,13 @@ export default class BuiltinsWorkspaceManager extends DefaultWorkspaceManager {
     collector(
       this.documentFactory.fromString(
         builtinAnnotations,
-        URI.parse('builtin:///annotations.d.formml'),
+        URI.parse('builtin:///annotations.d.fml'),
       ),
     )
     collector(
       this.documentFactory.fromString(
         builtinTypes,
-        URI.parse('builtin:///types.d.formml'),
+        URI.parse('builtin:///types.d.fml'),
       ),
     )
   }

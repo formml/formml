@@ -2,8 +2,8 @@ import type { LangiumSharedServices } from 'langium/lsp'
 
 import { URI } from 'langium'
 
-import builtinAnnotations from '../../../../builtins/annotations.d.formml?raw'
-import builtinTypes from '../../../../builtins/types.d.formml?raw'
+import builtinAnnotations from '../../../../builtins/annotations.d.fml?raw'
+import builtinTypes from '../../../../builtins/types.d.fml?raw'
 import BuiltinsWorkspaceManager from '../BuiltinsWorkspaceManager.js'
 
 describe('BuiltinsWorkspaceManager', () => {
@@ -38,7 +38,7 @@ describe('BuiltinsWorkspaceManager', () => {
       mockedServices.workspace.LangiumDocumentFactory.fromString,
     ).toHaveBeenCalledWith(
       builtinAnnotations,
-      URI.parse('builtin:///annotations.d.formml'),
+      URI.parse('builtin:///annotations.d.fml'),
     )
     expect(
       // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -75,7 +75,7 @@ describe('BuiltinsWorkspaceManager', () => {
     expect(
       // eslint-disable-next-line @typescript-eslint/unbound-method
       mockedServices.workspace.LangiumDocumentFactory.fromString,
-    ).toHaveBeenCalledWith(builtinTypes, URI.parse('builtin:///types.d.formml'))
+    ).toHaveBeenCalledWith(builtinTypes, URI.parse('builtin:///types.d.fml'))
     expect(
       // eslint-disable-next-line @typescript-eslint/unbound-method
       mockedServices.workspace.LangiumDocuments.addDocument,
