@@ -5,7 +5,9 @@ import { createInMemoryAggregateServices } from '../aggregate-module.js'
 
 describe('aggregate module', () => {
   test.each([
+    ['test.fml', 'formml'],
     ['test.formml', 'formml'],
+    ['test.d.fml', 'formml-declaration'],
     ['test.d.formml', 'formml-declaration'],
   ])(
     'should get correct language service according to file extension: "%s" -> "%s"',

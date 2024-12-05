@@ -53,6 +53,7 @@
           "formml"
         ],
         "extensions": [
+          ".fml",
           ".formml"
         ],
         "configuration": "./language-configuration.json"
@@ -64,6 +65,7 @@
           "formml-declaration"
         ],
         "extensions": [
+          ".d.fml",
           ".d.formml"
         ],
         "configuration": "./language-configuration.json"

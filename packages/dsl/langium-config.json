@@ -4,7 +4,7 @@
     {
       "id": "formml",
       "grammar": "src/language/formml/formml.langium",
-      "fileExtensions": [".formml"],
+      "fileExtensions": [".fml", ".formml"],
       "textMate": {
         "out": "../vscode/syntaxes/formml.tmLanguage.json"
       }
@@ -12,7 +12,7 @@
     {
       "id": "formml-declaration",
       "grammar": "src/language/formml-declaration/formml-declaration.langium",
-      "fileExtensions": [".d.formml"],
+      "fileExtensions": [".d.fml", ".d.formml"],
       "textMate": {
         "out": "../vscode/syntaxes/formml-declaration.tmLanguage.json"
       }
