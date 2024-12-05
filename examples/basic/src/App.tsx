@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, useFormML } from '@formml/client'
 
-import basic from './basic.formml'
+import basic from './basic.fml'
 
 export default function App() {
   const { $form, FormML, handleSubmit } = useFormML(basic)
