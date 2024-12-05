@@ -576,7 +576,7 @@ text name
 
 All available annotations are defined in `annotations.d.fml`. You can click the link below and `cmd/ctrl + F` to search annotations.
 
-[Latest Annotations List](https://github.com/formml/formml/blob/main/packages/dsl/builtins/annotations.d.formml)
+[Latest Annotations List](https://github.com/formml/formml/blob/main/packages/dsl/builtins/annotations.d.fml)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
