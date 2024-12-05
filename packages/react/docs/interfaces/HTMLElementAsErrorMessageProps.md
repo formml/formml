@@ -1,8 +1,8 @@
-[**@formml/client**](../README.md) • **Docs**
+[**@formml/react**](../README.md) • **Docs**
 
 ---
 
-[@formml/client](../globals.md) / HTMLElementAsErrorMessageProps
+[@formml/react](../globals.md) / HTMLElementAsErrorMessageProps
 
 # Interface: HTMLElementAsErrorMessageProps\<TElementName\>
 
@@ -28,7 +28,7 @@ The field index to bind to
 
 #### Defined in
 
-[packages/client/src/ErrorMessage.tsx:26](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/ErrorMessage.tsx#L26)
+[packages/react/src/ErrorMessage.tsx:26](https://github.com/formml/formml/blob/527c6e93502cf5114979de3946b0cc8cf0790b3f/packages/react/src/ErrorMessage.tsx#L26)
 
 ---
 
@@ -40,4 +40,4 @@ HTML element name to render the error message with
 
 #### Defined in
 
-[packages/client/src/ErrorMessage.tsx:33](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/ErrorMessage.tsx#L33)
+[packages/react/src/ErrorMessage.tsx:33](https://github.com/formml/formml/blob/527c6e93502cf5114979de3946b0cc8cf0790b3f/packages/react/src/ErrorMessage.tsx#L33)

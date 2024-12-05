@@ -1,8 +1,8 @@
-[**@formml/client**](../README.md) • **Docs**
+[**@formml/react**](../README.md) • **Docs**
 
 ---
 
-[@formml/client](../globals.md) / ErrorMessage
+[@formml/react](../globals.md) / ErrorMessage
 
 # Function: ErrorMessage()
 
@@ -62,7 +62,7 @@ Component props
 
 ### Defined in
 
-[packages/client/src/ErrorMessage.tsx:62](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/ErrorMessage.tsx#L62)
+[packages/react/src/ErrorMessage.tsx:62](https://github.com/formml/formml/blob/527c6e93502cf5114979de3946b0cc8cf0790b3f/packages/react/src/ErrorMessage.tsx#L62)
 
 ## ErrorMessage(props)
 
@@ -103,4 +103,4 @@ Component props
 
 ### Defined in
 
-[packages/client/src/ErrorMessage.tsx:62](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/ErrorMessage.tsx#L62)
+[packages/react/src/ErrorMessage.tsx:62](https://github.com/formml/formml/blob/527c6e93502cf5114979de3946b0cc8cf0790b3f/packages/react/src/ErrorMessage.tsx#L62)

@@ -1,8 +1,8 @@
-[**@formml/client**](../README.md) • **Docs**
+[**@formml/react**](../README.md) • **Docs**
 
 ---
 
-[@formml/client](../globals.md) / FormMLPack
+[@formml/react](../globals.md) / FormMLPack
 
 # Interface: FormMLPack\<T\>
 
@@ -20,7 +20,7 @@ Index to the form, the root of all child indexes
 
 #### Defined in
 
-[packages/client/src/useFormML.tsx:31](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/useFormML.tsx#L31)
+[packages/react/src/useFormML.tsx:29](https://github.com/formml/formml/blob/527c6e93502cf5114979de3946b0cc8cf0790b3f/packages/react/src/useFormML.tsx#L29)
 
 ---
 
@@ -38,29 +38,31 @@ FormML context provider
 
 #### Defined in
 
-[packages/client/src/useFormML.tsx:33](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/useFormML.tsx#L33)
+[packages/react/src/useFormML.tsx:31](https://github.com/formml/formml/blob/527c6e93502cf5114979de3946b0cc8cf0790b3f/packages/react/src/useFormML.tsx#L31)
 
 ---
 
 ### instance
 
-> **instance**: [`FormML`](../classes/FormML.md)\<`T`\>
+> **instance**: `FormML`\<`T`\>
 
 FormML instance
 
 #### Defined in
 
-[packages/client/src/useFormML.tsx:62](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/useFormML.tsx#L62)
+[packages/react/src/useFormML.tsx:61](https://github.com/formml/formml/blob/527c6e93502cf5114979de3946b0cc8cf0790b3f/packages/react/src/useFormML.tsx#L61)
 
 ## Methods
 
 ### handleSubmit()
 
-> **handleSubmit**(`onSubmit`, `onError`?): `FormEventHandler`\<`HTMLFormElement`\>
+> **handleSubmit**(`this`, `onSubmit`, `onError`?): `FormEventHandler`\<`HTMLFormElement`\>
 
 Creates a submit handler
 
 #### Parameters
+
+• **this**: `void`
 
 • **onSubmit**: [`SubmitHandler`](../type-aliases/SubmitHandler.md)
 
@@ -93,4 +95,4 @@ return <form onSubmit={onSubmit}>...</form>
 
 #### Defined in
 
-[packages/client/src/useFormML.tsx:57](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/useFormML.tsx#L57)
+[packages/react/src/useFormML.tsx:55](https://github.com/formml/formml/blob/527c6e93502cf5114979de3946b0cc8cf0790b3f/packages/react/src/useFormML.tsx#L55)

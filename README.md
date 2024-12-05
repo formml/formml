@@ -18,8 +18,8 @@
 <p align="center"><small>- 🚧 In Active Development 🏗️ -</small></p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@formml/client">
-    <img src="https://img.shields.io/npm/v/%40formml%2Fclient?logo=npm&label=%40formml%2Fclient" alt="client npm version">
+  <a href="https://www.npmjs.com/package/@formml/react">
+    <img src="https://img.shields.io/npm/v/%40formml%2Freact?logo=npm" alt="npm version">
   </a>
   <a href="https://github.com/formml/formml/blob/main/LICENSE.md">
     <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
@@ -582,7 +582,7 @@ All available annotations are defined in `annotations.d.fml`. You can click the 
 
 ## API Reference
 
-- [`@formml/react`](./packages/client/docs/README.md)
+- [`@formml/react`](./packages/react/docs/README.md)
 - [`@formml/core`](./packages/core/docs/README.md)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

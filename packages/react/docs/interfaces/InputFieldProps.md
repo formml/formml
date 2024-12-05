@@ -1,8 +1,8 @@
-[**@formml/client**](../README.md) • **Docs**
+[**@formml/react**](../README.md) • **Docs**
 
 ---
 
-[@formml/client](../globals.md) / InputFieldProps
+[@formml/react](../globals.md) / InputFieldProps
 
 # Interface: InputFieldProps
 
@@ -24,7 +24,7 @@ The field index to bind to
 
 #### Defined in
 
-[packages/client/src/Field.tsx:47](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/Field.tsx#L47)
+[packages/react/src/Field.tsx:47](https://github.com/formml/formml/blob/527c6e93502cf5114979de3946b0cc8cf0790b3f/packages/react/src/Field.tsx#L47)
 
 ---
 
@@ -118,7 +118,7 @@ node_modules/.pnpm/@types+react@18.2.45/node_modules/@types/react/index.d.ts:166
 
 ### aria-autocomplete?
 
-> `optional` **aria-autocomplete**: `"inline"` \| `"none"` \| `"list"` \| `"both"`
+> `optional` **aria-autocomplete**: `"inline"` \| `"list"` \| `"none"` \| `"both"`
 
 Indicates whether inputting text could trigger display of one or more predictions of the user's intended value for an input and specifies how predictions would be
 presented if they are made.
@@ -312,7 +312,7 @@ node_modules/.pnpm/@types+react@18.2.45/node_modules/@types/react/index.d.ts:171
 
 ### aria-current?
 
-> `optional` **aria-current**: `boolean` \| `"true"` \| `"time"` \| `"step"` \| `"date"` \| `"false"` \| `"page"` \| `"location"`
+> `optional` **aria-current**: `boolean` \| `"time"` \| `"step"` \| `"date"` \| `"true"` \| `"false"` \| `"page"` \| `"location"`
 
 Indicates the element that represents the current item within a container or set of related elements.
 
@@ -503,7 +503,7 @@ node_modules/.pnpm/@types+react@18.2.45/node_modules/@types/react/index.d.ts:175
 
 ### aria-haspopup?
 
-> `optional` **aria-haspopup**: `boolean` \| `"true"` \| `"dialog"` \| `"menu"` \| `"false"` \| `"grid"` \| `"listbox"` \| `"tree"`
+> `optional` **aria-haspopup**: `boolean` \| `"dialog"` \| `"menu"` \| `"true"` \| `"false"` \| `"grid"` \| `"listbox"` \| `"tree"`
 
 Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element.
 
@@ -810,7 +810,7 @@ node_modules/.pnpm/@types+react@18.2.45/node_modules/@types/react/index.d.ts:182
 
 ### aria-relevant?
 
-> `optional` **aria-relevant**: `"text"` \| `"all"` \| `"additions"` \| `"additions removals"` \| `"additions text"` \| `"removals"` \| `"removals additions"` \| `"removals text"` \| `"text additions"` \| `"text removals"`
+> `optional` **aria-relevant**: `"text"` \| `"additions"` \| `"additions removals"` \| `"additions text"` \| `"all"` \| `"removals"` \| `"removals additions"` \| `"removals text"` \| `"text additions"` \| `"text removals"`
 
 Indicates what notifications the user agent will trigger when the accessibility tree within a live region is modified.
 
@@ -1075,7 +1075,7 @@ Optional HTML element name to render the field with, defaults to `input`
 
 #### Defined in
 
-[packages/client/src/Field.tsx:54](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/Field.tsx#L54)
+[packages/react/src/Field.tsx:54](https://github.com/formml/formml/blob/527c6e93502cf5114979de3946b0cc8cf0790b3f/packages/react/src/Field.tsx#L54)
 
 ---
 
@@ -1519,7 +1519,7 @@ node_modules/.pnpm/@types+react@18.2.45/node_modules/@types/react/index.d.ts:199
 
 ### inputMode?
 
-> `optional` **inputMode**: `"text"` \| `"decimal"` \| `"search"` \| `"none"` \| `"email"` \| `"tel"` \| `"url"` \| `"numeric"`
+> `optional` **inputMode**: `"text"` \| `"decimal"` \| `"search"` \| `"email"` \| `"tel"` \| `"url"` \| `"none"` \| `"numeric"`
 
 Hints at the type of data that might be entered by the user while editing the element or its contents
 

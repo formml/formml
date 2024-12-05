@@ -1,8 +1,8 @@
-[**@formml/client**](../README.md) • **Docs**
+[**@formml/react**](../README.md) • **Docs**
 
 ---
 
-[@formml/client](../globals.md) / SubmitHandler
+[@formml/react](../globals.md) / SubmitHandler
 
 # Type Alias: SubmitHandler()
 
@@ -26,4 +26,4 @@ The original form submit event
 
 ## Defined in
 
-[packages/client/src/useFormML.tsx:18](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/useFormML.tsx#L18)
+[packages/react/src/useFormML.tsx:16](https://github.com/formml/formml/blob/527c6e93502cf5114979de3946b0cc8cf0790b3f/packages/react/src/useFormML.tsx#L16)

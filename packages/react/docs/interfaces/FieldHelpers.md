@@ -1,8 +1,8 @@
-[**@formml/client**](../README.md) • **Docs**
+[**@formml/react**](../README.md) • **Docs**
 
 ---
 
-[@formml/client](../globals.md) / FieldHelpers
+[@formml/react](../globals.md) / FieldHelpers
 
 # Interface: FieldHelpers
 
@@ -10,9 +10,13 @@
 
 ### blur()
 
-> **blur**(): `void`
+> **blur**(`this`): `void`
 
 Marks the field as touched, indicating user interaction
+
+#### Parameters
+
+• **this**: `void`
 
 #### Returns
 
@@ -20,16 +24,20 @@ Marks the field as touched, indicating user interaction
 
 #### Defined in
 
-[packages/client/src/useField.ts:39](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/useField.ts#L39)
+[packages/react/src/useField.ts:37](https://github.com/formml/formml/blob/527c6e93502cf5114979de3946b0cc8cf0790b3f/packages/react/src/useField.ts#L37)
 
 ---
 
 ### commitRawValue()
 
-> **commitRawValue**(): `void`
+> **commitRawValue**(`this`): `void`
 
 Commits the current raw string value to storage, converting it to the field's type and triggering post-processes.
 Usually used together with [setRawValue](FieldHelpers.md#setrawvalue).
+
+#### Parameters
+
+• **this**: `void`
 
 #### Returns
 
@@ -44,17 +52,19 @@ field.helpers.commitRawValue() // Converts string "123" to number 123 for `num` 
 
 #### Defined in
 
-[packages/client/src/useField.ts:50](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/useField.ts#L50)
+[packages/react/src/useField.ts:48](https://github.com/formml/formml/blob/527c6e93502cf5114979de3946b0cc8cf0790b3f/packages/react/src/useField.ts#L48)
 
 ---
 
 ### setRawValue()
 
-> **setRawValue**(`value`): `void`
+> **setRawValue**(`this`, `value`): `void`
 
 Sets the raw string value to represent user input, without any post-processes.
 
 #### Parameters
+
+• **this**: `void`
 
 • **value**: `string`
 
@@ -66,17 +76,19 @@ The string value to set
 
 #### Defined in
 
-[packages/client/src/useField.ts:56](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/useField.ts#L56)
+[packages/react/src/useField.ts:54](https://github.com/formml/formml/blob/527c6e93502cf5114979de3946b0cc8cf0790b3f/packages/react/src/useField.ts#L54)
 
 ---
 
 ### setTypedValue()
 
-> **setTypedValue**(`value`): `void`
+> **setTypedValue**(`this`, `value`): `void`
 
 Sets the typed value directly into storage, triggering post-processes.
 
 #### Parameters
+
+• **this**: `void`
 
 • **value**: `PrimitiveType`
 
@@ -88,4 +100,4 @@ The typed value matching the field's type
 
 #### Defined in
 
-[packages/client/src/useField.ts:62](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/useField.ts#L62)
+[packages/react/src/useField.ts:60](https://github.com/formml/formml/blob/527c6e93502cf5114979de3946b0cc8cf0790b3f/packages/react/src/useField.ts#L60)

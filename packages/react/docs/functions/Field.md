@@ -1,8 +1,8 @@
-[**@formml/client**](../README.md) • **Docs**
+[**@formml/react**](../README.md) • **Docs**
 
 ---
 
-[@formml/client](../globals.md) / Field
+[@formml/react](../globals.md) / Field
 
 # Function: Field()
 
@@ -57,4 +57,4 @@ Component props
 
 ## Defined in
 
-[packages/client/src/Field.tsx:96](https://github.com/formml/formml/blob/72da07b448131bd3f04929d1b1f639a533f113d9/packages/client/src/Field.tsx#L96)
+[packages/react/src/Field.tsx:96](https://github.com/formml/formml/blob/527c6e93502cf5114979de3946b0cc8cf0790b3f/packages/react/src/Field.tsx#L96)
