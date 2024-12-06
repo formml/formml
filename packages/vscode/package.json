@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "publisher": "formml",
   "type": "module",
-  "description": "The VSCode extension that provides intellisense for FormML schema files",
+  "description": "The VSCode extension that provides intellisense for FormML Model files",
   "keywords": [
     "formml",
     "form",
@@ -16,6 +16,7 @@
   "author": "Jindong Zhang <jindong.zhannng@gmail.com>",
   "license": "MIT",
   "files": [
+    "assets",
     "dist"
   ],
   "scripts": {
