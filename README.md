@@ -13,7 +13,7 @@
   <br>
 </h1>
 
-<p align="center"><strong>The Ultimate Solution for Building <a href="#whats-the-enterprise-level-forms">Enterprise-Level</a> Forms<br><small>(or at least, I'm aiming for it 😅)</small></strong></p>
+<p align="center"><strong>A Killer Solution for Building <a href="#whats-the-enterprise-level-forms">Enterprise-Level</a> Forms</strong></p>
 
 <p align="center"><small>- 🚧 In Active Development 🏗️ -</small></p>
 
