@@ -1,8 +1,8 @@
 <p align="center">
   <a href="https://github.com/formml/formml">
     <picture>
-      <source srcset="https://raw.githubusercontent.com/formml/formml/main/docs/logo/logo-bg.png" media="(prefers-color-scheme: dark)">
-      <img src="https://raw.githubusercontent.com/formml/formml/main/docs/logo/logo-color.png" alt="FormML Logo" width="300">
+      <source srcset="https://raw.githubusercontent.com/formml/formml/main/packages/vscode/assets/logo-bg.png" media="(prefers-color-scheme: dark)">
+      <img src="https://raw.githubusercontent.com/formml/formml/main/packages/vscode/assets/logo-color.png" alt="FormML Logo" width="300">
     </picture>
   </a>
 </p>
