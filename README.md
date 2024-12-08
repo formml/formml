@@ -59,9 +59,18 @@
   <img src="docs/image/demo.png" alt="FormML Demo" width="500">
 </p>
 
-**FormML** (Form Modeling Language, pronounced as "formal") is a full-stack framework for building **enterprise-level** forms.
+**FormML** (Form Modeling Language, pronounced as "formal") is a DSL-based, model-first, full-stack framework for building **enterprise-level** forms.
 
-It's under active development now and currently provides official **React** bindings.
+It's under **active development** now and currently provides official React bindings.
+
+<p align="center">
+  <i>⭐️ Please <strong>Star</strong> this repo to show your support and encourage me to keep building! 🙏</i>
+  <br>
+  <i>💖 Your support means the world to me! 🫰</i>
+  <br>
+  <br>
+  <img src="docs/image/call-to-star.gif" alt="Call to star">
+</p>
 
 ## Motivation
 
