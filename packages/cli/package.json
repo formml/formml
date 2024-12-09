@@ -1,5 +1,6 @@
 {
   "name": "@formml/cli",
+  "private": true,
   "version": "0.0.2",
   "type": "module",
   "description": "FormML CLI tool",
