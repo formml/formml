@@ -43,21 +43,21 @@
   },
   "exports": {
     ".": {
-      "default": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./builtins/*.fml": "./builtins/*.fml",
     "./interfaces/*.js": {
-      "default": "./builtins/generated/interfaces/*.js",
-      "types": "./builtins/generated/interfaces/*.d.ts"
+      "types": "./builtins/generated/interfaces/*.d.ts",
+      "default": "./builtins/generated/interfaces/*.js"
     },
     "./generators/*.js": {
-      "default": "./dist/generators/*.js",
-      "types": "./dist/generators/*.d.ts"
+      "types": "./dist/generators/*.d.ts",
+      "default": "./dist/generators/*.js"
     },
     "./generators/deps/*.js": {
-      "default": "./dist/generators/deps/*.js",
-      "types": "./dist/generators/deps/*.d.ts"
+      "types": "./dist/generators/deps/*.d.ts",
+      "default": "./dist/generators/deps/*.js"
     }
   },
   "module": "./dist/index.js",

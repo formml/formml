@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "build": "pnpm run build:cjs",
-    "build:cjs": "tsup",
+    "build:cjs": "esbuild src/index.ts src/language/main.ts --outdir=dist --out-extension:.js=.cjs --bundle --minify --platform=node --main-fields=module,main --loader:.fml=binary --external:vscode",
     "dev": "pnpm run build:cjs --watch",
     "lint": "eslint . --ignore-path .gitignore",
     "lint:fix": "pnpm run lint --fix",
