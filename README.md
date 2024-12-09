@@ -39,7 +39,8 @@
   <a href="#api-reference">API Reference</a> •
   <a href="#known-issues">Known Issues</a> •
   <a href="#roadmap">Roadmap</a> •
-  <a href="#faqs">FAQs</a>
+  <a href="#faqs">FAQs</a> •
+  <a href="#contacts">Contacts</a>
 </p>
 
 <p align="center">
@@ -678,5 +679,14 @@ To resolve this issue completely, I plan to create a cli with command like `form
 If you are using "Linting with Type Information" feature of `typescript-eslint`, it may fail due to `typescript-eslint` cannot resolve `.fml` file types correctly, even though TypeScript itself can.
 
 To fix this, please ensure `parserOptions.project: true` is set in your ESLint config (more details [here](https://typescript-eslint.io/packages/parser#project)). This enables `typescript-eslint` to have the completely same type information as TypeScript.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Contacts
+
+Follow me on socials to get the latest updates about FormML:
+
+- [X (formerly Twitter)](https://x.com/jindong_z)
+- [Bluesky](https://bsky.app/profile/jindong-z.bsky.social)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
