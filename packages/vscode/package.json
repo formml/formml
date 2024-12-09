@@ -39,6 +39,7 @@
     "eslint-config-formml": "workspace:*"
   },
   "displayName": "FormML",
+  "icon": "assets/icon.png",
   "engines": {
     "vscode": "^1.67.0"
   },
@@ -57,7 +58,11 @@
           ".fml",
           ".formml"
         ],
-        "configuration": "./language-configuration.json"
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "dark": "assets/icon.png",
+          "light": "assets/icon.png"
+        }
       },
       {
         "id": "formml-declaration",
@@ -69,7 +74,11 @@
           ".d.fml",
           ".d.formml"
         ],
-        "configuration": "./language-configuration.json"
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "dark": "assets/icon.png",
+          "light": "assets/icon.png"
+        }
       }
     ],
     "grammars": [
