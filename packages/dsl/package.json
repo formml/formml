@@ -1,6 +1,6 @@
 {
   "name": "@formml/dsl",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "description": "The parser of formml schema language",
   "keywords": [

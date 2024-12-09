@@ -1,6 +1,6 @@
 {
   "name": "@formml/ts-plugin",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "commonjs",
   "description": "A TypeScript plugin for importing FormML files",
   "homepage": "https://github.com/formml/formml/tree/main/packages/ts-plugin",

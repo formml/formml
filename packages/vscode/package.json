@@ -1,7 +1,7 @@
 {
   "name": "vscode-formml",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.1.0",
   "publisher": "formml",
   "type": "module",
   "description": "The VSCode extension that provides intellisense for FormML Model files",

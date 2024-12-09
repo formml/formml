@@ -1,6 +1,6 @@
 {
   "name": "@formml/utils",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "The utility package for formml.",
   "keywords": [
     "formml",

@@ -1,6 +1,6 @@
 {
   "name": "@formml/core",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "The core package of formml which provides APIs to evaluate formml schema files.",
   "keywords": [
     "formml",
