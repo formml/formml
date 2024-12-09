@@ -1,4 +1,27 @@
+# VSCode
 .vscode/**
 .vscode-test/**
+
+# Turbo
+.turbo/**
+
+# Git
 .gitignore
+
+# Node
+node_modules/**
+
+# Mac
+.DS_Store
+
+# ESLint
+.eslintrc.json
+
+# Langium
 langium-quickstart.md
+
+# Source
+src/**
+
+# TypeScript
+tsconfig.json
