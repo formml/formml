@@ -1,5 +1,11 @@
 # @formml/react
 
+## 0.1.1
+
+### Patch Changes
+
+- @formml/client@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes

@@ -1,5 +1,12 @@
 # @formml/core
 
+## 0.1.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @formml/dsl@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes

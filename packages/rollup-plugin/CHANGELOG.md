@@ -1,5 +1,13 @@
 # rollup-plugin-formml
 
+## 0.1.1
+
+### Patch Changes
+
+- Generate parser in production mode to improve performance
+- Updated dependencies
+  - @formml/dsl@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes

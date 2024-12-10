@@ -1,7 +1,7 @@
 {
   "name": "basic-example",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "private",
   "type": "module",
   "scripts": {

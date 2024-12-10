@@ -1,7 +1,7 @@
 {
   "name": "@formml/cli",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "description": "FormML CLI tool",
   "homepage": "https://github.com/formml/formml/tree/main/packages/cli",

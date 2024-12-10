@@ -1,6 +1,6 @@
 {
   "name": "@formml/client",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The client to evaluate formml files for frontend",
   "keywords": [
     "formml",
