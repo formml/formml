@@ -28,13 +28,13 @@
     "lint:type": "tsc",
     "test": "vitest run --typecheck",
     "test:watch": "vitest watch",
-    "langium:generate": "langium generate",
+    "langium:generate": "langium generate --mode=production",
     "langium:watch": "langium generate --watch",
     "gen:builtins": "vite-node ./scripts/generateBuiltins.ts && tsc -p tsconfig.builtins.json"
   },
   "dependencies": {
     "change-case": "^5.4.4",
-    "langium": "^3.2.0"
+    "langium": "^3.3.0"
   },
   "devDependencies": {
     "@formml/typescript-config": "workspace:*",

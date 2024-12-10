@@ -107,8 +107,8 @@ importers:
         specifier: ^24.1.0
         version: 24.1.0
       langium-cli:
-        specifier: ^3.0.3
-        version: 3.0.3
+        specifier: ^3.3.0
+        version: 3.3.0
       lint-staged:
         specifier: ^15.2.0
         version: 15.2.0
@@ -252,8 +252,8 @@ importers:
         specifier: ^5.4.4
         version: 5.4.4
       langium:
-        specifier: ^3.2.0
-        version: 3.2.0
+        specifier: ^3.3.0
+        version: 3.3.0
     devDependencies:
       '@formml/typescript-config':
         specifier: workspace:*
@@ -320,8 +320,8 @@ importers:
         specifier: workspace:*
         version: link:../dsl
       langium:
-        specifier: ^3.2.0
-        version: 3.2.0
+        specifier: ^3.3.0
+        version: 3.3.0
       synckit:
         specifier: ^0.9.0
         version: 0.9.0
@@ -360,8 +360,8 @@ importers:
         specifier: workspace:^
         version: link:../dsl
       langium:
-        specifier: ^3.2.0
-        version: 3.2.0
+        specifier: ^3.3.0
+        version: 3.3.0
       vscode-languageclient:
         specifier: ~9.0.1
         version: 9.0.1
@@ -660,10 +660,10 @@ packages:
     engines: { node: '>=6.0.0' }
     hasBin: true
 
-  '@babel/parser@7.26.2':
+  '@babel/parser@7.26.3':
     resolution:
       {
-        integrity: sha512-DWMCZH9WA4Maitz2q21SRKHo9QXZxkDsbNZoVD62gusNtNBBqDg9i7uOhASfTfIGNzW+O+r7+jAlM8dwphcJKQ==,
+        integrity: sha512-WJ/CvmY8Mea8iDXo6a7RK2wbmJITT5fN3BEkRuFlxVyNx8jOKIIhmC4fSkTcPcf8JyavbBwIe6OpiCOBXt/IcA==,
       }
     engines: { node: '>=6.0.0' }
     hasBin: true
@@ -735,10 +735,10 @@ packages:
       }
     engines: { node: '>=6.9.0' }
 
-  '@babel/types@7.26.0':
+  '@babel/types@7.26.3':
     resolution:
       {
-        integrity: sha512-Z/yiTPj+lDVnF7lWeKCIJzaIkI0vYO87dMpZ4bg4TDrFe4XXLFWL1TbXU27gBP3QccxV9mZICCrnjnYlJjXHOA==,
+        integrity: sha512-vN5p+1kl59GVKMvTHt55NzzmYVxprfJD+ql7U9NFIfKCBkYE55LYtS+WtPlaYOyzydrKI8Nezd+aZextrd+FMA==,
       }
     engines: { node: '>=6.9.0' }
 
@@ -5857,31 +5857,24 @@ packages:
       }
     engines: { node: '>=6' }
 
-  langium-cli@3.0.3:
+  langium-cli@3.3.0:
     resolution:
       {
-        integrity: sha512-g6PdhEq5IiYWK/oiySILglPvFdK6ofQdzC+U7PJmFH++bDKu0DGdxjWzDauUN5WUDyVQETWKgtYDmmbcxPzN0w==,
+        integrity: sha512-QWvlOYdLbso8/lv6Ma+SBtvMN9k70JrplLx6VSIcV7gJNDTXeS+tjwC/f6T0aco1fg8uLL8GiAcaMovd1FnneA==,
       }
     engines: { node: '>=16.0.0' }
     hasBin: true
 
-  langium-railroad@3.0.0:
+  langium-railroad@3.3.0:
     resolution:
       {
-        integrity: sha512-GQOnQBGl5gJqzgK/4bKvJO5QhJGNnprpYH6Fghbl4FviVLHwP6yzyqiouDelLSoCadChCr2JqKaBp5HXv7CgWw==,
+        integrity: sha512-x56CU0KnLoqYLkHEPDJjFoekFoCVbbZbmHduldiXjKD8owt6t5aqgWfg31OeMeR+7XgONZTtmsO76yl6GvEkzQ==,
       }
 
-  langium@3.0.0:
+  langium@3.3.0:
     resolution:
       {
-        integrity: sha512-+Ez9EoiByeoTu/2BXmEaZ06iPNXM6thWJp02KfBO/raSMyCJ4jw7AkWWa+zBCTm0+Tw1Fj9FOxdqSskyN5nAwg==,
-      }
-    engines: { node: '>=16.0.0' }
-
-  langium@3.2.0:
-    resolution:
-      {
-        integrity: sha512-HxAPgCVC7X+dCN99QKlZMEoaLW4s/mt0IImYrP6ooEBOMh8lJYdFNNSpJ5NIOE+WFwQd3xa2phTJDmJhOWVR7A==,
+        integrity: sha512-y1n1MxeHtXvE0Ksi/HjLCvesHm3/Vr0pyyuA1fn+vmGSYR81NkxnC3bU4kd2o0CrZaz8xekz9rhm+lGfRgNFzw==,
       }
     engines: { node: '>=16.0.0' }
 
@@ -6174,10 +6167,10 @@ packages:
         integrity: sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ==,
       }
 
-  magic-string@0.30.14:
+  magic-string@0.30.15:
     resolution:
       {
-        integrity: sha512-5c99P1WKTed11ZC0HMJOj6CDIue6F8ySu+bJL+85q1zBEIY8IklrJ1eiKC2NDRh3Ct3FcvmJPyQHb9erXMTJNw==,
+        integrity: sha512-zXeaYRgZ6ldS1RJJUrMrYgNJ4fdwnyI6tVqoiIhyCyv5IVTK9BU8Ic2l253GGETQHxI4HNUwhJ3fjDhKqEoaAw==,
       }
 
   magicast@0.3.4:
@@ -8615,10 +8608,10 @@ packages:
         integrity: sha512-mb1bvRJN8SVznADSGWM9u/b07H7Ecg0I3OgXDuLdn307rl/J3A9YD6/eYOssqhecL27hK1IPZAsaqh00i/Jljg==,
       }
 
-  vscode-languageserver-textdocument@1.0.11:
+  vscode-languageserver-textdocument@1.0.12:
     resolution:
       {
-        integrity: sha512-X+8T3GoiwTVlJbicx/sIAF+yuJAqz8VvwJyoMVhwEMoEKE/fkDmrqUgDMyBECcM2A2frVZIUj5HI/ErRXCfOeA==,
+        integrity: sha512-cxWNPesCnQCcMPeenjKKsOCKQZ/L6Tv19DTRIGuLWe32lyzWhihGVJ/rcckZXJxfdKCFvRLS3fpBIsV/ZGX4zA==,
       }
 
   vscode-languageserver-types@3.17.5:
@@ -9204,9 +9197,9 @@ snapshots:
     dependencies:
       '@babel/types': 7.24.7
 
-  '@babel/parser@7.26.2':
+  '@babel/parser@7.26.3':
     dependencies:
-      '@babel/types': 7.26.0
+      '@babel/types': 7.26.3
 
   '@babel/plugin-transform-react-jsx-self@7.23.3(@babel/core@7.23.6)':
     dependencies:
@@ -9263,7 +9256,7 @@ snapshots:
       '@babel/helper-validator-identifier': 7.24.7
       to-fast-properties: 2.0.0
 
-  '@babel/types@7.26.0':
+  '@babel/types@7.26.3':
     dependencies:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
@@ -10572,7 +10565,7 @@ snapshots:
 
   '@vue/compiler-core@3.4.32':
     dependencies:
-      '@babel/parser': 7.26.2
+      '@babel/parser': 7.26.3
       '@vue/shared': 3.4.32
       entities: 4.5.0
       estree-walker: 2.0.2
@@ -10585,13 +10578,13 @@ snapshots:
 
   '@vue/compiler-sfc@3.4.32':
     dependencies:
-      '@babel/parser': 7.26.2
+      '@babel/parser': 7.26.3
       '@vue/compiler-core': 3.4.32
       '@vue/compiler-dom': 3.4.32
       '@vue/compiler-ssr': 3.4.32
       '@vue/shared': 3.4.32
       estree-walker: 2.0.2
-      magic-string: 0.30.14
+      magic-string: 0.30.15
       postcss: 8.4.49
       source-map-js: 1.2.1
 
@@ -12508,35 +12501,27 @@ snapshots:
 
   kleur@4.1.5: {}
 
-  langium-cli@3.0.3:
+  langium-cli@3.3.0:
     dependencies:
       chalk: 5.3.0
       commander: 11.0.0
       fs-extra: 11.1.1
       jsonschema: 1.4.1
-      langium: 3.0.0
-      langium-railroad: 3.0.0
+      langium: 3.3.0
+      langium-railroad: 3.3.0
       lodash: 4.17.21
 
-  langium-railroad@3.0.0:
+  langium-railroad@3.3.0:
     dependencies:
-      langium: 3.0.0
+      langium: 3.3.0
       railroad-diagrams: 1.0.0
 
-  langium@3.0.0:
+  langium@3.3.0:
     dependencies:
       chevrotain: 11.0.3
       chevrotain-allstar: 0.3.1(chevrotain@11.0.3)
       vscode-languageserver: 9.0.1
-      vscode-languageserver-textdocument: 1.0.11
-      vscode-uri: 3.0.8
-
-  langium@3.2.0:
-    dependencies:
-      chevrotain: 11.0.3
-      chevrotain-allstar: 0.3.1(chevrotain@11.0.3)
-      vscode-languageserver: 9.0.1
-      vscode-languageserver-textdocument: 1.0.11
+      vscode-languageserver-textdocument: 1.0.12
       vscode-uri: 3.0.8
 
   language-subtag-registry@0.3.22: {}
@@ -12684,7 +12669,7 @@ snapshots:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  magic-string@0.30.14:
+  magic-string@0.30.15:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
 
@@ -14178,7 +14163,7 @@ snapshots:
       vscode-jsonrpc: 8.2.0
       vscode-languageserver-types: 3.17.5
 
-  vscode-languageserver-textdocument@1.0.11: {}
+  vscode-languageserver-textdocument@1.0.12: {}
 
   vscode-languageserver-types@3.17.5: {}
 
