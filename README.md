@@ -404,7 +404,7 @@ app.listen(3000, () => {
 })
 ```
 
-Each primitive type in FormML Model has its corresponding [JavaScript type](#primitive-types). The `parse` function will first validate the data according to the FormML Model definition, then convert plain data to rich types.
+Each primitive type in FormML Model has its corresponding [JavaScript type](#primitive-type). The `parse` function will first validate the data according to the FormML Model definition, then convert plain data to rich types.
 
 ```ts
 const data = {
