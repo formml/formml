@@ -17,7 +17,10 @@
   "license": "MIT",
   "files": [
     "assets",
-    "dist"
+    "dist",
+    "syntaxes",
+    "*.md",
+    "language-configuration.json"
   ],
   "scripts": {
     "build": "pnpm run build:cjs",
