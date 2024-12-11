@@ -1,13 +1,13 @@
-<p align="center">
+<h1 align="center">
   <a href="https://github.com/formml/formml">
     <picture>
       <source srcset="https://raw.githubusercontent.com/formml/formml/main/docs/logo/logo-bg.svg" media="(prefers-color-scheme: dark)">
       <img src="https://raw.githubusercontent.com/formml/formml/main/docs/logo/logo-color.svg" alt="FormML Logo" width="300">
     </picture>
   </a>
-</p>
-
-<h1 align="center">@formml/ts-plugin</h1>
+  <br>
+  @formml/ts-plugin
+</h1>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@formml/ts-plugin"><img src="https://img.shields.io/npm/v/@formml/ts-plugin.svg" alt="npm version"></a>
@@ -28,19 +28,19 @@ A [TypeScript Language Service Plugin](https://github.com/microsoft/TypeScript/w
 
 1. Install the plugin:
 
-```bash
-npm install @formml/ts-plugin --save-dev
-```
+   ```bash
+   npm install @formml/ts-plugin --save-dev
+   ```
 
 2. Configure TypeScript to use the plugin in your `tsconfig.json`:
 
-```json
-{
-  "compilerOptions": {
-    "plugins": [{ "name": "@formml/ts-plugin" }]
-  }
-}
-```
+   ```json
+   {
+     "compilerOptions": {
+       "plugins": [{ "name": "@formml/ts-plugin" }]
+     }
+   }
+   ```
 
 3. (For VSCode users) Configure VSCode to [use the workspace version of TypeScript](https://code.visualstudio.com/docs/typescript/typescript-compiling#_using-the-workspace-version-of-typescript)
 

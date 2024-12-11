@@ -16,15 +16,15 @@ Make sure you have [pnpm](https://pnpm.io/) installed, then:
 
 1. Install dependencies from the root of the monorepo:
 
-```bash
-pnpm install
-```
+   ```bash
+   pnpm install
+   ```
 
 2. Run the example:
 
-```bash
-pnpm --filter basic-example dev
-```
+   ```bash
+   pnpm --filter basic-example dev
+   ```
 
 The example will be available at `http://localhost:5173`.
 

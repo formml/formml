@@ -1,4 +1,12 @@
 {
   "singleQuote": true,
-  "semi": false
+  "semi": false,
+  "overrides": [
+    {
+      "files": ["*.jsonc", ".eslintrc", "tsconfig*.json"],
+      "options": {
+        "trailingComma": "none"
+      }
+    }
+  ]
 }

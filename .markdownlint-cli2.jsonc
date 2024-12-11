@@ -1,0 +1,9 @@
+{
+  "gitignore": true,
+  "globs": ["**/*.md", "!packages/*/docs/**", "!**/{LICENSE.md,CHANGELOG.md}"],
+  "config": {
+    "line-length": false,
+    "no-inline-html": false,
+    "no-duplicate-heading": { "siblings_only": true }
+  }
+}

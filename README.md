@@ -1,3 +1,4 @@
+<!-- markdownlint-disable-next-line first-line-heading -->
 <p align="right"><small>TOC click here ↑</small></p>
 
 <a id="readme-top"></a>
@@ -181,7 +182,7 @@ Here's what we changed/added:
 
 </details>
 
-Perfect! You now have your first complete FormML Model. For more FormML DSL syntax, please refer to the [FormML DSL Reference](#formml-dsl-reference) section.
+Perfect! You now have your first complete FormML Model. For more FormML DSL syntax, please refer to the [FormML Model Reference](#formml-model-dsl-reference) section.
 
 ### Create UI
 
@@ -221,7 +222,9 @@ export default defineConfig({
 
 To provide real-time type checking (even after editing `.fml` files), FormML uses [TypeScript's Language Service Plugin](https://github.com/microsoft/TypeScript/wiki/Writing-a-Language-Service-Plugin) feature. Here's how to set it up:
 
-> See [Why not code generation?](#why-not-code-generation) to learn the reason of this decision.
+> See [Why not code generation (like Prisma)?](#why-not-code-generation-like-prisma) to learn the reason of this decision.
+
+<!-- markdownlint-disable-next-line no-blanks-blockquote -->
 
 > TypeScript Language Service Plugin [only affects your editing experience](https://github.com/microsoft/TypeScript/wiki/Writing-a-Language-Service-Plugin#whats-a-language-service-plugin), meaning FormML Model's type information won't be included when running the `tsc` command.
 >
@@ -428,6 +431,8 @@ If validation fails, the `parse` function will throw an error.
 
 > 📝 For more information about the `parse` function, please refer to the [API Reference](#api-reference).
 
+<!-- markdownlint-disable-next-line no-blanks-blockquote -->
+
 > FormML also provides `safeParse` and `validate` functions for different scenarios. See the [API Reference](#api-reference) for details.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -442,7 +447,7 @@ For basic knowledge and how to create a new FormML Model, please refer to the [C
 
 Every FormML Model starts with a `form` block. Each model can only contain **one** `form` block as its unique entry point.
 
-**Syntax**
+#### Syntax
 
 ```java
 form [name] {
@@ -452,7 +457,7 @@ form [name] {
 }
 ```
 
-**Elements**
+#### Elements
 
 - `[name]`: A unique name for the form. Can be ASCII letters, numbers, and underscores, but **cannot start with a number**. (Use [pascal case](https://en.wikipedia.org/wiki/PascalCase) conventionally)
 - `[fields]`: One or more [field definitions](#field)
@@ -461,14 +466,14 @@ form [name] {
 
 Defines a form field inside a `form` block.
 
-**Syntax**
+#### Syntax
 
 ```java
 @[annotations]
 [type] [name]
 ```
 
-**Elements**
+#### Elements
 
 - `@[annotations]`: Zero or more [annotations](#annotation)
 - `[type]`: The type of the field. Can be a [primitive type](#primitive-type) or a [composite type](#composite-type) (WIP).
@@ -490,6 +495,8 @@ Represents a **general-purpose** number value (e.g., a quantity, age, or score).
 >
 > For that purpose, refer to the [`decimal`](#decimal) type instead.
 
+<!-- markdownlint-disable-next-line no-blanks-blockquote -->
+
 > Runtime JavaScript type: `number`
 
 ##### `bool`
@@ -503,6 +510,8 @@ Represents a [boolean](https://en.wikipedia.org/wiki/Boolean_data_type) (an eith
 Represents a **decimal** number value that won't lose precision on arithmetic operations (except for division). It's suitable for representing **currency** or other high precision values (e.g., a price, tax, or payment).
 
 > For general number scenarios that don't require high precision, use [`num`](#num) type instead.
+
+<!-- markdownlint-disable-next-line no-blanks-blockquote -->
 
 > Runtime JavaScript type: [`BigNumber`](https://mikemcl.github.io/bignumber.js/)
 
@@ -520,18 +529,18 @@ WIP
 
 Annotations are optional modifiers that can be added to a field to enhance its behavior. Typically they are used for further validation beyond basic field type checks.
 
-**Syntax**
+##### Syntax
 
 ```java
 @[name]([arguments])
 ```
 
-**Elements**
+##### Elements
 
 - `[name]`: The name of the annotation. Refer to the [Annotation Reference](#annotation-reference) for the full list.
 - `[arguments]`: Zero or more arguments passed to the annotation. See examples below for more details.
 
-**Examples**
+##### Examples
 
 You can omit optional parameters.
 
@@ -626,7 +635,7 @@ There are some comparisons with awesome tools in the ecosystem like React Hook F
 
 If you are still confused, welcome to new a discussion in this repo.
 
-### Why not code generation?
+### Why not code generation (like Prisma)?
 
 When implementing type support for FormML DSL, I had two choices with different pros and cons:
 
@@ -654,7 +663,7 @@ Due to the [limitation of TypeScript language service plugin](https://github.com
 
 That is, if you rely on `tsc` (directly or indirectly) to check types (mostly in CI/CD), you may get errors like:
 
-```
+```text
 error TS2307: Cannot find module 'xxx.fml' or its corresponding type declarations.
 ```
 

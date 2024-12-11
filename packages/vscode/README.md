@@ -1,13 +1,13 @@
-<p align="center">
+<h1 align="center">
   <a href="https://github.com/formml/formml">
     <picture>
       <source srcset="https://raw.githubusercontent.com/formml/formml/main/packages/vscode/assets/logo-bg.png" media="(prefers-color-scheme: dark)">
       <img src="https://raw.githubusercontent.com/formml/formml/main/packages/vscode/assets/logo-color.png" alt="FormML Logo" width="300">
     </picture>
   </a>
-</p>
-
-<h1 align="center">FormML VSCode Extension</h1>
+  <br>
+  FormML VSCode Extension
+</h1>
 
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=formml.vscode-formml">

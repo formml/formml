@@ -1,13 +1,13 @@
-<p align="center">
+<h1 align="center">
   <a href="https://github.com/formml/formml">
     <picture>
       <source srcset="https://raw.githubusercontent.com/formml/formml/main/docs/logo/logo-bg.svg" media="(prefers-color-scheme: dark)">
       <img src="https://raw.githubusercontent.com/formml/formml/main/docs/logo/logo-color.svg" alt="FormML Logo" width="300">
     </picture>
   </a>
-</p>
-
-<h1 align="center">@formml/react</h1>
+  <br>
+  @formml/react
+</h1>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@formml/react"><img src="https://img.shields.io/npm/v/@formml/react.svg" alt="npm version"></a>
